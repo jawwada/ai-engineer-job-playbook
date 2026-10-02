@@ -1668,12 +1668,12 @@ for message in pubsub.listen():
 
 | Use Case | Iceberg | Cosmos DB |
 |---|---|---|
-| Petabyte-scale audit logs | ✅ | ❌ (cost-prohibitive) |
-| Historical trend analysis (agent performance over months) | ✅ | ❌ |
-| Training data storage for model fine-tuning | ✅ | ❌ |
-| Time-travel queries ("what did the agent know on Nov 1?") | ✅ | ❌ |
-| Transactional writes, millisecond reads | ❌ | ✅ |
-| Real-time agent state | ❌ | ✅ |
+| Petabyte-scale audit logs | yes | no (cost-prohibitive) |
+| Historical trend analysis (agent performance over months) | yes | no |
+| Training data storage for model fine-tuning | yes | no |
+| Time-travel queries ("what did the agent know on Nov 1?") | yes | no |
+| Transactional writes, millisecond reads | no | yes |
+| Real-time agent state | no | yes |
 
 **In an agentic system:** Use Iceberg/Blob for the **analytics and compliance layer** — store all agent actions as Iceberg tables for retrospective analysis, model evaluation, and regulatory audit. Use Cosmos DB for the **operational layer** — real-time state, session management, memory.
 

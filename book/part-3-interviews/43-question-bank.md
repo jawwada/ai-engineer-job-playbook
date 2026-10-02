@@ -1,4 +1,4 @@
-# 43. Question bank: 150 questions with short answers
+# 43. Question bank: 173 questions with short answers
 
 > Use this for rapid-fire drills: read the question, answer aloud in two sentences, compare. Long-form answers live in the chapters referenced in brackets and in Part 6's 50-question guides.
 
@@ -76,7 +76,7 @@
 
 ## Security and governance [30]
 
-61. **OWASP LLM top risks?** Prompt injection, sensitive disclosure, supply chain, poisoning, output handling, excessive agency, system-prompt leakage, embedding weaknesses, misinformation, unbounded consumption.
+61. **OWASP LLM top risks?** The 2026 edition (August 2026), in order: prompt injection, sensitive information disclosure, excessive agency, supply chain, data and model poisoning, unbounded consumption, misinformation, hidden context exposure (which replaced system-prompt leakage), vector and embedding weaknesses, improper output handling. For agents, cite the separate Top 10 for Agentic Applications (December 2025, ASI01–ASI10).
 62. **Limit an agent to certain data?** Identity propagation (OBO), RLS/ACL filters at the data layer, scoped tools, policy engine, audit, negative tests.
 63. **Indirect prompt injection?** Instructions hidden in content the agent reads; treat as data, classify, least privilege, egress control, approvals.
 64. **Secrets in prompts?** Never; vault + runtime injection into tools.
@@ -100,7 +100,7 @@
 76. **Microsoft Foundry (formerly Azure AI Foundry, renamed November 2025)?** Model catalog, Foundry Agent Service (voice agents through Voice Live), evaluations and observability, Foundry Tools (formerly Azure AI Services), governance through the Foundry Control Plane; Entra-integrated, with Microsoft Entra Agent ID for agent identities.
 77. **Gemini Enterprise Agent Platform (formerly Vertex AI and its Agent Builder)?** Build with ADK and Agent Studio; run on Agent Runtime (formerly Agent Engine) with Agent Sessions, Memory Bank and Agent Sandbox; govern with Agent Identity, Registry and Gateway plus Model Armor; improve with Agent Simulation, Evaluation, Observability and Optimizer; Agent Search (formerly Vertex AI Search), A2A and MCP around it.
 78. **Choosing a cloud for AI?** Where data and identity live; model behind an abstraction; rent plumbing.
-79. **Databricks for agents?** Unity Catalog governance, Vector Search, Agent Framework + Evaluation, MLflow, AI Gateway, Agent Bricks.
+79. **Databricks for agents?** Unity Catalog governance, AI Search (formerly Vector Search), Agent Framework + Evaluation, MLflow, Unity Gateway, Agent Bricks.
 80. **Snowflake Cortex?** LLM functions in SQL, Cortex Search/Analyst/Agents.
 81. **BigQuery ML?** Models and embeddings via SQL, vector search in the warehouse.
 82. **Lakehouse?** Open table formats (Delta/Iceberg) on object storage with ACID, one copy for BI/ML/AI.
@@ -198,4 +198,4 @@ Each answer carries the number or parameter an interviewer listens for; check pr
 170. **Chirp 3 facts for a drive-through?** `chirp_3` with streaming recognition, up to 1,000 adaptation phrases, a denoiser that cannot remove background voices, word confidences that are not true confidences, $0.016 a minute at the first tier.
 171. **How does Polymarket resolve?** UMA's optimistic oracle: a bond of about $750, a two-hour challenge window, a second dispute goes to a token-holder vote of about 48 hours.
 172. **How does Kalshi resolve?** Its markets team finalizes the outcome from the source named in the rules, usually within a few hours of the outcome being known.
-173. **Old names to new?** Vertex AI → Gemini Enterprise Agent Platform; Agent Engine → Agent Runtime; Vertex AI Search → Agent Search; Customer Engagement Suite → Gemini Enterprise for Customer Experience; Dialogflow CX → still Dialogflow CX, with CX Agent Studio as its evolution; Conversational Insights → Customer Experience Insights; Azure AI Foundry → Microsoft Foundry.
+173. **Old names to new?** Vertex AI → Gemini Enterprise Agent Platform; Agent Engine → Agent Runtime; Vertex AI Search → Agent Search; Customer Engagement Suite → Gemini Enterprise for Customer Experience; Dialogflow CX → still Dialogflow CX, now filed as legacy, with CX Agent Studio as its evolution; Conversational Insights → Customer Experience Insights; Agentspace → Gemini Enterprise; Azure AI Foundry → Microsoft Foundry; LangGraph Platform → LangSmith Deployment; Databricks Vector Search → AI Search; Databricks AI Gateway → Unity Gateway; Amazon Kendra and Q Business → closed to new customers (AWS points to Bedrock Managed Knowledge Base and Amazon Quick).

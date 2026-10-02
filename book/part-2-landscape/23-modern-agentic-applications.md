@@ -28,7 +28,7 @@
 
 ## 23.4 Customer-support and service agents
 
-**Products:** Sierra, Decagon, Intercom Fin, Zendesk AI agents, Salesforce Agentforce, ServiceNow Now Assist, Google Conversational Agents, Amazon Connect + Q, Microsoft Copilot Studio agents, Ada, Kore.ai.
+**Products:** Sierra, Decagon, Intercom Fin, Zendesk AI agents, Salesforce Agentforce, ServiceNow Now Assist, Google CX Agent Studio, Amazon Connect + Q, Microsoft Copilot Studio agents, Ada, Kore.ai.
 
 **What they do:** resolve customer requests end to end across chat, email and voice — answer questions from policy and account data, take actions (refunds, changes, bookings), and hand off to humans with context.
 
@@ -36,7 +36,7 @@
 
 ## 23.5 Voice agents
 
-**Products:** drive-through systems (Wendy's FreshAI with Google, Yum/Taco Bell's platform, SoundHound, Presto, Hi Auto), phone agents (Vapi, Retell, Bland, ElevenLabs Conversational AI, PolyAI, Parloa), contact-center stacks (Amazon Connect + Nova Sonic, Google CES, Microsoft Dynamics 365 Contact Center, Genesys, NICE, Twilio ConversationRelay), platforms (LiveKit Agents, Pipecat, Deepgram Voice Agent API, OpenAI Realtime, Gemini Live).
+**Products:** drive-through systems (Wendy's FreshAI with Google, Yum/Taco Bell's platform, SoundHound, Presto, Hi Auto), phone agents (Vapi, Retell, Bland, ElevenLabs Conversational AI, PolyAI, Parloa), contact-center stacks (Amazon Connect + Nova Sonic, Google's Gemini Enterprise for Customer Experience, formerly the Customer Engagement Suite, Microsoft Dynamics 365 Contact Center, Genesys, NICE, Twilio ConversationRelay), platforms (LiveKit Agents, Pipecat, Deepgram Voice Agent API, OpenAI Realtime, Gemini Live).
 
 **What they do:** hold spoken conversations in real time to take orders, answer calls, schedule, qualify and collect — with interruptions, noise and accents.
 

@@ -90,11 +90,11 @@ The same controls apply to SPARQL and Gremlin; Gremlin's imperative style needs 
 
 | Question shape | Vector RAG | Knowledge graph |
 |---|---|---|
-| "What does the policy say about X?" (lookup) | ✔ | — |
-| "Which assets mention products governed by rule X and lack disclosure Y?" (multi-hop, set logic) | ✗ | ✔ |
-| "What are the main themes across 10,000 tickets?" (global) | ✗ (sampling) | ✔ via community summaries |
-| "Who is connected to whom through what?" (relationships) | ✗ | ✔ |
-| "Explain this figure" (unstructured, ambiguous) | ✔ | — |
+| "What does the policy say about X?" (lookup) | yes | — |
+| "Which assets mention products governed by rule X and lack disclosure Y?" (multi-hop, set logic) | no | yes |
+| "What are the main themes across 10,000 tickets?" (global) | no (only by sampling) | yes, via community summaries |
+| "Who is connected to whom through what?" (relationships) | no | yes |
+| "Explain this figure" (unstructured, ambiguous) | yes | — |
 | Fresh facts changing daily | easy to upsert | needs incremental pipelines |
 | Explainability and audit | citations to chunks | explicit paths — stronger |
 | Cost to build | low | medium–high (extraction, resolution, maintenance) |

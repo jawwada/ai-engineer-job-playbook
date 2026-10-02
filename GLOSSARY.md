@@ -1,189 +1,255 @@
 # Glossary
 
-Short definitions for the terms used across the book, alphabetical. The chapter in brackets goes deeper.
+Short definitions for the terms used across the book, alphabetical. The chapter in brackets goes deeper. Product names are as of October 2026; where a product was renamed, the former name has a short entry pointing to the current one.
 
-- **A2A (Agent2Agent)** — protocol for agents to discover each other (agent cards) and exchange tasks across vendors [22, 28b].
+- **A2A (Agent2Agent)** — protocol for agents to discover each other (agent cards) and exchange tasks across vendors; v1.0 in March 2026, part of the Agentic AI Foundation since August 2026 [14, 22, 28b].
+- **Abstention** — the model declining to answer when evidence is insufficient; measured as a behavior in RAG evals, not treated as a failure [24, 32].
 - **ACL (access control list)** — per-document or per-row permissions; carried into indexes so retrieval respects them [30].
-- **ADK (Agent Development Kit)** — Google's open-source agent framework; deploys to Vertex AI Agent Engine [20].
-- **AgentCore** — AWS's managed agent infrastructure: Runtime, Gateway, Memory, Identity, Policy, Observability, Evaluations, plus an Agent Registry (preview, 2026) and trace-driven optimization features; verify the current list, it changes quarterly [15].
-- **Agent Engine** — Vertex AI's managed agent runtime with Sessions and Memory Bank [15].
-- **Agentic RAG** — retrieval decided and iterated by the model rather than a fixed single pass [24].
+- **ACP** — two different protocols share the initials: the Agent Client Protocol (editors hosting coding agents) and the Agentic Commerce Protocol (agent checkout); see both [23, 52a].
+- **Adaptive RAG** — classifying a query's complexity first and routing it to no retrieval, a single retrieval pass or multi-step agentic retrieval [24b].
+- **ADK (Agent Development Kit)** — Google's open-source, code-first agent framework (Python, Go, Java, TypeScript); deploys to Agent Runtime on the Gemini Enterprise Agent Platform [15, 20].
+- **Agent (AI agent)** — a language model running in a loop with tools: it chooses an action, observes the result and decides the next step until the goal is met or a budget runs out; contrast with a workflow, where your code decides the path [0, 22].
+- **Agent Assist** — Google's real-time suggestions, summaries and knowledge for human contact-center agents, part of Gemini Enterprise for Customer Experience [28, 41].
+- **Agent Bricks** — Databricks' managed builder for eval-optimized agents over governed data [21].
+- **Agent card** — A2A's JSON descriptor advertising an agent's skills, endpoint and auth requirements [22, 28b].
+- **Agent Client Protocol (ACP)** — Zed's open protocol that lets an editor host an external coding agent such as Gemini CLI or Claude Code; not to be confused with the Agentic Commerce Protocol [52a].
+- **Agent Engine** — Google's former name for Agent Runtime [15].
+- **Agent harness** — see Harness (agent harness) [52a].
+- **Agent Identity / Agent Gateway / Agent Registry (Google)** — the governance layer of the Gemini Enterprise Agent Platform: a SPIFFE-based principal per agent, a gateway that applies IAM, semantic-governance and Model Armor policies to agent traffic in and out, and a catalog of agents and tools [30, 39b].
+- **Agent Registry (AWS)** — AgentCore's governed catalog for discovering and governing agents, tools, MCP servers and skills across an organization [15, 30].
+- **Agent Runtime** — the managed runtime of Google's Gemini Enterprise Agent Platform (formerly Agent Engine): deploys ADK, LangGraph, CrewAI or LlamaIndex agents with autoscaling, Agent Sessions, Memory Bank, Agent Identity and tracing [15, 39b].
+- **Agent Search** — Google's managed search and RAG product for websites and enterprise documents, with access-controlled data stores and the Ranking and Check Grounding APIs (formerly Vertex AI Search) [15, 24b, 39b].
+- **Agent Skills / SKILL.md** — an open format, developed by Anthropic and an open standard since December 2025, that packages a procedure as a folder: a `SKILL.md` file with YAML frontmatter (name, description, optional allowed tools and invocation rules) plus scripts and references, loaded on demand by progressive disclosure; most harnesses now load the same folders [15, 52a, 60].
+- **AgentCore** — AWS's managed agent infrastructure: Runtime, Harness, Gateway, Memory, Identity, Policy, Observability, Evaluations and Optimization, plus the AWS Agent Registry; verify the current list, it changes quarterly [15].
+- **Agentforce / Copilot Studio** — Salesforce's and Microsoft's low-code agent platforms [28, 60].
+- **Agentic AI Foundation (AAIF)** — the Linux Foundation's home, since December 2025, for open agent standards: MCP, Block's goose and OpenAI's AGENTS.md at launch, with A2A joining in August 2026 [14, 20b, 52a].
+- **Agentic Commerce Protocol (ACP) / AP2 / UCP / x402 / MPP** — protocols for agent-initiated purchases and payments: OpenAI and Stripe's ACP, Google's Agent Payments Protocol, the Universal Commerce Protocol with Shopify and other retailers, and the HTTP 402 micropayment protocols x402 (Coinbase) and MPP (Stripe and Tempo); study the delegation and confirmation steps [23, 60].
+- **Agentic RAG** — retrieval decided and iterated by the model rather than a fixed single pass [24, 24b].
+- **AGENTS.md** — a plain-markdown instructions file read by many coding agents (Codex, Copilot, Cursor, Amp, opencode and others), the cross-vendor counterpart of `CLAUDE.md`; contributed to the Agentic AI Foundation, and read by Claude Code when a project has no `CLAUDE.md` [52a].
+- **Agentspace** — Google's former name for Gemini Enterprise [15].
+- **AI Search (Databricks)** — Databricks' managed index synced from Delta tables, with vector, full-text and hybrid search governed by Unity Catalog; called Vector Search until June 2026 [21].
+- **Amazon Kendra / Amazon Q Business** — AWS services closed to new customers in 2026 (Kendra went into maintenance on 30 June and closed to new customers on 30 July); AWS points to the Bedrock Managed Knowledge Base and to Amazon Quick [15, 50].
 - **ANN (approximate nearest neighbor)** — fast similarity search with a recall trade-off (HNSW, IVF, PQ, DiskANN) [18].
+- **Argo CD** — GitOps controller that reconciles Kubernetes state from Git [45].
+- **ARR / run-rate** — the latest month or quarter of revenue multiplied out to a year; not audited annual revenue, and companies define it differently [0].
+- **ASR / STT / TTS** — automatic speech recognition (speech-to-text) and text-to-speech; the chained voice stack's two ends [41].
 - **AST (Audio Spectrogram Transformer)** — ViT applied to spectrograms for audio tagging [17].
+- **Auto memory (Claude Code)** — notes Claude Code writes for itself per repository (an index plus topic files) and loads at session start; context, not enforced configuration [52a].
+- **Autoencoder / VAE** — networks that compress and reconstruct inputs; reconstruction error flags anomalies; the variational version yields a sampleable latent space [17].
+- **Autonomy levels** — a graded scale of how much an agent may do without a person, chosen per action rather than per agent: from suggesting, through acting with approval, to acting alone and reporting; one taxonomy (Feng, McDonald and Zhang, 2025) names five levels by the user's role, from operator to observer, and each rung needs the controls of the rungs below it [53c].
+- **Azure AI Foundry** — Microsoft's former name for Microsoft Foundry [15].
+- **Backoff (exponential, with jitter)** — growing retry delays with randomness so retries do not stampede a recovering service [49].
+- **Bandit** — online allocation among options balancing exploration and exploitation; the lightweight alternative to a full A/B test [17, 36].
+- **Barge-in / endpointing** — the caller interrupting the agent mid-utterance; detecting when a speaker has finished; both depend on voice-activity detection [28, 41].
 - **Batch API** — asynchronous, discounted model inference for offline workloads [16, 31].
 - **BM25** — lexical ranking function used by keyword search engines [18].
+- **Bootstrap confidence interval** — resampling the evaluated items with replacement many times to put an interval around a metric; with paired tests on the same items, the honest way to report a judge-scored comparison [32b].
+- **Canary / shadow deployment** — releasing to a small traffic slice, or mirroring traffic to a new model without serving its output, before promotion [45, 46].
+- **Canary token** — see Tripwire / canary token [53c].
+- **Cascading failure** — one agent's or service's error propagating through others that trust its output; OWASP's ASI08 for agents [30, 53c].
+- **Cedar / OpenFGA / OPA** — authorization policy languages and engines (AWS Verified Permissions and AgentCore Policy use Cedar; OpenFGA is relationship-based; OPA evaluates Rego policies) [30, 53b].
 - **Chain of thought (CoT)** — the model's step-by-step reasoning text before an answer [22].
 - **Checkpointer** — persistence of graph state between steps (LangGraph) enabling resume and interrupts [20].
 - **Chunking** — splitting documents into retrievable units with context and metadata [18, 24].
+- **Circuit breaker / dead-letter queue** — stop calling a dependency that keeps failing; park messages that failed processing for inspection and replay [49].
+- **Citations** — evidence references in an answer; the mechanism is carrying chunk ids from retrieval through generation and verifying each quoted span exists [24, 32].
+- **Claude Agent SDK / Claude Managed Agents** — the harness behind Claude Code as a Python and TypeScript library you host (formerly the Claude Code SDK), and Anthropic's hosted version of it, in public beta since April 2026 and billed as tokens plus active session-hours [15, 52a].
+- **Client ID Metadata Documents (CIMD)** — MCP's way for a client to identify itself to an authorization server with an HTTPS URL that serves its metadata, instead of registering dynamically; added in the 2025-11-25 revision, and Dynamic Client Registration was deprecated in its favour in 2026-07-28 [20b].
+- **CLIP / SigLIP / SAM** — image-text embedding models and the Segment Anything model; the vision building blocks of multimodal pipelines [17.3].
+- **CMEK** — customer-managed encryption keys; a common enterprise requirement for AI services [30].
+- **ColBERT / late interaction** — retrieval that keeps one vector per token for query and document and scores with MaxSim (the sum of each query token's best match); more precise than single-vector search and cheaper than a cross-encoder at query time, but costly in storage; ColPali applies it to page images [18, 24b].
+- **Compaction** — summarizing older context so an agent's window stays small across long runs [22b, 52a].
+- **Computer use** — a model driving a browser or desktop from screenshots and actions; slow and brittle, so used where no API exists [23].
+- **Containment rate** — share of conversations resolved without a human; the voice and support agents' headline metric, paired with CSAT [28, 41].
 - **Context caching / prompt caching** — reusing a stable prompt prefix at reduced cost [16, 31].
 - **Context engineering** — deciding what goes into the model's window each turn [22].
 - **Context window** — the maximum tokens a model attends to per call [16].
 - **Contextual retrieval** — prepending chunk-specific context before indexing to improve recall [18, 24].
-- **Cross-encoder / reranker** — a model scoring query–document pairs jointly for precise ranking [18].
-- **Cypher / GQL** — query languages for property graphs [25, 33].
-- **Dialogflow CX / Conversational Agents** — Google's flow-based plus generative conversational platform [28, 41].
-- **Distillation** — training a small student model on a large teacher's outputs [26b].
-- **DPO (direct preference optimization)** — aligning a model on preference pairs without a reward model [26b].
-- **Drift** — change in input or output distributions over time that degrades models [46].
-- **Embedding** — a vector representation capturing meaning for similarity search [18].
-- **Eval set / gold set** — curated inputs with references or rubrics used to measure quality [32].
-- **Evaluator–optimizer** — a generate–critique–revise loop with explicit criteria [22].
-- **FDE (Forward Deployed Engineer)** — engineer embedded with customers to take AI use cases to production [44].
-- **FinOps** — the practice of managing cloud and AI spend across engineering, finance and product [31, 47].
-- **Function calling / tool use** — a model emitting structured calls to functions you execute [20, 28b].
-- **GraphRAG** — retrieval over an extracted entity graph with community summaries for global questions [25].
-- **GRPO** — group-relative policy optimization; RL with verifiable rewards used for reasoning models [26b].
-- **Guardrails** — input, tool and output checks enforcing policy and safety [30].
-- **HITL (human-in-the-loop)** — approval gates and review queues inside automated workflows [22].
-- **HNSW** — hierarchical navigable small-world graph index for ANN search [18].
-- **Hybrid search** — combining lexical and vector retrieval, usually with RRF [18].
-- **IaC (infrastructure as code)** — Terraform/CDK/Bicep definitions of infrastructure [45].
-- **Idempotency** — an operation safe to repeat without duplicate side effects [49].
-- **JEPA** — joint-embedding predictive architecture; prediction in representation space (V-JEPA 2) [17].
-- **Judge (LLM-as-a-judge)** — a model scoring outputs against a rubric, calibrated to human labels [32].
-- **KV cache** — stored attention keys/values enabling fast decoding and prefix reuse [16].
-- **Lakehouse** — open table formats on object storage with ACID, serving BI/ML/AI from one copy [21].
-- **Latent reasoning** — reasoning performed in hidden states rather than emitted tokens [22, 39b].
-- **LoRA / QLoRA** — low-rank adapters for parameter-efficient fine-tuning; QLoRA on a quantized base [26].
-- **MCP (Model Context Protocol)** — the standard for exposing tools, resources and prompts to models [20, 28b].
-- **Medallion** — bronze/silver/gold data-layer convention [21].
-- **Memory Bank** — Vertex AI Agent Engine's long-term memory service [15].
-- **Mixture of experts (MoE)** — architecture activating a subset of experts per token [16].
-- **Model Armor** — Google Cloud's prompt/response screening service [30].
-- **Model routing** — sending requests to different model tiers by difficulty or policy [31].
-- **MTEB** — benchmark suite for embedding models [18].
-- **Multimodal** — models consuming or producing more than one modality (text, image, audio, video) [19].
-- **NDCG / MRR / recall@k** — ranking and retrieval quality metrics [18, 32].
-- **Observability** — logs, metrics, traces (and profiles) that let you answer questions about a running system [29].
-- **OBO (on-behalf-of)** — token exchange so an agent acts with the user's permissions [30].
-- **Ontology** — the schema of a knowledge graph: entity and relationship types [25].
-- **OpenTelemetry (OTel)** — vendor-neutral telemetry standard; GenAI semantic conventions for LLM spans [29].
-- **Orchestrator–workers** — a central planner dispatching sub-tasks to workers and synthesizing [22].
-- **pass^k** — success on all of k runs; a consistency metric for stochastic agents [53].
-- **pgvector** — Postgres extension for vector storage and search [18].
-- **Playbook** — Dialogflow CX's LLM-driven, goal-oriented agent inside a flow [41].
-- **Prompt injection** — instructions in input or content that try to redirect the model [30].
-- **PTU / provisioned throughput** — reserved model capacity billed regardless of use [31].
-- **RAG** — retrieval-augmented generation [24].
-- **ReAct** — reason-and-act loop interleaving thought, tool call and observation [22].
-- **Red teaming** — adversarial testing of models and agents [53].
-- **Reinforcement learning from human feedback (RLHF)** — preference-based policy optimization with a reward model [26b].
-- **Remote Control** — Claude Code feature to steer a local session from phone or web [11].
-- **RLS (row-level security)** — database policies restricting rows by user [30].
-- **RRF (reciprocal rank fusion)** — rank-based fusion of result lists [18].
-- **Semantic layer** — defined metrics/dimensions that make text-to-SQL reliable [21, 23].
-- **SFT (supervised fine-tuning)** — training on (prompt, ideal response) pairs [26b].
-- **Skill** — a packaged instruction set with scripts the agent loads on demand (Claude Code); also other meanings in Alexa/Watson/Bot Framework [28b, 60].
-- **Speculative decoding** — draft-model acceleration of decoding [16].
-- **Speech-to-speech model** — audio-in, audio-out model (Nova Sonic, Gemini Live, OpenAI Realtime) [17, 41].
-- **Strands Agents** — AWS's open-source model-driven agent SDK [20].
-- **Structured outputs** — schema-constrained model responses [49].
-- **Sub-agent** — an agent invoked by another with isolated context [22].
-- **Supervisor** — the coordinating agent in a supervisor/sub-agent topology [22].
-- **Thinking budget** — tokens (or effort) allowed for a model's reasoning before answering [16, 39b].
-- **Token** — the sub-word unit models process and bill on [16].
-- **Trace / span** — a request's tree of timed operations; the unit of agent observability [29].
-- **Trajectory** — the sequence of tool calls and decisions in an agent run; evaluated alongside outcomes [53].
-- **Two-tower model** — separate encoders for query and item enabling ANN retrieval in ranking systems [17].
-- **Unity Catalog** — Databricks' governance layer for data, models, functions and vector indexes [21].
-- **Vector database** — a store with ANN indexes and metadata filters [18].
-- **VPC Service Controls** — Google Cloud perimeters preventing data exfiltration [30].
-- **Workflow (vs agent)** — predetermined steps with model-filled parts; the agent decides the path [22].
-
-## Critic's additions: terms the book uses that were missing above
-
-Alphabetical, same format. Product names are grouped where the book treats them as a set.
-
-- **Abstention** — the model declining to answer when evidence is insufficient; measured as a behavior in RAG evals, not treated as a failure [24, 32].
-- **Agent Bricks** — Databricks' managed builder for eval-optimized agents over governed data [21].
-- **Agent card** — A2A's JSON descriptor advertising an agent's skills, endpoint and auth requirements [22, 28b].
-- **Agent harness** — the loop around the model: tools, memory, permissions, hooks, sub-agents, compaction; where most reliability gains now come from [22b, 52].
-- **Agent Registry (AWS)** — AgentCore's catalog for discovering and governing agents, tools, MCP servers and skills across an organization (preview, 2026) [15].
-- **Agentic Commerce Protocol (ACP) / AP2 / UCP** — protocols for agent-initiated purchases and payments (OpenAI-Stripe ACP, Google's Agent Payments Protocol, the Universal Commerce Protocol with Shopify and others); study the delegation and confirmation steps [23, 60].
-- **Agentforce / Copilot Studio** — Salesforce's and Microsoft's low-code agent platforms [28, 60].
-- **Argo CD** — GitOps controller that reconciles Kubernetes state from Git [45].
-- **ASR / STT / TTS** — automatic speech recognition (speech-to-text) and text-to-speech; the chained voice stack's two ends [41].
-- **Autoencoder / VAE** — networks that compress and reconstruct inputs; reconstruction error flags anomalies; the variational version yields a sampleable latent space [17].
-- **Backoff (exponential, with jitter)** — growing retry delays with randomness so retries do not stampede a recovering service [49].
-- **Bandit** — online allocation among options balancing exploration and exploitation; the lightweight alternative to a full A/B test [17, 36].
-- **Barge-in / endpointing** — the caller interrupting the agent mid-utterance; detecting when a speaker has finished; both depend on voice-activity detection [41].
-- **Canary / shadow deployment** — releasing to a small traffic slice, or mirroring traffic to a new model without serving its output, before promotion [45, 46].
-- **Cedar / OpenFGA / OPA** — authorization policy languages and engines (AWS Verified Permissions uses Cedar; OpenFGA is relationship-based; OPA evaluates Rego policies) [30].
-- **Circuit breaker / dead-letter queue** — stop calling a dependency that keeps failing; park messages that failed processing for inspection and replay [49].
-- **Citations** — evidence references in an answer; the mechanism is carrying chunk ids from retrieval through generation and verifying each quoted span exists [24, 32].
-- **CLIP / SigLIP / SAM** — image-text embedding models and the Segment Anything model; the vision building blocks of multimodal pipelines [17.3].
-- **CMEK** — customer-managed encryption keys; a common enterprise requirement for AI services [30].
-- **Compaction** — summarizing older context so an agent's window stays small across long runs [22b, 52].
-- **Computer use** — a model driving a browser or desktop from screenshots and actions; slow and brittle, so used where no API exists [23].
-- **Containment rate** — share of conversations resolved without a human; the voice and support agents' headline metric, paired with CSAT [28, 41].
+- **Conversational Agents (Google)** — the name Google used for a while for Dialogflow CX and its console; see Dialogflow CX [28, 39c].
+- **Corrective RAG (CRAG)** — a lightweight evaluator grades each retrieved document and triggers an action for the query: refine the relevant passages, discard them and fall back to a rewritten search, another index or the web, or combine both when unsure [24b].
 - **CrewAI / AutoGen / Semantic Kernel / PydanticAI / LlamaIndex / OpenAI Agents SDK** — other agent frameworks; AutoGen and Semantic Kernel converged into the Microsoft Agent Framework [20].
+- **Cross-encoder / reranker** — a model scoring query–document pairs jointly for precise ranking [18, 24b].
 - **CSAT / AHT** — customer-satisfaction score; average handle time [41].
 - **CTR / QPS** — click-through rate; queries per second [36.3].
-- **Customer Engagement Suite (CES) / Agent Assist** — Google's contact-center suite (Conversational Agents, Agent Assist, Insights); Agent Assist suggests answers to human agents in real time [28, 41].
+- **Customer Engagement Suite (CES)** — Google's former name for Gemini Enterprise for Customer Experience [28, 41].
+- **CX Agent Studio (Customer Experience Agent Studio)** — Google's current builder for contact-center agents inside Gemini Enterprise for Customer Experience, documented as the evolution of Dialogflow CX: LLM agents with instructions, tools, callbacks and guardrails that can hand a conversation to existing Dialogflow CX flows [28, 39c, 41].
+- **Cypher / GQL** — query languages for property graphs [25, 33].
 - **Deep Agents** — LangChain's harness package: planning tool, file-system memory, sub-agents, skills middleware [22b].
+- **Dialogflow CX** — Google's flow-based plus generative conversational platform (flows, pages, intents, entities, playbooks, data stores), branded Conversational Agents for a while; Google now files it under legacy conversational agents — still documented and running — with CX Agent Studio as its evolution [28, 39c, 41].
 - **Diffusion / flow matching** — generative models that learn to reverse noise (or a straight transport path) into data; the basis of image, audio and video generation [17.5].
+- **Distillation** — training a small student model on a large teacher's outputs [26b].
 - **Document parsers (Docling, Unstructured, LlamaParse; Document AI, Document Intelligence, Textract)** — open-source and cloud services that turn PDFs and scans into structured text, tables and layout [19, 24].
+- **DPO (direct preference optimization)** — aligning a model on preference pairs without a reward model [26b].
+- **Drift** — change in input or output distributions over time that degrades models [46].
 - **DSPy / GEPA** — programmatic prompt optimization: a framework that compiles prompts against an eval metric, and a reflective evolutionary optimizer [22b, 60].
 - **Durable execution (Temporal)** — workflows whose state survives crashes by replaying an event history; the backbone for long-running agent jobs [45, 49].
 - **Elasticity (price)** — percentage change in demand per percentage change in price; the quantity pricing models estimate [36.3, 36.4].
-- **EU AI Act** — EU regulation with risk-tiered obligations (prohibited, high-risk, transparency) phasing in from 2025 [30].
+- **Elicitation (MCP)** — an MCP server asking the user a structured question mid-call ("which of these accounts did you mean?"); since the 2026-07-28 revision delivered through multi round-trip requests [20b].
+- **Embedding** — a vector representation capturing meaning for similarity search [18].
+- **EU AI Act** — EU regulation with risk-tiered obligations (prohibited practices, general-purpose models, transparency, high-risk systems) phasing in from 2025; the 2026 Digital Omnibus moved the high-risk dates to December 2027 and August 2028 [30, 53b, 54b].
+- **Eval set / gold set** — curated inputs with references or rubrics used to measure quality [32].
+- **Evaluator–optimizer** — a generate–critique–revise loop with explicit criteria [22].
 - **Extended thinking** — Claude's visible reasoning mode with a token budget; the unit of the "reasoning as a budget" trend [16, 39b].
 - **Faithfulness / groundedness** — whether an answer is supported by the retrieved evidence; judged claim by claim [32].
+- **FDE (Forward Deployed Engineer)** — engineer embedded with customers to take AI use cases to production [44].
 - **Feature store** — versioned, point-in-time-correct features shared by training and serving to prevent skew [46, 48].
 - **Few-shot / zero-shot** — prompting with or without worked examples [22].
 - **Fine-tuning** — updating a pre-trained model's weights (fully or through adapters) on task data; the last resort after prompting and retrieval plateau [26, 27].
+- **FinOps** — the practice of managing cloud and AI spend across engineering, finance and product [31, 47].
+- **Fork bomb (agentic)** — agents spawning helpers that spawn helpers, from an injected instruction or unprompted over-delegation; a depth cap bounds the height, a concurrency cap the width, and only a spend cap the total [53c].
+- **Function calling / tool use** — a model emitting structured calls to functions you execute [20, 28b].
 - **GDPR / CCPA / HIPAA / PII / PHI** — the EU and California privacy laws, the US health-privacy law, and the data classes they protect (personally identifiable and protected health information) [30, 59].
-- **Gemini Enterprise (formerly Agentspace)** — Google's enterprise search-and-agents platform with permission-aware connectors [23, 60].
+- **Gemini Enterprise** — Google's employee-facing app for enterprise search, assistants and agents with permission-aware connectors (formerly Agentspace); not the developer platform [15, 23, 60].
+- **Gemini Enterprise Agent Platform** — Google Cloud's platform for building, deploying, governing and evaluating models and agents: Model Garden, ADK and Agent Studio, Agent Runtime, Agent Search, Agent Identity, Gateway and Registry, evaluation and pipelines; the April 2026 successor brand of Vertex AI, whose API endpoint (`aiplatform.googleapis.com`) it kept [15, 39b].
+- **Gemini Enterprise for Customer Experience** — Google's contact-center suite (formerly the Customer Engagement Suite): CX Agent Studio, the legacy Dialogflow CX, Agent Assist, Customer Experience Insights, telephony, and prebuilt shopping and food-ordering agents [28, 39b, 41].
 - **GitOps** — infrastructure and deployments declared in Git and reconciled by a controller [45].
+- **GraphRAG** — retrieval over an extracted entity graph with community summaries for global questions [25].
+- **GRPO** — group-relative policy optimization; RL with verifiable rewards used for reasoning models [26b].
+- **Guardrails** — input, retrieval, tool, output and monitoring checks ("rails") that enforce policy and safety; they lower risk but do not replace authorization at the data layer [30, 53b].
 - **Hallucination** — fluent output unsupported by evidence or fact; reduced by grounding, abstention and judges, never eliminated [32].
-- **Hooks** — scripts that run on agent lifecycle events (before a tool call, after a file edit) to enforce rules deterministically [52, 60].
-- **HyDE / query rewriting** — generating a hypothetical answer, or several rephrasings, to retrieve with; cheap recall improvements [24].
+- **Harness (agent harness)** — everything around a model that makes it an agent: the loop, tools, instructions, context management (compaction, sub-agents, files as memory), permissions and sandbox, hooks, sessions and observability; the same model performs very differently in different harnesses, and most reliability gains now come from here [22b, 52a].
+- **HITL (human-in-the-loop)** — approval gates and review queues inside automated workflows [22].
+- **HNSW** — hierarchical navigable small-world graph index for ANN search [18].
+- **Hooks** — handlers that run deterministically at agent lifecycle events (before or after a tool call, at a permission decision, at session start, on notifications) and can block an action, which an instruction in `CLAUDE.md` cannot [52a, 53b].
+- **Hybrid search** — combining lexical and vector retrieval, usually with RRF [18].
+- **HyDE / query rewriting** — generating a hypothetical answer, or several rephrasings, to retrieve with; cheap recall improvements [24, 24b].
+- **IaC (infrastructure as code)** — Terraform/CDK/Bicep definitions of infrastructure [45].
+- **Idempotency** — an operation safe to repeat without duplicate side effects [49].
 - **Incrementality** — causal lift measured by holdouts or geo experiments rather than attribution rules [36.3, 61].
+- **Injection laundering / trust laundering** — untrusted text losing its provenance on the way through a system: a sub-agent's summary carries injected instructions upward as a "finding", or a memory entry turns a claim from a tool result into a standing rule [53c].
+- **Inter-rater agreement (Cohen's κ, Krippendorff's α)** — chance-corrected agreement between two or more raters; the yardstick for calibrating a judge against humans, with human–human agreement as the ceiling [32b].
+- **ISO/IEC 42001** — the certifiable AI management-system standard (2023): policy, roles, risk and impact assessment, lifecycle controls, supplier management, monitoring and audit; increasingly requested in procurement [30, 53b].
 - **Jailbreak** — input crafted to bypass a model's safety behavior; tested in red-team suites [30, 53].
+- **JEPA** — joint-embedding predictive architecture; prediction in representation space (V-JEPA 2) [17].
+- **Judge cascade** — a cheap judge decides clear cases and escalates low-confidence, disputed or high-stakes items to a stronger judge or a human [32b].
+- **Judge (LLM-as-a-judge)** — a model scoring outputs against a rubric, calibrated to human labels [32, 32b].
+- **Judge panel / jury** — several smaller judges, ideally from different model families, aggregated by majority or mean; often matches a single large judge with less self-preference bias and at lower cost (Verga et al., 2024) [32b].
+- **Kill switch** — a control outside the agent's reach that stops an agent or a whole agent tree quickly: ask it to stop, stop the runtime and every child, and revoke its credentials at the identity provider and gateway; one on-call action, drilled regularly [53b, 53c].
+- **KV cache** — stored attention keys/values enabling fast decoding and prefix reuse [16].
 - **Lakeflow** — Databricks' ingestion, pipeline and orchestration suite [21].
+- **Lakehouse** — open table formats on object storage with ACID, serving BI/ML/AI from one copy [21].
+- **LangGraph Platform** — LangChain's former name for LangSmith Deployment [20].
 - **LangSmith / Langfuse / Phoenix / Braintrust** — LLM tracing and evaluation platforms; Langfuse and Phoenix are open source [29, 32].
+- **LangSmith Deployment** — LangChain's managed runtime for LangGraph agents (cloud, hybrid or self-hosted), called LangGraph Platform until October 2025 [20, 50].
+- **Latent reasoning** — reasoning performed in hidden states rather than emitted tokens [22, 39, 39b].
+- **Learning-to-rank / LambdaMART** — supervised ranking trained on relevance labels or clicks over features such as BM25, vector and reranker scores, recency and authority; LambdaMART is the gradient-boosted-tree version that optimizes NDCG [24b].
 - **Least privilege** — grant only the permissions a task needs; for agents, per-tool and per-user scopes [30].
-- **LLM gateway (LiteLLM, Portkey)** — a proxy that unifies model APIs, holds keys, routes, caches and attributes cost [31].
+- **Lethal trifecta / Agents Rule of Two** — Simon Willison's warning that an agent with access to private data, exposure to untrusted content and a way to communicate externally can be made to exfiltrate; Meta's Agents Rule of Two (October 2025) generalizes it: in one session an agent should have at most two of untrusted input, access to sensitive data or systems, and the ability to change state or communicate externally, unless a human approves the step [30, 49].
+- **Listwise reranking** — an LLM ordering a whole candidate list in one prompt (with sliding windows for long lists), as opposed to scoring items one at a time (pointwise) or in pairs (pairwise) [24b].
+- **LLM gateway (LiteLLM, Portkey, Unity Gateway)** — a proxy that unifies model APIs, holds keys, routes, caches, enforces budgets and attributes cost [14, 31].
 - **Long context / lost in the middle** — windows of a million tokens; the finding that models attend poorly to evidence placed mid-prompt, which is why ordering matters [16, 24].
+- **LoRA / QLoRA** — low-rank adapters for parameter-efficient fine-tuning; QLoRA on a quantized base [26].
 - **LSTM** — long short-term memory recurrent network; the pre-transformer sequence model still found in older intent classifiers and forecasters [17].
-- **Managed retrieval (Bedrock Knowledge Bases, Vertex AI Search, Azure AI Search)** — cloud services that bundle parsing, chunking, embedding, hybrid search and ACL filtering [15, 24].
+- **Managed retrieval** — cloud services that bundle parsing, chunking, embedding, hybrid search and ACL filtering: Bedrock Knowledge Bases and the Managed Knowledge Base, Google's Agent Search and RAG Engine, Azure AI Search, Databricks AI Search [15, 24, 24b].
+- **Managed settings** — Claude Code settings deployed by an administrator that user, project and command-line settings cannot override: deny rules, allowed MCP servers, telemetry, `disableBypassPermissionsMode`, and hooks or permission rules accepted only from the managed tier [52a, 53b].
+- **MCP Apps / MCP extensions** — optional, versioned additions outside MCP's core, negotiated per request: Tasks (long-running work with polling), MCP Apps (interactive UI rendered in the conversation), Skills over MCP, and authorization extensions [20b].
+- **MCP host / client / server** — the application the user works in (Claude Code, ChatGPT, an IDE), the connector inside it that talks to one server, and the program that exposes tools, resources and prompts [20b].
+- **MCP (Model Context Protocol)** — the open standard for exposing tools, resources and prompts to models through servers; in the Agentic AI Foundation since December 2025, and stateless since the 2026-07-28 revision [20b, 28b].
+- **MCP transports (stdio, Streamable HTTP)** — local servers run as child processes over standard input and output; remote servers over Streamable HTTP with OAuth 2.1 [20b].
+- **Medallion** — bronze/silver/gold data-layer convention [21].
+- **Memory Bank (Agent Memory Bank)** — long-term memory for agents on Google's Agent Runtime (formerly part of Vertex AI Agent Engine) [15].
 - **Microsoft Fabric / OneLake** — Microsoft's unified analytics platform and its single logical lake [21].
+- **Microsoft Foundry** — Microsoft's platform for AI apps and agents, called Azure AI Foundry until November 2025: the model catalog (OpenAI, Claude and open models), Foundry Agent Service, Foundry IQ, guardrails and the Foundry Control Plane [15, 53b].
+- **Mixture of experts (MoE)** — architecture activating a subset of experts per token [16].
 - **MLflow** — open-source experiment tracking, model registry, evaluation and GenAI tracing [21, 46].
+- **Model Armor** — Google Cloud's prompt/response screening service [30, 39b, 53b].
 - **Model registry** — versioned store of models with stage transitions (staging, production, archived) and lineage [46].
-- **Mosaic AI** — Databricks' GenAI suite: model serving, vector search, agent framework, evaluation [21].
+- **Model routing** — sending requests to different model tiers by difficulty or policy [31].
+- **Morris II / AI worm** — a self-replicating prompt (Cohen, Bitton and Nassi, 2024) that spread between RAG email assistants without a click; Prompt Infection and Agent Smith showed the same inside multi-agent systems [53c].
+- **Mosaic AI** — Databricks' label for its GenAI stack (Model Serving, AI Search, Unity Gateway, Agent Framework, Agent Evaluation), which Databricks has been retiring in favour of plain product names during 2026 [21].
+- **MRTR (multi round-trip requests)** — the MCP 2026-07-28 pattern that replaced server-initiated requests: the server returns `input_required` with what it needs, and the client retries the original request with the answers [15, 20b].
+- **MTEB** — benchmark suite for embedding models [18].
+- **Multimodal** — models consuming or producing more than one modality (text, image, audio, video) [19].
+- **NDCG / MRR / recall@k** — ranking and retrieval quality metrics [18, 32].
+- **NIST AI RMF / AI 600-1** — the US voluntary AI risk-management framework (Govern, Map, Measure, Manage) and its Generative AI Profile [53b].
 - **OAuth / OIDC / JWT** — delegation, identity and token formats; agents act for users through scoped tokens, never shared passwords [30].
+- **OBO (on-behalf-of)** — token exchange so an agent acts with the user's permissions [30].
+- **Observability** — logs, metrics, traces (and profiles) that let you answer questions about a running system [29].
 - **OCR** — optical character recognition; now usually one stage inside a document-understanding model [19].
+- **Ontology** — the schema of a knowledge graph: entity and relationship types [25].
 - **OpenAPI / Pydantic / FastAPI** — the API specification format; the Python validation library; the typed async web framework [49].
-- **OWASP Top 10 for LLM Applications / MITRE ATLAS** — threat catalogues for LLM apps and for adversarial ML [30, 53].
+- **OpenTelemetry (OTel)** — vendor-neutral telemetry standard; GenAI semantic conventions for LLM spans [29].
+- **Orchestrator–workers** — a central planner dispatching sub-tasks to workers and synthesizing [22].
+- **OWASP Top 10 for LLM Applications / for Agentic Applications / MITRE ATLAS** — threat catalogues: the LLM list (2026 edition, posted in August 2026, with excessive agency moved up to LLM03), the separate Top 10 for Agentic Applications (December 2025, ASI01–ASI10), and MITRE's matrix of attacks on ML systems [30, 53, 53b].
 - **p95 / p99** — latency percentiles; the numbers to quote instead of averages [29, 45].
 - **Parallel tool calls** — the model emitting several tool calls in one turn; execute concurrently and return all results [20].
-- **Plugin (Claude Code)** — a bundle of skills, agents, hooks and MCP servers installed from a marketplace [52, 60].
+- **pass^k** — success on all of k runs; a consistency metric for stochastic agents [53].
+- **pgvector** — Postgres extension for vector storage and search [18].
+- **Playbook** — Dialogflow CX's LLM-driven, goal-oriented agent inside a flow; in CX Agent Studio the equivalent is an LLM agent [39c, 41].
+- **Plugin / marketplace** — a bundle of skills, sub-agents, hooks, commands and MCP servers, installed from a marketplace (in Claude Code with `/plugin`); the way teams share a configured harness, and something to review like code [52a, 60].
 - **Position bias** — a judge preferring the first (or last) candidate; mitigated by swapping order and averaging [32].
+- **Post-hoc attribution (verify-then-answer)** — checking each claim of a draft against the evidence and removing or flagging unsupported ones before answering, with citations per sentence [24b].
+- **Prediction-powered inference (PPI)** — combining many judge labels with a small human-labelled sample from the same distribution: the judge's mean plus a correction measured on the sample gives an unbiased estimate with a valid confidence interval (Angelopoulos et al., 2023) [32b].
 - **Presidio** — Microsoft's open-source PII detection and redaction library [30].
+- **Prompt injection** — instructions in input or content that try to redirect the model [30, 53].
+- **PTU / provisioned throughput** — reserved model capacity billed regardless of use [31].
 - **Quantization (AWQ, GPTQ, GGUF)** — storing weights at lower precision to cut memory and cost; the formats differ by runtime [16, 26].
+- **RAG** — retrieval-augmented generation [24].
 - **Rate limit** — request or token caps per key; design with queues, backoff and routing to alternate capacity [31, 49].
-- **Red-team tools (PyRIT, garak)** — automated adversarial probing frameworks [53].
+- **ReAct** — reason-and-act loop interleaving thought, tool call and observation [22].
+- **Red teaming** — adversarial testing of models and agents, automated with tools such as PyRIT, garak, promptfoo and DeepTeam [53, 53b].
+- **Reinforcement learning from human feedback (RLHF)** — preference-based policy optimization with a reward model [26b].
+- **Remote Control** — Claude Code feature to steer a session running on your own machine from claude.ai/code or the Claude mobile app [11, 52a].
+- **Reward hacking** — a model exploiting flaws in its reward or test signal instead of solving the task (special-casing inputs, editing tests, exiting before tests run); keep graders and tests outside the agent's write scope [26b, 53c].
+- **RLS (row-level security)** — database policies restricting rows by user [30].
 - **RLVR** — reinforcement learning with verifiable rewards (tests, exact answers) rather than learned reward models [26b].
+- **Rogue agent** — an agent acting against its principal's intent, whether from a misspecified goal, a learned disposition, subversion by injected content or a plain capability failure; OWASP's ASI10 [53c].
+- **RRF (reciprocal rank fusion)** — rank-based fusion of result lists [18].
+- **Rug pull** — an MCP server (or skill) that changes its tool descriptions after you approved it; pin versions or description hashes and re-approve on change [20b, 49, 53c].
+- **Sampling / Roots (MCP)** — client features through which a server asked the host's model for a completion, or learned which directories it may use; deprecated in the 2026-07-28 revision [20b].
 - **Sandbox** — isolated execution for agent code and tools (container, microVM, network egress rules) [30, 52].
 - **Secrets and keys (Secrets Manager, Key Vault, Vault, KMS)** — where credentials and encryption keys live; never in prompts, repos or tool outputs [30, 57].
 - **Seed / temperature / top-p** — sampling controls; low temperature and a fixed seed reduce, but do not remove, non-determinism [16, 54].
+- **Self-RAG** — the model decides when retrieval is needed and critiques retrieved passages and its own draft for relevance and support (reflection tokens in the original paper) [24b].
 - **Semantic cache** — serving a cached answer for a query whose embedding is near a previous one; a FinOps lever with a staleness risk [31].
 - **Semantic chunking** — splitting documents at meaning boundaries rather than fixed sizes [18, 24].
+- **Semantic layer** — defined metrics/dimensions that make text-to-SQL reliable [21, 23].
 - **Serverless (Cloud Run, Lambda, Container Apps)** — scale-to-zero compute; good for spiky agent traffic, poor for long-lived GPU work [45].
+- **SFT (supervised fine-tuning)** — training on (prompt, ideal response) pairs [26b].
+- **Shadowing** — a tool or skill whose description overlaps another's and captures its routing, sometimes deliberately by a malicious MCP server [53c].
 - **Showback / chargeback** — reporting cost to teams versus billing them for it [31, 47].
+- **Skill** — a packaged instruction set with scripts that an agent loads on demand (see Agent Skills / SKILL.md); also unrelated meanings in Alexa, Watson and Bot Framework [28b, 52a, 60].
 - **SLO / SLA / SLI** — the internal target, the contractual promise, the measured indicator [45].
+- **Spawn depth** — how many layers of sub-agents may spawn further sub-agents; Claude Code allows three layers below the main conversation by default (`CLAUDE_CODE_MAX_SUBAGENT_SPAWN_DEPTH`), and a depth cap bounds the height of an agent tree but not its spend [53c].
+- **Specification gaming** — satisfying the letter of an objective while defeating its intent, such as editing the tests an agent is graded on; reward hacking is the training-time form [22, 53c].
+- **Speculative decoding** — draft-model acceleration of decoding [16].
+- **Speculative RAG** — a small specialist drafter writes several answers from different subsets of the retrieved documents in parallel, and a larger generalist verifies and picks one [24b].
+- **Speech-to-speech model** — audio-in, audio-out model (Nova Sonic, Gemini Live, OpenAI Realtime) [17, 41].
+- **SR 11-7** — the 2011 US bank model-risk guidance, superseded by SR 26-2 on 17 April 2026 [46, 54b].
+- **SR 26-2** — the Federal Reserve's revised model-risk guidance, issued jointly with the OCC and FDIC on 17 April 2026: risk-based, most relevant above $30 billion in assets, keeps "effective challenge", and puts generative and agentic AI outside its scope [46, 54b].
 - **SSE / WebSocket** — streaming transports for token-by-token and bidirectional audio delivery [41, 49].
+- **Strands Agents** — AWS's open-source model-driven agent SDK [20].
 - **Streaming** — delivering tokens as they are generated; cuts perceived latency and enables early stops [49].
+- **Structured outputs** — schema-constrained model responses [49].
+- **Sub-agent** — an agent invoked by another with isolated context [22, 52a].
+- **Supervisor** — the coordinating agent in a supervisor/sub-agent topology [22].
 - **SWE-bench / τ²-bench / LMArena** — a coding benchmark on real repositories; a tool-use benchmark with simulated users; a crowd-sourced preference leaderboard [60].
 - **Synthetic data** — generated examples for training or evaluation; useful only when label-checked and diverse [26, 32].
 - **System prompt** — the standing instructions that frame every turn; versioned like code [22].
 - **Text-to-SQL / text-to-Cypher** — translating questions into database queries, reliable only over a semantic layer or ontology [23, 25, 33].
 - **TFT / Chronos / TimesFM** — the Temporal Fusion Transformer and two pre-trained time-series foundation models [17.9].
+- **Thin slice / readiness gate** — one user group and one workflow taken end to end through real identity, data and systems, with draft-only or read-only actions behind a feature flag and weeks of shadow mode; and the checklist it must pass before wider rollout (improvement over the human baseline beyond the confidence interval, red-team findings closed, cost within budget at ten times pilot volume, rollback and kill switch tested, owners named) [54b].
+- **Thinking budget** — tokens (or effort) allowed for a model's reasoning before answering [16, 39b].
+- **Token** — the sub-word unit models process and bill on [16].
+- **Tool poisoning** — hidden instructions in a tool's description, metadata or results that the model follows; Invariant Labs' April 2025 demonstration made Cursor leak an SSH key [20b, 53c].
 - **Tool schema** — the JSON schema that defines a tool's name, parameters and description; the model reads it, so write it for the model [20, 28b].
+- **Tool search / code execution with MCP** — two ways to keep a large tool catalog out of the context window: the host loads tool definitions only when the model searches for a capability, or the agent writes a short program that calls tools and filters their results in a sandbox [20b].
+- **Trace / span** — a request's tree of timed operations; the unit of agent observability [29].
+- **Trajectory** — the sequence of tool calls and decisions in an agent run; evaluated alongside outcomes [53].
+- **Tripwire / canary token** — a planted signal that only misbehaviour triggers: fake credentials, canary rows no task reads, honeypot tools such as `export_all_customers`, checksums on tests and graders; one hit justifies containment [53c].
+- **Two-person rule** — a second human must approve destructive or irreversible actions such as deletes, large payments or production changes [53b, 53c].
+- **Two-tower model** — separate encoders for query and item enabling ANN retrieval in ranking systems [17].
+- **Unity Catalog** — Databricks' governance layer for data, models, functions and vector indexes [21].
+- **Unity Gateway** — Databricks' governance gateway for models, coding agents, MCP servers and tools (permissions, guardrails, spend caps, rate limits, payload logging), generally available since 4 August 2026; it succeeds the AI Gateway for serving endpoints, once branded Mosaic AI Gateway [14, 21, 30].
 - **Uplift modeling** — predicting the treatment effect per individual rather than the outcome; who to target, not who will buy [17; Part 6].
-- **Vector stores (Qdrant, Weaviate, Milvus, Pinecone, Vespa, OpenSearch)** — dedicated or search-engine-based vector databases; pgvector is the Postgres alternative [18].
+- **Vector database / vector store** — a store with ANN indexes and metadata filters: dedicated engines (Qdrant, Weaviate, Milvus, Pinecone), search engines with vector support (Vespa, OpenSearch), or pgvector in Postgres [18].
+- **Vector Search (Databricks)** — Databricks' former name for AI Search [21].
+- **Vertex AI** — Google's former name for the Gemini Enterprise Agent Platform, still seen in API names, SDKs and job descriptions [15, 39b].
+- **Vertex AI Search** — Google's former name for Agent Search [15].
 - **vLLM / SGLang (continuous batching, PagedAttention, RadixAttention)** — open-source serving engines; both batch requests continuously as they arrive; vLLM's PagedAttention pages the KV cache to avoid fragmentation, and SGLang's RadixAttention reuses cached prefixes shared across requests [16].
 - **Voice stack (Twilio, LiveKit, Pipecat, Vapi, Retell, Deepgram, ElevenLabs, Cartesia)** — telephony, real-time transport, orchestration frameworks, hosted voice-agent platforms, and STT/TTS vendors [41].
+- **VPC Service Controls** — Google Cloud perimeters preventing data exfiltration [30].
 - **WAPE / MAPE** — weighted and plain mean absolute percentage error; forecasting accuracy is usually reported as one minus WAPE [17.9].
 - **Webhook** — an HTTP callback from a service to your endpoint on an event; verify signatures and make handlers idempotent [28, 49].
+- **Workflow (vs agent)** — predetermined steps with model-filled parts; the agent decides the path [22].
 - **Workload identity** — cloud-native identity for running services instead of long-lived keys [30].

@@ -4,7 +4,7 @@
 
 ## 28b.1 Conversational AI platforms
 
-| Concept | Dialogflow CX / Conversational Agents | Amazon Lex V2 | Copilot Studio | Rasa (CALM) | Watson Assistant / watsonx Orchestrate | Bot Framework / Composer (legacy) | Alexa |
+| Concept | Dialogflow CX (legacy since CX Agent Studio; once branded Conversational Agents) | Amazon Lex V2 | Copilot Studio | Rasa (CALM) | Watson Assistant / watsonx Orchestrate | Bot Framework / Composer (legacy) | Alexa |
 |---|---|---|---|---|---|---|---|
 | The bot | Agent | Bot | Agent (formerly Copilot) | Assistant | Assistant | Bot | Skill (an Alexa app) |
 | User meaning | Intent (training phrases) | Intent (sample utterances) | Topic trigger phrases / generative orchestration | Intent (legacy) → flows via dialogue understanding | Intent / Action trigger | Intent (LUIS/CLU) | Intent |
@@ -16,7 +16,7 @@
 | Knowledge/RAG | Data store | QnAIntent over Bedrock Knowledge Bases | Knowledge sources (SharePoint, websites, Dataverse) | Enterprise search policy | Search skill / conversational search | QnA Maker (legacy) → Language service | — |
 | Reusable module named "skill" | — (reuse via flows/route groups) | — | — | — | Skill = a unit of an assistant (dialog, search, action skills) | Skill = a sub-bot callable from another bot | Skill = the whole voice app |
 | Human handoff | Live agent handoff / Agent Assist | Connect agent transfer | Escalate to Dynamics/Omnichannel | Handoff via connectors | Service desk integrations | Handoff libraries | — |
-| Telephony | Built-in via CES / partners | Amazon Connect | Dynamics 365 Contact Center | Partners | Phone integrations | Direct Line Speech | Alexa devices |
+| Telephony | Built-in via Gemini Enterprise for Customer Experience (formerly CES) / partners | Amazon Connect | Dynamics 365 Contact Center | Partners | Phone integrations | Direct Line Speech | Alexa devices |
 | Versioning/envs | Versions + environments, test cases | Bot versions + aliases | Environments, solutions (ALM) | Git | Versions | Source control | Skill versions |
 
 The word **"skill"** therefore means: a whole voice app (Alexa), a sub-bot (Bot Framework), a component of an assistant (Watson), and — in the agent world — a packaged instruction set with scripts that a model loads on demand (Anthropic Agent Skills, Deep Agents SkillsMiddleware). Dialogflow CX has no "skill"; its reusable units are flows, route groups and playbooks. Ask which meaning before you answer.
@@ -33,11 +33,11 @@ The word **"skill"** therefore means: a whole voice app (Alexa), a sub-bot (Bot 
 | Human-in-the-loop | interrupt() + resume | callbacks / confirmations | hooks | tool approval callbacks | human-input executors | human input flag | permission modes, hooks | interrupts via LangGraph |
 | Memory | Store (long-term), checkpoints (short) | Memory service, Memory Bank | AgentCore Memory, session | sessions | memory in threads/stores | memory | memory files, Skills | MemoryMiddleware (AGENTS.md) |
 | Tracing | LangSmith / OTel | OTel / Cloud Trace | OTel | built-in traces | OTel GenAI | built-in | hooks + OTel | LangSmith / OTel |
-| Hosting | LangSmith Deployment (formerly LangGraph Platform) / self | Agent Engine / Cloud Run | AgentCore Runtime or Harness / Lambda / EKS | self | Foundry Agent Service (hosted agents) | CrewAI AMP / self | self / Claude Managed Agents | self / LangSmith Deployment |
+| Hosting | LangSmith Deployment (formerly LangGraph Platform) / self | Agent Runtime (formerly Agent Engine) / Cloud Run | AgentCore Runtime or Harness / Lambda / EKS | self | Foundry Agent Service (hosted agents) | CrewAI AMP / self | self / Claude Managed Agents | self / LangSmith Deployment |
 
 ## 28b.3 Model APIs
 
-| Concept | Anthropic Messages API | OpenAI (Responses/Chat) | Gemini API / Vertex | Bedrock Converse | Azure AI Foundry Models |
+| Concept | Anthropic Messages API | OpenAI (Responses/Chat) | Gemini API / Gemini Enterprise Agent Platform (formerly Vertex AI) | Bedrock Converse | Microsoft Foundry Models (formerly Azure AI Foundry) |
 |---|---|---|---|---|---|
 | Instruction channel | `system` | `instructions` / developer message | `system_instruction` | `system` | same as the underlying model API |
 | Tool definition | `tools` with JSON schema; `tool_use` / `tool_result` blocks | `tools`/functions; `function_call` outputs | `tools` with function declarations | `toolConfig`/`tools` | per model |
@@ -50,7 +50,7 @@ The word **"skill"** therefore means: a whole voice app (Alexa), a sub-bot (Bot 
 | Batch | Message Batches API | Batch API | Batch prediction | Batch inference | Batch |
 | Server-side tools | web search, web fetch, code execution, computer use, MCP connector | web search, file search, code interpreter, computer use, MCP | Google Search grounding, code execution, URL context | Knowledge Bases, Guardrails | Bing grounding, file search, code interpreter |
 | Files | Files API | Files API | File API | S3 | Files |
-| Agent harness | Claude Agent SDK / Managed Agents | Agents SDK | ADK / Agent Engine | Strands / AgentCore | Agent Framework / Agent Service |
+| Agent harness | Claude Agent SDK / Managed Agents | Agents SDK | ADK / Agent Runtime | Strands / AgentCore | Agent Framework / Agent Service |
 
 ## 28b.4 Protocols
 
@@ -68,7 +68,7 @@ Two neighbouring protocols complete the picture: **AG-UI** (agent ↔ front end:
 
 ## 28b.5 Retrieval and vector stores
 
-| Concept | pgvector | Pinecone | Qdrant | Weaviate | Milvus | Elasticsearch/OpenSearch | Azure AI Search | Vertex AI Search / Vector Search | Databricks Vector Search (AI Search since June 2026) |
+| Concept | pgvector | Pinecone | Qdrant | Weaviate | Milvus | Elasticsearch/OpenSearch | Azure AI Search | Agent Search (formerly Vertex AI Search) / Vector Search | Databricks AI Search (formerly Vector Search; renamed June 2026) |
 |---|---|---|---|---|---|---|---|---|---|
 | Container | table + index | index + namespace | collection | collection (class) | collection + partition | index | index | data store / index + deployed index | index (Delta-synced or direct) |
 | Record | row | vector + metadata | point + payload | object + properties | entity | document | document | document / datapoint | row |
@@ -89,15 +89,15 @@ Two neighbouring protocols complete the picture: **AG-UI** (agent ↔ front end:
 
 ## 28b.7 MLOps objects
 
-| Concept | MLflow | Vertex AI | SageMaker | Azure ML / Foundry | Databricks |
+| Concept | MLflow | Gemini Enterprise Agent Platform | SageMaker | Azure ML / Foundry | Databricks |
 |---|---|---|---|---|---|
 | Experiment / run | experiment, run | experiment, run | experiment, trial | job, run | MLflow experiment |
 | Registered model | registered model, version, alias | Model Registry model + version | Model Package Group / Package | registered model + version | Unity Catalog model |
-| Pipeline | Projects/recipes (or Airflow) | Vertex Pipelines (KFP) | SageMaker Pipelines | Azure ML pipelines | Lakeflow Jobs |
-| Feature store | — | Vertex Feature Store | SageMaker Feature Store | Azure ML feature store | Databricks Feature Store |
+| Pipeline | Projects/recipes (or Airflow) | Agent Platform Pipelines (KFP) | SageMaker Pipelines | Azure ML pipelines | Lakeflow Jobs |
+| Feature store | — | Feature Store | SageMaker Feature Store | Azure ML feature store | Databricks Feature Store |
 | Endpoint | model serving (Databricks) | Endpoint | Endpoint | Online endpoint | Model Serving endpoint |
 | Monitor | — | Model Monitoring | Model Monitor | Data drift monitor | Lakehouse Monitoring |
-| Prompt registry | MLflow Prompt Registry | Vertex prompt management | Bedrock Prompt Management (versioned prompts with variables) | Foundry prompt flow (legacy)/evals | MLflow |
+| Prompt registry | MLflow Prompt Registry | prompt management in Agent Studio | Bedrock Prompt Management (versioned prompts with variables) | Foundry prompt flow (legacy)/evals | MLflow |
 
 ## 28b.8 Data platform units and names
 
@@ -120,14 +120,14 @@ Two neighbouring protocols complete the picture: **AG-UI** (agent ↔ front end:
 | Text-to-speech | Polly | Azure AI Speech | Text-to-Speech |
 | Speech-to-speech model | Nova Sonic | GPT realtime on Foundry | Gemini Live |
 | Document OCR/extraction | Textract | Document Intelligence | Document AI |
-| Vision | Rekognition | Azure AI Vision | Vision AI / Vertex vision models |
+| Vision | Rekognition | Azure AI Vision | Vision AI / Gemini and Model Garden vision models |
 | Translation | Translate | Translator | Translation AI |
 | Content safety | Bedrock Guardrails, Comprehend | Content Safety, Prompt Shields | Model Armor, safety settings |
 | PII detection | Comprehend, Macie | PII detection, Purview | Sensitive Data Protection (DLP) |
-| Search/RAG | Bedrock Knowledge Bases and Bedrock Managed Knowledge Base, OpenSearch (Kendra: maintenance mode from 30 June 2026, closed to new customers from 30 July 2026, AWS recommends the Managed Knowledge Base) | Azure AI Search, Foundry IQ | Search (formerly Vertex AI Search), RAG Engine |
-| Contact center | Connect + Lex + Q | Dynamics 365 Contact Center + Copilot Studio | Customer Engagement Suite (Conversational Agents, Agent Assist) |
+| Search/RAG | Bedrock Knowledge Bases and Bedrock Managed Knowledge Base, OpenSearch (Kendra: maintenance mode from 30 June 2026, closed to new customers from 30 July 2026, AWS recommends the Managed Knowledge Base) | Azure AI Search, Foundry IQ | Agent Search, RAG Engine |
+| Contact center | Connect + Lex + Q | Dynamics 365 Contact Center + Copilot Studio | Gemini Enterprise for Customer Experience, formerly Customer Engagement Suite (CX Agent Studio, legacy Dialogflow CX, Agent Assist) |
 | Enterprise assistant | Amazon Quick (Amazon Q Business is closed to new customers as of 2026; AWS points to Quick) | Microsoft 365 Copilot | Gemini for Workspace / Gemini Enterprise (formerly Agentspace) |
-| Managed agents | Bedrock Agents, AgentCore Runtime and Harness | Foundry Agent Service (hosted agents) | Agent Engine (Gemini Enterprise Agent Platform) |
+| Managed agents | Bedrock Agents, AgentCore Runtime and Harness | Foundry Agent Service (hosted agents) | Agent Runtime (Gemini Enterprise Agent Platform) |
 | Agent identity | IAM roles + AgentCore Identity (OAuth vault, OBO) | Entra Agent ID | Agent Identity |
 | Agent registry / governance | AWS Agent Registry | Agent 365, Foundry Control Plane | Agent Registry |
 | Tool gateway | AgentCore Gateway | API Management AI gateway, Foundry tools | Agent Gateway, Apigee |

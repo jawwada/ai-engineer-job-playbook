@@ -50,7 +50,7 @@ You are grading whether an ANSWER is supported by the CONTEXT.
 QUESTION: ... CONTEXT: ... ANSWER: ...
 ```
 
-**Tooling:** Ragas, DeepEval, promptfoo, Inspect, OpenAI Evals, LangSmith and Langfuse evaluators, Braintrust, Arize Phoenix evals, MLflow LLM evaluate and Databricks Agent Evaluation (built-in judges for groundedness, relevance, safety; custom guidelines), Vertex AI Gen AI evaluation (pointwise/pairwise, computation-based and model-based metrics), Azure AI Foundry evaluation SDK (groundedness, relevance, coherence, fluency, safety evaluators, simulators), Bedrock AgentCore Evaluations (built-in and custom evaluators, DeepEval/AutoEval integrations).
+**Tooling:** Ragas, DeepEval, promptfoo, Inspect, OpenAI Evals, LangSmith and Langfuse evaluators, Braintrust, Arize Phoenix evals, MLflow LLM evaluate and Databricks Agent Evaluation (built-in judges for groundedness, relevance, safety; custom guidelines), the Gen AI evaluation service on Google's Gemini Enterprise Agent Platform, formerly Vertex AI (pointwise/pairwise, computation-based and model-based metrics), the Microsoft Foundry (formerly Azure AI Foundry) evaluation SDK (groundedness, relevance, coherence, fluency, safety evaluators, simulators), Bedrock AgentCore Evaluations (built-in and custom evaluators, DeepEval/AutoEval integrations).
 
 ## 32.5 Evaluating agents
 

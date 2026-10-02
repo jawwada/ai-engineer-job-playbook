@@ -165,7 +165,7 @@ Know: `match` vs `term`, `bool` with `must/should/filter`, analyzers, aggregatio
 
 ## 33.10 Vector-store query APIs
 
-Pinecone (`index.query(vector=..., top_k=10, filter={"tenant": {"$eq": "acme"}}, include_metadata=True)`), Qdrant (`search` with `filter` conditions and `with_payload`), Weaviate (GraphQL-style `Get` with `nearVector`/`hybrid` and `where`), Milvus (`search` with `expr`), Vertex AI Vector Search, Azure AI Search (`vectorQueries` + `search` text + `filter` OData), Databricks `vector_search()` in SQL. The concepts are identical: a vector, a `k`, a metadata filter, and optional hybrid text — chapter 18 explains why the filter semantics matter.
+Pinecone (`index.query(vector=..., top_k=10, filter={"tenant": {"$eq": "acme"}}, include_metadata=True)`), Qdrant (`search` with `filter` conditions and `with_payload`), Weaviate (GraphQL-style `Get` with `nearVector`/`hybrid` and `where`), Milvus (`search` with `expr`), Google's Agent Platform Vector Search (formerly Vertex AI Vector Search), Azure AI Search (`vectorQueries` + `search` text + `filter` OData), Databricks `vector_search()` in SQL. The concepts are identical: a vector, a `k`, a metadata filter, and optional hybrid text — chapter 18 explains why the filter semantics matter.
 
 ## 33.11 MongoDB, Redis, DynamoDB
 

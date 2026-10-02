@@ -23,7 +23,7 @@
 ## 57.2 The six-repo portfolio for AI Engineer / FDE roles
 
 1. **RAG with permissions on a cloud** (lab 1 or 3 or 6): ingestion pipeline, hybrid retrieval, reranking, ACL filters, eval set with recall@k and faithfulness, traces, cost per query, IaC, README with numbers.
-2. **Agent on a managed runtime** (lab 2 or 4): a supervisor with two tools and memory on AgentCore or Agent Engine; trajectory evals; a short demo GIF.
+2. **Agent on a managed runtime** (lab 2 or 4): a supervisor with two tools and memory on AgentCore or Google's Agent Runtime (formerly Agent Engine); trajectory evals; a short demo GIF.
 3. **Evaluation and observability kit** (lab 9): judges calibrated against human labels, promptfoo/DeepEval in GitHub Actions, OpenTelemetry to Langfuse/Phoenix; the harness interviewers ask about.
 4. **A domain project from your background** (voice agent, document pipeline, knowledge graph, ranking model) with real-looking synthetic data and a measurement.
 5. **This playbook** — the job-search agent kit and the book; it demonstrates agent design, skills and documentation.

@@ -17,10 +17,10 @@
 
 | Need | Prompting | RAG | Knowledge graph | Fine-tuning | Agent |
 |---|---|---|---|---|---|
-| Current, specific facts | ✗ | ✔ | ✔ (structured) | ✗ | via tools |
-| Citations and audit | partial | ✔ | ✔ (paths) | ✗ | ✔ if tools log |
-| Relationships, multi-hop | ✗ | partial | ✔ | ✗ | ✔ with graph tools |
-| Consistent format/style | partial | partial | — | ✔ | — |
+| Current, specific facts | no | yes | yes (structured) | no | via tools |
+| Citations and audit | partial | yes | yes (paths) | no | yes, if tools log |
+| Relationships, multi-hop | no | partial | yes | no | yes, with graph tools |
+| Consistent format/style | partial | partial | — | yes | — |
 | Cost per request at scale | high (frontier) | medium | medium | low (small model) | highest |
 | Latency | model-bound | +retrieval | +query | lowest with small model | highest |
 | Time to first version | hours | days | weeks | weeks | days–weeks |

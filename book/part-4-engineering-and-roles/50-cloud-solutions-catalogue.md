@@ -28,7 +28,7 @@
 | Data warehouse / lake | Redshift, Athena, Glue, Lake Formation, SageMaker Lakehouse | Fabric (OneLake, Warehouse), Synapse (legacy direction), Data Factory | BigQuery, Knowledge Catalog (formerly Dataplex Universal Catalog), Dataflow, Dataproc |
 | Streaming analytics | Managed Service for Apache Flink (formerly Kinesis Data Analytics) | Stream Analytics, Fabric RTI | Dataflow |
 | ML platform | SageMaker AI (Unified Studio); note that Model Monitor, Clarify, Ground Truth, Debugger and A2I entered maintenance mode in July 2026 | Azure Machine Learning | the Vertex AI capabilities (pipelines, registry, endpoints, Model Garden), now under the Gemini Enterprise Agent Platform |
-| GenAI platform | Bedrock, Bedrock AgentCore (Bedrock Agents is now "Agents Classic", in maintenance since July 2026) | Microsoft Foundry (renamed from Azure AI Foundry at Ignite, November 2025) and Foundry Agent Service | Gemini Enterprise Agent Platform (announced April 2026 as the evolution of Vertex AI: Agent Development Kit, Agent Engine, Agent Garden, Model Garden) with Gemini Enterprise as the end-user layer |
+| GenAI platform | Bedrock, Bedrock AgentCore (Bedrock Agents is now "Agents Classic", in maintenance since July 2026) | Microsoft Foundry (renamed from Azure AI Foundry at Ignite, November 2025) and Foundry Agent Service | Gemini Enterprise Agent Platform (announced April 2026 as the evolution of Vertex AI: Agent Development Kit, Agent Runtime — formerly Agent Engine — Agent Garden, Model Garden) with Gemini Enterprise as the end-user layer |
 | Security posture | GuardDuty, Security Hub, Inspector, WAF, Shield | Defender for Cloud, Sentinel, WAF | Security Command Center, Cloud Armor |
 | Cost tools | Cost Explorer, Budgets, Data Exports (CUR 2.0, the successor to the legacy Cost and Usage Report) | Cost Management + Billing | Billing reports, budgets, BigQuery export |
 | Edge/IoT | IoT Core, Greengrass (v2; v1 is sunset) | IoT Hub | (IoT via partners / Pub/Sub) |
@@ -65,7 +65,7 @@ Connectors (SharePoint/Drive/S3/Confluence) → ingestion pipeline (parse, chunk
 
 ## 50.4 Reference architecture 3 — Agent platform
 
-API/channels → agent runtime (AgentCore Runtime / Agent Engine / Foundry Agent Service / LangSmith Deployment, formerly LangGraph Platform, on Kubernetes) with sessions and memory → tool gateway (MCP registry, auth, policy, rate limits) over enterprise APIs, databases (read replicas), search and code sandboxes → identity propagation (OBO) → guardrails service (input/tool/output) → human approval queues → observability (OTel GenAI) and evaluation service → FinOps attribution. Templates for supervisor, RAG and workflow agents; a review board for high-risk use cases.
+API/channels → agent runtime (AgentCore Runtime / Agent Runtime / Foundry Agent Service / LangSmith Deployment, formerly LangGraph Platform, on Kubernetes) with sessions and memory → tool gateway (MCP registry, auth, policy, rate limits) over enterprise APIs, databases (read replicas), search and code sandboxes → identity propagation (OBO) → guardrails service (input/tool/output) → human approval queues → observability (OTel GenAI) and evaluation service → FinOps attribution. Templates for supervisor, RAG and workflow agents; a review board for high-risk use cases.
 
 ## 50.5 Reference architecture 4 — ML training and serving platform
 
@@ -73,7 +73,7 @@ Lakehouse features → feature store → training on managed jobs (SageMaker/Gem
 
 ## 50.6 Reference architecture 5 — Contact center with AI agents
 
-Telephony/chat (Connect / Dynamics 365 CC / CES) → bot layer (Lex / Copilot Studio / Conversational Agents) with deterministic flows → LLM agent for open dialogue grounded in knowledge (Bedrock KB / Azure AI Search / Agent Search) and tools over CRM → agent assist for humans → analytics (Contact Lens / Insights) → QA judges on transcripts → compliance recording and retention.
+Telephony/chat (Connect / Dynamics 365 CC / Gemini Enterprise for Customer Experience, formerly CES) → bot layer (Lex / Copilot Studio / CX Agent Studio or legacy Dialogflow CX) with deterministic flows → LLM agent for open dialogue grounded in knowledge (Bedrock KB / Azure AI Search / Agent Search) and tools over CRM → agent assist for humans → analytics (Contact Lens / Insights) → QA judges on transcripts → compliance recording and retention.
 
 ## 50.7 Cross-cloud decision notes
 

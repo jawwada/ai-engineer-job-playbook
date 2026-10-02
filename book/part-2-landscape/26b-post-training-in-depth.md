@@ -52,7 +52,7 @@ trainer = SFTTrainer(model="Qwen/Qwen3-8B", train_dataset=ds["train"], eval_data
 trainer.train(); trainer.save_model("out/sft/adapter")
 ```
 
-Managed equivalents: OpenAI fine-tuning (JSONL upload), Vertex AI supervised tuning for Gemini, Bedrock custom models, Azure AI Foundry fine-tuning, Databricks Mosaic AI fine-tuning — same data shape, no GPUs to manage. Serve the adapter with vLLM (`--enable-lora`) or merge it.
+Managed equivalents: OpenAI fine-tuning (JSONL upload), supervised tuning for Gemini on the Gemini Enterprise Agent Platform (formerly Vertex AI), Bedrock custom models, Microsoft Foundry (formerly Azure AI Foundry) fine-tuning, Databricks Mosaic AI fine-tuning — same data shape, no GPUs to manage. Serve the adapter with vLLM (`--enable-lora`) or merge it.
 
 **Use cases.** Fixed-schema extraction at volume; house-style drafting; tool-call syntax for a custom agent protocol; domain vocabulary (after continued pretraining); a chatbot's persona and refusal style.
 

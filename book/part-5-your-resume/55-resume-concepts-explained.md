@@ -64,9 +64,9 @@
 ## 55.5 Core expertise — Cloud-native delivery
 
 - **AWS Bedrock** — managed model API, Knowledge Bases, Guardrails; **AgentCore** (in the environment line) — agent runtime, gateway, memory, identity, plus (as of 2026) Policy, Evaluations, an Agent Registry and optimization features that propose prompt and tool-description fixes from production traces (chapter 15; verify the current component list before an interview, it changes quarterly).
-- **Vertex AI, ADK, A2A** — Google's ML/GenAI platform; the Agent Development Kit; the agent-to-agent protocol, now governed under the Linux Foundation (chapters 15, 20, 22).
-- **Azure ML, Azure OpenAI, Microsoft Fabric, Azure AI Foundry** — Azure's ML platform, OpenAI models on Azure, the data platform, and the AI app/agent platform (chapters 15, 21).
-- **Databricks** — lakehouse with Unity Catalog, Mosaic AI, MLflow (chapter 21).
+- **Vertex AI, ADK, A2A** — Google's ML/GenAI platform, renamed the Gemini Enterprise Agent Platform in April 2026 (a resume may keep the old name for the period it describes; write both, "Vertex AI / Gemini Enterprise Agent Platform", so keyword filters match either); the Agent Development Kit; the agent-to-agent protocol, now governed under the Linux Foundation's Agentic AI Foundation (chapters 15, 20, 22).
+- **Azure ML, Azure OpenAI, Microsoft Fabric, Azure AI Foundry** — Azure's ML platform, OpenAI models on Azure, the data platform, and the AI app/agent platform, called Microsoft Foundry since November 2025 (chapters 15, 21).
+- **Databricks** — lakehouse with Unity Catalog, Mosaic AI (Model Serving, AI Search — formerly Vector Search — Unity Gateway, Agent Framework), MLflow (chapter 21).
 - **Security-aware design** — identity propagation, least privilege, data-layer permissions, guardrails (chapter 30).
 - **Kubernetes, Docker, Argo CD, CI/CD** — containers, orchestration, GitOps deployment, pipelines (chapter 45).
 - **Scalability, resiliency, latency and cost optimization** — stateless services, queues, autoscaling, caching, routing, FinOps (chapters 31, 45, 50).

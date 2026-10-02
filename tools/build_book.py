@@ -54,9 +54,6 @@ def main():
         for f in chapter_files(d):
             text = open(f, encoding="utf8").read().strip()
             chunks.append("\n\n" + text + "\n")
-    glossary = os.path.join(ROOT, "GLOSSARY.md")
-    if os.path.exists(glossary):
-        chunks.append("\n\n" + open(glossary, encoding="utf8").read().strip() + "\n")
     with open(a.out, "w", encoding="utf8") as fh:
         fh.write("".join(chunks))
     print("wrote", a.out)

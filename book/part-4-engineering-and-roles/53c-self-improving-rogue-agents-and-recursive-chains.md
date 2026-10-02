@@ -251,7 +251,7 @@ Two agent-specific rules: the agent's narrative is not evidence (Replit's rollba
 | Memory facts | agent | automatic, with provenance, tenant and expiry | conflict checks |
 | Policy-like memory | agent | domain owner (compliance where regulated) | review queue |
 | Routing policy | learner | ML owner | off-policy evaluation, change-rate cap |
-| Weights | training pipeline | model-risk validation (SR 11-7's "effective challenge" in US banks) | hidden holdout, safety suite |
+| Weights | training pipeline | model-risk validation ("effective challenge" in US bank guidance: SR 11-7, superseded in April 2026 by SR 26-2, which keeps the principle) | hidden holdout, safety suite |
 | Permissions, hooks, budgets | never the agent | security | none |
 
 The proposer never approves a change or writes the evaluator. Self-changes are versioned, rate-limited, canaried and rolled back automatically, and freezes are enforced by permissions (chapter 45 treats each change as a deploy).
@@ -383,6 +383,7 @@ Voluntarily: the AI Incident Database, and coordinated disclosure with vendors.
 - [Office of the Governor of California: SB 53 signed (Sep 2025)](https://www.gov.ca.gov/2025/09/29/governor-newsom-signs-sb-53-advancing-californias-world-leading-artificial-intelligence-industry/)
 - [California SB 53 bill text (LegiScan)](https://legiscan.com/CA/text/SB53/id/3270002)
 - [FINRA: 2026 Annual Regulatory Oversight Report, GenAI section](https://www.finra.org/rules-guidance/guidance/reports/2026-finra-annual-regulatory-oversight-report/gen-ai)
-- [Federal Reserve: SR 11-7, Guidance on Model Risk Management (2011)](https://www.federalreserve.gov/supervisionreg/srletters/sr1107.htm)
+- [Federal Reserve: SR 11-7, Guidance on Model Risk Management (2011; superseded 17 April 2026)](https://www.federalreserve.gov/supervisionreg/srletters/sr1107.htm)
+- [Federal Reserve: SR 26-2, Revised Guidance on Model Risk Management (April 2026)](https://www.federalreserve.gov/supervisionreg/srletters/SR2602.htm)
 - [SEC: Knight Capital charged over market access rule violations (Oct 2013)](https://www.sec.gov/news/press-release/2013-222)
 - [OWASP: Top 10 for Agentic Applications for 2026 (Dec 2025)](https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/)

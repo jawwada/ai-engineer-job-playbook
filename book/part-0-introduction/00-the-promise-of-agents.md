@@ -138,11 +138,11 @@ The book is meant to be used, not read cover to cover. Part 1 is a working syste
 |---|---|---|
 | 1. The agent | 1–13 | The Claude Code job-search agent: how it is built, how to run it, how to adapt it to your own search. It doubles as your first portfolio project |
 | 2. The landscape | 14–34, plus 20b (MCP), 22b (self-improving and deep agents), 24b (agentic RAG and reranking), 26b (post-training), 28b (cross-solution Rosetta stones), 32b (optimizing LLM judges) | The map interviews assume: models, clouds, frameworks, patterns, retrieval, fine-tuning, observability, security, cost and evaluation |
-| 3. Interviews | 35–43, plus 39b and 39c | Reading a job description, use-case thinking, preparation, STAR stories, technical topics, system design, conversational AI, prediction markets and a 150-question bank |
+| 3. Interviews | 35–43, plus 39b and 39c | Reading a job description, use-case thinking, preparation, STAR stories, technical topics, system design, conversational AI, prediction markets and a 173-question bank |
 | 4. Engineering and roles | 44–54, plus 52a (harnesses), 53b (enterprise guardrails), 53c (self-improving agents, rogue agents and recursive chains), 54b (industrial challenges) | The roles map and the disciplines around agents: platform, MLOps and LLMOps, FinOps, data engineering, architecture, coding agents, adversarial evaluation, recipes |
 | 5. Your resume | 55–57 | Every concept on the reference resume explained, a glossary, and the GitHub portfolio |
 | 6. Reference guides | study library | Long-form, code-heavy guides, each paired with a chapter |
-| 7. Building and earning | 58–61 | Startup ideas, income playbooks with Claude, trends and tools, and successful startups in the resume's domains |
+| 7. Building and earning | 58–62 | Startup ideas, income playbooks with Claude, trends and tools, successful startups in the resume's domains, and the open research problems builders can work on |
 
 **Three reading paths.**
 
@@ -150,7 +150,7 @@ The book is meant to be used, not read cover to cover. Part 1 is a working syste
 
 *The interview in two weeks.* Days 1–2: chapters 35, 36 and 37 for the process and the target. Days 3–7: chapters 14, 22, 24, 30 and 32, the five behind most technical questions, plus 20b and 31 if the role touches tools or cost. Days 8–10: chapters 39 and 40 out loud, plus 39b–39c, 41 or 42 if the job matches them. Days 11–13: chapters 38 and 43, timed. Day 14: rest, then reread your own resume with chapter 55 beside it.
 
-*The builder or founder.* Start with sections 0.4 and 0.5, then chapters 52, 52a and 54 for working with agents; 20, 20b, 22, 22b and 23 for building them; 31, 32 and 32b for whether they pay and whether they work; 30, 53, 53b and 53c for how they fail; and Part 7 (58–61) for ideas, income and the companies to learn from.
+*The builder or founder.* Start with sections 0.4 and 0.5, then chapters 52, 52a and 54 for working with agents; 20, 20b, 22, 22b and 23 for building them; 31, 32 and 32b for whether they pay and whether they work; 30, 53, 53b and 53c for how they fail; and Part 7 (58–62) for ideas, income, the companies to learn from and the problems still open.
 
 ## Sources
 

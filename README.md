@@ -50,14 +50,14 @@ Requirements: a Claude Pro, Max, Team or Enterprise plan (signed in with `/login
 **Part 2 — The AI engineering landscape**
 
 - [14. The AI engineering landscape: one map of everything](book/part-2-landscape/14-the-landscape-map.md)
-- [15. Cloud AI platforms: AWS Bedrock, Azure AI Foundry, Google Vertex AI, and the Anthropic platform](book/part-2-landscape/15-cloud-ai-platforms.md)
+- [15. Cloud AI platforms: AWS Bedrock and AgentCore, Microsoft Foundry, Google's Gemini Enterprise Agent Platform, and the Anthropic platform](book/part-2-landscape/15-cloud-ai-platforms.md)
 - [16. The model landscape: frontier, open-weight, reasoning, small — and what tokens cost](book/part-2-landscape/16-the-model-landscape.md)
 - [17. Beyond LLMs: the model families you will be asked about](book/part-2-landscape/17-beyond-llms-model-families.md)
 - [18. Embeddings and vector search](book/part-2-landscape/18-embeddings-and-vector-search.md)
 - [19. Multimodality: what it is, how it works, when to use it](book/part-2-landscape/19-multimodality.md)
 - [20. Agent frameworks: LangGraph, Claude Agent SDK, OpenAI Agents SDK, Google ADK, Strands, Microsoft Agent Framework, CrewAI, PydanticAI, LlamaIndex and friends](book/part-2-landscape/20-agent-frameworks.md)
 - [20b. MCP in depth: what it is, why teams add it, real server examples, building and securing servers](book/part-2-landscape/20b-mcp-in-depth.md)
-- [21. Databricks and the data-platform side: Unity Catalog, Mosaic AI, Agent Bricks, Vector Search, MLflow — plus Snowflake, Fabric and BigQuery](book/part-2-landscape/21-databricks-and-data-platforms.md)
+- [21. Databricks and the data-platform side: Unity Catalog, Mosaic AI, Agent Bricks, AI Search (formerly Vector Search), MLflow — plus Snowflake, Fabric and BigQuery](book/part-2-landscape/21-databricks-and-data-platforms.md)
 - [22. Agentic design patterns](book/part-2-landscape/22-agentic-design-patterns.md)
 - [22b. Self-improving agentic design, and the "deep agent" harness (LangChain Deep Agents, Claude Code and relatives)](book/part-2-landscape/22b-self-improving-agents-and-deep-agents.md)
 - [23. Modern agentic AI applications: what they do and how they are built](book/part-2-landscape/23-modern-agentic-applications.md)
@@ -67,7 +67,7 @@ Requirements: a Claude Pro, Max, Team or Enterprise plan (signed in with `/login
 - [26. Fine-tuning: SFT, LoRA/QLoRA, preference optimization, distillation — and when not to](book/part-2-landscape/26-fine-tuning.md)
 - [26b. Post-training in depth: SFT, RLHF, DPO/GRPO, distillation and judges — with concrete setups](book/part-2-landscape/26b-post-training-in-depth.md)
 - [27. When to use what: prompting, RAG, knowledge graphs, fine-tuning, agents, multimodality — a decision guide with scenarios](book/part-2-landscape/27-when-to-use-what.md)
-- [28. Conversational AI platforms: Dialogflow CX, Amazon Lex and Connect, Microsoft Copilot Studio, Rasa and the voice stacks](book/part-2-landscape/28-conversational-ai-platforms.md)
+- [28. Conversational AI platforms: Google CX Agent Studio and Dialogflow CX, Amazon Lex and Connect, Microsoft Copilot Studio, Rasa and the voice stacks](book/part-2-landscape/28-conversational-ai-platforms.md)
 - [28b. Cross-solution Rosetta stones: the same concept under every vendor's name](book/part-2-landscape/28b-cross-solution-rosetta-stones.md)
 - [29. Observability and OpenTelemetry for LLM systems](book/part-2-landscape/29-observability-and-opentelemetry.md)
 - [30. Security, IAM and guardrails for LLM systems and agents](book/part-2-landscape/30-security-iam-and-guardrails.md)
@@ -86,10 +86,10 @@ Requirements: a Claude Pro, Max, Team or Enterprise plan (signed in with `/login
 - [39. Technical interview topics with model answers](book/part-3-interviews/39-technical-interview-topics.md)
 - [39b. The Applied AI / FDE role-related-knowledge interview (Google Cloud flavor): the five topics in depth](book/part-3-interviews/39b-applied-ai-fde-rrk-five-topics-in-depth.md)
 - [39c. The role-related-knowledge interview, part two: Dialogflow CX background, the drive-through and prediction-market use cases, the Applied AI team context, and the communication playbook](book/part-3-interviews/39c-conversational-ai-background-and-use-cases-for-the-rrk.md)
-- [40. AI system design: how to run the whiteboard, and six worked exercises](book/part-3-interviews/40-ai-system-design-exercises.md)
+- [40. AI system design: how to run the whiteboard, and eight worked exercises](book/part-3-interviews/40-ai-system-design-exercises.md)
 - [41. Conversational AI in depth: Dialogflow CX, and designing a drive-through voice agent](book/part-3-interviews/41-conversational-ai-and-voice-agents.md)
 - [42. Applied AI at prediction markets (Kalshi, Polymarket and peers): what the work is and how to interview for it](book/part-3-interviews/42-prediction-markets-applied-ai.md)
-- [43. Question bank: 150 questions with short answers](book/part-3-interviews/43-question-bank.md)
+- [43. Question bank: 173 questions with short answers](book/part-3-interviews/43-question-bank.md)
 
 **Part 4 — Engineering, roles and operating agents**
 
@@ -125,6 +125,7 @@ Requirements: a Claude Pro, Max, Team or Enterprise plan (signed in with `/login
 - [59. How to make money with Claude: income playbooks for AI engineers](book/part-7-building-and-earning/59-how-to-make-money-with-claude.md)
 - [60. Modern trends, skill libraries, tools and references: an intuitive map for 2026](book/part-7-building-and-earning/60-trends-skill-libraries-tools-and-references.md)
 - [61. Successful startups in the domains on the resume: what they do and how they do it](book/part-7-building-and-earning/61-successful-startups-in-your-domains.md)
+- [62. Research directions and innovation challenges: what is unsolved in agentic AI, and where builders can win](book/part-7-building-and-earning/62-research-directions-and-innovation-challenges.md)
 
 **Glossary:** [GLOSSARY.md](GLOSSARY.md)
 

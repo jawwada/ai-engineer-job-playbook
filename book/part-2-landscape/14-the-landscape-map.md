@@ -31,7 +31,7 @@ flowchart LR
 
 ### Row 2 — Serving and inference infrastructure
 
-- **Managed APIs:** the model vendors directly; the clouds (Bedrock, Foundry, Vertex AI); aggregators and routers (OpenRouter, Together, Fireworks, Groq, Cerebras, SambaNova, Baseten, Replicate) that serve open-weight models fast and cheap.
+- **Managed APIs:** the model vendors directly; the clouds (Bedrock, Microsoft Foundry, Google's Gemini Enterprise Agent Platform — formerly Vertex AI); aggregators and routers (OpenRouter, Together, Fireworks, Groq, Cerebras, SambaNova, Baseten, Replicate) that serve open-weight models fast and cheap.
 - **Self-hosted engines:** vLLM (the default; PagedAttention, continuous batching, prefix caching), SGLang (RadixAttention, structured generation), TensorRT-LLM (NVIDIA-optimized), Hugging Face TGI, llama.cpp/Ollama (CPU/consumer GPU, GGUF), MLX (Apple silicon), LMDeploy, Ray Serve/KServe for orchestration.
 - **Quantization and formats:** FP8, INT8, INT4 (GPTQ, AWQ), GGUF, NF4 for QLoRA; speculative decoding; KV-cache offload. See chapter 16.
 - **Hardware:** NVIDIA H100/H200/B200 and the GB200 NVL72 racks; AMD MI300X/MI355X; Google TPU v5p/v6e (Trillium)/v7 (Ironwood); AWS Trainium 2/3 and Inferentia; Apple silicon for local.
@@ -39,8 +39,8 @@ flowchart LR
 ### Row 3 — Application and agent logic (chapters 20, 22)
 
 - **Agent frameworks:** LangGraph (and LangChain 1.0), Claude Agent SDK, OpenAI Agents SDK, Google ADK, AWS Strands Agents, Microsoft Agent Framework (Semantic Kernel + AutoGen), CrewAI, PydanticAI, LlamaIndex (Workflows), Haystack, DSPy (programmatic prompt optimization), Mastra and Vercel AI SDK (TypeScript), smolagents (Hugging Face).
-- **Managed agent runtimes:** Bedrock AgentCore (Runtime and, since July 2026, the no-code Harness), Google Agent Engine (now the runtime inside the Gemini Enterprise Agent Platform, the April 2026 successor to Vertex AI Agent Builder), Microsoft Foundry Agent Service (hosted agents), Claude Managed Agents (public beta April 2026), LangSmith Deployment (formerly LangGraph Platform), Modal/Temporal for durable execution. The 2026 pattern is the **managed harness**: you supply model, instructions, tools and skills; the vendor supplies the loop, sandbox, memory and traces.
-- **Low-code / business-user builders:** Microsoft Copilot Studio, Google Gemini Enterprise (formerly Agentspace) and Conversational Agents, Salesforce Agentforce, ServiceNow AI Agents, n8n, Zapier Agents, Make, Dify, Flowise, Langflow.
+- **Managed agent runtimes:** Bedrock AgentCore (Runtime and, since July 2026, the no-code Harness), Google's Agent Runtime (formerly Agent Engine) on the Gemini Enterprise Agent Platform, Microsoft Foundry Agent Service (hosted agents), Claude Managed Agents (public beta April 2026), LangSmith Deployment (formerly LangGraph Platform), Modal/Temporal for durable execution. The 2026 pattern is the **managed harness**: you supply model, instructions, tools and skills; the vendor supplies the loop, sandbox, memory and traces.
+- **Low-code / business-user builders:** Microsoft Copilot Studio, Google Gemini Enterprise (formerly Agentspace) and CX Agent Studio, Salesforce Agentforce, ServiceNow AI Agents, n8n, Zapier Agents, Make, Dify, Flowise, Langflow.
 - **Coding agents (also products you compete with and borrow from):** Claude Code, OpenAI Codex, Cursor, GitHub Copilot agent, Devin, Gemini CLI, Aider, Cline, Windsurf.
 
 ### Row 4 — Tools, protocols, and integration
@@ -53,18 +53,18 @@ flowchart LR
 
 ### Row 5 — Retrieval (chapters 18, 24, 25)
 
-- **Vector databases:** pgvector (Postgres; the pragmatic default), Pinecone (managed), Weaviate, Qdrant, Milvus/Zilliz, Chroma (dev), LanceDB (embedded, columnar), Vespa (search + vectors at scale), Elasticsearch/OpenSearch (hybrid), Redis, MongoDB Atlas Vector Search, Azure AI Search, Vertex AI Vector Search, Databricks Vector Search, Turbopuffer.
+- **Vector databases:** pgvector (Postgres; the pragmatic default), Pinecone (managed), Weaviate, Qdrant, Milvus/Zilliz, Chroma (dev), LanceDB (embedded, columnar), Vespa (search + vectors at scale), Elasticsearch/OpenSearch (hybrid), Redis, MongoDB Atlas Vector Search, Azure AI Search, Google's Agent Platform Vector Search, Databricks AI Search (formerly Vector Search), Turbopuffer.
 - **Keyword/lexical:** BM25 in Elasticsearch/OpenSearch, Vespa, Postgres full-text, Typesense, Meilisearch; sparse neural (SPLADE).
 - **Graph databases and knowledge graphs:** Neo4j (Cypher/GQL), Amazon Neptune (Gremlin, openCypher, SPARQL), TigerGraph, Memgraph, FalkorDB, Kùzu, ArangoDB; RDF triple stores (GraphDB, Stardog, Virtuoso, Blazegraph); GraphRAG frameworks (Microsoft GraphRAG, LightRAG, Neo4j GraphRAG, LlamaIndex PropertyGraphIndex).
 - **Document parsing:** Docling, Unstructured, LlamaParse, Azure Document Intelligence, AWS Textract, Google Document AI, Marker, PyMuPDF; OCR with Tesseract or vision models.
-- **Managed RAG:** Bedrock Knowledge Bases and AgentCore's Managed Knowledge Base (GA July 2026; six connectors, hybrid search, queried through the gateway), Azure AI Search + Foundry IQ, Google Search and RAG Engine (the former Vertex AI Search, inside the Gemini Enterprise Agent Platform), Databricks Agent Bricks Knowledge Assistant, OpenAI file search, Claude Files API.
+- **Managed RAG:** Bedrock Knowledge Bases and AgentCore's Managed Knowledge Base (GA July 2026; six connectors, hybrid search, queried through the gateway), Azure AI Search + Foundry IQ, Google Agent Search (formerly Vertex AI Search) and RAG Engine, Databricks Agent Bricks Knowledge Assistant, OpenAI file search, Claude Files API.
 
 ### Row 6 — Data platform (chapter 21)
 
 - **Lakehouse and warehouse:** Databricks (Delta Lake, Unity Catalog, Mosaic AI), Snowflake (Cortex AI, Snowpark), Google BigQuery (BigQuery ML, vector search), Microsoft Fabric (OneLake), AWS (Redshift, Glue, Athena, S3 Tables/Iceberg), open table formats (Delta, Iceberg, Hudi).
 - **Pipelines and orchestration:** Airflow, Dagster, Prefect, dbt, Lakeflow, Azure Data Factory, Spark (batch), Flink and Kafka (streaming), Fivetran/Airbyte (ingestion).
 - **Operational stores:** Postgres (and Lakebase, Neon, Supabase), MySQL, DynamoDB, Cosmos DB, Spanner, MongoDB, Redis; feature stores (Feast, Tecton, Databricks Feature Store).
-- **Experiment tracking and model registry:** MLflow, Weights & Biases, Comet, Vertex AI Experiments, SageMaker Experiments, Neptune.ai.
+- **Experiment tracking and model registry:** MLflow, Weights & Biases, Comet, experiment tracking in the Gemini Enterprise Agent Platform, SageMaker Experiments, Neptune.ai.
 
 ### Row 7 — Memory and state
 
@@ -74,15 +74,15 @@ flowchart LR
 
 ### Row 8 — Gateway, guardrails, identity and security (chapter 30)
 
-- **LLM gateways:** LiteLLM, Portkey, Kong AI Gateway, Cloudflare AI Gateway, Databricks Unity AI Gateway (formerly Mosaic AI Gateway; GA August 2026, also governs MCP servers and coding agents), Azure API Management AI gateway policies, AgentCore Gateway for tools, AWS Bedrock cross-region inference profiles; unify keys, rate limits, retries, fallbacks, caching, cost attribution and hard spend caps.
+- **LLM gateways:** LiteLLM, Portkey, Kong AI Gateway, Cloudflare AI Gateway, Databricks Unity Gateway (successor to the AI Gateway once branded Mosaic AI Gateway; GA 4 August 2026, also governs MCP servers and coding agents), Azure API Management AI gateway policies, AgentCore Gateway for tools, AWS Bedrock cross-region inference profiles; unify keys, rate limits, retries, fallbacks, caching, cost attribution and hard spend caps.
 - **Guardrails:** Bedrock Guardrails, Azure AI Content Safety and Prompt Shields, Google Model Armor, NVIDIA NeMo Guardrails, Guardrails AI, Lakera Guard, Llama Guard / Llama Prompt Guard, Meta's Purple Llama tooling, OpenAI moderation.
 - **Identity and authorization for agents:** OAuth 2.1 for MCP, on-behalf-of token exchange (AgentCore Identity, Entra agent ID, Google Agent Identity), SPIFFE/workload identity, fine-grained authorization engines (OpenFGA, Cedar via Amazon Verified Permissions, Oso, Permit.io), row-level security in the database, Unity Catalog permissions.
-- **Secrets and data protection:** Vault, AWS Secrets Manager, Key Vault; PII detection (Presidio, Comprehend, DLP API); prompt-injection defenses; OWASP Top 10 for LLM Applications (2026 edition) and Top 10 for Agentic Applications; the MITRE ATLAS threat matrix.
+- **Secrets and data protection:** Vault, AWS Secrets Manager, Key Vault; PII detection (Presidio, Comprehend, DLP API); prompt-injection defenses; OWASP Top 10 for LLM Applications (2026 edition, posted August 2026) and Top 10 for Agentic Applications (December 2025); the MITRE ATLAS threat matrix.
 
 ### Row 9 — Observability and evaluation (chapters 29, 32)
 
-- **Tracing/observability:** OpenTelemetry (GenAI semantic conventions), LangSmith, Langfuse (open source), Arize Phoenix and Arize AX, Braintrust, Weights & Biases Weave, Datadog LLM Observability, New Relic AI Monitoring, Honeycomb, Dash0, Helicone, Traceloop/OpenLLMetry, MLflow Tracing, AgentCore Observability, Vertex AI Agent Engine tracing, Azure Monitor/Application Insights.
-- **Evaluation:** Ragas, DeepEval, promptfoo, Inspect (UK AISI), OpenAI Evals, LangSmith evaluators, Braintrust, Vertex AI Gen AI evaluation, Foundry evaluation SDK, AgentCore Evaluations, MLflow LLM evaluate, Databricks Agent Evaluation and Mosaic AI judges; benchmarks (MMLU-Pro, GPQA Diamond, HLE, SWE-bench Verified, Terminal-Bench, τ-bench, BrowseComp, ARC-AGI-2/3, LMArena).
+- **Tracing/observability:** OpenTelemetry (GenAI semantic conventions), LangSmith, Langfuse (open source), Arize Phoenix and Arize AX, Braintrust, Weights & Biases Weave, Datadog LLM Observability, New Relic AI Monitoring, Honeycomb, Dash0, Helicone, Traceloop/OpenLLMetry, MLflow Tracing, AgentCore Observability, Google Agent Runtime tracing (Cloud Trace), Azure Monitor/Application Insights.
+- **Evaluation:** Ragas, DeepEval, promptfoo, Inspect (UK AISI), OpenAI Evals, LangSmith evaluators, Braintrust, the Gen AI evaluation service on the Gemini Enterprise Agent Platform, Foundry evaluation SDK, AgentCore Evaluations, MLflow LLM evaluate, Databricks Agent Evaluation and Mosaic AI judges; benchmarks (MMLU-Pro, GPQA Diamond, HLE, SWE-bench Verified, Terminal-Bench, τ-bench, BrowseComp, ARC-AGI-2/3, LMArena).
 - **Red teaming:** PyRIT (Microsoft), garak (NVIDIA), promptfoo red team, Giskard, DeepTeam.
 
 ### Row 10 — Workflow, scheduling and ops
@@ -93,7 +93,7 @@ flowchart LR
 ### Row 11 — Users and channels (chapter 28)
 
 - **Chat and app UIs:** Streamlit, Gradio, Chainlit, Vercel AI SDK UI, assistant-ui, Open WebUI; Slack/Teams bots; embedded widgets.
-- **Contact center and voice:** Google Conversational Agents (Dialogflow CX) and Agent Assist, Amazon Connect + Lex + Nova Sonic, Microsoft Dynamics 365 Contact Center + Copilot Studio, Genesys, NICE, Twilio (Voice, ConversationRelay), LiveKit Agents, Pipecat, Vapi, Retell, Bland, ElevenLabs Conversational AI, Deepgram Voice Agent API, OpenAI Realtime API, Gemini Live API.
+- **Contact center and voice:** Google's Gemini Enterprise for Customer Experience (formerly Customer Engagement Suite: CX Agent Studio, legacy Dialogflow CX, Agent Assist), Amazon Connect + Lex + Nova Sonic, Microsoft Dynamics 365 Contact Center + Copilot Studio, Genesys, NICE, Twilio (Voice, ConversationRelay), LiveKit Agents, Pipecat, Vapi, Retell, Bland, ElevenLabs Conversational AI, Deepgram Voice Agent API, OpenAI Realtime API, Gemini Live API.
 - **Enterprise assistants:** Microsoft 365 Copilot, Google Gemini for Workspace and Gemini Enterprise (formerly Agentspace), Amazon Quick (the successor AWS recommends now that Amazon Q Business is closed to new customers), Glean, Notion AI, Salesforce Agentforce, ServiceNow Now Assist, Claude Cowork.
 
 ## 14.3 The five questions that organize any tool conversation
@@ -123,7 +123,7 @@ Question 3 deserves numbers, because "lock-in" is what the architect across the 
 
 ## 14.4 What changed in the last two years (so you sound current)
 
-- Agents moved from demos to infrastructure: every cloud shipped a managed runtime plus identity, gateway, memory and policy (AgentCore, Agent Engine, Foundry Agent Service), and frameworks converged on graphs of steps with explicit state (LangGraph, ADK, Agent Framework). In 2026 the clouds went one step further and shipped **managed harnesses** (AgentCore Harness, Foundry hosted agents, Claude Managed Agents): the agent loop itself became a rentable service, and the platforms renamed around it (Vertex AI became the Gemini Enterprise Agent Platform; Azure AI Foundry became Microsoft Foundry).
+- Agents moved from demos to infrastructure: every cloud shipped a managed runtime plus identity, gateway, memory and policy (AgentCore, Google's Agent Runtime, Foundry Agent Service), and frameworks converged on graphs of steps with explicit state (LangGraph, ADK, Agent Framework). In 2026 the clouds went one step further and shipped **managed harnesses** (AgentCore Harness, Foundry hosted agents, Claude Managed Agents): the agent loop itself became a rentable service, and the platforms renamed around it (Vertex AI became the Gemini Enterprise Agent Platform; Azure AI Foundry became Microsoft Foundry).
 - **MCP became the universal tool interface** and A2A the agent-to-agent interface; "integration" now means writing or configuring MCP servers. Both protocols now live in the Agentic AI Foundation under the Linux Foundation, and MCP's 2026-07-28 revision made the protocol stateless — a sign that it is being engineered for gateways and scale rather than for demos.
 - Reasoning models with adjustable "thinking" budgets became default for hard tasks; cost control shifted to routing between tiers (Haiku/Flash/mini for the easy 80%, Opus/Pro for the hard 20%).
 - Open-weight models closed most of the gap for many workloads (DeepSeek V4, Qwen 3.8, GLM-5, Kimi K3, Llama 4, gpt-oss), so "self-host for privacy" became a serious option rather than a compromise.

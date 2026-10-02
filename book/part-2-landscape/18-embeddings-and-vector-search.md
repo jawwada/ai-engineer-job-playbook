@@ -58,7 +58,7 @@ Filtering ("only documents of tenant X updated this year") is where ANN indexes 
 | Elasticsearch / OpenSearch | you already run it; hybrid search, aggregations, security | vector performance tuning; licensing/forks |
 | Vespa | search engineering at scale, ranking expressions, late interaction | learning curve |
 | LanceDB / Chroma | local, embedded, prototyping, notebooks | not multi-node |
-| Cloud-native (Vertex AI Vector Search, Azure AI Search, Bedrock KB stores, Amazon S3 Vectors, Databricks Vector Search) | staying inside one cloud and its IAM; S3 Vectors and Databricks' storage-optimized endpoints for large, cold, cheap indexes | portability; cold stores have higher query latency |
+| Cloud-native (Google's Agent Platform Vector Search, formerly Vertex AI Vector Search; Azure AI Search; Bedrock KB stores; Amazon S3 Vectors; Databricks AI Search, formerly Vector Search) | staying inside one cloud and its IAM; S3 Vectors and Databricks' storage-optimized endpoints for large, cold, cheap indexes | portability; cold stores have higher query latency |
 
 Default advice: start with pgvector or your cloud's managed search; move to a dedicated store when you measure a need (QPS, corpus size, filtered-search latency), not before. Rough thresholds: pgvector is comfortable to ~10–50M vectors and a few hundred QPS on one well-sized instance; above that, or with heavy filtered search across many tenants, a dedicated engine earns its operational cost.
 

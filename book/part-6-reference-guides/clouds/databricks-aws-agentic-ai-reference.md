@@ -435,6 +435,7 @@ Financial services firms operate under heavy regulatory scrutiny. The JD's empha
 - **Audit trails**: Every model training run, deployment, and prediction is logged and immutable.
 - **Human-in-the-loop**: For high-stakes decisions (investment recommendations, risk assessments), require human review before acting on model output.
 - **Model risk management (SR 11-7)**: Federal Reserve guidance requiring financial institutions to validate, monitor, and govern models — including AI/ML models.
+  - *Update (October 2026):* SR 11-7 was superseded on 17 April 2026 by SR 26-2, revised interagency guidance that places generative and agentic AI outside its scope; see chapter 54b.
 
 ---
 

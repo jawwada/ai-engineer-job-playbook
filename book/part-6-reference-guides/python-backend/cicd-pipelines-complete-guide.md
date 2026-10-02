@@ -662,9 +662,9 @@ GitHub generates a short-lived token; AWS validates it via IAM OIDC provider. No
 **Environments** with protection rules:
 ```
 Settings → Environments → production
-  ✓ Required reviewers: [lead-engineer, devops]
-  ✓ Wait timer: 5 minutes
-  ✓ Deployment branches: only "main"
+  [x] Required reviewers: [lead-engineer, devops]
+  [x] Wait timer: 5 minutes
+  [x] Deployment branches: only "main"
 ```
 
 **Matrix builds** (test across versions):
@@ -1327,11 +1327,11 @@ Pin to dated model versions. A model upgrade is a deliberate decision with eval 
 
 ```
 Settings → Branches → main
-  ✓ Require pull request reviews (1+ approver)
-  ✓ Require status checks to pass (lint, test, security)
-  ✓ Require branches to be up to date before merging
-  ✓ Require signed commits
-  ✓ Do not allow bypassing the above settings
+  [x] Require pull request reviews (1+ approver)
+  [x] Require status checks to pass (lint, test, security)
+  [x] Require branches to be up to date before merging
+  [x] Require signed commits
+  [x] Do not allow bypassing the above settings
 ```
 
 ### 9.4 Least-Privilege IAM for CI/CD

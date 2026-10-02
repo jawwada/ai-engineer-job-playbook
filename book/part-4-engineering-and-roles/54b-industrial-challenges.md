@@ -103,7 +103,7 @@ The pattern that scales is hub and spoke: a central platform (gateway, guardrail
 
 **13. Vendor lock-in and market churn.**
 - *Symptoms:* a product is renamed twice during the project; an API you built on is sunset; a supplier is acquired or fails.
-- *Facts:* between late 2024 and 2026 Azure AI Studio became Azure AI Foundry and then Microsoft Foundry, Google Agentspace became Gemini Enterprise and Vertex AI evolved into the Gemini Enterprise Agent Platform (chapter 14 tracks names); OpenAI's Assistants API shut down on 26 August 2026; Lakera, a prompt-injection specialist, is now part of Check Point; Builder.ai, valued at about $1.5 billion, went into insolvency in May 2025 (54b.4).
+- *Facts:* between late 2024 and 2026 Azure AI Studio became Azure AI Foundry and then Microsoft Foundry, Google Agentspace became Gemini Enterprise and Vertex AI evolved into the Gemini Enterprise Agent Platform (chapter 15 and the naming table in 39b.0 track the names); OpenAI's Assistants API shut down on 26 August 2026; Lakera, a prompt-injection specialist, is now part of Check Point; Builder.ai, valued at about $1.5 billion, went into insolvency in May 2025 (54b.4).
 - *Mitigations:* the model behind a thin interface with per-model prompt variants and an eval suite that qualifies a replacement in days; own your prompts, traces and eval data; open protocols at boundaries (MCP, OpenTelemetry, A2A); contracts with data export, notice periods and transition help; a dependency register with renewal and retirement dates.
 
 ## 54b.3 Industry by industry

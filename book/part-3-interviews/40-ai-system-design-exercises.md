@@ -1,4 +1,4 @@
-# 40. AI system design: how to run the whiteboard, and six worked exercises
+# 40. AI system design: how to run the whiteboard, and eight worked exercises
 
 > **The idea:** system-design rounds for AI roles test whether you can turn a vague product ask into an architecture with trade-offs, numbers and a plan — in 45 minutes, while talking. The method is fixed; the content changes. Go deeper: Part 6 → *Agentic RAG system design walkthrough* and *AI/backend engineer deep dive* §12.
 
@@ -105,7 +105,7 @@ Chapter 41's additions carry the operation schema, the latency table and the cos
 
 *Ask:* a platform team must let 30 product teams ship agents safely within six months.
 
-*Design.* Paved road: an agent runtime (Amazon Bedrock AgentCore; Agent Runtime on the Gemini Enterprise Agent Platform, formerly Vertex AI Agent Engine; Foundry Agent Service in Microsoft Foundry, formerly Azure AI Foundry; or LangGraph Platform), a gateway with identity, rate limits and cost attribution, an MCP tool registry with governance, a retrieval service with ACLs, an eval service (datasets, judges, CI integration), tracing with OTel GenAI conventions, guardrails as a shared service, templates (supervisor, RAG, workflow), and a review board for high-risk use cases. Deep dive: multi-tenancy and cost showback. Metrics: time to first production agent per team, incidents, cost per task, eval coverage.
+*Design.* Paved road: an agent runtime (Amazon Bedrock AgentCore; Agent Runtime on the Gemini Enterprise Agent Platform, formerly Vertex AI Agent Engine; Foundry Agent Service in Microsoft Foundry, formerly Azure AI Foundry; or LangSmith Deployment, formerly LangGraph Platform), a gateway with identity, rate limits and cost attribution, an MCP tool registry with governance, a retrieval service with ACLs, an eval service (datasets, judges, CI integration), tracing with OTel GenAI conventions, guardrails as a shared service, templates (supervisor, RAG, workflow), and a review board for high-risk use cases. Deep dive: multi-tenancy and cost showback. Metrics: time to first production agent per team, incidents, cost per task, eval coverage.
 
 ### Critic's additions: the paved road on Google Cloud, and four follow-ups
 
