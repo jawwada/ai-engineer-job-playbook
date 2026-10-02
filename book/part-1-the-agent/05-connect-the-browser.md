@@ -1,0 +1,20 @@
+# 5. Connect the browser: Claude in Chrome for LinkedIn, Dice and Indeed
+
+The agent does not scrape job boards or call hidden APIs. It drives your own Chrome through the Claude in Chrome extension: it opens tabs in a tab group for the session, reads pages, clicks, types and uploads files, all visibly, using the logins you already have. That is what makes it work on sites with no public API, and it is also why you stay in control — you can watch the window and take over at any point.
+
+**Set it up (once):**
+
+1. Install the Claude in Chrome extension (version 1.0.36 or later) and sign it in with the same claude.ai account you used for `/login`.
+2. In Claude Code, run `/chrome`. The panel should read *Status: Enabled* and *Extension: Installed*. Choose **Enabled by default** so you do not need `--chrome` every time (it costs a little context because the browser tools are always loaded; if you notice that, switch back to using the flag).
+3. Log in to LinkedIn, Dice and Indeed in Chrome yourself, before you start a session. The agent reuses those sessions. When it meets a login page or a CAPTCHA it stops and asks you to handle it — that is by design and must stay that way: never give it a password and never ask it to solve a CAPTCHA.
+4. The first time it acts on each site, Chrome shows a prompt that begins "Claude in Chrome wants to…". Choose the option that allows all actions on that site for the session. Site-level permissions live in the extension's own settings, independent of Claude Code's permission rules.
+
+**Test it with a read-only task** before anything else: *"Open linkedin.com/jobs, search 'AI Engineer', remote, United States, posted in the past 24 hours, Easy Apply only, and list the first ten results with company, title, posted time and URL. Do not apply to anything."* You should see a new tab open, the search run, and a table come back. Repeat for Dice (*"on dice.com search 'Forward Deployed Engineer', remote, posted today"*) and Indeed.
+
+**Per-site preparation the agent cannot do for you:**
+
+- **LinkedIn:** keep the profile current and the headline aligned with your target title; the agent reads it but, per the kit's rules, never edits it. Have one default resume uploaded in Easy Apply so the first application is one click; the agent replaces it with the tailored PDF each time.
+- **Dice:** complete the profile fully (it is what recruiters search), upload a resume, set work preferences (contract, C2C or W2, remote) and switch on job alerts. Dice's apply flow is short and consistent, which is why it is the best first platform for the agent.
+- **Indeed:** build the Indeed profile and resume once. Because Indeed's terms prohibit automating Indeed Apply outside its own tools, the kit uses Indeed for scouting and lets the agent *prefill* only in review mode; you press Apply. Treat Indeed listings mostly as pointers to the company's own careers page, where the ATS form (Greenhouse, Lever, Ashby) is the better path anyway.
+
+**Things that trip people up:** keep the Chrome window open and not minimized while the agent works — background tabs are throttled and timing-sensitive steps (file uploads, modals) fail; do not type in the tab the agent is using; a JavaScript alert or confirm dialog blocks all further actions until you dismiss it by hand; after a long idle period the extension's service worker sleeps and browser tools return "Receiving end does not exist" — run `/chrome` → **Reconnect extension**. File uploads are limited to 10 MB per upload, which is never a problem for a two-page PDF. The integration needs an interactive Claude Code session with Chrome running; it is not available in Windows Subsystem for Linux, and a scheduled run in the background only works while Chrome is open and you are logged in (see *Monitoring and staying connected*).

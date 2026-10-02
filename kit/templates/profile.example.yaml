@@ -1,0 +1,101 @@
+# profile.yaml - the truth file for the job-search agent (job-agent-kit).
+#
+# /job-setup copies this template to profile/profile.yaml and fills it in with you.
+# The agent may only state facts found here, in profile/answers.yaml or in the master resume.
+# Every value below is a fake example (Jane Doe). Replace all of them.
+
+identity:
+  name: Jane Doe
+  email: jane@example.com
+  phone: "+1 555 010 0000"            # keep the quotes so YAML keeps the leading +
+  location: Austin, TX, USA            # as you want it written on forms
+  links:
+    linkedin: https://www.linkedin.com/in/jane-doe-example
+    github: https://github.com/jane-doe-example
+    portfolio: https://jane-doe.example.com
+
+work_authorization:
+  status: US citizen                   # e.g. US citizen | Green card | H-1B | TN | STEM OPT | EAD
+  needs_sponsorship: false             # now or in the future
+  employment_models: [W2, C2C, 1099, full-time]   # what you accept; delete what you do not
+  c2c_vendor: ""                       # legal name of the company that invoices C2C (your LLC or employer of record)
+
+targets:
+  titles:                              # used as search keywords, most important first
+    - Forward Deployed Engineer
+    - AI Engineer
+    - Applied AI Engineer
+    - LLM Engineer
+    - GenAI Engineer
+  seniority: [Senior, Staff, Lead]
+  remote_only: true
+  min_rate_usd_per_hour: 90            # contract floor; postings clearly below it are skipped
+  min_salary_usd: 170000               # full-time base salary floor
+  start_date: "2 weeks after an offer"
+  max_posting_age_hours: 48            # freshness rule: older postings are ignored
+  exclude_if:                          # phrases that make a posting a hard no for YOU
+    - active security clearance
+    - TS/SCI
+    - onsite
+    - hybrid
+    - relocation required
+    # add "W2 only" if you can only work C2C, "US citizens only" / "green card holders only" if you hold a visa
+  exclude_companies:
+    - Example Current Employer Inc.    # current employer, its clients, anyone you must not apply to
+
+skills_years:                          # years of hands-on use that the master resume supports; a missing skill = 0
+  professional experience: 10          # total, for "how many years of experience" questions
+  python: 9
+  machine learning: 7
+  llm applications: 3
+  rag: 2
+  agents: 1
+  evaluation: 2
+  aws: 6
+  kubernetes: 4
+  sql: 9
+  pytorch: 5
+  typescript: 2
+
+skill_aliases:                         # optional: other names (lowercase) -> key in skills_years
+  generative ai: llm applications
+  genai: llm applications
+  large language models: llm applications
+  retrieval augmented generation: rag
+  agentic ai: agents
+  amazon web services: aws
+  k8s: kubernetes
+  total experience: professional experience
+
+resume:
+  master_path: profile/master-resume.docx   # relative to ~/job-search; never edited by the agent
+  max_pages: 2
+  anchors:                             # EXACT current text of paragraphs in the master resume.
+    headline: ""                       # /job-setup copies them from `tailor_resume.py --dump`;
+    summary_1: ""                      # change them whenever you edit those paragraphs in the master.
+    summary_2: ""
+    summary_3: ""
+    skills_line: ""                    # for "Skills: a, b, c" use only the text after the label
+
+limits:
+  max_applications_per_day: 15         # all platforms together
+  linkedin_max_per_day: 25             # LinkedIn Easy Apply ceiling; the overall cap above still applies
+  mode: review                         # review = stop on the final review screen; auto = submit within caps (never Indeed)
+
+gmail:
+  labels:
+    alerts: Jobs/Alerts                # job-alert emails (LinkedIn, Dice, Indeed)
+    recruiters: Jobs/Recruiters        # recruiter emails
+
+approved_consents: []                  # consent/privacy boxes you approved once, per company
+#  - company: Example Corp
+#    consent: "I agree to the Example Corp candidate privacy notice"
+#    approved_on: 2026-10-02
+
+stories: []                            # STAR stories for /interview-prep (numbers must match the master resume)
+#  - title: Cut support handling time with a RAG assistant
+#    skills: [rag, evaluation, customer delivery]
+#    situation: "Support agents searched four wikis per ticket."
+#    task: "Own retrieval and rollout for 120 agents."
+#    action: "Built hybrid retrieval, a 300-case eval set and a weekly review with the support lead."
+#    result: "Median handling time down 38%."

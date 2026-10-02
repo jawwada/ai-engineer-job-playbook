@@ -1,0 +1,12 @@
+# The job-search workspace holds personal data. Never commit it.
+profile/
+tracker/
+applications/
+inbox/
+scouting/
+.venv/
+*.docx
+*.pdf
+
+# Personal Claude Code overrides
+.claude/settings.local.json

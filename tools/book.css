@@ -1,0 +1,17 @@
+:root { --fg:#1d232b; --muted:#5b6673; --bg:#ffffff; --accent:#0f4c5c; --code:#f4f6f8; --border:#dde3ea; }
+@media (prefers-color-scheme: dark) { :root { --fg:#e6e9ee; --muted:#a5afbb; --bg:#14181d; --accent:#7cc4d6; --code:#1e242b; --border:#2c343d; } }
+html { background: var(--bg); }
+body { color: var(--fg); background: var(--bg); font: 17px/1.6 Georgia, "Iowan Old Style", "Palatino Linotype", serif; max-width: 52rem; margin: 0 auto; padding: 2rem 1rem 6rem; }
+h1, h2, h3, h4 { font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height: 1.25; color: var(--fg); }
+h1 { font-size: 1.9rem; margin-top: 3.5rem; border-bottom: 2px solid var(--accent); padding-bottom: .3rem; }
+h2 { font-size: 1.35rem; margin-top: 2.2rem; }
+a { color: var(--accent); }
+blockquote { margin: 1rem 0; padding: .6rem 1rem; border-left: 4px solid var(--accent); color: var(--muted); background: var(--code); }
+code { font: 0.88em/1.4 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; background: var(--code); padding: .1em .3em; border-radius: 4px; }
+pre { background: var(--code); padding: .9rem; overflow-x: auto; border-radius: 6px; border: 1px solid var(--border); }
+pre code { padding: 0; background: none; }
+table { border-collapse: collapse; width: 100%; font-size: .9rem; display: block; overflow-x: auto; }
+th, td { border: 1px solid var(--border); padding: .4rem .55rem; vertical-align: top; text-align: left; }
+th { background: var(--code); }
+nav#TOC { background: var(--code); border: 1px solid var(--border); border-radius: 8px; padding: 1rem 1.5rem; }
+nav#TOC ul { padding-left: 1.2rem; }

@@ -1,0 +1,121 @@
+# answers.yaml - the only allowed answers to application screening questions (job-agent-kit).
+#
+# Each entry: match = phrases that identify the question (case-insensitive, any one is enough);
+#             answer = what to enter; note = optional guidance for the agent.
+# If several entries match, the one with the longest matching phrase wins.
+# {{dotted.path}} is filled from profile.yaml, e.g. {{targets.min_rate_usd_per_hour}}.
+# A question that matches nothing is NOT guessed: the agent asks you (review mode) or marks the
+# application needs-check (auto mode). Add the answer here once and it is reused.
+# Consent, privacy and terms checkboxes are never answered from this file; they need a per-company
+# entry in profile.yaml approved_consents.
+# Every value below is a fake example (Jane Doe, US citizen). /job-setup rewrites them with you.
+
+- match: ["legally authorized to work", "authorized to work in the united states", "authorized to work in the us", "eligible to work in the us", "work authorization"]
+  answer: "Yes"
+
+- match: ["require sponsorship", "need sponsorship", "visa sponsorship", "sponsor your visa", "h-1b", "h1b", "employment visa"]
+  answer: "No"
+  note: "Covers now and in the future (work_authorization.needs_sponsorship)."
+
+- match: ["us citizen", "u.s. citizen", "citizenship", "green card", "permanent resident"]
+  answer: "Yes"
+  note: "Jane is a US citizen. 'Are you a green card holder?' on its own is No; 'US citizen or green card holder?' is Yes."
+
+- match: ["security clearance", "active clearance", "secret clearance", "ts/sci", "public trust", "clearable"]
+  answer: "No"
+
+- match: ["w2", "w-2", "corp-to-corp", "corp to corp", "c2c", "1099", "tax term", "employment type", "independent contractor"]
+  answer: "Open to W2, C2C or 1099 for contracts, and to full-time roles."
+  note: "Answer only from work_authorization.employment_models. Single choice: pick the first allowed option the form offers. 'Can you work W2?' is Yes only if W2 is listed. For C2C the invoicing company is work_authorization.c2c_vendor. If the wording is ambiguous ('W-2 or independent contractor?'), answer and mark needs-check."
+
+- match: ["gender", "race", "ethnicity", "hispanic or latino", "veteran", "disability", "sexual orientation", "transgender", "self-identify", "voluntary self-identification"]
+  answer: "Decline to self-identify"
+  note: "Pick the option closest to 'I don't wish to answer'. Never infer."
+
+- match: ["desired salary", "salary expectation", "expected salary", "compensation expectation", "expected compensation", "base salary", "salary requirement"]
+  answer: "{{targets.min_salary_usd}}"
+  note: "Number field: the number only. Text field: 'USD {{targets.min_salary_usd}} base, flexible on total compensation.'"
+
+- match: ["hourly rate", "desired rate", "expected rate", "bill rate", "pay rate", "rate expectation", "rate per hour"]
+  answer: "{{targets.min_rate_usd_per_hour}}"
+  note: "Number field: USD per hour, number only. Text field: 'USD {{targets.min_rate_usd_per_hour}} per hour, negotiable.'"
+
+- match: ["pay range", "salary range", "compensation range", "is this range acceptable", "comfortable with the range"]
+  answer: "Yes"
+  note: "Yes only when the posted range reaches the floor (min_salary_usd or min_rate_usd_per_hour); otherwise the posting should already have been skipped, so mark needs-check."
+
+- match: ["start date", "available to start", "when can you start", "notice period", "earliest start", "availability"]
+  answer: "{{targets.start_date}}"
+
+- match: ["willing to relocate", "relocation", "relocate"]
+  answer: "No"
+  note: "targets.remote_only is true."
+
+- match: ["work onsite", "work on-site", "in the office", "hybrid", "commute to"]
+  answer: "No"
+  note: "Remote only. If the question is about occasional customer or team visits, use the travel answer."
+
+- match: ["work remotely", "remote work", "fully remote"]
+  answer: "Yes"
+
+- match: ["willing to travel", "travel requirement", "percentage of travel", "travel up to", "able to travel"]
+  answer: "Yes, up to 25%"
+  note: "Forward deployed roles often include customer travel. Yes/No field: Yes."
+
+- match: ["time zone", "timezone", "work during", "business hours"]
+  answer: "US Central Time; can cover Eastern or Pacific business hours."
+
+- match: ["previously applied", "applied to this company before", "applied here before", "previously employed", "former employee", "worked for this company", "worked here before"]
+  answer: "No"
+  note: "Check the tracker for an application to this company in the last 12 months and the employers in the master resume; if either says yes, answer Yes."
+
+- match: ["how did you hear", "how did you find", "where did you learn about", "source of application", "how were you referred"]
+  answer: "Job board"
+  note: "Name the platform the posting came from: LinkedIn, Dice, Indeed, company website or recruiter."
+
+- match: ["referred by", "employee referral", "were you referred"]
+  answer: "No"
+
+- match: ["text message", "sms", "receive texts", "marketing", "newsletter", "promotional", "talent community", "future opportunities by email"]
+  answer: "No"
+  note: "Leave every opt-in box unticked."
+
+- match: ["years of experience", "how many years", "years of professional experience", "years have you worked", "years of hands-on"]
+  answer: "From skills_years"
+  note: "Look the skill up in profile.yaml skills_years (through skill_aliases); a skill that is not listed is 0. Whole numbers, never rounded up, never above what the master resume supports. Total experience = skills_years['professional experience']."
+
+- match: ["at least 18", "18 years of age", "over 18", "of legal age"]
+  answer: "Yes"
+
+- match: ["background check", "drug screen", "drug test", "employment verification"]
+  answer: "Yes"
+
+- match: ["non-compete", "non-solicitation", "restrictive covenant"]
+  answer: "No"
+
+- match: ["english proficiency", "level of english", "fluent in english"]
+  answer: "Native or bilingual"
+
+- match: ["contract to hire", "contract-to-hire", "convert to full-time", "conversion to full-time"]
+  answer: "Yes"
+
+- match: ["linkedin profile", "linkedin url"]
+  answer: "{{identity.links.linkedin}}"
+
+- match: ["github"]
+  answer: "{{identity.links.github}}"
+
+- match: ["portfolio", "personal website", "website url"]
+  answer: "{{identity.links.portfolio}}"
+
+- match: ["current employer", "current company", "most recent employer", "current title", "current job title"]
+  answer: "From the master resume"
+  note: "Copy the most recent role and employer exactly as the master resume states them."
+
+- match: ["highest level of education", "highest degree", "degree"]
+  answer: "From the master resume"
+  note: "Copy the degree exactly as the master resume states it."
+
+- match: ["why are you interested", "why do you want", "why this role", "why us", "cover letter", "additional information", "anything else"]
+  answer: "Use the tailored cover note"
+  note: "Paste the cover letter text for this posting (applications/<date>/<id>/*.txt); for a short field use its first two sentences. It is built only from master-resume facts."

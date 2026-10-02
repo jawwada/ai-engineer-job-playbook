@@ -1,0 +1,161 @@
+# 52a. Harnesses: Claude Code and the other coding and agent harnesses
+
+> **What you need to be able to say:** what a harness is and why the same model performs very differently in different harnesses; the anatomy every serious harness shares (loop, tools, context management, permissions and sandboxing, instructions and memory, extensibility, surfaces, sessions, observability); Claude Code in depth; how Codex, Gemini CLI, GitHub Copilot, Cursor, Windsurf/Devin, Amp, Aider, Cline, OpenHands, goose, Kiro and the rest differ; the general-purpose harnesses you build products on (Claude Agent SDK, Deep Agents, OpenAI Agents SDK, ADK, Strands); the standards that make them interoperate (MCP, AGENTS.md, A2A, the Agent Client Protocol, skills); and how to choose, configure and measure one for a team. Product details move monthly; check versions before quoting them.
+
+## 52a.1 What a harness is
+
+A model is a capability; a **harness** is everything that turns it into an agent that gets work done: the **loop** (send context to the model, parse tool calls, execute them, append results, repeat until done or stopped), the **tools** (read, search, edit, run commands, fetch, browse, delegate), the **system prompt** and instruction files, **context management** (what goes into the window each turn, compaction, caching, sub-agents with fresh windows, files as external memory), **permissions and sandboxing** (what may run without asking, what is forbidden, what is isolated), **extensibility** (MCP servers, skills, hooks, plugins, slash commands), **surfaces** (terminal, IDE, desktop, web, mobile, CI, chat apps), **session management** (resume, checkpoints, rewind, background tasks) and **observability** (transcripts, costs, OpenTelemetry). Agent benchmarks such as SWE-bench and Terminal-Bench routinely show the same model scoring several points apart in different harnesses: the harness is an engineering artifact in its own right, and "harness engineering" is now a job skill (chapter 22b).
+
+## 52a.2 Anatomy, with what to look for
+
+| Component | What it does | What good looks like |
+|---|---|---|
+| Loop and stop conditions | model → tools → results → model, until done | explicit budgets (turns, tokens, time), interruptibility, clear final summaries |
+| Tool set | file read/search/edit, shell, web, browser, delegation, planning | few powerful tools with precise semantics; edits as diffs; tool results trimmed to what matters |
+| Planning | todo lists or plans the agent maintains | visible plan, updated as work proceeds, plan-only mode for review |
+| Context management | compaction, caching, sub-agents, file memory | automatic compaction with control, prompt caching, sub-agents with isolated context, progressive loading of instructions |
+| Instructions and memory | project and user instruction files, learned notes | hierarchical files (user, project, local), imports, editable memory |
+| Permissions | what runs without asking; what is denied | allow/ask/deny rules, modes (plan, accept edits, auto), enterprise-managed policy that users cannot override |
+| Sandboxing | isolation of commands and network | OS-level sandbox (filesystem and network), containers or cloud VMs for autonomous work |
+| Extensibility | adding capabilities | MCP client, skills, hooks at lifecycle events, plugins and marketplaces, custom commands |
+| Surfaces | where you use it | terminal, IDEs, desktop, web, mobile, CI (headless), chat |
+| Sessions | continuity | resume, checkpoints and rewind, background and cloud tasks, handoff between devices |
+| Observability and cost | knowing what happened | transcripts, per-session cost, OpenTelemetry export, audit logs for enterprises |
+| Programmatic access | building on it | a headless mode and an SDK exposing the same loop |
+
+## 52a.3 Claude Code in depth
+
+**Surfaces.** The `claude` CLI in any terminal; extensions for VS Code (and forks) and JetBrains IDEs; the Code tab in the Claude desktop app; Claude Code on the web (cloud sessions at claude.ai/code, also reachable from the mobile app); **Remote Control**, which lets a phone or browser drive a session running on your own machine (chapter 11); GitHub Actions integration (mention the agent in issues and pull requests); and integrations with chat tools. The same engine is available as a library through the **Claude Agent SDK** (Python and TypeScript).
+
+**Tools.** Read, Write, Edit (exact string replacement), Glob and Grep (search), Bash (with an allow-list of read-only commands that never prompt), WebFetch and WebSearch, a planning/todo tool, notebook editing, the Agent/Task tool for **sub-agents**, MCP tools from any configured server, and browser tools when the Claude in Chrome integration is enabled (`claude --chrome`, `/chrome`).
+
+**Instructions and memory.** `CLAUDE.md` files at user (`~/.claude/CLAUDE.md`), project (`./CLAUDE.md` or `./.claude/CLAUDE.md`, committed) and local (`CLAUDE.local.md`, personal, gitignored) levels, plus an organization-managed file that users cannot exclude, loaded at session start; `/init` drafts one from the repository; `/memory` edits them; files can import others with `@path` (up to four hops). Keep them short and imperative: build and test commands, architecture map, conventions, forbidden patterns, gotchas — the documentation targets under 200 lines per file.
+
+**Skills.** Folders with a `SKILL.md` (frontmatter: `name`, `description`, optional `allowed-tools`, `disable-model-invocation`, `argument-hint`, `context: fork` to run in an isolated sub-agent, and more) plus scripts and references, in `~/.claude/skills/<name>/` (personal) or `.claude/skills/<name>/` (project). Claude loads a skill when its description matches the task, or you invoke it as `/<name> args` (`$ARGUMENTS`, `$0`, `$1` placeholders; `${CLAUDE_SKILL_DIR}` for bundled scripts). Changes are picked up live; `/reload-skills` handles a skills directory created mid-session. Legacy `.claude/commands/*.md` custom commands still work. The job-search kit in Part 1 is a set of skills.
+
+**Sub-agents.** Markdown files in `~/.claude/agents/` or `.claude/agents/` with frontmatter (`name`, `description`, `tools`, `model`, `permissionMode`, `maxTurns`, `skills`, `memory`, `background`, `isolation`, and more); Claude delegates to them by description, you can force one with an @-mention, or run a whole session as one with `claude --agent <name>`. Each gets its own context window; by default sub-agents can spawn sub-agents up to three levels below the main conversation (configurable).
+
+**Hooks.** Handlers that run deterministically at lifecycle events — before and after tool use (`PreToolUse`, `PostToolUse`, `PostToolUseFailure`), when a permission decision is needed, when a prompt is submitted, on notifications, when a sub-agent starts or stops, when the agent stops, before and after compaction, when instructions or configuration files load or change, when worktrees are created, at session start and end. A handler can be a shell command, an HTTP endpoint, an MCP tool call, a single-turn prompt to a model, or (experimentally) a sub-agent that checks a condition with tools. Uses: format and lint after every edit, block commands or file reads that policy forbids, inject context at session start, notify you when input is needed (chapter 11), log every tool call to an audit store. Hooks are how you put guarantees around a probabilistic loop.
+
+**Permissions and sandboxing.** Modes: `default` (labelled Manual; asks on first use of each tool), `acceptEdits`, `plan` (read-only exploration), `auto` (a background classifier approves routine actions), `dontAsk` (deny anything that would prompt), `bypassPermissions` (for isolated environments only). Rules in `settings.json` at user, project, local and **managed** (enterprise) levels: `allow`, `ask` and `deny` lists such as `Bash(npm run *)`, `Read(./.env)`, `WebFetch(domain:docs.example.com)`, `mcp__github__*`; deny wins over allow; managed settings override users. A built-in sandbox can isolate shell commands at the filesystem and network level.
+
+**MCP.** `claude mcp add` (stdio or HTTP), scopes (local, project via `.mcp.json`, user), OAuth through `/mcp`, and claude.ai connectors available automatically when logged in with a claude.ai account (chapter 20b).
+
+**Plugins.** Bundles of commands, skills, sub-agents, hooks and MCP servers distributed through marketplaces and installed with `/plugin`; the way teams share a configured harness. `/import` brings instruction files, MCP servers, commands, sub-agents and skills over from Codex, Gemini CLI or Cursor configurations on the same machine.
+
+**Sessions and context.** `claude --continue` / `--resume`; checkpoints with `/rewind` (code and conversation); `/compact` and automatic compaction; `/clear`; background tasks and `/background` to detach a whole session; `/teleport` to pull a cloud session into the terminal; `/loop` for in-session recurring prompts and `/schedule` for cloud routines; `/model` and `/effort` to trade quality for cost and speed; `/batch` to split a large change into independent units, each run by a background sub-agent in its own worktree.
+
+**Headless and CI.** `claude -p "task"` with `--output-format json|stream-json`, `--allowedTools`, `--permission-mode`, and session resumption — the building block for CI jobs, pre-commit checks and batch refactors; the Agent SDK for products.
+
+**Observability.** Per-session usage and cost, transcripts on disk, OpenTelemetry metrics and events export for organizations, and enterprise audit through managed settings.
+
+**Critic's additions: the Claude Code details that separate users from experts (October 2026).**
+- **Instructions are layered and still only context.** Beyond `CLAUDE.md`: `.claude/rules/*.md` files with an optional `paths` glob load only when Claude works on matching files; **auto memory** holds notes Claude writes for itself per repository (an index plus topic files under `~/.claude/projects/<project>/memory/`; the first 200 lines or 25 KB of the index load each session, and it can be switched off); and since v2.1.277 Claude Code reads `AGENTS.md` directly when the project has no `CLAUDE.md` (or both, when configured). The documentation is explicit that all of this is context rather than enforced configuration: anything that must hold every time belongs in permissions or hooks.
+- **Hook mechanics.** A command hook receives the event as JSON on standard input (for tool events, `tool_name` and `tool_input`, such as `tool_input.command` or `tool_input.file_path`); exit code 2 blocks the action and returns standard error to Claude, and no JSON output can override it; a `PreToolUse` hook can instead return a decision (`allow`, `deny`, `ask` or `defer`) or rewrite the tool input. Other non-zero exit codes do not block, which is a classic bug in hand-written policy hooks.
+- **Permission evaluation.** Rules are evaluated deny, then ask, then allow, and specificity does not change the order: a broad `Bash(aws *)` deny beats a narrow `Bash(aws s3 ls)` allow. Bash rules match the command text, not the program, so `Bash(curl *)` in a deny list stops `curl https://…` but not `/usr/bin/curl` or `sh -c 'curl …'`; the documentation says plainly that such rules are not a security boundary, and the sandbox is what enforces filesystem and network limits however a command is spelled. Project-level allow rules apply only after the user accepts the folder's workspace-trust dialog, and administrators can disable bypass and auto modes or accept permission rules and hooks only from managed settings (`disableBypassPermissionsMode`, `disableAutoMode`, `allowManagedPermissionRulesOnly`, `allowManagedHooksOnly`).
+- **Review built in.** `/code-review` (alias `/review`) reviews a diff, branch or pull request for correctness bugs and can post findings as PR comments; `/security-review` checks the branch's changes for vulnerabilities; `/simplify` runs parallel reviewers for reuse, simplification, efficiency and abstraction level (chapter 52). They are second opinions before the human review, not replacements for it.
+- **Headless runs on code you did not write.** A `claude -p` or SDK run never shows the workspace-trust dialog, so in a repository you did not write it still runs the repository's hooks and connects the servers in its `.mcp.json`. For untrusted code run with `--bare` (no project hooks, skills, sub-agents, plugins or `.mcp.json` servers) or `--setting-sources user`, and pass `--settings '{"disableAllHooks": true}'` for the run.
+
+## 52a.4 The other coding harnesses
+
+| Harness | Who / license | Surfaces | Instructions file | Extensibility | Autonomy and isolation | What it is known for |
+|---|---|---|---|---|---|---|
+| **OpenAI Codex** | OpenAI; CLI open source (Apache-2.0, Rust) | CLI, IDE extension, desktop Codex app, Codex cloud (web and ChatGPT), GitHub code review, Slack, `codex exec` headless and an SDK | `AGENTS.md` | MCP, Agent Skills, plugins | approval policies plus OS-level sandboxing locally (macOS Seatbelt, Linux Landlock/seccomp); parallel cloud tasks in isolated containers that open PRs; managed configuration for enterprises | cloud delegation of many tasks in parallel; code review |
+| **Gemini CLI** | Google; open source (Apache-2.0) | terminal; sibling products Gemini Code Assist (IDE agent mode) and **Jules** (asynchronous agent in cloud VMs that opens PRs) | `GEMINI.md` | MCP, extensions, custom commands, Agent Skills | approvals, trusted folders, optional sandbox | free tier of 60 requests per minute and 1,000 per day with a personal Google account, Google Search grounding, 1M-token context |
+| **Google Antigravity** | Google; launched with Gemini 3 in November 2025 | agent-first IDE with an agent manager, a CLI, and a command centre for several local agents in parallel; an SDK | rules | MCP, Agent Skills, custom sub-agents, lifecycle hooks | artifacts for review (implementation plan, walkthrough, screenshots); `/goal` runs until the task is done; browser-in-the-loop agents | orchestrating many agents from one surface |
+| **GitHub Copilot** | GitHub/Microsoft | agent mode in VS Code, Visual Studio, JetBrains and others; **coding agent** (GitHub's docs now call it Copilot cloud agent: assign an issue and it plans, edits, runs tests and linters in an ephemeral GitHub Actions environment and opens a PR; one repository per run, 59-minute limit); Copilot CLI; code review | `.github/copilot-instructions.md`, path-specific `.instructions.md` files, also `AGENTS.md` | MCP, custom agents, hooks, Agent Skills | branch protections and Actions isolation for the cloud agent | native to GitHub workflows and enterprise policy; multi-vendor models |
+| **Cursor** | Anysphere | AI-first editor (VS Code fork), CLI, background/cloud agents, Bugbot PR review | `.cursor/rules`, `AGENTS.md` | MCP, Agent Skills | cloud agents in isolated VMs | the most polished editor experience; fast tab completion; own models alongside frontier ones |
+| **Windsurf** and **Devin** | Cognition (acquired Windsurf in 2025) | Windsurf editor with the Cascade agent; Devin as an autonomous cloud engineer with its own VM, browser and shell | rules and memories | MCP | Devin works asynchronously in its own environment | delegating well-specified tickets end to end |
+| **Amp** | originally built at Sourcegraph | web, macOS and iOS apps, CLI (also inside an editor's terminal) | `AGENTS.md` | MCP, sub-agents, Agent Skills | permission prompts; per-thread cloud environments | multi-model and deliberately opinionated; aggressive sub-agent use, shareable threads |
+| **Aider** | open source (Apache-2.0) | terminal pair programmer | conventions files | any model via LiteLLM | git-native: every change is a commit you can undo | repository map with tree-sitter; architect/editor two-model mode; model-agnostic |
+| **Cline, Roo Code, Kilo Code** | open-source VS Code extensions (Roo and Kilo began as forks) | IDE | rules files | MCP marketplaces | plan/act modes, checkpoints, approvals | bring-your-own model and key; transparent token costs |
+| **OpenHands** | All Hands AI; open source (formerly OpenDevin) | GUI, CLI, cloud, an agent SDK | repository instructions and skills (microagents in older versions) | MCP, Agent Skills | runs in Docker sandboxes | research-grade open platform; strong benchmark results |
+| **goose** | Block; open source; an Agentic AI Foundation project | desktop app and CLI | instructions and recipes | MCP-first (extensions are MCP servers), Agent Skills | local execution with approvals | general-purpose local agent beyond code |
+| **Kiro** | AWS | IDE, CLI with headless mode for CI, a web agent that plans, implements and opens PRs, and mobile monitoring — one harness behind every surface | steering files in `.kiro/` | MCP, hooks, Agent Skills, "powers" (tools with built-in knowledge that load on demand) | approvals; autonomous runs on the web surface | spec-driven development: requirements → design → tasks before code, plus a bug-fix spec for root-cause work |
+| **Junie** | JetBrains | JetBrains IDEs | `.junie/guidelines.md` | MCP, Agent Skills | IDE-integrated approvals | deep IDE inspections and refactorings |
+| **opencode**, **Crush** | open-source terminal agents (SST; Charm) | TUI (opencode also desktop and IDE) | `AGENTS.md` | MCP, many providers; Agent Skills in opencode | approvals | provider-agnostic terminal UX |
+| **Warp**, **Factory**, **Zed** | agentic terminal; enterprise "droids"; editor with an agent panel | — | various | MCP; Zed's **Agent Client Protocol (ACP)** lets editors host external agents such as Gemini CLI and Claude Code | — | integration of agents into existing tools |
+
+**Critic's additions: what changed in this table during 2026, and how to read it.** The rows were updated against each vendor's documentation in October 2026: Google Antigravity was added (an agent-first IDE launched with Gemini 3, now with a CLI, an SDK, skills, sub-agents and lifecycle hooks); Codex gained a desktop app, skills and plugins; GitHub's documentation now calls the Copilot coding agent "Copilot cloud agent" and lists hooks, custom agents and skills; Kiro grew from an IDE into a family of surfaces (IDE, CLI, web agent, mobile) on one harness; and the Agent Skills format now appears in almost every row. The convergence is the point an interviewer wants to hear: by late 2026 nearly every serious harness offers the same anatomy (MCP, a skills format, hooks, sub-agents, sandboxed or cloud execution, an instructions file), so the differences that decide a choice are model access, the permission and sandbox model, enterprise controls, surfaces your team already uses, and measured quality on your own tasks (52a.9). Surfaces and features change monthly; treat the table as a map to verify, not a spec.
+
+## 52a.5 General-purpose harnesses you build products on
+
+- **Claude Agent SDK** — Claude Code's loop, tools, sub-agents, hooks, permissions, sessions and skills as a library; you host it (containers, serverless, AgentCore Runtime, Agent Engine); **Claude Managed Agents** host sessions for you.
+- **LangChain Deep Agents** — planning tool, virtual filesystem with pluggable backends, `task` sub-agents, summarization, prompt caching and optional memory/skills middleware on LangGraph; model-agnostic (chapter 22b).
+- **OpenAI Agents SDK** (and the AgentKit tooling around it) — agents, handoffs, guardrails, sessions and built-in tracing; hosted tools through the Responses API.
+- **Google ADK** with Agent Engine; **AWS Strands** with AgentCore (including AgentCore Harness for fully managed execution); **Microsoft Agent Framework** with Foundry Agent Service (chapter 20).
+- **smolagents** (code-acting agents), computer-use harnesses (Claude computer use and browser tools, OpenAI's computer-using agent, Browser Use, Stagehand) and general consumer agents (Manus-style: browser, sandbox and file system in one loop).
+
+**Critic's additions: hosted harnesses and where the data lives.** *Claude Managed Agents* (in beta, behind the `managed-agents-2026-04-01` header) separates an *agent* (model, system prompt, tools, MCP servers, skills) from an *environment* (an Anthropic-managed cloud sandbox or a self-hosted sandbox on your own infrastructure) and runs long-lived *sessions* that you steer with events over server-sent events, with scheduled runs available. Because sessions, sandbox state and history are stored server-side, it was not eligible for zero-data-retention or HIPAA BAA coverage at the time of writing — the deciding fact for many regulated customers, who then self-host the SDK or use a self-hosted sandbox. AgentCore Harness plays the same role on AWS (a managed agent loop invoked with one API call, next to AgentCore Runtime, Gateway, Identity, Memory, Policy, Evaluations and a Registry). *Claude Cowork* applies the same harness to knowledge work outside a repository, in the Claude desktop app — files, connectors and a browser instead of a codebase — and is governed by the same permission rules (a managed `Bash` deny rule also stops Cowork's shell tool). The interview question behind all of these is the same: which data leaves your boundary, where is it stored, for how long, and who can turn it off.
+
+## 52a.6 Standards that make harnesses interoperate
+
+- **MCP** for tools and data (chapter 20b) — supported by essentially every harness above.
+- **AGENTS.md** — a plain-markdown instructions file read by many coding agents (Codex, Copilot, Cursor, Amp, opencode and others); contributed to the Agentic AI Foundation with MCP and goose, and adopted by more than 60,000 open-source projects by the foundation's launch. Claude Code reads `CLAUDE.md` and, since v2.1.277, reads `AGENTS.md` directly when no `CLAUDE.md` exists; teams keep one source of truth and import the other (`@AGENTS.md` at the top of `CLAUDE.md`, Claude-specific notes below it).
+- **Agent Skills (`SKILL.md` folders)** — packaged procedures with scripts and references; developed by Anthropic and now an open standard (agentskills.io) that most harnesses load (see below).
+- **A2A** for agent-to-agent delegation; **ACP** for editor-to-agent integration.
+
+**Critic's additions: how portable a skill really is.** Skills load by progressive disclosure: the name and description are always in context, the body loads when a task matches, and supporting files load only when needed — which is why a library of fifty skills costs little until one is used (Claude Code caps the always-loaded listing at about 1% of the context window and drops the least-used descriptions first when it overflows). By late 2026 the format was supported by Claude Code and the Claude apps, Codex, GitHub Copilot and VS Code, Cursor, Gemini CLI, Antigravity, Amp, goose, OpenHands, opencode, Junie, Kiro, Roo Code, Factory and others. Portability holds for the standard fields (`name`, `description`, `license`, `compatibility`, `metadata`, `allowed-tools`); harness-specific fields such as Claude Code's `context: fork`, `paths` or `disable-model-invocation` do not travel, so a team that wants one skill library for several harnesses keeps to the standard fields and tests each skill in each harness it claims to support. Skills can also be served from MCP servers through the Skills over MCP extension (chapter 20b). Treat third-party skills like third-party code: a skill can bundle scripts and pre-approve tools, so review it before installing.
+
+## 52a.7 Choosing a harness
+
+| Need | Strong options | Why |
+|---|---|---|
+| Interactive pair programming in an editor | Cursor, Copilot agent mode, Claude Code in VS Code/JetBrains, Junie | inline diffs, fast iteration |
+| Terminal-first engineers and scripting | Claude Code, Codex CLI, Gemini CLI, Aider, opencode | composable with shell, headless modes |
+| Delegating tickets asynchronously | Copilot coding agent, Codex cloud, Jules, Devin, Claude Code on the web or in GitHub Actions | isolated environments, PR-based review |
+| Bring-your-own or local models, regulated environments | Aider, Cline/Roo/Kilo, OpenHands, goose, opencode | model choice, self-hosting |
+| Spec-heavy team process | Kiro | requirements and design documents before code |
+| Running several agents in parallel on one codebase | Claude Code (`/batch`, background sessions, worktree-isolated sub-agents), Antigravity's agent manager, Cursor's multi-agent mode, Codex cloud | one isolated workspace per agent and review through pull requests |
+| Building your own product agent | Claude Agent SDK, Deep Agents, ADK, Strands, OpenAI Agents SDK | libraries, hosting options |
+| Enterprise governance | Claude Code (managed settings, OpenTelemetry), Copilot (GitHub policies), Cursor/Codex enterprise tiers | central policy, audit, SSO, data controls |
+
+Criteria to score: quality on *your* repository's tasks, context handling on large codebases, permission and sandbox model, extensibility (MCP, skills, hooks), headless/CI support, enterprise controls (SSO, managed policy, audit, retention), cost model (seat subscription vs tokens), and support for the models you are allowed to use.
+
+## 52a.8 Configuring a harness for a team (Claude Code example)
+
+- **Repository:** `CLAUDE.md` under ~200 lines (commands, architecture, conventions, gotchas) — or, in a team that uses several agents, `AGENTS.md` as the shared source of truth and a short `CLAUDE.md` that starts with `@AGENTS.md` and adds only Claude-specific notes; `.claude/rules/` for instructions that apply to one part of the codebase; `.claude/settings.json` with shared permissions and hooks; `.claude/skills/` for team procedures (release, migration, incident triage); `.claude/agents/` for reviewers and test writers; `.mcp.json` for shared servers; a short "how we use agents here" section in the contributing guide.
+- **Hooks that pay for themselves:**
+
+```json
+{
+  "hooks": {
+    "PostToolUse": [
+      { "matcher": "Edit|Write",
+        "hooks": [ { "type": "command",
+                     "command": "f=$(jq -r '.tool_input.file_path'); case \"$f\" in *.py) ruff format \"$f\" && ruff check --fix \"$f\";; esac; exit 0" } ] }
+    ],
+    "PreToolUse": [
+      { "matcher": "Bash",
+        "hooks": [ { "type": "command", "command": "python3 \"$CLAUDE_PROJECT_DIR\"/.claude/hooks/block_dangerous.py" } ] }
+    ]
+  }
+}
+```
+
+  (The formatter hook reads the event JSON from standard input and formats only the file that was just edited — running `ruff format .` over the whole repository after every edit is slow on large codebases and turns unrelated files into diff noise; it exits 0 because the edit has already happened and a lint finding should be reported, not block. `block_dangerous.py` reads `tool_input.command` from standard input and exits with status 2, which blocks the call and shows its message to Claude, for patterns your policy forbids, such as deleting outside the workspace or reading secrets. Treat both as defence in depth on top of the sandbox: a pattern check on command text can be bypassed by a differently spelled command.)
+- **Enterprise:** managed settings that pin deny rules, allowed MCP servers, telemetry export and model choices; SSO; a plugin marketplace with the approved bundle.
+- **CI:** headless runs for routine chores (dependency bumps, changelog drafts, test generation) with read-mostly permissions and human review of the resulting PR.
+
+**Critic's additions: hardening a harness, with the incidents that motivate it.** A coding agent on a developer's laptop holds that developer's credentials, and two public incidents show what that means. In August 2025 attackers stole the npm publishing token of the Nx build system and shipped malicious versions (Nx packages see about six million installs a week); for roughly four hours the post-install script searched machines for secrets and tried to drive locally installed AI command-line agents such as Claude Code and Gemini CLI to help, then published what it found to public GitHub repositories. Separately, the GitHub MCP prompt-injection demonstration (20b.4) showed an agent with a broad token leaking private repositories because of text in a public issue. The controls that follow:
+
+| Risk | Control |
+|---|---|
+| Malicious code drives the agent with prompts disabled | never leave `bypassPermissions` usable on machines with real credentials (`disableBypassPermissionsMode` in managed settings); run unattended work in containers or cloud sandboxes with only the credentials the task needs |
+| Untrusted repository configures your agent | hooks, `.mcp.json` servers and allow rules come from the repository: rely on the workspace-trust dialog interactively, and use `--bare` or `--setting-sources user` for headless runs on code you did not write |
+| Injected instructions in issues, docs or web pages | one repository per session for agents with write tokens; no outbound tools alongside untrusted input without approval; least-privilege, short-lived tokens |
+| Shell rules bypassed by spelling | the OS-level sandbox for filesystem and network limits; deny rules and hooks as a second layer, not the only one |
+| Unreviewed configuration drift across a team | managed settings for deny rules, allowed MCP servers and telemetry; an approved plugin marketplace; `allowManagedHooksOnly` where policy requires it |
+| No record of what happened | OpenTelemetry export of tool calls and costs to the security team's store; transcripts retained according to policy |
+
+## 52a.9 Measuring a harness on your own work
+
+Pick 20–30 real tasks from your backlog with tests or clear acceptance criteria; run each harness/model pair three times; record task success (tests pass and a reviewer accepts), human edits needed, wall-clock, tokens and cost, and permission prompts; repeat quarterly. Public benchmarks are a starting point; your repository, conventions and tests are the only benchmark that predicts your results.
+
+**Critic's additions: what 25 tasks can and cannot tell you.** With 25 tasks, a 60% success rate has a 95% interval of roughly ±19 points (√(0.6 × 0.4 / 25) ≈ 0.098), and three runs per task do not triple the sample, because runs of the same task are correlated — treat the task as the unit (cluster by task). So a bake-off of this size can separate a harness that solves 40% of your tasks from one that solves 75%, not 60% from 65%. Make it count: run every harness on the *same* tasks and compare paired (which tasks one solves and the other does not); report pass@1 and pass^3 (all three runs succeed), because a harness that succeeds once in three is a different product from one that succeeds every time; keep model, effort setting and permissions identical except for the variable under test; and log reviewer edit time, which often decides adoption more than raw success.
+
+## 52a.10 In interviews
+
+Expect "what is a harness and why does it matter?", "how would you build a coding agent?" (loop, tools, context, permissions, verification by tests, sandbox, budgets, traces), "how do you make an agent safe in CI?" (read-mostly permissions, isolated runners, human-reviewed PRs, hooks that block dangerous actions, audit), and "how do you keep agent-written code maintainable?" (chapter 52).
+
+**Interview line:** *"The harness is half the agent: the loop, a small set of powerful tools, context management with compaction and sub-agents, permissions and a sandbox, instruction files, and hooks for the things that must always happen. Claude Code exposes all of it — skills, sub-agents, hooks, MCP, managed policy, headless mode and an SDK — and I choose and configure a harness by measuring it on our own tasks, not on leaderboards."*
