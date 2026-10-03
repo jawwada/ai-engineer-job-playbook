@@ -15,6 +15,7 @@ PARTS = [
     ("part-4-engineering-and-roles", "Part 4 - Engineering, roles and operating agents"),
     ("part-5-your-resume", "Part 5 - The resume, glossary and portfolio"),
     ("part-7-building-and-earning", "Part 7 - Building and earning"),
+    ("part-8-advanced-questions", "Part 8 - Advanced interview questions, answered in depth"),
     ("part-6-reference-guides", "Part 6 - Reference guides (study library)"),
 ]
 REF_ORDER = ["agentic-ai", "retrieval", "llms", "machine-learning", "clouds", "python-backend", "industries", "interview-practice"]
