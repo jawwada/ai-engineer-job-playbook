@@ -1,0 +1,268 @@
+{
+  "clip_id": "ego-kit-000731-c03",
+  "annotation_version": "ego-annot-v3.0",
+  "taxonomy": {
+    "verbs": "verb-list-v3 (take, put-down, pour, lift, place, stir, ...)",
+    "nouns": "noun-list-v3"
+  },
+  "narrations": [
+    {
+      "t_s": 0.8,
+      "text": "#C C takes the kettle with the right hand"
+    },
+    {
+      "t_s": 2.6,
+      "text": "#C C pours hot water over the coffee grounds in the dripper"
+    },
+    {
+      "t_s": 9.8,
+      "text": "#C C puts the kettle down on the counter"
+    },
+    {
+      "t_s": 11.4,
+      "text": "#C C lifts the dripper off the mug"
+    },
+    {
+      "t_s": 15.0,
+      "text": "#C C places the dripper on the tray"
+    },
+    {
+      "t_s": 17.2,
+      "text": "#C C stirs the coffee with a spoon"
+    },
+    {
+      "t_s": 21.7,
+      "text": "#C C picks up the mug with both hands"
+    }
+  ],
+  "actions": [
+    {
+      "id": "a1",
+      "start_s": 0.6,
+      "end_s": 2.4,
+      "verb": "take",
+      "noun": "kettle",
+      "hands": "right"
+    },
+    {
+      "id": "a2",
+      "start_s": 2.4,
+      "end_s": 9.6,
+      "verb": "pour",
+      "noun": "water",
+      "target": "dripper",
+      "hands": "right"
+    },
+    {
+      "id": "a3",
+      "start_s": 9.6,
+      "end_s": 11.0,
+      "verb": "put-down",
+      "noun": "kettle",
+      "hands": "right"
+    },
+    {
+      "id": "a4",
+      "start_s": 11.2,
+      "end_s": 14.8,
+      "verb": "lift",
+      "noun": "dripper",
+      "hands": "right"
+    },
+    {
+      "id": "a5",
+      "start_s": 14.8,
+      "end_s": 16.5,
+      "verb": "place",
+      "noun": "dripper",
+      "target": "tray",
+      "hands": "right"
+    },
+    {
+      "id": "a6",
+      "start_s": 17.0,
+      "end_s": 21.5,
+      "verb": "stir",
+      "noun": "coffee",
+      "tool": "spoon",
+      "hands": "right"
+    },
+    {
+      "id": "a7",
+      "start_s": 21.5,
+      "end_s": 24.0,
+      "verb": "take",
+      "noun": "mug",
+      "hands": "both"
+    }
+  ],
+  "object_tracks": [
+    {
+      "track_id": "kettle-1",
+      "category": "kettle",
+      "boxes": [
+        {
+          "frame": 18,
+          "bbox_xywh": [
+            1210,
+            610,
+            260,
+            300
+          ]
+        },
+        {
+          "frame": 72,
+          "bbox_xywh": [
+            1030,
+            420,
+            280,
+            320
+          ]
+        },
+        {
+          "frame": 180,
+          "bbox_xywh": [
+            980,
+            380,
+            290,
+            330
+          ]
+        },
+        {
+          "frame": 288,
+          "bbox_xywh": [
+            1250,
+            640,
+            250,
+            290
+          ]
+        }
+      ]
+    },
+    {
+      "track_id": "dripper-1",
+      "category": "dripper",
+      "boxes": [
+        {
+          "frame": 72,
+          "bbox_xywh": [
+            860,
+            560,
+            210,
+            170
+          ]
+        },
+        {
+          "frame": 336,
+          "bbox_xywh": [
+            880,
+            540,
+            210,
+            170
+          ]
+        },
+        {
+          "frame": 444,
+          "bbox_xywh": [
+            1320,
+            700,
+            210,
+            170
+          ]
+        }
+      ]
+    },
+    {
+      "track_id": "mug-1",
+      "category": "mug",
+      "boxes": [
+        {
+          "frame": 72,
+          "bbox_xywh": [
+            850,
+            700,
+            230,
+            240
+          ]
+        },
+        {
+          "frame": 510,
+          "bbox_xywh": [
+            900,
+            690,
+            230,
+            240
+          ]
+        },
+        {
+          "frame": 690,
+          "bbox_xywh": [
+            920,
+            420,
+            240,
+            250
+          ]
+        }
+      ]
+    },
+    {
+      "track_id": "spoon-1",
+      "category": "spoon",
+      "boxes": [
+        {
+          "frame": 510,
+          "bbox_xywh": [
+            1100,
+            600,
+            60,
+            220
+          ]
+        },
+        {
+          "frame": 600,
+          "bbox_xywh": [
+            1000,
+            610,
+            60,
+            220
+          ]
+        }
+      ]
+    }
+  ],
+  "hand_object_contact": [
+    {
+      "start_s": 0.6,
+      "end_s": 11.0,
+      "hand": "right",
+      "track_id": "kettle-1"
+    },
+    {
+      "start_s": 11.2,
+      "end_s": 16.5,
+      "hand": "right",
+      "track_id": "dripper-1"
+    },
+    {
+      "start_s": 17.0,
+      "end_s": 21.5,
+      "hand": "right",
+      "track_id": "spoon-1"
+    },
+    {
+      "start_s": 21.5,
+      "end_s": 24.0,
+      "hand": "both",
+      "track_id": "mug-1"
+    }
+  ],
+  "qc": {
+    "second_pass_temporal_iou": 0.81,
+    "boxes_audited_fraction": 0.1,
+    "privacy_check": "passed",
+    "annotator": "ann_v12",
+    "reviewer": "rev_v03",
+    "prelabel_model": "vlm-prelabeler-2026-07",
+    "human_minutes": 9.5
+  }
+}

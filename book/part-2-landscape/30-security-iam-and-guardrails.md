@@ -27,6 +27,8 @@ Apply permissions **where the data lives**, not in the prompt:
 5. **Separate indexes/tenants** when regulations require hard isolation (per-customer vector collections, separate projects/accounts).
 6. **Audit**: every tool call logged with the principal, arguments and result (chapter 29).
 
+For the protocols underneath these patterns (OAuth 2.0 flows, OpenID Connect, PKCE, JWT validation, SAML and SCIM, mutual TLS), see chapter 49b.
+
 ## 30.4 Prompt injection and output handling
 
 - Treat **all tool output and retrieved content as untrusted data**; never let it change the agent's goals. Mark it in the prompt as data; use models trained with instruction hierarchy; keep instructions in the system prompt; strip or quarantine instructions found in content.

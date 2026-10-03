@@ -1,0 +1,11 @@
+batch,record_id,delivered_label,auditor_label,defect,note
+batch-07,cs-1203,billing_refund,billing_refund,false,
+batch-07,cs-1219,cancel_order,cancel_order,false,
+batch-07,cs-1240,shipping_policy,update_address,true,asked to reroute a parcel
+batch-07,cs-1251,update_address,update_address,false,
+batch-07,cs-1266,billing_refund,billing_refund,false,
+batch-07,cs-1278,cancel_order,cancel_order,false,
+batch-07,cs-1290,shipping_policy,shipping_policy,false,
+batch-07,cs-1302,billing_refund,billing_refund,false,
+batch-07,cs-1315,update_address,update_address,false,
+batch-07,cs-1327,cancel_order,cancel_order,false,

@@ -68,7 +68,7 @@ The twenty patterns and where they map on LeetCode (problems marked † need Lee
 | 19 | Monotonic stack | Next Greater Element; Next Smaller Element; Largest Rectangle in Histogram | 496, (1475 is the closest), 84 |
 | 20 | Multi-threaded | Invert Binary Tree; Binary Search Tree Iterator; Same Tree | 226, 173, 100 (solved with threads), plus 1114–1242 |
 
-The list is a curriculum, not the whole syllabus: hash maps with prefix sums, graph traversal and shortest paths, union-find, tries, greedy choices and the other dynamic-programming families come up at least as often as some of the twenty (the current course covers most of them too), so 39d.23 adds them in shorter form.
+The list is a curriculum, not the whole syllabus: hash maps with prefix sums, graph traversal and shortest paths, union-find, tries, greedy choices and the other dynamic-programming families come up at least as often as some of the twenty (the current course covers most of them too), so 39d.23 adds them in shorter form. Chapters 39e–39g go underneath and beyond this catalog: data structures from the inside and the ten sorting algorithms (39e); the classic templates, binary-tree thinking, data-structure design and graph algorithms (39f); and backtracking, BFS, dynamic programming, greedy algorithms and math techniques (39g).
 
 ## 39d.2 Recognize the pattern from the statement and the constraints
 
@@ -2129,6 +2129,8 @@ class LRUCache:
 ```
 
 ## 39d.24 The Python toolkit for coding rounds
+
+Chapter 49a is the full Python brush-up; this list is the subset a coding round leans on.
 
 - **`collections.deque`** for queues: O(1) `append` and `popleft`. `list.pop(0)` is O(n).
 - **`heapq`** is a min-heap on a list: `heappush`, `heappop`, `heapreplace` (pop then push, one sift), `heappushpop`, `nsmallest`/`nlargest` (heap of size k inside). Max-heap: push negated keys, which works everywhere; Python 3.14 added `heappush_max`, `heappop_max` and the rest. Ties: push `(priority, counter, item)` so items are never compared.

@@ -1,0 +1,26 @@
+diff --git a/querykit/parse.py b/querykit/parse.py
+index 83da721..b1cddfe 100644
+--- a/querykit/parse.py
++++ b/querykit/parse.py
+@@ -3,7 +3,7 @@ from urllib.parse import unquote_plus
+ 
+ 
+ def parse_query(qs):
+-    """Parse 'a=1&b=two' into {'a': '1', 'b': 'two'}."""
++    """Parse 'a=1&b=two' into {'a': '1', 'b': 'two'}; a repeated key maps to a list of values."""
+     result = {}
+     if not qs:
+         return result
+@@ -11,5 +11,11 @@ def parse_query(qs):
+         if not pair:
+             continue
+         key, _, value = pair.partition("=")
+-        result[unquote_plus(key)] = unquote_plus(value)
++        key, value = unquote_plus(key), unquote_plus(value)
++        if key not in result:
++            result[key] = value
++        elif isinstance(result[key], list):
++            result[key].append(value)
++        else:
++            result[key] = [result[key], value]
+     return result

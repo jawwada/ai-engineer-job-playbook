@@ -1,0 +1,149 @@
+{
+  "tools": [
+    {
+      "name": "find_customer_by_email",
+      "description": "Find a customer id by the email on file.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "email"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "verify_identity",
+      "description": "Verify the customer with the last four digits of the phone number on file.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "customer_id": {
+            "type": "string"
+          },
+          "phone_last4": {
+            "type": "string",
+            "pattern": "^[0-9]{4}$"
+          }
+        },
+        "required": [
+          "customer_id",
+          "phone_last4"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "get_account",
+      "description": "Read an account of the verified customer: plan, pending plan, billing cycle.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "account_id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "account_id"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "list_plans",
+      "description": "List all public plans with prices and renewable share.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "required": [],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "change_plan",
+      "description": "Schedule a plan change for the next billing cycle (verified customer only).",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "account_id": {
+            "type": "string"
+          },
+          "plan_id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "account_id",
+          "plan_id"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "get_invoice",
+      "description": "Read an invoice of the verified customer.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "invoice_id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "invoice_id"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "issue_credit",
+      "description": "Credit an amount against an invoice of the verified customer.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "invoice_id": {
+            "type": "string"
+          },
+          "amount": {
+            "type": "number",
+            "exclusiveMinimum": 0
+          },
+          "reason": {
+            "type": "string",
+            "enum": [
+              "duplicate_charge",
+              "meter_error",
+              "other_billing_error"
+            ]
+          }
+        },
+        "required": [
+          "invoice_id",
+          "amount",
+          "reason"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "transfer_to_human",
+      "description": "Hand the conversation to a human agent with a summary.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "summary": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "summary"
+        ],
+        "additionalProperties": false
+      }
+    }
+  ]
+}

@@ -123,6 +123,8 @@ Register it in a host: `claude mcp add orders -- python orders_server.py` (stdio
 
 **Critic's additions: the security review an interviewer expects for a new MCP server.** Walk it as a threat model, one line per risk. *Spoofed server or client:* OAuth with audience-bound tokens and issuer validation. *Confused deputy:* no token passthrough; the server calls upstream with its own credentials or an on-behalf-of exchange scoped to the user. *Over-broad tools:* one intent per tool, read and write split, curated queries instead of free SQL. *Injection through results:* label tool output as untrusted, strip or escape instructions where possible, and never pair untrusted input, private data and an outbound tool in one session without approval. *Poisoned or changed descriptions:* pinned versions, description hashes, re-approval on change. *Duplicate side effects:* idempotency keys on every write (more important after 2026-07-28, see 20b.7). *Denial of wallet:* per-client rate limits, result size caps, timeouts. *Audit:* every call logged with principal, tool, argument hash, result status and trace id. If you can name the control and the test for each line, the interviewer stops probing.
 
+Chapter 49b.8.5 walks through how an MCP client obtains a token from the server's authorization server, with the OAuth 2.0 and PKCE mechanics in 49b.6 and 49b.7.
+
 ## 20b.7 The 2026-07-28 revision: stateless MCP
 
 The latest revision removes protocol-level sessions so servers scale like ordinary stateless HTTP services:

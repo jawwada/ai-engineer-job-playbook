@@ -1,0 +1,28 @@
+{
+  "clip_id": "ego-kit-000731-c03",
+  "session_id": "ego-kit-000731",
+  "device": {
+    "type": "head-mounted camera",
+    "model": "generic-egocam-v2"
+  },
+  "fps": 30,
+  "resolution": [
+    1920,
+    1080
+  ],
+  "duration_s": 24.0,
+  "frames": 720,
+  "recorded_utc": "2026-08-27T08:14:05Z",
+  "scene": "home kitchen",
+  "task": "finish a pour-over coffee",
+  "consent_id": "cons-55190",
+  "contributor_id": "contrib-0882",
+  "privacy": {
+    "faces_blurred": true,
+    "screens_blurred": true,
+    "audio_removed": true,
+    "location_removed": true
+  },
+  "protocol_version": "ego-collect-v4.2",
+  "storage_uri": "s3://example-bucket/ego/2026-08/ego-kit-000731-c03.mp4"
+}

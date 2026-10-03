@@ -1,0 +1,4 @@
+{"id": "cs-0001", "text": "I was charged twice for order 7731, can you refund one?", "intent": "billing_refund", "entities": [{"type": "order_id", "value": "7731", "start": 30, "end": 34}], "language": "en", "split": "train"}
+{"id": "cs-0002", "text": "Change my delivery address to 14 Elm Street before it ships", "intent": "update_address", "entities": [{"type": "address", "value": "14 Elm Street", "start": 30, "end": 43}], "language": "en", "split": "train"}
+{"id": "cs-0003", "text": "Do you ship to Canada?", "intent": "shipping_policy", "entities": [{"type": "country", "value": "Canada", "start": 15, "end": 21}], "language": "en", "split": "train"}
+{"id": "cs-0004", "text": "Cancel order 8820 please", "intent": "cancel_order", "entities": [{"type": "order_id", "value": "8820", "start": 13, "end": 17}], "language": "en", "split": "train"}

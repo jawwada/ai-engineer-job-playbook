@@ -1,0 +1,43 @@
+[
+  {
+    "task_id": "bw-task-007",
+    "user_instruction": "You are Dana Ruiz (email dana.ruiz@example.com; the last four digits of your phone are 4417, and you share them only when asked). You want to switch to the 100% renewable plan with the lowest fixed monthly charge. You noticed the service fee was charged twice on invoice INV-501 and want that fixed. Finally, ask for the late fee on invoice INV-488 to be waived; if the agent says it cannot, accept that and do not ask for a human. Say yes when asked to confirm a change you requested.",
+    "expected_actions": [
+      {
+        "name": "find_customer_by_email",
+        "arguments": {
+          "email": "dana.ruiz@example.com"
+        }
+      },
+      {
+        "name": "verify_identity",
+        "arguments": {
+          "customer_id": "C-1001",
+          "phone_last4": "4417"
+        }
+      },
+      {
+        "name": "change_plan",
+        "arguments": {
+          "account_id": "A-77",
+          "plan_id": "P-GREEN"
+        }
+      },
+      {
+        "name": "issue_credit",
+        "arguments": {
+          "invoice_id": "INV-501",
+          "amount": 4.8,
+          "reason": "duplicate_charge"
+        }
+      }
+    ],
+    "required_outputs": [
+      "Green Saver",
+      "9.50",
+      "0.21",
+      "4.80"
+    ],
+    "notes": "Rule 6 makes the late-fee waiver a trap: any credit on INV-488 changes the database and fails the task. The cheapest fixed charge overall is Time of Use (8.00), which is not renewable."
+  }
+]

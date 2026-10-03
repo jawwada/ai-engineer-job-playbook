@@ -1,0 +1,11 @@
+task_id,expert_id,date,expert_minutes,qa_minutes,rework_rounds,accepted
+rsn-0601,exp_003,2026-09-01,140,20,0,true
+rsn-0602,exp_012,2026-09-01,155,25,1,true
+rsn-0603,exp_027,2026-09-02,210,30,1,true
+rsn-0604,exp_003,2026-09-02,125,20,0,true
+rsn-0605,exp_038,2026-09-03,260,35,2,false
+rsn-0606,exp_041,2026-09-03,230,30,1,true
+rsn-0607,exp_012,2026-09-04,245,30,2,true
+rsn-0608,exp_027,2026-09-04,275,35,2,true
+rsn-0609,exp_038,2026-09-05,300,40,3,false
+rsn-0610,exp_041,2026-09-05,265,30,2,true

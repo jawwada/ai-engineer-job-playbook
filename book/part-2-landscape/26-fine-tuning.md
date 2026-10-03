@@ -34,6 +34,7 @@ The question "is LoRA as good as full fine-tuning?" now has a better answer than
 - **Sources**: production logs with human corrections (the best), SME-written examples, frontier-model-generated examples filtered by a judge (synthetic data; check licenses — some providers restrict training competitors on their outputs), public datasets for format.
 - **Format**: chat-formatted JSONL with system, user, assistant turns; include tool calls if you tune for tools; mask loss on prompt tokens; keep a held-out set and a separate test set from a later time period.
 - **Hygiene**: no secrets or PII in training data; a data card documenting provenance; versioning (DVC, lakehouse tables, Hugging Face datasets).
+- **Worked examples**: chapter 26d shows a complete, tested record of every training and evaluation dataset type (SFT, preference pairs, rankings and process labels, AI feedback, RL prompts with verifiers, evaluation sets, agent environments) and how the trainer or grader reads each field.
 
 ## 26.4 Training in practice
 

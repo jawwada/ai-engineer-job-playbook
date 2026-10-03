@@ -9,7 +9,7 @@ Long-form study guides written during interview preparation, included here as a 
 | `llms/` | LLM fine-tuning guide, modern LLM engineering guide | 16, 26, 26b |
 | `machine-learning/` | causal inference, mechanistic interpretability, time-series forecasting, ranking systems, uplift modeling | 17, 36 |
 | `clouds/` | AWS cloud-native development, Kubernetes complete guide, Databricks + AWS agentic AI reference | 15, 21, 45, 50 |
-| `python-backend/` | Python and backend guide, CI/CD pipelines complete guide | 45, 49 |
+| `python-backend/` | Python and backend guide, CI/CD pipelines complete guide | 45, 49, 49a, 49b |
 | `industries/` | ad-tech, e-commerce, energy, insurance, telecom data studies; insurance/healthcare agentic NLP deep dive; NLP extraction and RAG guide; systematic trading and ML | 36, 58 |
 | `interview-practice/` | behavioural interviews at top tech companies; AI/backend engineer deep dive (code, algorithms, worked answers); agentic RAG system-design walkthrough; agentic RAG deep-dive questions; two 50-question banks (Azure/A2A/MCP/healthcare; AWS/agentic AI-ML engineer); an anonymized example job description | 35, 37–43 |
 | `practice/` | two React quiz apps for quantitative practice (`quant_practice.jsx`, `quant_practice_2.jsx`) | 37 |

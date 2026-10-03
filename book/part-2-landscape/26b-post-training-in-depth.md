@@ -20,6 +20,8 @@ flowchart LR
 - **Distillation** compresses a strong teacher into a small student for cost and latency.
 - **Safety and evaluation** run throughout: refusal behaviour, red-team suites, capability regressions.
 
+Chapter 26d shows the data each stage consumes, record by record, with the loss or grader that reads it.
+
 ## 26b.2 Supervised fine-tuning: a concrete setup
 
 **Data format (chat JSONL):**
@@ -81,7 +83,7 @@ trainer = DPOTrainer(model="out/sft/merged", ref_model=None,  # ref = frozen cop
 trainer.train()
 ```
 
-`beta` controls how far the policy may move from the reference (0.05–0.5); too high → the model drifts and loses abilities, too low → no change. Variants: **ORPO** (combines SFT and preference in one stage without a reference model), **KTO** (works with single-example good/bad labels instead of pairs), **SimPO** (reference-free, length-normalized), **IPO**. All train on the same pair format.
+`beta` (typically 0.05–0.5) sets how tightly the policy is held to the reference model: a higher β keeps it closer to the reference, so the preferences change it less; a lower β lets it move further, and too low a β lets it drift, over-fit the pairs and lose abilities. Section 26d.3.4 works through the DPO loss with numbers. Variants: **ORPO** (combines SFT and preference in one stage without a reference model), **KTO** (works with single-example good/bad labels instead of pairs), **SimPO** (reference-free, length-normalized), **IPO**. All train on the same pair format.
 
 **Classic RLHF with a reward model + PPO** (what the labs do; heavier): train a reward model on comparisons (`RewardTrainer`), then optimize the policy with PPO (`PPOTrainer`) using the reward minus a KL penalty to the reference; needs careful hyperparameters, four model copies in memory (the policy being trained, a frozen reference for the KL term, the reward model, and a value/critic model that estimates expected reward per token), and reward-hacking vigilance (the policy finds what the reward model over-rewards: length, sycophancy, keywords). Online methods (online DPO, GRPO) sample from the current policy and score with a judge or verifier, which avoids distribution mismatch of static pairs.
 

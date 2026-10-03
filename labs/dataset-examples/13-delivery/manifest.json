@@ -1,0 +1,42 @@
+{
+  "dataset": "support-intents",
+  "version": "v1",
+  "spec_version": "intent-v1.3",
+  "created": "2026-09-30",
+  "records": {
+    "train": 4
+  },
+  "schema": {
+    "id": "string",
+    "text": "string",
+    "intent": "enum[billing_refund, update_address, shipping_policy, cancel_order]",
+    "entities": "list[{type, value, start, end}]",
+    "language": "string (BCP 47)",
+    "split": "enum[train, validation, test]"
+  },
+  "files": {
+    "train.jsonl": {
+      "sha256": "78a8f5d1e3247d6aa06bab14a71da4c7e86dad78388d73b1beff1fd69e9baee0",
+      "bytes": 852
+    },
+    "train.csv": {
+      "sha256": "0a75726297b3ed585b4a2cea08eee6671407868e9ed4e0b43de0bd9b5fc4dd77",
+      "bytes": 684
+    },
+    "datasheet.md": {
+      "sha256": "aaeeb85082fdca7f3a4bd6f8748f506af0e80a783b823e0bcd4da315177e4b4b",
+      "bytes": 2144
+    }
+  },
+  "quality": {
+    "audit_sample": 80,
+    "audit_defects": 1,
+    "acceptance_rule": "accept if defects <= 2 in 80",
+    "gold_accuracy_min": 0.9
+  },
+  "pipeline": {
+    "generator_model": "generator-model-2026-07",
+    "prompt_template": "support-message-v2",
+    "editor_pool": "experts-en-retail"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "instance_id": "acme__querykit-142",
+  "repo": "acme/querykit",
+  "base_commit": "748046bac40afa53861ed2014f8961cc802e3137",
+  "problem_statement": "parse_query drops repeated keys\n\n`parse_query(\"tag=a&tag=b\")` returns `{\"tag\": \"b\"}`. The README says a key that appears more than once maps to a list of its values, in order, so I expected `{\"tag\": [\"a\", \"b\"]}`. Keys that appear once should stay plain strings.",
+  "hints_text": "Maintainer: keep single keys as strings; only repeated keys become lists.",
+  "created_at": "2026-09-02T14:05:11Z",
+  "version": "0.4",
+  "environment_setup_commit": "748046bac40afa53861ed2014f8961cc802e3137",
+  "patch": "diff --git a/querykit/parse.py b/querykit/parse.py\nindex 83da721..b1cddfe 100644\n--- a/querykit/parse.py\n+++ b/querykit/parse.py\n@@ -3,7 +3,7 @@ from urllib.parse import unquote_plus\n \n \n def parse_query(qs):\n-    \"\"\"Parse 'a=1&b=two' into {'a': '1', 'b': 'two'}.\"\"\"\n+    \"\"\"Parse 'a=1&b=two' into {'a': '1', 'b': 'two'}; a repeated key maps to a list of values.\"\"\"\n     result = {}\n     if not qs:\n         return result\n@@ -11,5 +11,11 @@ def parse_query(qs):\n         if not pair:\n             continue\n         key, _, value = pair.partition(\"=\")\n-        result[unquote_plus(key)] = unquote_plus(value)\n+        key, value = unquote_plus(key), unquote_plus(value)\n+        if key not in result:\n+            result[key] = value\n+        elif isinstance(result[key], list):\n+            result[key].append(value)\n+        else:\n+            result[key] = [result[key], value]\n     return result\n",
+  "test_patch": "diff --git a/tests/test_parse.py b/tests/test_parse.py\nindex c2a0feb..914f786 100644\n--- a/tests/test_parse.py\n+++ b/tests/test_parse.py\n@@ -11,3 +11,7 @@ def test_empty_string():\n \n def test_plus_and_percent_decoding():\n     assert parse_query(\"name=Ada+Lovelace&city=S%C3%A3o+Paulo\") == {\"name\": \"Ada Lovelace\", \"city\": \"São Paulo\"}\n+\n+\n+def test_repeated_keys_are_kept():\n+    assert parse_query(\"tag=a&tag=b&x=1&tag=c\") == {\"tag\": [\"a\", \"b\", \"c\"], \"x\": \"1\"}\n",
+  "FAIL_TO_PASS": [
+    "tests/test_parse.py::test_repeated_keys_are_kept"
+  ],
+  "PASS_TO_PASS": [
+    "tests/test_parse.py::test_simple_pairs",
+    "tests/test_parse.py::test_empty_string",
+    "tests/test_parse.py::test_plus_and_percent_decoding"
+  ]
+}

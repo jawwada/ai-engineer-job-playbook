@@ -1,0 +1,115 @@
+{
+  "today": "2026-09-15",
+  "customers": {
+    "C-1001": {
+      "name": "Dana Ruiz",
+      "email": "dana.ruiz@example.com",
+      "phone_last4": "4417",
+      "account_ids": [
+        "A-77"
+      ]
+    },
+    "C-1002": {
+      "name": "Sam Okafor",
+      "email": "sam.okafor@example.com",
+      "phone_last4": "0928",
+      "account_ids": [
+        "A-78"
+      ]
+    }
+  },
+  "accounts": {
+    "A-77": {
+      "customer_id": "C-1001",
+      "plan_id": "P-STD",
+      "pending_plan_id": null,
+      "cycle_start": "2026-09-01",
+      "next_cycle_start": "2026-10-01",
+      "plan_changed_this_cycle": false
+    },
+    "A-78": {
+      "customer_id": "C-1002",
+      "plan_id": "P-GREENPLUS",
+      "pending_plan_id": null,
+      "cycle_start": "2026-09-01",
+      "next_cycle_start": "2026-10-01",
+      "plan_changed_this_cycle": false
+    }
+  },
+  "plans": {
+    "P-STD": {
+      "name": "Standard",
+      "fixed_monthly": 12.0,
+      "per_kwh": 0.18,
+      "renewable_pct": 40
+    },
+    "P-GREEN": {
+      "name": "Green Saver",
+      "fixed_monthly": 9.5,
+      "per_kwh": 0.21,
+      "renewable_pct": 100
+    },
+    "P-GREENPLUS": {
+      "name": "Green Plus",
+      "fixed_monthly": 14.0,
+      "per_kwh": 0.19,
+      "renewable_pct": 100
+    },
+    "P-TOU": {
+      "name": "Time of Use",
+      "fixed_monthly": 8.0,
+      "per_kwh": 0.15,
+      "per_kwh_peak": 0.29,
+      "renewable_pct": 40
+    }
+  },
+  "invoices": {
+    "INV-501": {
+      "account_id": "A-77",
+      "issued": "2026-08-20",
+      "status": "paid",
+      "lines": [
+        {
+          "desc": "Energy, 412 kWh at 0.18",
+          "amount": 74.16
+        },
+        {
+          "desc": "Fixed monthly charge",
+          "amount": 12.0
+        },
+        {
+          "desc": "Service fee",
+          "amount": 4.8
+        },
+        {
+          "desc": "Service fee",
+          "amount": 4.8
+        }
+      ],
+      "total": 95.76,
+      "credits": []
+    },
+    "INV-488": {
+      "account_id": "A-77",
+      "issued": "2026-06-02",
+      "status": "paid",
+      "lines": [
+        {
+          "desc": "Energy, 380 kWh at 0.18",
+          "amount": 68.4
+        },
+        {
+          "desc": "Fixed monthly charge",
+          "amount": 12.0
+        },
+        {
+          "desc": "Late payment fee",
+          "amount": 7.5
+        }
+      ],
+      "total": 87.9,
+      "credits": []
+    }
+  },
+  "transfers": []
+}

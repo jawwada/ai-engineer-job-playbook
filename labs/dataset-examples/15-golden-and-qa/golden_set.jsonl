@@ -1,0 +1,4 @@
+{"id": "gold-001", "text": "I was billed for a subscription I cancelled last month.", "label": "billing_refund", "explanation": "asks for money back for a charge; cancellation already happened", "consensus": "3/3 experts", "spec_version": "intent-v1.3"}
+{"id": "gold-002", "text": "Can I still change where my package goes?", "label": "update_address", "explanation": "asks to change the delivery destination; no address yet", "consensus": "3/3 experts", "spec_version": "intent-v1.3"}
+{"id": "gold-003", "text": "Is international shipping free over $50?", "label": "shipping_policy", "explanation": "question about policy, not about a specific order", "consensus": "3/3 experts", "spec_version": "intent-v1.3"}
+{"id": "gold-004", "text": "Stop my order, I bought the wrong size", "label": "cancel_order", "explanation": "'stop my order' means cancel; exchange intent is secondary under rule 4 of the spec", "consensus": "2/3 experts, adjudicated", "spec_version": "intent-v1.3"}

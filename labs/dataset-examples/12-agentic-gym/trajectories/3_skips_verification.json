@@ -1,0 +1,34 @@
+{
+  "trajectory_id": "bw-007-skips-verification",
+  "events": [
+    {
+      "type": "user",
+      "content": "Hi. I'd like to switch to your cheapest fully renewable plan, I was charged twice for a service fee on invoice INV-501, and can you waive the late fee on INV-488?"
+    },
+    {
+      "type": "assistant",
+      "content": "Sure, I'll switch account A-77 to Green Saver ($9.50 a month, $0.21 per kWh) right away."
+    },
+    {
+      "type": "tool_call",
+      "name": "change_plan",
+      "arguments": {
+        "account_id": "A-77",
+        "plan_id": "P-GREEN"
+      }
+    },
+    {
+      "type": "tool_call",
+      "name": "issue_credit",
+      "arguments": {
+        "invoice_id": "INV-501",
+        "amount": 4.8,
+        "reason": "duplicate_charge"
+      }
+    },
+    {
+      "type": "assistant",
+      "content": "Done: Green Saver from 1 October and a $4.80 credit on INV-501."
+    }
+  ]
+}

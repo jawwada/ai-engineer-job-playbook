@@ -1,0 +1,104 @@
+{
+  "trajectory_id": "bw-007-wrong-plan",
+  "events": [
+    {
+      "type": "user",
+      "content": "Hi. I'd like to switch to your cheapest fully renewable plan, I was charged twice for a service fee on invoice INV-501, and can you waive the late fee on INV-488?"
+    },
+    {
+      "type": "assistant",
+      "content": "I can help with all three. First, what is the email address on your account?"
+    },
+    {
+      "type": "user",
+      "content": "dana.ruiz@example.com"
+    },
+    {
+      "type": "tool_call",
+      "name": "find_customer_by_email",
+      "arguments": {
+        "email": "dana.ruiz@example.com"
+      }
+    },
+    {
+      "type": "assistant",
+      "content": "Thanks. To verify your identity, what are the last four digits of the phone number on file?"
+    },
+    {
+      "type": "user",
+      "content": "4417"
+    },
+    {
+      "type": "tool_call",
+      "name": "verify_identity",
+      "arguments": {
+        "customer_id": "C-1001",
+        "phone_last4": "4417"
+      }
+    },
+    {
+      "type": "tool_call",
+      "name": "get_account",
+      "arguments": {
+        "account_id": "A-77"
+      }
+    },
+    {
+      "type": "tool_call",
+      "name": "list_plans",
+      "arguments": {}
+    },
+    {
+      "type": "assistant",
+      "content": "You're verified. Our cheapest plan is Time of Use at $8.00 a month plus $0.15 per kWh off-peak. Shall I switch you?"
+    },
+    {
+      "type": "user",
+      "content": "Yes, please."
+    },
+    {
+      "type": "tool_call",
+      "name": "change_plan",
+      "arguments": {
+        "account_id": "A-77",
+        "plan_id": "P-TOU"
+      }
+    },
+    {
+      "type": "tool_call",
+      "name": "get_invoice",
+      "arguments": {
+        "invoice_id": "INV-501"
+      }
+    },
+    {
+      "type": "assistant",
+      "content": "Invoice INV-501 lists the $4.80 service fee twice. I can credit $4.80 to that invoice as a duplicate charge. Shall I go ahead?"
+    },
+    {
+      "type": "user",
+      "content": "Yes."
+    },
+    {
+      "type": "tool_call",
+      "name": "issue_credit",
+      "arguments": {
+        "invoice_id": "INV-501",
+        "amount": 4.8,
+        "reason": "duplicate_charge"
+      }
+    },
+    {
+      "type": "assistant",
+      "content": "About the late fee on INV-488: late payment fees are not billing errors, so I'm not able to waive or credit them."
+    },
+    {
+      "type": "user",
+      "content": "OK, understood."
+    },
+    {
+      "type": "assistant",
+      "content": "Done: Time of Use from 1 October 2026 ($8.00 a month), and a $4.80 credit on INV-501 for the duplicate service fee."
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "name": "support-assistant-eval",
+  "version": "2026-09-30",
+  "items_file": "eval_items.jsonl",
+  "metrics": {
+    "primary": "pass_rate",
+    "report": [
+      "pass_rate",
+      "pass_rate_by_slice",
+      "wilson_95ci"
+    ]
+  },
+  "sampling": {
+    "temperature": 0.0,
+    "max_output_tokens": 1024,
+    "samples_per_item": 1
+  },
+  "contamination_checks": [
+    "canary string search in training corpora",
+    "13-gram overlap with training data below 1%"
+  ],
+  "release_rule": "never published; results reported only as aggregates"
+}

@@ -14,6 +14,8 @@ Prompts, models, retrieval settings and tools change weekly, and none of them th
 4. **Version it** (a table in the lakehouse, a Langfuse/LangSmith/Braintrust dataset, a JSONL in git) and add to it from every production failure.
 5. **Synthesize carefully**: an LLM can generate questions from documents and rubrics from policies; review every generated item — synthetic sets drift toward what the generator finds easy.
 
+Chapter 26d.7 shows a complete evaluation set with its scorers (execution match on several fixtures, unit tests, a rubric judge), a canary string and confidence intervals; 26d.8 shows how to aggregate subjective judgments that have no ground truth.
+
 ## 32.3 Metric families
 
 | Task | Metrics | Notes |

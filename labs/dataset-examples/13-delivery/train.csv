@@ -1,0 +1,5 @@
+id,text,intent,entities_json,entity_count,language,split
+cs-0001,"I was charged twice for order 7731, can you refund one?",billing_refund,"[{""type"": ""order_id"", ""value"": ""7731"", ""start"": 30, ""end"": 34}]",1,en,train
+cs-0002,Change my delivery address to 14 Elm Street before it ships,update_address,"[{""type"": ""address"", ""value"": ""14 Elm Street"", ""start"": 30, ""end"": 43}]",1,en,train
+cs-0003,Do you ship to Canada?,shipping_policy,"[{""type"": ""country"", ""value"": ""Canada"", ""start"": 15, ""end"": 21}]",1,en,train
+cs-0004,Cancel order 8820 please,cancel_order,"[{""type"": ""order_id"", ""value"": ""8820"", ""start"": 13, ""end"": 17}]",1,en,train

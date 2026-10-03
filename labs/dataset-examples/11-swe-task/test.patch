@@ -1,0 +1,12 @@
+diff --git a/tests/test_parse.py b/tests/test_parse.py
+index c2a0feb..914f786 100644
+--- a/tests/test_parse.py
++++ b/tests/test_parse.py
+@@ -11,3 +11,7 @@ def test_empty_string():
+ 
+ def test_plus_and_percent_decoding():
+     assert parse_query("name=Ada+Lovelace&city=S%C3%A3o+Paulo") == {"name": "Ada Lovelace", "city": "São Paulo"}
++
++
++def test_repeated_keys_are_kept():
++    assert parse_query("tag=a&tag=b&x=1&tag=c") == {"tag": ["a", "b", "c"], "x": "1"}
