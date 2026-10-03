@@ -143,6 +143,7 @@ The book is meant to be used, not read cover to cover. Part 1 is a working syste
 | 5. Your resume | 55–57 | Every concept on the reference resume explained, a glossary, and the GitHub portfolio |
 | 6. Reference guides | study library | Long-form, code-heavy guides, each paired with a chapter |
 | 7. Building and earning | 58–62 | Startup ideas, income playbooks with Claude, trends and tools, successful startups in the resume's domains, and the open research problems builders can work on |
+| 8. Advanced questions | 63–67 | Five senior-interview questions answered in depth: cutting token costs, troubleshooting an agent that cannot find a dataset that exists, latent and adaptive reasoning in agent SDKs, building an LLM judge, and authorising an agent to see only certain data |
 
 **Three reading paths.**
 
@@ -150,7 +151,7 @@ The book is meant to be used, not read cover to cover. Part 1 is a working syste
 
 *The interview in two weeks.* Days 1–2: chapters 35, 36 and 37 for the process and the target. Days 3–7: chapters 14, 22, 24, 30 and 32, the five behind most technical questions, plus 20b and 31 if the role touches tools or cost. Days 8–10: chapters 39 and 40 out loud, plus 39b–39c, 41 or 42 if the job matches them. Days 11–13: chapters 38 and 43, timed. Day 14: rest, then reread your own resume with chapter 55 beside it.
 
-*The builder or founder.* Start with sections 0.4 and 0.5, then chapters 52, 52a and 54 for working with agents; 20, 20b, 22, 22b and 23 for building them; 31, 32 and 32b for whether they pay and whether they work; 30, 53, 53b and 53c for how they fail; and Part 7 (58–62) for ideas, income, the companies to learn from and the problems still open.
+*The builder or founder.* Start with sections 0.4 and 0.5, then chapters 52, 52a and 54 for working with agents; 20, 20b, 22, 22b and 23 for building them; 31, 32 and 32b for whether they pay and whether they work; 30, 53, 53b and 53c for how they fail; and Part 7 (58–62) for ideas, income, the companies to learn from and the problems still open; Part 8 (63–67) when a senior interview is booked, for the five long-form answers.
 
 ## Sources
 

@@ -21,6 +21,7 @@ PARTS = [
     ("part-5-your-resume", "Part 5 — The resume, glossary and portfolio"),
     ("part-6-reference-guides", "Part 6 — Reference guides (study library)"),
     ("part-7-building-and-earning", "Part 7 — Building and earning"),
+    ("part-8-advanced-questions", "Part 8 — Advanced interview questions, answered in depth"),
 ]
 PART6_LINE = ("- [Study library index](book/part-6-reference-guides/README.md) — agentic AI, retrieval, LLMs, "
               "machine learning, clouds, Python and backend, industries, interview practice")
