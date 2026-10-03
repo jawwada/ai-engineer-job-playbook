@@ -8,7 +8,7 @@ Per request: input tokens (system prompt + tools + retrieved context + history),
 
 ## 31.2 The levers, in order of leverage
 
-1. **Prompt caching.** Put the stable prefix first (system prompt, tool schemas, long reference documents); cache reads cost 10% or less of input price (2.5–5% on the Anthropic frontier tiers as of 2026: $0.25 on a $10 input price, $0.20 on $4). Agents with long tool lists and multi-turn loops see 50–90% input-cost reductions. The mechanics behind that number: on Anthropic you mark up to four `cache_control` breakpoints and pay a write premium (1.25× input for a 5-minute TTL, 2× for one hour), so a prefix pays for itself from its second read; OpenAI caches automatically for prompts above about 1,024 tokens; Gemini has implicit caching plus explicit cache objects billed for storage per hour. There is a minimum cacheable prefix length (around 1–4k tokens depending on the model). Watch cache TTLs and ordering — the cache is a prefix match in the order tools → system → messages, so one changed byte early (a timestamp in the system prompt, a re-ordered tool list, a per-user greeting) invalidates everything after it; measure the cache-hit ratio (`cache_read_input_tokens` ÷ total input) as a first-class metric.
+1. **Prompt caching.** Put the stable prefix first (system prompt, tool schemas, long reference documents); cache reads cost 10% or less of input price (2.5–5% on the Anthropic frontier tiers as of 2026: \$0.25 on a \$10 input price, \$0.20 on \$4). Agents with long tool lists and multi-turn loops see 50–90% input-cost reductions. The mechanics behind that number: on Anthropic you mark up to four `cache_control` breakpoints and pay a write premium (1.25× input for a 5-minute TTL, 2× for one hour), so a prefix pays for itself from its second read; OpenAI caches automatically for prompts above about 1,024 tokens; Gemini has implicit caching plus explicit cache objects billed for storage per hour. The minimum cacheable prompt length depends on the model; on the Claude API in October 2026 it is 512 tokens for Claude Opus 5.5, Sonnet 5.5, Opus 5, Fable 5 and 5.1, and Mythos 5 and 5.1; 1,024 for Opus 4.8, Sonnet 5, Sonnet 4.6 and Sonnet 4.5; 2,048 for Opus 4.7 and Mythos Preview; and 4,096 for Opus 4.6, Opus 4.5 and Haiku 4.5. A shorter prompt marked with `cache_control` is processed without caching and without an error, so check that `cache_creation_input_tokens` or `cache_read_input_tokens` is non-zero. Watch cache TTLs and ordering — the cache is a prefix match in the order tools → system → messages, so one changed byte early (a timestamp in the system prompt, a re-ordered tool list, a per-user greeting) invalidates everything after it; measure the cache-hit ratio (`cache_read_input_tokens` ÷ total input) as a first-class metric.
 2. **Model routing.** Classify difficulty (rules, a small model, or confidence from the cheap model) and send the easy 70–90% to the cheap tier; reserve frontier for hard cases and final answers. Measure quality per route on the eval set.
 3. **Context engineering.** Retrieve fewer, better chunks (rerank to 5–8), trim tool outputs to what the next step needs, summarize history, drop dead tool schemas, use sub-agents with fresh windows instead of one bloated conversation.
 4. **Output control.** Structured outputs instead of prose, explicit length limits, stop sequences, no "explain your reasoning" unless needed; for reasoning models, set thinking budgets per step and zero for workers.
@@ -21,7 +21,7 @@ Per request: input tokens (system prompt + tools + retrieved context + history),
 
 ## 31.3 Attribution and controls
 
-- **Tag every call** with feature, tenant, user segment, model, prompt version, route (OTel attributes; gateway metadata) and compute cost from a price table at ingestion; dashboards by feature and tenant; unit economics (cost per resolved ticket, per document, per asset) that the business recognizes.
+- **Tag every call** with feature, tenant, user segment, model, prompt version, route (OTel attributes; gateway metadata) and compute cost from a price table at ingestion; dashboards by feature and tenant; unit economics (cost per resolved ticket, per document, per asset) that the business recognizes. Chapter 29b works through cost per span and per trace: where to compute it (application, Collector or warehouse), the versioned price table, and how sampling distorts the totals.
 - **Gateways** (LiteLLM, Portkey, Databricks Unity Gateway, Azure APIM, Cloudflare/Kong AI gateways, AgentCore Gateway) enforce budgets, rate limits and per-key spend caps, and route/fallback across providers. A budget is only as good as its enforcement point: a hard cap in the gateway stops spend; an alert on a dashboard tells you about it the next morning.
 - **Budgets per run** for agents (max tokens/tool calls/dollars) and alerts on anomalies (a run 10× the median).
 - **Cost in CI**: the eval suite reports cost per task next to quality; a change that improves quality by 1% and doubles cost needs a conversation.
@@ -29,14 +29,14 @@ Per request: input tokens (system prompt + tools + retrieved context + history),
 
 ## 31.4 A worked optimization
 
-Baseline: a support agent on a frontier model, 50 turns/day/agent-seat × 2,000 seats; each turn 9,000 input tokens (2,500 system+tools, 5,000 retrieved context, 1,500 history) and 400 output; price $4/$20 per MTok.
+Baseline: a support agent on a frontier model, 50 turns/day/agent-seat × 2,000 seats; each turn 9,000 input tokens (2,500 system+tools, 5,000 retrieved context, 1,500 history) and 400 output; price \$4/\$20 per MTok.
 
 ```
 per turn: 9,000 × $4/1M + 400 × $20/1M = $0.036 + $0.008 = $0.044
 per day:  100,000 turns × $0.044 = $4,400  → ~$130k/month
 ```
 
-Changes: cache the 2,500-token prefix (reads at 5% on this $4 tier: $0.0005 instead of $0.010); rerank context to 2,500 tokens; route 75% of turns to a $2/$10 model (whose cache reads are 10% of input, $0.20/MTok); cap history at 800 tokens via summaries.
+Changes: cache the 2,500-token prefix (reads at 5% on this \$4 tier: \$0.0005 instead of \$0.010); rerank context to 2,500 tokens; route 75% of turns to a \$2/\$10 model (whose cache reads are 10% of input, \$0.20/MTok); cap history at 800 tokens via summaries.
 
 ```
 frontier turn: (2,500×0.05 + 2,500 + 800) × $4/1M + 400 × $20/1M ≈ $0.0137 + $0.008 = $0.0217
@@ -50,7 +50,7 @@ Quality check: the eval set shows no change on resolution rate for routed turns;
 
 ### Critic's additions: why agent costs grow quadratically, and what caching does to the curve
 
-A chat turn sends its context once; an agent loop re-sends the whole growing transcript on every step. If a run starts with a 10k-token prefix and each step adds 3k tokens (tool call, tool result, reasoning), step *i* sends 10k + 3k × (i − 1) input tokens, so a 30-step run sends 30 × 10k + 3k × (30 × 29 / 2) ≈ **1.6M input tokens** — quadratic in the number of steps. On a $2/$10 model:
+A chat turn sends its context once; an agent loop re-sends the whole growing transcript on every step. If a run starts with a 10k-token prefix and each step adds 3k tokens (tool call, tool result, reasoning), step *i* sends 10k + 3k × (i − 1) input tokens, so a 30-step run sends 30 × 10k + 3k × (30 × 29 / 2) ≈ **1.6M input tokens** — quadratic in the number of steps. On a \$2/\$10 model:
 
 ```
 uncached:  1.6M × $2/1M                                   ≈ $3.21 per run (+ ~$0.15 output)
@@ -62,7 +62,7 @@ The levers specific to agents follow from the formula: cache the transcript pref
 
 ## 31.5 Classic ML and infrastructure costs (don't forget them)
 
-GPU utilization (batching, autoscaling to zero, spot instances for training), vector-DB sizing (dimensions × vectors × replicas; quantization), serverless vs provisioned warehouses, log volume (sampling, retention), and the human review cost that a better model can reduce. A FinOps review lists all of them with owners.
+GPU utilization (batching, autoscaling to zero, spot instances for training), vector-DB sizing (dimensions × vectors × replicas; quantization), serverless vs provisioned warehouses, log volume (sampling, retention), and the human review cost that a better model can reduce. A FinOps review lists all of them with owners. Chapters 47a–47g cover the whole bill from the cloud FinOps analyst's seat: the role and finance vocabulary, billing data and native tools, forecasting and variance, allocation, tagging and anomalies, commitments and realized savings, executive reporting and the interview, and a hands-on lab.
 
 ## 31.6 Scenarios
 

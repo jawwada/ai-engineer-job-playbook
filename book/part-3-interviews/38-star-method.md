@@ -4,7 +4,7 @@
 
 ## 38.1 STAR, precisely
 
-- **Situation** (15 s): context, scale, constraint. "A $3T asset manager; thousands of marketing assets a year; legal review was the bottleneck."
+- **Situation** (15 s): context, scale, constraint. "A \$3T asset manager; thousands of marketing assets a year; legal review was the bottleneck."
 - **Task** (10 s): what *you* owned. "I owned the design and delivery of the agentic review workflow."
 - **Action** (50 s): the decisions you made and why — three or four concrete moves, in first person singular. "I split review into parallel reviewer agents with their own retrieval…; I made every finding cite a rule id…; I put a conflict-detection step…; I negotiated the rubric with legal…"
 - **Result** (15 s): numbers, adoption, what changed. "Cycle time dropped from days to hours; zero regulatory escapes in the first quarter; the platform was reused for two more content types."
@@ -34,7 +34,7 @@ Each story gets two or three tags; the bank needs every tag covered twice.
 | # | Story headline | Tags | Numbers |
 |---|---|---|---|
 | 1 | Parallel reviewer agents with conflict detection for marketing compliance | OWN, TECH, INF | cycle time, escapes, rules cited |
-| 2 | Taking an LLM-first inventory platform from concept to production in nine months as co-founder | OWN, DEL, AMB | $1.5M, 15%, 89% |
+| 2 | Taking an LLM-first inventory platform from concept to production in nine months as co-founder | OWN, DEL, AMB | \$1.5M, 15%, 89% |
 | 3 | Serving throughput +80% on GPU/TPU for multimodal models | TECH, DATA | 80%, cost per asset |
 | 4 | Two-tower ranking at 10K QPS with statistical gates — saying no to a launch | DATA, INF, TECH | ~100% CTR, QPS |
 | 5 | Building a 15-person Smart Agents team and a portfolio with acceptance criteria | LEAD, AMB | team size, use cases |

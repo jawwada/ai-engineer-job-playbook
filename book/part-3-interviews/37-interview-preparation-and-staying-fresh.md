@@ -31,7 +31,7 @@ A scripted role-related-knowledge round is different from a technical deep dive 
 
 - **Day 1–2:** read the JD four ways (chapter 35); write the 90-day sentence; list the implied architecture; identify gaps.
 - **Day 3–5:** update the use-case files for the three projects closest to their problem (chapter 36); write ten STAR stories (chapter 38); drill the five technical topics (chapter 39; chapters 39b and 39c for the provider-side, Google Cloud version) out loud, recorded, ten minutes each, and write the number-defense cards (36.7) for every figure on the resume you sent.
-- **Day 6–8:** two system-design dry runs with a timer (chapter 40), one with a friend or the Claude Code kit's `/interview-prep` mock mode; one coding session per day (45 min).
+- **Day 6–8:** two system-design dry runs with a timer (chapter 40), one with a friend or the Claude Code kit's `/interview-prep` mock mode; one coding session per day (45 min), working through the pattern sets in chapter 39d.
 - **Day 9–10:** company research: product, customers, recent news, engineering blog, the interviewers' public talks or posts; prepare five questions per interviewer type; build or refresh one lab repo relevant to their stack (chapter 34).
 - **Day 11–12:** mock interviews end to end; fix the three weakest answers; prepare the logistics kit (37.4).
 - **Day 13:** light review only — the use-case files and STAR headlines, not new material. Sleep.
@@ -83,7 +83,7 @@ Run this on every rehearsed answer. If any line fails, the answer is high level,
 | Check | Fails when you say | Passes when you say |
 |---|---|---|
 | Mechanism | "we made it resilient" | "retry three times with exponential backoff and jitter, then fall back to the second model behind the gateway, then dead-letter" |
-| Number | "it got much cheaper" | "cost per turn from $0.044 to $0.014, a 69% reduction, no change on the 200-case eval set" |
+| Number | "it got much cheaper" | "cost per turn from \$0.044 to \$0.014, a 69% reduction, no change on the 200-case eval set" |
 | Product and parameter | "a vector database" | "Vector Search on the Agent Platform (Vertex AI Vector Search, in the old naming) with a `tenant` restrict on every query" |
 | Threshold | "we monitor latency" | "p95 under 2.5 s; alert at 2× the seven-day baseline for ten minutes" |
 | Failure mode | "it works well" | "it fails when the tool swallows a 403 into an empty list; the empty-result-rate monitor catches it" |

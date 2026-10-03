@@ -1,10 +1,10 @@
 # 23. Modern agentic AI applications: what they do and how they are built
 
-> **What you need to be able to say:** for each major category of agent product in 2026, what it does, what the architecture looks like under the hood, where the hard part is, and what you would measure. These are also the systems interviewers ask you to design (chapter 40) and the companies that hire FDEs and AI engineers.
+> **What you need to be able to say:** for each major category of agent product in 2026, what it does, what the architecture looks like under the hood, where the hard part is, and what you would measure. These are also the systems interviewers ask you to design (chapter 40) and the companies that hire FDEs and AI engineers. Chapter 23b adds field notes synthesized from the menuagentic.com blog: the deciding axes, the 2026 incident record and the controls it teaches.
 
 ## 23.1 Coding agents
 
-**Products:** Claude Code, OpenAI Codex, Cursor (editor + background agents), GitHub Copilot coding agent, Devin, Gemini CLI, Google Jules and Antigravity, AWS Kiro (spec-driven), Windsurf, Cline, Aider, Replit Agent, Lovable/Bolt (app generation).
+**Products:** Claude Code, OpenAI Codex, Cursor (editor + background agents), GitHub Copilot coding agent, Devin, Gemini CLI (for paid API-key and Gemini Code Assist Standard or Enterprise users since 18 June 2026, when Antigravity CLI replaced it for free-tier and consumer users), Google Jules and Antigravity, AWS Kiro (spec-driven), Windsurf, Cline, Aider, Replit Agent, Lovable/Bolt (app generation).
 
 **What they do:** take a task in natural language, read a repository, plan, edit files, run commands and tests, iterate until the task passes, and open a pull request — in the terminal, the IDE, or as a background cloud job.
 
@@ -12,7 +12,7 @@
 
 ## 23.2 Computer-use and browser agents
 
-**Products:** OpenAI's agent mode/Operator lineage and the ChatGPT Atlas browser, Claude computer use and Claude in Chrome, Google's Project Mariner lineage, the Gemini computer-use model and Gemini agent features, Perplexity Comet, Browserbase/Stagehand, AgentCore Browser, Browser Use, Skyvern, Anthropic's browser toolset.
+**Products:** OpenAI's agent mode/Operator lineage (OpenAI shut down its ChatGPT Atlas browser on 9 August 2026, moving browser-based agentic work into ChatGPT — chiefly the desktop app, with the ChatGPT Chrome extension or sidebar for help inside Chrome — and Codex), Claude computer use and Claude in Chrome, Google's Project Mariner lineage, the Gemini computer-use model and Gemini agent features, Perplexity Comet, Browserbase/Stagehand, AgentCore Browser, Browser Use, Skyvern, Anthropic's browser toolset.
 
 **What they do:** operate a GUI the way a person does — click, type, scroll, read screenshots or the accessibility tree — to complete tasks on sites with no API: forms, bookings, back-office systems, legacy ERPs.
 

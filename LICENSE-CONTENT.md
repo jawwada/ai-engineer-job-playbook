@@ -8,5 +8,6 @@ You may share and adapt the material for any purpose, including commercially, as
 appropriate credit ("AI Engineer Job Playbook, github.com/jawwada/ai-engineer-job-playbook"),
 link to the license, and indicate if changes were made.
 
-Code in `kit/` and `tools/` is licensed under the MIT License (see `LICENSE`).
+Code in `kit/`, `tools/` and `labs/`, and the documentation that ships with it in those folders,
+is licensed under the MIT License (see `LICENSE`).
 Product names, trademarks and quoted sources belong to their respective owners.

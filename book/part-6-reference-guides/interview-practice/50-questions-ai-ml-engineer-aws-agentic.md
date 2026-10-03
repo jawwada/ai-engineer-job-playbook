@@ -1862,7 +1862,7 @@ We built an MVP in three weeks and ran it on ten historical contracts where we a
 **Q51. Describe a situation where you had to make a significant technical trade-off and communicate it to a non-technical stakeholder.**
 
 **Answer:**
-During a document intelligence project for an insurance client, we hit a decision point about embedding model selection. The product team wanted to use the largest, most accurate embedding model available because "more accuracy is always better." The problem was that re-embedding their entire corpus of 2 million documents with the larger model would cost approximately $12,000 and take 48 hours, versus $800 and four hours for a smaller, faster model that benchmarked at only 3% lower retrieval accuracy on our domain-specific test set.
+During a document intelligence project for an insurance client, we hit a decision point about embedding model selection. The product team wanted to use the largest, most accurate embedding model available because "more accuracy is always better." The problem was that re-embedding their entire corpus of 2 million documents with the larger model would cost approximately \$12,000 and take 48 hours, versus \$800 and four hours for a smaller, faster model that benchmarked at only 3% lower retrieval accuracy on our domain-specific test set.
 
 I prepared a one-page briefing for the VP of Product — not a technical deep-dive, but a clear cost-benefit frame. I described it as: "The premium model is like hiring a specialist for every document review. The standard model is like having a well-trained generalist. For our specific task — finding policy exclusion clauses — the generalist scores 97% as well as the specialist, but costs 15 times less and finishes 12 times faster."
 

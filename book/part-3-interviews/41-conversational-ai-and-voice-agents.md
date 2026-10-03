@@ -75,9 +75,9 @@ Say the mapping once if the interviewer comes from another cloud; then answer in
 
 **Gemini Live API (speech-to-speech).** Input audio is 16-bit PCM at 16 kHz and output audio is 24 kHz. Voice activity detection is configured under `automatic_activity_detection` with `start_of_speech_sensitivity`, `end_of_speech_sensitivity`, `prefix_padding_ms` and `silence_duration_ms` (Google suggests 500–800 ms for silence as the balance between latency and cutting people off). When the user barges in, the server marks the generation `interrupted`, and only what was already sent to the client stays in the session history — so the order state must be updated from confirmed operations, not from what the model intended to say. Turn on `input_audio_transcription` and `output_audio_transcription` so every turn has text to log, judge and screen (Model Armor does not screen audio). Audio-only sessions are limited to 15 minutes without context-window compression, a connection lives about 10 minutes (the server sends `GoAway` with the time left), and session-resumption handles stay valid for two hours; `contextWindowCompression` with a sliding window and a trigger token count keeps long sessions bounded. Audio is about 32 tokens per second, and the accumulated session context is billed again on every turn, so cost grows with the number of turns.
 
-**Chirp 3 (cascaded recognition).** Model id `chirp_3`; `StreamingRecognize` for live audio; up to 1,000 phrases for speech adaptation (menu items, brand names); a built-in denoiser that, per the documentation, cannot remove background human voices; automatic language detection; speaker diarization only in non-streaming recognition; word-level confidence values that the documentation says are not true confidence scores; general availability in the `us` and `eu` multi-regions. Price: $0.016 per minute for the first 500,000 minutes a month, falling to $0.004 above two million.
+**Chirp 3 (cascaded recognition).** Model id `chirp_3`; `StreamingRecognize` for live audio; up to 1,000 phrases for speech adaptation (menu items, brand names); a built-in denoiser that, per the documentation, cannot remove background human voices; automatic language detection; speaker diarization only in non-streaming recognition; word-level confidence values that the documentation says are not true confidence scores; general availability in the `us` and `eu` multi-regions. Price: \$0.016 per minute for the first 500,000 minutes a month, falling to \$0.004 above two million.
 
-**Text-to-speech.** Chirp 3 HD voices at $30 per million characters (the first million free each month); Gemini TTS models priced per text and audio token for expressive, steerable speech; pre-synthesize the twenty most common phrases ("Anything else?", "Please pull forward") as cached audio so they cost nothing and start instantly.
+**Text-to-speech.** Chirp 3 HD voices at \$30 per million characters (the first million free each month); Gemini TTS models priced per text and audio token for expressive, steerable speech; pre-synthesize the twenty most common phrases ("Anything else?", "Please pull forward") as cached audio so they cost nothing and start instantly.
 
 **Latency budget from the end of the customer's speech (cascaded).**
 
@@ -85,7 +85,7 @@ Say the mapping once if the interviewer comes from another cloud; then answer in
 |---|---|---|
 | End-of-speech detection | 300–500 ms | shorter silence threshold on yes/no and quantity prompts, longer on open questions |
 | Final transcript | 100–200 ms | streaming recognition; start understanding on stable partials |
-| Model to first structured token | 250–400 ms | Flash tier, `minimal` thinking, cached menu prefix, a small response schema |
+| Model to first structured token | 250–400 ms | Flash tier at its lowest thinking level (`low` on Gemini 3.8 Flash, which has no `minimal` level per Google's thinking guide of September 2026), cached menu prefix, a small response schema. The 250–400 ms figure assumed `minimal` thinking: re-measure it at `low` on Gemini 3.8 Flash, or move the live turn to Gemini 3.5 Flash-Lite at `minimal` |
 | State machine and price lookup | 20–50 ms | prices cached at the store edge from the POS |
 | First audio | 150–250 ms, or 0 for pre-synthesized phrases | streaming synthesis |
 | Total | about 0.8–1.4 s before mitigations | the requirement (first response under one second at p95) is met only with speculative understanding on stable partials and pre-synthesized phrases; measure per store and daypart |
@@ -154,9 +154,9 @@ The operation set is closed (`add`, `modify`, `remove`, `set_quantity`, `confirm
 
 | Path | Arithmetic | Per order |
 |---|---|---|
-| Cascaded: Chirp 3 + Gemini 3.8 Flash + Chirp 3 HD | recognition 1.5 min × $0.016 = $0.024; model 8 × (8,000 × $0.075 + 1,000 × $0.75 + 150 × $3.75) per million ≈ $0.015; speech 500 × $30 per million = $0.015 | ≈ $0.054 at list; ≈ $0.04 once recognition volume reaches the lower tiers (a fleet at 150,000 orders a day streams millions of minutes a month) |
-| Speech-to-speech, menu in the session prompt | 8 turns × 8,000 text tokens × $0.75 ≈ $0.048; accumulated audio context ≈ 8 × 1,200 tokens × $3.00 ≈ $0.029; agent audio out ≈ 1,100 tokens × $12.00 ≈ $0.013 (all per million) | ≈ $0.09 |
-| Speech-to-speech, menu behind a catalog tool | text context ≈ 8 × 2,700 tokens × $0.75 per million ≈ $0.016, audio as above | ≈ $0.06 |
+| Cascaded: Chirp 3 + Gemini 3.8 Flash + Chirp 3 HD | recognition 1.5 min × \$0.016 = \$0.024; model 8 × (8,000 × \$0.075 + 1,000 × \$0.75 + 150 × \$3.75) per million ≈ \$0.015; speech 500 × \$30 per million = \$0.015 | ≈ \$0.054 at list; ≈ \$0.04 once recognition volume reaches the lower tiers (a fleet at 150,000 orders a day streams millions of minutes a month) |
+| Speech-to-speech, menu in the session prompt | 8 turns × 8,000 text tokens × \$0.75 ≈ \$0.048; accumulated audio context ≈ 8 × 1,200 tokens × \$3.00 ≈ \$0.029; agent audio out ≈ 1,100 tokens × \$12.00 ≈ \$0.013 (all per million) | ≈ \$0.09 |
+| Speech-to-speech, menu behind a catalog tool | text context ≈ 8 × 2,700 tokens × \$0.75 per million ≈ \$0.016, audio as above | ≈ \$0.06 |
 
 Three things to say about the table: the model is a few cents per order either way, so accuracy and crew interventions decide the business case, not tokens; the Live path is cheaper when the menu lives behind a tool, because the session context is re-billed on every turn; and the Flash introductory price ends on 31 December 2026, which roughly doubles the model line from January 2027.
 
@@ -167,7 +167,7 @@ Three things to say about the table: the model is a few cents per order either w
 **Six follow-ups.**
 - *"Why not let the model keep the order in its context?"* — Context is not state: corrections, caps, prices and promotions need deterministic validation, and an order you can replay operation by operation is an order you can test and audit.
 - *"'Make it a large' after three items — which one?"* — The most recent sizeable item unless the last utterance mentioned two, in which case one clarifying question; the resolution is logged as an operation with its `target`.
-- *"Latency doubles at the lunch peak."* — Regional endpoints near the stores, Provisioned Throughput sized to the lunch peak in tokens per second with Priority spill-over for the order path, pre-synthesized phrases, `minimal` thinking, and p95 tracked per store and daypart so the peak is visible, not averaged away.
+- *"Latency doubles at the lunch peak."* — Regional endpoints near the stores, Provisioned Throughput sized to the lunch peak in tokens per second with Priority spill-over for the order path, pre-synthesized phrases, the lowest thinking level the model accepts (`low` on Gemini 3.8 Flash), and p95 tracked per store and daypart so the peak is visible, not averaged away.
 - *"Wind noise defeats the recognizer."* — Fix it upstream: windscreens and microphone placement, echo cancellation and noise suppression at the edge, speech adaptation for menu terms; after two empty or garbled recognitions, hand off.
 - *"How do you stop the agent from quoting a wrong price?"* — It cannot: the schema has no price field, the total is read from the POS, and the speech for totals is templated.
 - *"What do you hand the crew when you hand off?"* — The partial order on the tablet, the last utterance, and the reason code (low confidence, cap exceeded, allergen question, customer asked), so the crew continues rather than restarts.

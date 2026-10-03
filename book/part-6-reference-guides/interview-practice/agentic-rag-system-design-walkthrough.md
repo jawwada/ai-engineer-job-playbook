@@ -238,7 +238,7 @@ Know these well enough to discuss when you'd pick each one and why.
 
 ### 3.5 Retrieval Pipeline Best Practices
 
-- **Chunking**: Experiment with chunk sizes (256–1024 tokens); use overlap (10–20%); prefer semantic boundaries (headings, paragraphs) over fixed-size
+- **Chunking**: Start around 200–400 tokens without overlap and measure; add overlap only if recall@k improves on your gold set (chapter 24c); prefer semantic boundaries (headings, paragraphs) over fixed-size
 - **Hybrid search**: Always combine dense (vector) + sparse (BM25) retrieval; tune the weight between them
 - **Re-ranking**: Add a cross-encoder re-ranker as a second stage — it's the single highest-impact improvement to retrieval quality
 - **Metadata filtering**: Store document metadata (date, author, department, document type) and filter before or after retrieval
@@ -380,7 +380,7 @@ test_set = [
 ### Numbers to have ready
 
 - Typical embedding dimensions: 1024–3072
-- Good chunk size range: 256–1024 tokens, 10–20% overlap
+- Chunk size: start around 200–400 tokens with no overlap and add overlap only if recall@k improves on your gold set (evidence in chapter 24c; older guidance of 256–1024 tokens with 10–20% overlap tends to lower precision)
 - Retrieval top-k: 5–20 candidates before re-ranking, 3–5 after
 - LLM context budget: allocate explicitly (system 500, context 3000, history 1000, output 1500 — adjust per model)
 - Target latency for interactive agent: <3s end-to-end for simple queries, <10s for multi-hop

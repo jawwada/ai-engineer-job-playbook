@@ -40,8 +40,8 @@ flowchart LR
 
 - **Agent frameworks:** LangGraph (and LangChain 1.0), Claude Agent SDK, OpenAI Agents SDK, Google ADK, AWS Strands Agents, Microsoft Agent Framework (Semantic Kernel + AutoGen), CrewAI, PydanticAI, LlamaIndex (Workflows), Haystack, DSPy (programmatic prompt optimization), Mastra and Vercel AI SDK (TypeScript), smolagents (Hugging Face).
 - **Managed agent runtimes:** Bedrock AgentCore (Runtime and, since July 2026, the no-code Harness), Google's Agent Runtime (formerly Agent Engine) on the Gemini Enterprise Agent Platform, Microsoft Foundry Agent Service (hosted agents), Claude Managed Agents (public beta April 2026), LangSmith Deployment (formerly LangGraph Platform), Modal/Temporal for durable execution. The 2026 pattern is the **managed harness**: you supply model, instructions, tools and skills; the vendor supplies the loop, sandbox, memory and traces.
-- **Low-code / business-user builders:** Microsoft Copilot Studio, Google Gemini Enterprise (formerly Agentspace) and CX Agent Studio, Salesforce Agentforce, ServiceNow AI Agents, n8n, Zapier Agents, Make, Dify, Flowise, Langflow.
-- **Coding agents (also products you compete with and borrow from):** Claude Code, OpenAI Codex, Cursor, GitHub Copilot agent, Devin, Gemini CLI, Aider, Cline, Windsurf.
+- **Low-code / business-user builders:** Microsoft Copilot Studio, Google Gemini Enterprise (formerly Agentspace) and CX Agent Studio, Salesforce Agentforce, ServiceNow AI Agents, n8n, Zapier Agents, Make, Dify, Langflow. (Flowise's repository was archived on 13 August 2026 and its team ended maintenance; 23b.14.)
+- **Coding agents (also products you compete with and borrow from):** Claude Code, OpenAI Codex, Cursor, GitHub Copilot agent, Devin, Google's Antigravity CLI and Gemini CLI (since 18 June 2026 Gemini CLI serves only paid API-key and Gemini Code Assist Standard or Enterprise users; Antigravity CLI replaced it for free-tier and consumer users), Aider, Cline, Windsurf.
 
 ### Row 4 — Tools, protocols, and integration
 
@@ -82,7 +82,7 @@ flowchart LR
 ### Row 9 — Observability and evaluation (chapters 29, 32)
 
 - **Tracing/observability:** OpenTelemetry (GenAI semantic conventions), LangSmith, Langfuse (open source), Arize Phoenix and Arize AX, Braintrust, Weights & Biases Weave, Datadog LLM Observability, New Relic AI Monitoring, Honeycomb, Dash0, Helicone, Traceloop/OpenLLMetry, MLflow Tracing, AgentCore Observability, Google Agent Runtime tracing (Cloud Trace), Azure Monitor/Application Insights.
-- **Evaluation:** Ragas, DeepEval, promptfoo, Inspect (UK AISI), OpenAI Evals, LangSmith evaluators, Braintrust, the Gen AI evaluation service on the Gemini Enterprise Agent Platform, Foundry evaluation SDK, AgentCore Evaluations, MLflow LLM evaluate, Databricks Agent Evaluation and Mosaic AI judges; benchmarks (MMLU-Pro, GPQA Diamond, HLE, SWE-bench Verified, Terminal-Bench, τ-bench, BrowseComp, ARC-AGI-2/3, LMArena).
+- **Evaluation:** Ragas, DeepEval, promptfoo, Inspect (UK AISI), OpenAI Evals (read-only from 31 October 2026, shut down on 30 November 2026; OpenAI's migration guide points to promptfoo), LangSmith evaluators, Braintrust, the Gen AI evaluation service on the Gemini Enterprise Agent Platform, Foundry evaluation SDK, AgentCore Evaluations, MLflow LLM evaluate, Databricks Agent Evaluation and Mosaic AI judges; benchmarks (MMLU-Pro, GPQA Diamond, HLE, SWE-bench Verified, Terminal-Bench, τ-bench, BrowseComp, ARC-AGI-2/3, LMArena).
 - **Red teaming:** PyRIT (Microsoft), garak (NVIDIA), promptfoo red team, Giskard, DeepTeam.
 
 ### Row 10 — Workflow, scheduling and ops

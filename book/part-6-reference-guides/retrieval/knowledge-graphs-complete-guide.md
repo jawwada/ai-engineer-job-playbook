@@ -604,7 +604,7 @@ It's overkill when:
 
 ### 9.6 The Construction Cost Reality
 
-Microsoft GraphRAG on a 1M-document corpus with gpt-4o-mini for extraction costs roughly **$5K–20K in API costs** depending on chunking and prompt design. With Claude Opus, multiply by ~10. This is the gating factor for adoption.
+Microsoft GraphRAG on a 1M-document corpus with gpt-4o-mini for extraction costs roughly **\$5K–20K in API costs** depending on chunking and prompt design. With Claude Opus, multiply by ~10. This is the gating factor for adoption.
 
 Mitigations:
 - **Dependency-parsing-first construction**: dependency parsing achieves 94% of LLM-based extraction performance (61.87% vs 65.83% in some benchmarks) at far lower cost.
@@ -873,7 +873,7 @@ Strong answer:
 
 Strong answer:
 
-> "Microsoft-style LLM-driven GraphRAG construction on a million-document corpus runs $5K–20K in API costs with gpt-4o-mini, multiplied by ~10x for premium models. That's the gating factor for adoption.
+> "Microsoft-style LLM-driven GraphRAG construction on a million-document corpus runs \$5K–20K in API costs with gpt-4o-mini, multiplied by ~10x for premium models. That's the gating factor for adoption.
 >
 > The cost optimizations I'd reach for: first, hybrid extraction — dependency parsing handles the syntactic majority of entity-relation pairs and gets you within 94% of pure-LLM performance at a fraction of the cost. Second, model tiering — cheap model for extraction, expensive model only for ambiguity resolution. Third, incremental construction — never re-extract from unchanged documents."
 

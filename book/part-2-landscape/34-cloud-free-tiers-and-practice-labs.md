@@ -6,20 +6,20 @@
 
 | Provider | What you get | How long | Card? | Notes |
 |---|---|---|---|---|
-| **AWS** (accounts created after 15 July 2025) | Free plan: $100 credit at sign-up plus up to $100 more for completing activities (launch EC2, set a budget, etc.), capped free-plan services; or Paid plan with the same credits and all services | 6 months or until credits run out; account closes after 6 months on the free plan unless upgraded (data deleted 90 days later) | yes | The old 12-month per-service free tier is gone for new accounts. Always-free: Lambda 1M requests + 400k GB-s/month, DynamoDB 25 GB, CloudFront 1 TB transfer/10M requests, S3 only via credits/limits — check the Free Tier page |
-| **Azure** | $200 credit for 30 days, then 12 months of popular services free within limits (B1s VM hours, 250 GB SQL, 5 GB blob, etc.), plus always-free services (Functions 1M executions, App Service F1, Cosmos DB 1,000 RU/s + 25 GB, Azure AI services free tiers) | 30 days credit / 12 months limits / always-free | yes | Azure OpenAI/Foundry models are pay-as-you-go; the $200 covers a lot of tokens. Students: Azure for Students $100 without a card |
-| **Google Cloud** | $300 credit for new customers plus the always-free tier (Cloud Run 2M requests/month, Firestore 1 GiB, e2-micro VM, 5 GB Cloud Storage in US regions, BigQuery 1 TB queries + 10 GB storage/month) | 90 days credit; free tier ongoing | yes | Nothing auto-upgrades to paid; you must activate billing. Gemini API also has a free tier with rate limits through AI Studio (free-tier prompts may be used to improve Google's products — never send real customer data through it). Gemini Enterprise Agent Platform (formerly Vertex AI) usage draws on the $300 credit |
+| **AWS** (accounts created after 15 July 2025) | Free plan: \$100 credit at sign-up plus up to \$100 more for completing activities (launch EC2, set a budget, etc.), capped free-plan services; or Paid plan with the same credits and all services | 6 months or until credits run out; account closes after 6 months on the free plan unless upgraded (data deleted 90 days later) | yes | The old 12-month per-service free tier is gone for new accounts. Always-free: Lambda 1M requests + 400k GB-s/month, DynamoDB 25 GB, CloudFront 1 TB transfer/10M requests, S3 only via credits/limits — check the Free Tier page |
+| **Azure** | \$200 credit for 30 days, then 12 months of popular services free within limits (B1s VM hours, 250 GB SQL, 5 GB blob, etc.), plus always-free services (Functions 1M executions, App Service F1, Cosmos DB 1,000 RU/s + 25 GB, Azure AI services free tiers) | 30 days credit / 12 months limits / always-free | yes | Azure OpenAI/Foundry models are pay-as-you-go; the \$200 covers a lot of tokens. Students: Azure for Students \$100 without a card |
+| **Google Cloud** | \$300 credit for new customers plus the always-free tier (Cloud Run 2M requests/month, Firestore 1 GiB, e2-micro VM, 5 GB Cloud Storage in US regions, BigQuery 1 TB queries + 10 GB storage/month) | 90 days credit; free tier ongoing | yes | Nothing auto-upgrades to paid; you must activate billing. Gemini API also has a free tier with rate limits through AI Studio (free-tier prompts may be used to improve Google's products — never send real customer data through it). Gemini Enterprise Agent Platform (formerly Vertex AI) usage draws on the \$300 credit |
 | **Databricks** | **Free Edition**: a free, limited workspace on serverless compute with notebooks, SQL, Lakeflow (Lakeflow Designer added in 2026), Unity Catalog, MLflow, model serving, AI Search (formerly Vector Search) and agents for individuals | ongoing | no | Replaced Community Edition (June 2025); quotas apply (small serverless sizes, limited endpoints, no GPU training); perfect for the lakehouse and agent labs |
-| **Snowflake** | 30-day trial with $400 credits | 30 days | no | enough for Cortex Search/Analyst labs |
+| **Snowflake** | 30-day trial with \$400 credits | 30 days | no | enough for Cortex Search/Analyst labs |
 | **Anthropic Claude** | Developer Platform is pay-as-you-go (prepaid credits; a few dollars goes far on Haiku); Claude Pro/Max subscriptions include Claude Code usage | — | yes | Claude is also usable via Bedrock, Google's Agent Platform and Foundry credits |
 | **OpenAI / Google Gemini API** | Pay-as-you-go; Gemini API free tier with daily limits via AI Studio | — | varies | |
 | **Hugging Face** | free model/dataset hosting, free Spaces (CPU), Inference Providers with monthly free credits; Pro adds GPU and ZeroGPU | ongoing | no | host demos here |
 | **GitHub** | free Actions minutes, Codespaces hours, GitHub Models playground; **Student Developer Pack** adds cloud credits (Azure, DigitalOcean, etc.) | ongoing | no | your portfolio lives here |
-| **Oracle Cloud / IBM Cloud** | Oracle always-free (ARM VMs, 2 DBs); IBM Lite plans (40+ services, no expiry) and $200 PAYG credit | ongoing | varies | useful for always-on demos |
+| **Oracle Cloud / IBM Cloud** | Oracle always-free (ARM VMs, 2 DBs); IBM Lite plans (40+ services, no expiry) and \$200 PAYG credit | ongoing | varies | useful for always-on demos |
 | **Kaggle / Colab** | free GPU/TPU notebook hours (Kaggle 30 h/week GPU; Colab free tier variable) | ongoing | no | fine-tuning labs with LoRA on 7–8B models |
 | **Local** | Ollama / llama.cpp / LM Studio on your laptop; Apple-silicon or a 12–24 GB GPU runs 7–27B models at 4-bit | — | — | the cheapest way to practice serving |
 
-Practical rules: one email per provider (aliases work), set a **budget alert at $1** the day you sign up (AWS Budgets, Azure Cost Management, GCP Budgets), tear down everything after a lab (`terraform destroy`; delete resource groups/projects), never leave a GPU VM, a provisioned vector index or a NAT gateway running overnight, and never put credentials in a repo (use the cloud CLI's login and `.env` files in `.gitignore`).
+Practical rules: one email per provider (aliases work), set a **budget alert at \$1** the day you sign up (AWS Budgets, Azure Cost Management, GCP Budgets), tear down everything after a lab (`terraform destroy`; delete resource groups/projects), never leave a GPU VM, a provisioned vector index or a NAT gateway running overnight, and never put credentials in a repo (use the cloud CLI's login and `.env` files in `.gitignore`).
 
 ### Critic's additions: the services that quietly bill while idle
 
@@ -27,7 +27,7 @@ Budget alerts are delayed by hours, so know the usual culprits in AI labs before
 
 | Service | Why it bills when you are not using it | What to do |
 |---|---|---|
-| OpenSearch Serverless (often created by a Bedrock Knowledge Base quick-create) | minimum capacity units run continuously — historically on the order of $100+ a month even for a toy index | choose Aurora pgvector, S3 Vectors or a free-tier store for labs; delete the collection after |
+| OpenSearch Serverless (often created by a Bedrock Knowledge Base quick-create) | minimum capacity units run continuously — historically on the order of \$100+ a month even for a toy index | choose Aurora pgvector, S3 Vectors or a free-tier store for labs; delete the collection after |
 | Azure AI Search above the Free tier | a Basic or Standard search unit bills per hour from creation | use the Free tier (limited indexes and storage) for labs |
 | Vector Search endpoints and managed online endpoints (Google's Agent Platform, Azure ML, SageMaker) | dedicated nodes bill per hour whether or not they serve traffic | undeploy the model and delete the index endpoint, not just the index |
 | Provisioned throughput (Bedrock model units, Azure PTUs, Google Provisioned Throughput) | committed hourly or monthly capacity | never in a lab; use on-demand |
@@ -58,7 +58,7 @@ Twelve labs is a quarter of weekends. Six are enough to change interviews: pick 
 
 ## 34.3 How to talk about labs in interviews
 
-Lead with the problem and the numbers, not the stack: "I built a permission-aware policy assistant on Databricks Free Edition over 400 documents; recall@10 went from 0.62 to 0.88 after contextual chunking and reranking; p95 was 2.1 s; cost per query $0.004 on a mid-tier model; the eval set has 120 questions including 20 'no answer' cases, and the judge agreed with my labels 91% of the time." Then show the repo. A lab with measurements beats a certificate; a certificate plus a lab beats both.
+Lead with the problem and the numbers, not the stack: "I built a permission-aware policy assistant on Databricks Free Edition over 400 documents; recall@10 went from 0.62 to 0.88 after contextual chunking and reranking; p95 was 2.1 s; cost per query \$0.004 on a mid-tier model; the eval set has 120 questions including 20 'no answer' cases, and the judge agreed with my labels 91% of the time." Then show the repo. A lab with measurements beats a certificate; a certificate plus a lab beats both.
 
 ## 34.4 Certifications (worth it when the JD names them)
 

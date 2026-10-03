@@ -53,7 +53,7 @@ S3 (with S3 Tables for Iceberg), Glue (catalog and ETL), Athena (serverless SQL)
 
 Every platform now lets you call a model from SQL (`ai_query`, `AI_COMPLETE`, `AI.GENERATE`, Fabric AI functions). It is the fastest way to enrich a table — and the fastest way to burn a budget. What to say when asked:
 
-- **Cost is rows × tokens.** 10M support tickets × 600 input tokens × a $0.30/MTok model ≈ $1,800 per full pass; the same pass on a $3/MTok model is $18,000. Run on new or changed rows only (incremental pipelines), materialize the results, and never put an LLM function in a dashboard query that re-runs on every refresh.
+- **Cost is rows × tokens.** 10M support tickets × 600 input tokens × a \$0.30/MTok model ≈ \$1,800 per full pass; the same pass on a \$3/MTok model is \$18,000. Run on new or changed rows only (incremental pipelines), materialize the results, and never put an LLM function in a dashboard query that re-runs on every refresh.
 - **Throughput and quotas.** The function fans out to the model endpoint; provisioned throughput or batch inference is cheaper and steadier than pay-per-token for large backfills (Databricks `ai_query` uses batch inference on provisioned endpoints; BigQuery and Snowflake have their own quotas).
 - **Determinism and versioning.** Pin the model version and the prompt in the pipeline code; store model and prompt identifiers next to the generated column, so a later re-run with a new model is visible in lineage.
 - **Quality checks.** Add expectations on generated columns (allowed labels, non-null rate, distribution drift versus last week) exactly as for any other pipeline output; sample a few hundred rows for human review when the prompt or model changes.

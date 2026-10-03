@@ -720,7 +720,7 @@ Use tools to accelerate evaluation, but keep ownership of your dataset, rubric, 
 | LangSmith | Dataset-based evals, traces, experiments, correctness/groundedness/relevance/retrieval relevance evaluators |
 | Arize Phoenix | OpenTelemetry/OpenInference tracing, evals on traces, retrieval metrics, hallucination/correctness analysis |
 | LlamaIndex evals | Faithfulness, relevancy, correctness, retrieval evaluation, synthetic question generation |
-| OpenAI Evals/API | General eval orchestration and custom model/application evals |
+| OpenAI Evals/API | General eval orchestration and custom model/application evals. *Update (October 2026):* existing evals become read-only on 31 October 2026 and the Evals dashboard and API are scheduled to shut down on 30 November 2026, so export results and plan a replacement; OpenAI fine-tuning, often paired with it, closed to new organizations on 7 May 2026 and accepts no new jobs from 6 January 2027 ([deprecations](https://developers.openai.com/api/docs/deprecations)) |
 | Custom notebooks | Maximum flexibility, useful for metric prototypes and domain-specific rubrics |
 
 Tool selection advice:

@@ -27,6 +27,8 @@ Prompts, models, retrieval settings and tools change weekly, and none of them th
 | Safety | harmful-output rate, injection success rate, PII leakage, refusal correctness | red-team suites |
 | Operational | p50/p95 latency, cost per task, token usage, error/retry rate | always next to quality |
 
+For RAG-specific evaluation — retrieval metrics with their formulas, how each RAGAS metric is computed and where it misleads, the other frameworks and benchmarks, and a practical evaluation plan — see chapter 24c.
+
 ## 32.4 LLM-as-a-judge, properly
 
 A judge is a model prompted to score outputs against a rubric. Done well it agrees with human judgement at 80–90%+ on well-defined criteria — the MT-Bench study (Zheng et al., 2023) found GPT-4's pairwise agreement with expert humans, excluding ties, was about 85%, above the ~81% agreement between humans themselves — done badly it rewards verbosity and its own style. Note the subtlety in that number: humans disagree with each other too, so the target is "as consistent with the human panel as the humans are with each other", not 100%.
@@ -50,7 +52,7 @@ You are grading whether an ANSWER is supported by the CONTEXT.
 QUESTION: ... CONTEXT: ... ANSWER: ...
 ```
 
-**Tooling:** Ragas, DeepEval, promptfoo, Inspect, OpenAI Evals, LangSmith and Langfuse evaluators, Braintrust, Arize Phoenix evals, MLflow LLM evaluate and Databricks Agent Evaluation (built-in judges for groundedness, relevance, safety; custom guidelines), the Gen AI evaluation service on Google's Gemini Enterprise Agent Platform, formerly Vertex AI (pointwise/pairwise, computation-based and model-based metrics), the Microsoft Foundry (formerly Azure AI Foundry) evaluation SDK (groundedness, relevance, coherence, fluency, safety evaluators, simulators), Bedrock AgentCore Evaluations (built-in and custom evaluators, DeepEval/AutoEval integrations).
+**Tooling:** Ragas, DeepEval, promptfoo, Inspect, OpenAI Evals (read-only from 31 October 2026 and shut down on 30 November 2026; OpenAI's migration guide points to promptfoo), LangSmith and Langfuse evaluators, Braintrust, Arize Phoenix evals, MLflow LLM evaluate and Databricks Agent Evaluation (built-in judges for groundedness, relevance, safety; custom guidelines), the Gen AI evaluation service on Google's Gemini Enterprise Agent Platform, formerly Vertex AI (pointwise/pairwise, computation-based and model-based metrics), the Microsoft Foundry (formerly Azure AI Foundry) evaluation SDK (groundedness, relevance, coherence, fluency, safety evaluators, simulators), Bedrock AgentCore Evaluations (built-in and custom evaluators, DeepEval/AutoEval integrations).
 
 ## 32.5 Evaluating agents
 

@@ -1663,6 +1663,7 @@ The biggest risks are bad data, overfitting, catastrophic forgetting, memorizati
 - OpenAI supervised fine-tuning docs: [Supervised fine-tuning](https://platform.openai.com/docs/guides/supervised-fine-tuning)
 - OpenAI DPO docs: [Direct preference optimization](https://platform.openai.com/docs/guides/direct-preference-optimization)
 - OpenAI reinforcement fine-tuning docs: [Reinforcement fine-tuning](https://platform.openai.com/docs/guides/reinforcement-fine-tuning)
+  - *Update (October 2026):* OpenAI's fine-tuning closed to new organizations on 7 May 2026, and existing customers can create no new jobs from 6 January 2027; the OpenAI Evals platform becomes read-only on 31 October 2026 and is scheduled to shut down on 30 November 2026 ([deprecations](https://developers.openai.com/api/docs/deprecations)).
 - Hugging Face PEFT docs: [PEFT](https://huggingface.co/docs/peft/index)
 - Hugging Face LoRA docs: [LoRA](https://huggingface.co/docs/peft/developer_guides/lora)
 - Hugging Face TRL docs: [TRL](https://huggingface.co/docs/trl)

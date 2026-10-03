@@ -126,7 +126,7 @@
 - **Inventory planning, forecasting, pricing and replenishment workflows with agents** — chapter 36.4.
 - **Ask-AI copilot with RAG over reviews and sales data** — chapters 24, 36.4.
 - **Helium 10, Jungle Scout, Google Analytics, Linnworks** — Amazon-seller analytics tools (keyword, listing and competitor data), web analytics and order management integrated into one data model; the integration mechanism is nightly batch pulls through each vendor's API or export into a job-status table, then a star schema keyed on SKU, marketplace and day (chapter 48).
-- **$1.5M saved/added revenue, 15% better stock handling, 89% forecast accuracy** — outcomes; know the measurement (chapter 36.4).
+- **\$1.5M saved/added revenue, 15% better stock handling, 89% forecast accuracy** — outcomes; know the measurement (chapter 36.4).
 - **Azure ML, Databricks, NeuralProphet, XGBoost** — the training and pipeline stack (chapters 21, 46).
 
 ## 55.12 Experience — enterprise AI at a utility
@@ -156,7 +156,7 @@
 | 90% user-engagement lift | "Weekly active creators who completed at least one generation-and-export, new cohort versus the pre-launch cohort, over eight weeks." | Cohorts were not randomized; we corrected for seasonality but it is an observational number. |
 | ~100% CTR uplift at 10K QPS (ad-tech) | "Click-through rate of the two-tower ranker versus the rules-based baseline in a 50/50 traffic-split A/B over three weeks, significance checked with a sequential test and a revenue guardrail metric." | Lift was measured against a weak baseline; against the tuned logistic model the lift was smaller, and we reported both. |
 | Daily incremental updates | "The ranking model retrained on the previous day's impressions every night, with a shadow evaluation gate: the new model had to match or beat the live model on offline NDCG before promotion." | Daily retraining introduced drift in embeddings; we pinned the item tower and refreshed only the context tower on most days. |
-| $1.5M saved or added revenue (inventory platform) | "Sum over SKUs of avoided stockout days times average daily margin, plus overstock reduction times holding cost, computed from the client's own sales and stock tables for the twelve months after go-live." | Attribution is counterfactual; we validated it on a holdout set of SKUs that stayed on the old process. |
+| \$1.5M saved or added revenue (inventory platform) | "Sum over SKUs of avoided stockout days times average daily margin, plus overstock reduction times holding cost, computed from the client's own sales and stock tables for the twelve months after go-live." | Attribution is counterfactual; we validated it on a holdout set of SKUs that stayed on the old process. |
 | 89% forecast accuracy | "One minus weighted absolute percentage error (WAPE) at the SKU-week grain, over a rolling eight-week horizon, on the top 80% of SKUs by revenue." | Long-tail SKUs were far worse; we used category-level forecasts and safety stock there. |
 | 15% better stock handling | "Reduction in days of inventory on hand at constant fill rate, before versus after the replenishment recommendations were adopted." | Adoption was partial; the number is for the SKUs where the buyer followed the recommendation. |
 | 25% cloud-cost reduction (utility) | "Monthly cloud bill for the analytics platform, same workload, after moving batch jobs to spot capacity, right-sizing clusters and scheduling pipelines off-peak; compared on a three-month average." | The workload grew the next year, so the absolute bill rose while unit cost fell. |

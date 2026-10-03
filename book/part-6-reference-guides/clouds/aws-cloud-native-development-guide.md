@@ -507,8 +507,8 @@ User API request → Lambda puts message on SQS → ECS worker reads SQS
 **Use for**: multi-step agent workflows where you want durability and visibility without writing your own state machine.
 
 **Standard vs Express**:
-- **Standard**: up to 1 year execution, exactly-once, $0.025 per 1000 state transitions. For long-running workflows.
-- **Express**: up to 5 minutes, at-least-once, $1 per million executions. For high-volume short workflows.
+- **Standard**: up to 1 year execution, exactly-once, \$0.025 per 1000 state transitions. For long-running workflows.
+- **Express**: up to 5 minutes, at-least-once, \$1 per million executions. For high-volume short workflows.
 
 **Example: document processing pipeline**:
 
@@ -684,7 +684,7 @@ anthropic_key = get_secret("prod/anthropic-api-key")["api_key"]
 
 **Two types**:
 - **Gateway endpoints** (free): S3, DynamoDB only
-- **Interface endpoints** ($0.01/hr + data): everything else (Bedrock, Secrets Manager, etc.)
+- **Interface endpoints** (\$0.01/hr + data): everything else (Bedrock, Secrets Manager, etc.)
 
 ---
 
@@ -755,7 +755,7 @@ cw.put_metric_data(
 )
 ```
 
-**Key metrics to track**: request latency (p50/p95/p99), error rate by type, tokens per request, $ per request, cache hit rate, queue depth, active tasks.
+**Key metrics to track**: request latency (p50/p95/p99), error rate by type, tokens per request, \$ per request, cache hit rate, queue depth, active tasks.
 
 ### 8.3 CloudWatch Alarms
 
@@ -1085,7 +1085,7 @@ Rank-ordered by typical impact:
 
 1. **LLM API costs** (often 60–80% of total): model routing, prompt caching, output token caps, caching at the application layer
 2. **Compute (ECS/Lambda)**: right-size task definitions, use Fargate Spot for non-critical workers (70% cheaper), scale to zero in dev
-3. **Data transfer**: VPC endpoints eliminate NAT Gateway charges for AWS-to-AWS traffic. NAT Gateway data processing is $0.045/GB — adds up fast
+3. **Data transfer**: VPC endpoints eliminate NAT Gateway charges for AWS-to-AWS traffic. NAT Gateway data processing is \$0.045/GB — adds up fast
 4. **Storage**: S3 lifecycle rules (IA at 30 days, Glacier at 90), DynamoDB on-demand vs provisioned, ElastiCache sizing
 5. **OpenSearch**: serverless OCU pricing can spike under load; monitor and right-size
 
@@ -1199,7 +1199,7 @@ else:
 
 **2. One giant IAM role for everything.** "It works if I give it `AdministratorAccess`." Yes, and it also works for an attacker.
 
-**3. No VPC endpoints.** All your S3, DynamoDB, and Bedrock traffic routing through a NAT Gateway at $0.045/GB adds up fast and adds latency.
+**3. No VPC endpoints.** All your S3, DynamoDB, and Bedrock traffic routing through a NAT Gateway at \$0.045/GB adds up fast and adds latency.
 
 **4. Storing secrets in environment variables in task definitions.** Use Secrets Manager references.
 
@@ -1207,7 +1207,7 @@ else:
 
 **6. No DLQ on SQS queues.** Failed messages vanish silently. Always configure a dead-letter queue.
 
-**7. CloudWatch Logs with no retention policy.** Default is "keep forever." At $0.50/GB-month for ingestion + $0.03/GB-month for storage, this adds up over years.
+**7. CloudWatch Logs with no retention policy.** Default is "keep forever." At \$0.50/GB-month for ingestion + \$0.03/GB-month for storage, this adds up over years.
 
 **8. Single-AZ deployments.** One AZ goes down (it happens), your service goes down.
 

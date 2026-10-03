@@ -24,7 +24,7 @@
 ## Retrieval and RAG [18, 24, 25]
 
 17. **Why RAG?** Current, specific, permissioned, citable knowledge without retraining.
-18. **Chunking strategy?** Structure-aware, 200–800 tokens, overlap, contextual summaries, metadata, tables whole, parent-child.
+18. **Chunking strategy?** Structure-aware, about 200–400 tokens to start, overlap only if recall improves on your eval set (24c.3), contextual summaries, metadata, tables whole, parent-child.
 19. **Hybrid search?** BM25 + dense fused (RRF) then reranked; exact terms plus semantics.
 20. **What is a reranker?** A cross-encoder scoring query–document pairs; accurate, expensive; apply to top-k only.
 21. **HNSW?** A layered proximity graph for approximate nearest neighbor search; tune M, efConstruction, efSearch; memory ≈ 1.5× vectors.
@@ -178,7 +178,7 @@ Each answer carries the number or parameter an interviewer listens for; check pr
 
 151. **Price of a cached Gemini token?** 10% of the input price on Gemini 2.5 and later; explicit caches add storage per million tokens per hour; minimum prefix 2,048 tokens on 2.5, 4,096 on 3.x.
 152. **Ways to buy Gemini capacity?** Standard PayGo, Priority (about 1.8× list), Flex (about 50% off), Batch (about 50% off), Provisioned Throughput in GSUs on one-week to one-year terms.
-153. **Thinking knobs?** `thinking_level` (minimal, low, medium, high) on Gemini 3.x, `thinking_budget` in tokens on 2.5; billed as output; Gemini 3.8 Flash defaults to medium, so set `minimal` on workers.
+153. **Thinking knobs?** `thinking_level` (minimal, low, medium, high; the accepted levels vary by model) on Gemini 3.x, `thinking_budget` in tokens on 2.5; billed as output; Gemini 3.8 Flash defaults to medium and accepts only low, medium and high (Google's thinking guide, September 2026), so set `low` on its workers.
 154. **First move when an agent "can't find the dataset"?** Open the trace: was the `execute_tool` span called, with which arguments, and what status came back.
 155. **BigQuery 404 versus 403?** `404 notFound`: no such dataset in that project and region; `403 accessDenied`: it exists, and the message names the missing permission; running queries also needs `roles/bigquery.jobUser`.
 156. **A VPC Service Controls denial looks like?** A 403 saying the request is prohibited by the organization's policy, with a `vpcServiceControlsUniqueIdentifier` to search in the audit logs.
@@ -195,7 +195,21 @@ Each answer carries the number or parameter an interviewer listens for; check pr
 167. **Per-user rows in BigQuery?** `CREATE ROW ACCESS POLICY … GRANT TO (…) FILTER USING (SESSION_USER() = owner_email)`, with the query run under the user's identity.
 168. **Dialogflow CX webhook timeout?** 5 seconds by default, 30 at most, one retry on transient failure; handle `webhook.error.timeout` with a message and a path, never silence.
 169. **Gemini Live API session facts?** Audio-only sessions 15 minutes without compression, about 10 minutes per connection, resumption handles valid for two hours, 16 kHz PCM in and 24 kHz out, accumulated context re-billed every turn.
-170. **Chirp 3 facts for a drive-through?** `chirp_3` with streaming recognition, up to 1,000 adaptation phrases, a denoiser that cannot remove background voices, word confidences that are not true confidences, $0.016 a minute at the first tier.
-171. **How does Polymarket resolve?** UMA's optimistic oracle: a bond of about $750, a two-hour challenge window, a second dispute goes to a token-holder vote of about 48 hours.
+170. **Chirp 3 facts for a drive-through?** `chirp_3` with streaming recognition, up to 1,000 adaptation phrases, a denoiser that cannot remove background voices, word confidences that are not true confidences, \$0.016 a minute at the first tier.
+171. **How does Polymarket resolve?** UMA's optimistic oracle: a bond of about \$750, a two-hour challenge window, a second dispute goes to a token-holder vote of about 48 hours.
 172. **How does Kalshi resolve?** Its markets team finalizes the outcome from the source named in the rules, usually within a few hours of the outcome being known.
-173. **Old names to new?** Vertex AI → Gemini Enterprise Agent Platform; Agent Engine → Agent Runtime; Vertex AI Search → Agent Search; Customer Engagement Suite → Gemini Enterprise for Customer Experience; Dialogflow CX → still Dialogflow CX, now filed as legacy, with CX Agent Studio as its evolution; Conversational Insights → Customer Experience Insights; Agentspace → Gemini Enterprise; Azure AI Foundry → Microsoft Foundry; LangGraph Platform → LangSmith Deployment; Databricks Vector Search → AI Search; Databricks AI Gateway → Unity Gateway; Amazon Kendra and Q Business → closed to new customers (AWS points to Bedrock Managed Knowledge Base and Amazon Quick).
+173. **Old names to new?** Vertex AI → Gemini Enterprise Agent Platform; Agent Engine → Agent Runtime; Vertex AI Search → Agent Search; Customer Engagement Suite → Gemini Enterprise for Customer Experience; Dialogflow CX → still Dialogflow CX, now filed as legacy, with CX Agent Studio as its evolution; Conversational Insights → Customer Experience Insights; Agentspace → Gemini Enterprise; Azure AI Foundry → Microsoft Foundry; LangGraph Platform → LangSmith Deployment; Databricks Vector Search → AI Search; Databricks AI Gateway → Unity Gateway; Amazon Kendra and Q Business → closed to new customers (AWS points to Bedrock Managed Knowledge Base and Amazon Quick); Bedrock Agents → Agents Classic, closed to new customers on 30 July 2026 (AWS points to AgentCore).
+
+## More questions with model answers in the deep-dive chapters
+
+The newer deep-dive chapters end with their own interview sections; drill them the same way.
+
+- Coding interview patterns (the twenty LeetCode patterns, recognition cues, tested templates): chapter 39d, with the worked talk-through in 39d.26.
+- JEPA, world models and joint-embedding architectures: 17b.8.
+- Latent reasoning in agents: 22c.11.
+- RAG techniques and RAG evaluation (RAGAS and friends): 24c.17.
+- Distillation techniques: 26c.11.
+- Observability reference (definitions, the OpenTelemetry schema, latency and cost per span): 29b.8.
+- Observability engineering (the role, SLOs, systems at scale): 45a.8.
+- AI for observability, and building and shipping AI skills: 45c.7.
+- The cloud FinOps analyst track (executive reporting and the interview): chapter 47f.

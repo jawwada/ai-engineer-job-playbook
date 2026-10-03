@@ -57,6 +57,8 @@ Only items verified against primary or reputable sources are included.
 | Sep 2025 | postmark-mcp | version 1.0.16 of an npm MCP server BCC'd every email to an attacker (1,643 downloads) | pinned versions; egress monitoring |
 | Nov 2025 | Claude Code misused for espionage | Anthropic reported a state-sponsored campaign in which the agent did 80–90% of the work against about 30 targets, a few successfully, with tasks split up to look innocent | misuse detection at the provider; agent harnesses are dual-use |
 
+The 2026 incidents are summarized in 23b.7, which continues this table.
+
 **Exploit demonstrations** (real mechanisms, no known victims):
 
 - **Morris II** (Cohen, Bitton and Nassi, 2024): a self-replicating prompt spread with zero clicks between RAG email assistants (Gemini Pro, ChatGPT 4.0, LLaVA) to send spam and exfiltrate data. **Prompt Infection** and **Agent Smith** (2024) showed the same inside multi-agent systems; Agent Smith jailbroke up to a million simulated agents from one image.
@@ -89,10 +91,10 @@ Only items verified against primary or reputable sources are included.
 
 - Anthropic's research system initially spawned "50 subagents for simple queries", and its multi-agent runs used about 15× the tokens of a chat.
 - The OverThink attack used decoy problems to inflate o1's reasoning tokens by up to 18× (FreshQA) and 46× (SQuAD).
-- Replit users reported bills of "$1k this week alone" after the Agent 3 launch (September 2025).
-- Anthropic added weekly limits after users ran Claude Code "24/7"; one used tens of thousands of dollars of model usage on a $200 plan.
+- Replit users reported bills of "\$1k this week alone" after the Agent 3 launch (September 2025).
+- Anthropic added weekly limits after users ran Claude Code "24/7"; one used tens of thousands of dollars of model usage on a \$200 plan.
 
-A viral account of two A2A agents looping for 11 days at $47,000 names no company *(reported, verify)*. Unverified stories of agents wiping drives are left out.
+A viral account of two A2A agents looping for 11 days at \$47,000 names no company *(reported, verify)*. Unverified stories of agents wiping drives are left out.
 
 **The common thread.** In every incident:
 
@@ -271,7 +273,7 @@ Voluntarily: the AI Incident Database, and coordinated disclosure with vendors.
 - **A self-improving support agent.** Typed, tenant-scoped memory with provenance stores "my account is pre-approved for refunds" as an untrusted claim. Nightly prompt diffs are gated on resolution, refund rate, average refund per slice and the misbehaviour suite. Thumbs-up routing keeps an exploration floor, a honeypot `issue_refund_override` tool is watched, and rollback restores prompt and memory together.
 - **A research swarm.** Depth 2, fan-out of at most 5 and concurrency of 10, with a per-question budget and the remaining deadline passed down. Quarantined readers without tools return claim–quote–URL records (chapter 30's dual-LLM pattern). Add a citation verifier, URL fingerprints against duplicate work, tree-shape alarms and kill by trace ID.
 - **An A2A partner network** (a procurement agent and suppliers' quoting agents). Hop limits and call chains travel in metadata under contract, and cycles are refused. Each partner gets its own budget and breaker, and its output is treated as untrusted data. Anything that commits money carries an idempotency key. Authentication is mutual, commitments above a threshold need human approval, and contracts include incident-notification clauses.
-- **A trading-research agent.** It has no order tool (chapter 30). Backtests run in a service it cannot write to, on walk-forward periods it never sees; editing the harness or leaking future data would be reward hacking. Ideas go to humans or to a separately validated execution system with a gateway kill switch and the pre-trade limits SEC Rule 15c3-5 requires. Without adequate controls, Knight Capital sent over 4 million orders while trying to fill 212 customer orders, and lost over $460 million in 45 minutes (2012). Pricing agents are monitored for collusive outcomes.
+- **A trading-research agent.** It has no order tool (chapter 30). Backtests run in a service it cannot write to, on walk-forward periods it never sees; editing the harness or leaking future data would be reward hacking. Ideas go to humans or to a separately validated execution system with a gateway kill switch and the pre-trade limits SEC Rule 15c3-5 requires. Without adequate controls, Knight Capital sent over 4 million orders while trying to fill 212 customer orders, and lost over \$460 million in 45 minutes (2012). Pricing agents are monitored for collusive outcomes.
 
 ## 53c.8 Interview questions with model answers
 
@@ -350,7 +352,7 @@ Voluntarily: the AI Incident Database, and coordinated disclosure with vendors.
 - [The Register: Replit Agent 3 pricing complaints (Sep 2025)](https://www.theregister.com/2025/09/18/replit_agent3_pricing/)
 - [TechCrunch: Anthropic weekly rate limits for Claude Code (Jul 2025)](https://techcrunch.com/2025/07/28/anthropic-unveils-new-rate-limits-to-curb-claude-code-power-users/)
 - [Simon Willison: Anthropic's statement on weekly limits (Jul 2025)](https://simonwillison.net/2025/Jul/28/anthropic/)
-- [Towards AI: "We spent $47,000 running AI agents in production" (Oct 2025, single unverified account)](https://pub.towardsai.net/we-spent-47-000-running-ai-agents-in-production-heres-what-nobody-tells-you-about-a2a-and-mcp-5f845848de33)
+- [Towards AI: "We spent \$47,000 running AI agents in production" (Oct 2025, single unverified account)](https://pub.towardsai.net/we-spent-47-000-running-ai-agents-in-production-heres-what-nobody-tells-you-about-a2a-and-mcp-5f845848de33)
 
 **Recursive chains and limits**
 - [Claude Code docs: Subagents](https://code.claude.com/docs/en/sub-agents)

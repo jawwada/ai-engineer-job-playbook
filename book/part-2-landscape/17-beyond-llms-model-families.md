@@ -39,7 +39,7 @@ A diffusion model learns to reverse a noising process: train it to predict the n
 
 ## 17.6 JEPA and world models
 
-The **Joint-Embedding Predictive Architecture (JEPA)**, Yann LeCun's proposal for self-supervised learning, predicts in *representation space* rather than in pixels: an encoder embeds the visible part of an input, a predictor forecasts the embedding of the masked part, and a slowly updated (EMA) target encoder provides the targets so the model cannot collapse to trivial outputs. The point is to spend capacity on structure that is predictable — object permanence, motion, physics — and ignore unpredictable detail (leaves, ripples) that a pixel-level generative model is forced to render. **I-JEPA** (images, 2023) and **V-JEPA** (video, 2024) showed strong representations without labels; **V-JEPA 2** (June 2025) scaled this to over a million hours of video with a ViT encoder over spatio-temporal "tubelets", then fine-tuned an action-conditioned predictor (**V-JEPA 2-AC**) on about 62 hours of robot video so that a robot can plan by imagining the embedding of the future under candidate actions and picking the sequence that lands closest to the goal embedding — model-predictive control, zero-shot on new tasks. **World models** more broadly (DreamerV3, Genie 3, Cosmos) learn simulators of an environment, in pixels or in latents, that an agent can plan in; they are the physical-world counterpart of the reasoning that LLM agents do in text. Why this matters for an AI-engineer interview: it is the standard "what is beyond next-token prediction" question, and the honest answer is that language agents and world-model agents are converging on the same loop — perceive, predict, act, correct — with different substrates.
+The **Joint-Embedding Predictive Architecture (JEPA)**, Yann LeCun's proposal for self-supervised learning, predicts in *representation space* rather than in pixels: an encoder embeds the visible part of an input, a predictor forecasts the embedding of the masked part, and a slowly updated (EMA) target encoder, which receives no gradient, provides the targets. That asymmetry keeps training from collapsing to trivial outputs in practice, but an EMA target alone does not guarantee it: the theory is partial, and the quieter dimensional collapse still has to be monitored (17b.1.5). The point is to spend capacity on structure that is predictable — object permanence, motion, physics — and ignore unpredictable detail (leaves, ripples) that a pixel-level generative model is forced to render. **I-JEPA** (images, 2023) and **V-JEPA** (video, 2024) showed strong representations without labels; **V-JEPA 2** (June 2025) scaled this to over a million hours of video with a ViT encoder over spatio-temporal "tubelets", then post-trained a new action-conditioned predictor (**V-JEPA 2-AC**, about 300M parameters) on top of the frozen encoder with under 62 hours of unlabeled robot video, so that a robot can plan by imagining the embedding of the future under candidate actions and picking the sequence that lands closest to the embedding of a goal image — model-predictive control, zero-shot in two labs not seen in training. **World models** more broadly (DreamerV3, Genie 3, Cosmos) learn simulators of an environment, in pixels or in latents, that an agent can plan in; they are the physical-world counterpart of the reasoning that LLM agents do in text. Why this matters for an AI-engineer interview: it is the standard "what is beyond next-token prediction" question, and the honest answer is that language agents and world-model agents are converging on the same loop — perceive, predict, act, correct — with different substrates. Chapter 17b covers JEPA, world models and joint-embedding architectures in depth: the JEPA family model by model, the adjacent models, practical use today, JEPA versus LLMs for agents, and interview questions with model answers.
 
 ## 17.7 State-space models and hybrids
 
@@ -72,14 +72,14 @@ The reason systems combine families is economics, and interviewers expect you to
 | Family | Latency per call | Cost per 1,000 calls | Where it runs |
 |---|---|---|---|
 | GBDT classifier/regressor | microseconds–1 ms | fractions of a cent | CPU, inside the request path |
-| Embedding model (text, 500 tokens) | 5–50 ms | $0.01–0.10 (API) | CPU or small GPU, batched |
-| Cross-encoder reranker (50 pairs) | 50–300 ms | $1–2 (hosted) | GPU |
+| Embedding model (text, 500 tokens) | 5–50 ms | \$0.01–0.10 (API) | CPU or small GPU, batched |
+| Cross-encoder reranker (50 pairs) | 50–300 ms | \$1–2 (hosted) | GPU |
 | CNN/ViT classifier or segmenter | 2–30 ms | cents | GPU, or CPU/edge for small CNNs |
-| ASR, streaming | 200–500 ms to final transcript | $5–10 per 1,000 minutes | GPU or API |
-| TTS, streaming | 100–300 ms to first audio | $10–30 per 1,000 minutes | API |
+| ASR, streaming | 200–500 ms to final transcript | \$5–10 per 1,000 minutes | GPU or API |
+| TTS, streaming | 100–300 ms to first audio | \$10–30 per 1,000 minutes | API |
 | Speech-to-speech model | 300–600 ms turn latency | billed per audio minute | API |
-| LLM, cheap tier (1k in / 200 out) | 0.5–2 s | $1–3 | API |
-| LLM, frontier tier with 4k thinking | 10–60 s | $50–300 | API |
-| Diffusion image (1024², ~25 steps) | 1–5 s | $10–40 | GPU |
+| LLM, cheap tier (1k in / 200 out) | 0.5–2 s | \$1–3 | API |
+| LLM, frontier tier with 4k thinking | 10–60 s | \$50–300 | API |
+| Diffusion image (1024², ~25 steps) | 1–5 s | \$10–40 | GPU |
 
 Read the table bottom-up when designing: every call you can move from an LLM row to a classifier, embedding or rule row is a 100–1,000× saving, which is the whole argument for routing, distillation and "deterministic where deterministic".

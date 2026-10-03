@@ -1,6 +1,6 @@
 # 32b. Optimizing LLM-as-a-judge: accuracy, robustness, cost and statistical honesty
 
-> **What you need to be able to say:** what "a better judge" means (agreement with humans, robustness to bias and manipulation, stability, cost); how to measure it; the prompt-, model- and system-level levers that improve it; how to optimize a judge automatically against human labels; how to keep the bill down with cascades and small judges; and how to report metrics honestly when the judge itself makes mistakes. Chapter 32 builds the first judge; this chapter makes it good.
+> **What you need to be able to say:** what "a better judge" means (agreement with humans, robustness to bias and manipulation, stability, cost); how to measure it; the prompt-, model- and system-level levers that improve it; how to optimize a judge automatically against human labels; how to keep the bill down with cascades and small judges; and how to report metrics honestly when the judge itself makes mistakes. Chapter 32 builds the first judge; this chapter makes it good; chapter 24c covers RAG-specific evaluation (how each RAGAS metric is computed and where it misleads, the other frameworks, and calibrating RAG judges).
 
 ## 32b.1 Define "better" before optimizing
 

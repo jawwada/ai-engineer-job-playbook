@@ -150,7 +150,7 @@ An interviewer at Google will spend most of this use case on the two numbers and
 
 **Operations.** Release cadence with a small team; monitoring of data-source failures (third-party APIs break); feedback from users into prompts and models.
 
-**Outcome.** The resume reports $1.5M in saved or added revenue and 15% better stock handling, with the platform in production within nine months.
+**Outcome.** The resume reports \$1.5M in saved or added revenue and 15% better stock handling, with the platform in production within nine months.
 
 **Hard parts.** Data integration across five tools with different semantics; trust — users needed explanations and the ability to override; keeping forecasting honest on intermittent demand.
 
@@ -161,7 +161,7 @@ An interviewer at Google will spend most of this use case on the two numbers and
 - *"89% forecast accuracy — which metric, at which level, at which horizon?"* — Say the metric (1 − WAPE or 1 − MAPE are the usual definitions behind an "accuracy" figure; MAPE is undefined on zero-demand weeks, which matters for intermittent SKUs), the aggregation level (SKU × marketplace × week), the horizon (one to four weeks ahead), and the baseline (seasonal naive or the previous process). An interviewer will accept "weekly WAPE at SKU-marketplace level, 2-week horizon, versus a seasonal-naive baseline" and will not accept "89% accurate".
 - *"How do you forecast intermittent demand?"* — Typical methods: Croston or TSB for intermittent series, zero-inflated or hurdle models, or classifying SKUs by demand pattern (smooth, intermittent, lumpy) and routing each class to a different model; evaluate with scale-free metrics (RMSSE) rather than MAPE. Name the one you used or would use.
 - *"What stops the LLM from inventing a number?"* — The agent never computes: it calls `forecast(sku, horizon)`, `inventory_position(sku)`, `lead_time(supplier)` and a `reorder_policy` tool that applies the thresholds; the LLM composes the explanation from tool outputs, and the structured proposal (`sku`, `quantity`, `reason`, `evidence`) is validated before a human sees it. A test asserts that every number in the explanation appears in a tool output.
-- *"How did you attribute $1.5M?"* — Before/after on stockout days and overstock value with a holdout set of SKUs or marketplaces where possible, seasonality adjusted, counted conservatively (only effects the operations team signed off on). If the figure includes revenue the business attributed to the platform rather than a measured increment, say that plainly.
+- *"How did you attribute \$1.5M?"* — Before/after on stockout days and overstock value with a holdout set of SKUs or marketplaces where possible, seasonality adjusted, counted conservatively (only effects the operations team signed off on). If the figure includes revenue the business attributed to the platform rather than a measured increment, say that plainly.
 - *"How does a system like this map onto Google Cloud today?"* — Typical mapping: BigQuery for sales and inventory, BigQuery ML or the Agent Platform's training pipelines (Vertex AI Pipelines, in the old naming) for the forecasters, the agent on Agent Runtime with ADK tools over BigQuery and the marketplace APIs, Gemini Flash routing with Pro for explanations, review-embedding retrieval in Vector Search (formerly Vertex AI Vector Search) or BigQuery vector search, Looker for the decision dashboards, Cloud Scheduler and Cloud Run jobs for the nightly batch.
 
 ---

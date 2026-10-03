@@ -1053,8 +1053,8 @@ Store these in S3 partitioned by date — they're the ground truth for evaluatio
 
 **Cost**:
 - Tokens per request
-- $ per request
-- $ per user per day
+- \$ per request
+- \$ per user per day
 - Cache hit rate (saved tokens)
 
 **Operational**:
@@ -1107,8 +1107,8 @@ Cost per request = (input_tokens × input_price) + (output_tokens × output_pric
 ```
 
 For Claude Opus pricing (illustrative):
-- Input: ~$15/M tokens
-- Output: ~$75/M tokens
+- Input: ~\$15/M tokens
+- Output: ~\$75/M tokens
 
 A typical RAG request:
 - System prompt: 500 tokens
@@ -1117,11 +1117,11 @@ A typical RAG request:
 - Conversation history: 1500 tokens
 - Output: 800 tokens
 
-Input total: 10,100 tokens × $15/M = $0.15
-Output: 800 tokens × $75/M = $0.06
-**Total: $0.21 per request**
+Input total: 10,100 tokens × \$15/M = \$0.15
+Output: 800 tokens × \$75/M = \$0.06
+**Total: \$0.21 per request**
 
-At 100k requests/day = $21k/day = $630k/year.
+At 100k requests/day = \$21k/day = \$630k/year.
 
 Now you understand why cost engineering matters.
 
@@ -1164,7 +1164,7 @@ A simple classifier (small LLM or rules) can save 60–80% on aggregate cost.
 
 ### 9.3 Cost as a Production Metric
 
-Track $/request as a first-class metric. Alert if it deviates >2x from baseline — usually means a misconfigured retry loop or a verbose new prompt slipped through.
+Track \$/request as a first-class metric. Alert if it deviates >2x from baseline — usually means a misconfigured retry loop or a verbose new prompt slipped through.
 
 ---
 

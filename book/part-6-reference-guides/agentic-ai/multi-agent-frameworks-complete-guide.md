@@ -573,7 +573,7 @@ For multi-agent, Claude Agent SDK supports a **three-agent harness** (Planner â†
 - **Subagent pattern** for parallel sub-tasks
 - **Battle-tested**: same loop powers Claude Code
 - **Multi-cloud**: supports AWS Bedrock, Google Vertex AI, Azure AI Foundry
-- **Managed Agents**: Anthropic also offers a hosted version (launched April 2026) that runs agents and sandboxes for you at $0.08/session-hour
+- **Managed Agents**: Anthropic also offers a hosted version (launched April 2026) that runs agents and sandboxes for you at \$0.08/session-hour
 
 #### Weaknesses
 - **Anthropic-first**: works with other providers, but the design is Claude-centric. Lock-in risk if you want to switch models

@@ -1959,6 +1959,7 @@ The biggest practical wins are high-quality data filtering, deduplication, stron
 - RLHF/InstructGPT: [Training Language Models to Follow Instructions with Human Feedback](https://arxiv.org/abs/2203.02155)
 - DPO: [Direct Preference Optimization](https://arxiv.org/abs/2305.18290)
 - OpenAI reinforcement fine-tuning docs: [Reinforcement fine-tuning](https://platform.openai.com/docs/guides/reinforcement-fine-tuning)
+  - *Update (October 2026):* OpenAI's fine-tuning closed to new organizations on 7 May 2026, and existing customers can create no new jobs from 6 January 2027; the OpenAI Evals platform becomes read-only on 31 October 2026 and is scheduled to shut down on 30 November 2026 ([deprecations](https://developers.openai.com/api/docs/deprecations)).
 - LoRA: [Low-Rank Adaptation of Large Language Models](https://arxiv.org/abs/2106.09685)
 - QLoRA: [Efficient Finetuning of Quantized LLMs](https://arxiv.org/abs/2305.14314)
 - ZeRO: [ZeRO: Memory Optimizations Toward Training Trillion Parameter Models](https://arxiv.org/abs/1910.02054)
