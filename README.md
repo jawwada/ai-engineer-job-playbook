@@ -106,7 +106,7 @@ Requirements: a Claude Pro, Max, Team or Enterprise plan (signed in with `/login
 
 **Part 4 — Engineering, roles and operating agents**
 
-- [44. The roles map: AI Engineer, Forward Deployed Engineer, ML Engineer, MLOps, DevOps/Platform, Data Engineer, FinOps, SRE, Solutions Architect, Data Scientist](book/part-4-engineering-and-roles/44-roles-map.md)
+- [44. The roles map: AI Engineer, Forward Deployed Engineer, ML Engineer, MLOps, DevOps/Platform, Data Engineer, FinOps, SRE, Solutions Architect, Data Scientist, Quant AI Engineer](book/part-4-engineering-and-roles/44-roles-map.md)
 - [45. DevOps and platform engineering for AI teams](book/part-4-engineering-and-roles/45-devops-and-platform-engineering.md)
 - [45a. Observability engineering: the role, systems at scale, and SLAs that mean something](book/part-4-engineering-and-roles/45a-observability-engineering-role-slos-and-systems-at-scale.md)
 - [45b. The open-source observability stack in depth: OpenTelemetry, Prometheus at scale, PromQL, Grafana, Loki, Tempo and Mimir](book/part-4-engineering-and-roles/45b-opentelemetry-prometheus-promql-and-the-lgtm-stack.md)
