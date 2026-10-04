@@ -175,7 +175,7 @@ Rolling windows (the SRE workbook favors four weeks, so every window contains th
 
 > **Service:** checkout. **SLOs:** 99.9% of valid requests succeed, and 99% of valid requests complete within 250 ms, both measured at the edge load balancer over a rolling 30 days. **Normal state:** with more than 25% of either budget remaining, releases follow the usual process. **Budget at risk:** with 25% or less remaining, or after any fast-burn page in the last seven days, each release needs a reliability review and the team reserves a quarter of its sprint capacity for reliability actions. **Budget exhausted:** feature releases stop until the 30-day SLI is back above target; security fixes and changes that reduce risk continue; postmortem action items become the team's top priority. **Single large incident:** an incident that consumes more than 20% of a budget gets a postmortem within five business days. **What counts:** planned maintenance and failures caused by dependencies count against the budget, because users notice them; the response is to change the architecture or the dependency, not to exclude the minutes. **Disputes** go to the engineering director; the policy is reviewed every quarter.
 
-### Critic's additions: SLOs in the release path, and what a canary can detect
+### SLOs in the release path, and what a canary can detect
 
 An error-budget policy acts after the damage; a canary gate acts during the rollout. Argo Rollouts and Flagger both run Prometheus queries at each canary step and roll back when a check fails, and the check should be the SLI, compared between the canary and the stable version, not a CPU threshold. The statistics decide what a gate can catch. With 5% of 100 requests per second on the canary, it sees 5 requests per second. Telling a 1% error ratio from a 0.1% baseline needs about 1,060 requests per arm, three to four minutes; telling 0.2% from 0.1% needs about 23,500 per arm, about 78 minutes (two-sided test at the 5% level with 80% power). So a canary stops gross regressions within minutes, a latency SLI at 99% detects a doubling with roughly a tenth of the traffic because its bad events are ten times more common, and subtle regressions are left to burn-rate alerts after full rollout. Annotate every deploy in Grafana so dashboards, triage notes and postmortems line changes up with burn.
 
@@ -376,7 +376,7 @@ Generators such as Sloth and Pyrra produce these rules from a short SLO specific
 
 A healthy ladder looks like this: an external SLA of 99.9% per calendar month, an internal SLO of 99.95% over a rolling 28 days, and measured performance around 99.97%. If measured performance sits well above the SLO for quarters, the SLO is too loose to guide decisions; if it sits below, either the system or the promise has to change.
 
-### Critic's additions: SLOs for the observability platform itself
+### SLOs for the observability platform itself
 
 Platform interviews ask what SLOs the telemetry platform should have, because its users are other engineers during their worst hour. Four SLIs cover most of it, each measured from outside the component it judges:
 

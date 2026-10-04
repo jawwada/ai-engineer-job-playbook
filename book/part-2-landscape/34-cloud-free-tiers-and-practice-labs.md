@@ -21,7 +21,7 @@
 
 Practical rules: one email per provider (aliases work), set a **budget alert at \$1** the day you sign up (AWS Budgets, Azure Cost Management, GCP Budgets), tear down everything after a lab (`terraform destroy`; delete resource groups/projects), never leave a GPU VM, a provisioned vector index or a NAT gateway running overnight, and never put credentials in a repo (use the cloud CLI's login and `.env` files in `.gitignore`).
 
-### Critic's additions: the services that quietly bill while idle
+### The services that quietly bill while idle
 
 Budget alerts are delayed by hours, so know the usual culprits in AI labs before you create them (prices as of 2026 are approximate and regional — check the pricing page):
 

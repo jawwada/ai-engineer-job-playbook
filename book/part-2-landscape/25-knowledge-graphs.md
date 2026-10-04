@@ -73,9 +73,9 @@ Chapter 33 covers these alongside SQL and the rest.
 - **Graph for governance and rules.** Product → rule → required-disclosure graphs; data lineage graphs; organizational graphs for permissions — deterministic lookups that an LLM should never guess.
 - **LLM for graph construction.** Extraction, schema suggestion, entity resolution assistance, and community summarization — with provenance and human review.
 
-### Critic's additions: making generated graph queries reliable
+### Making generated graph queries reliable
 
-Text-to-Cypher fails in predictable ways: wrong relationship direction, a label or property that does not exist, a missing `DISTINCT` that multiplies rows through a fan-out, an unbounded variable-length path that times out, and — the dangerous one — a syntactically valid query that answers a different question. The controls, in the order they pay off:
+Validating generated queries is most of the engineering in text-to-Cypher, because it fails in predictable ways: wrong relationship direction, a label or property that does not exist, a missing `DISTINCT` that multiplies rows through a fan-out, an unbounded variable-length path that times out, and — the dangerous one — a syntactically valid query that answers a different question. The controls, in the order they pay off:
 
 1. **Schema pruning.** Give the model only the labels, relationship types, directions and properties relevant to the question (retrieve them by embedding the schema elements), with one-line descriptions and example values; a 300-label schema in full degrades accuracy.
 2. **Few-shot by retrieval.** Keep a library of verified question–query pairs and retrieve the three most similar as examples; this does more than any prompt wording.

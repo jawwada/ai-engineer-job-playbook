@@ -43,9 +43,9 @@ Instrumentation libraries that emit these: OpenLLMetry (Traceloop), OpenInferenc
 
 Logs carry structured events (JSON with trace ids); metrics feed SLO dashboards (p95 latency, error rate, cost per request, token usage, guardrail block rate, escalation rate); traces are for debugging and for building eval datasets from real runs.
 
-### Critic's additions: volume, cardinality and privacy
+### Volume, cardinality and privacy
 
-LLM telemetry is heavier than web telemetry, and the bill and the privacy review arrive together:
+Capturing those layers at production volume is where LLM telemetry diverges from web telemetry: it is heavier, and the bill and the privacy review arrive together.
 
 - **Volume.** A single agent run can carry 50–500k tokens of prompt and tool content. At 100,000 requests a day with an average 20 KB of captured content, that is ~2 GB a day before indexing — and several times more for agents. Capture content for a sampled subset (errors, low judge scores, a small random slice) and keep span attributes for everything.
 - **Cardinality.** Metric labels multiply time series: model × route × prompt version × tenant is fine; user id, conversation id or raw tool arguments as metric labels will break Prometheus-style backends. Put high-cardinality identifiers on spans and logs, not on metrics.

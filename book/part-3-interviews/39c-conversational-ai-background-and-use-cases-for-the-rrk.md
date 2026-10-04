@@ -27,7 +27,7 @@
 ### The resume story in one breath
 "At a creative-AI start-up I built the conversational layer in Dialogflow CX — flows and pages for navigation and account actions, intents and entities for commands, webhook fulfillment to the FastAPI backend that triggered our agentic workflows and returned results into the chat, generative fallback for open requests — so users had deterministic UX for exact things and the agent for everything else."
 
-### Critic's additions: the limits, the webhook contract, the playbook tool types, and nine more follow-ups
+### The limits, the webhook contract, the playbook tool types, and nine more follow-ups
 
 **The numbers that prove you have built on it (current published limits; check the quotas page before the interview).** 50 flows per agent, 250 pages per flow, 10,000 intents per agent, 2,000 training phrases per intent per language (768 characters each), 250 entity types per agent, 20 parameters per page, 100 route groups per flow, 50 playbooks per agent. Webhook timeout default 5 seconds and maximum 30 seconds per attempt, one automatic retry on transient failure (so plan for up to twice the timeout), webhook response at most 64 KiB. Sessions expire 30 minutes after the last request. Audio input at most 120 seconds per request; text input for non-generative intent matching at most 256 characters. Runtime quotas: 1,200 text requests and 600 audio requests per minute per project, 600,000 generative tokens per minute, 60 design-time writes per minute. The number an interviewer actually tests you on is the webhook timeout, because it sits inside the user's turn.
 
@@ -46,7 +46,7 @@
 - *"How do you keep a playbook from inventing a policy?"* — A data-store tool with a grounding threshold so ungrounded answers are not spoken, instructions that forbid answering policy questions without a tool result, examples that demonstrate the refusal, and judge sampling of generative turns for groundedness; the deterministic flow still owns anything with money attached.
 - *"What is the handoff payload?"* — A summary written by a generator, the collected parameters, the transcript, the reason code for the transfer, and the last page — delivered to Agent Assist or the contact-center platform so the human does not restart the conversation; measure it with the repeat-information rate after transfer.
 
-### Critic's additions: CX Agent Studio — what carries over from Dialogflow CX, and five more follow-ups
+### CX Agent Studio — what carries over from Dialogflow CX, and five more follow-ups
 
 A Google interviewer in late 2026 may say "Dialogflow", "Conversational Agents", "CES" or "CX Agent Studio" for the same job. Customer Experience Agent Studio is documented as the evolution of Dialogflow CX: a low-code builder built on ADK, inside Gemini Enterprise for Customer Experience, with Dialogflow CX still documented (as the legacy conversational-agents product) for existing agents. The skill transfers if you can map it:
 
@@ -88,7 +88,7 @@ Google's own reference here is the work with a major quick-service chain on a dr
 
 **The sentence that shows ownership.** "I'd start in shadow mode at two stores, publish the accuracy and latency numbers weekly, and gate expansion on order accuracy and crew-intervention rate — the failures in the news were measurement and handoff designed last."
 
-### Critic's additions: Google's 2026 product context, the architecture decision with current names, the rollout gates, and ten follow-ups
+### Google's 2026 product context, the architecture decision with current names, the rollout gates, and ten follow-ups
 
 **The product context to know.** In January 2026 Google Cloud folded an enhanced Food Ordering agent into Gemini Enterprise for Customer Experience, explicitly "building on its drive-thru success with fast food retailers"; at Next '26 the Shopping and Food Ordering agents were positioned for direct and third-party chat and digital channels, alongside an Omnichannel Gateway that keeps context across web, mobile and voice. So the first question in a customer engagement is not "how do I build a voice agent" but "does the productized agent fit this chain's menu, POS and measurement, or do we build on CX Agent Studio or ADK with the Live API?" — and the answer comes from a two-week proof on recorded lane audio.
 
@@ -140,7 +140,7 @@ Why they appear in the conversation: they are high-growth, data-rich customers w
 
 **The sentence that shows judgement.** "For a market operator I would make the agent a faster, more consistent analyst — spec drafting, resolution packages with citations, integrity narratives — with approvals on anything that moves money or resolves a market, adversarial evals, and an audit trail a regulator can read."
 
-### Critic's additions: how the two platforms actually resolve, the regulatory facts to state carefully, the resolution-package schema, and seven follow-ups
+### How the two platforms actually resolve, the regulatory facts to state carefully, the resolution-package schema, and seven follow-ups
 
 **How resolution works, in the platforms' own terms (check before the interview; both change).**
 - *Kalshi:* each market's rules name the source (league statistics, a government release, an event authority) and may set a determination time later than the event; "a market settles when the official outcome is confirmed and our markets team finalizes the result", most within a few hours (often about three) of the outcome being known, and a delayed or revised source postpones settlement.
@@ -176,7 +176,7 @@ An Applied AI / Forward Deployed Engineer at a cloud provider is the customer's 
 - *Consulting* ("the customer wants X but it's a bad idea"): discovery questions, the risk in plain terms, a safer alternative with a timeline, the decision documented; ownership of the relationship.
 - *Demo / application development*: a small end-to-end app you can show and explain (one of chapter 34's labs on Google Cloud), with evals and traces.
 
-### Critic's additions: the sample questions answered with numbers, and the vocabulary the guide lists
+### The sample questions answered with numbers, and the vocabulary the guide lists
 
 **"A marketing manager says the website is slow" — the specific version.** Clarify in one breath: which pages, since when, for whom (region, device, logged in or not), and whether "slow" means loading or interacting. Then field data before lab data: Core Web Vitals at the 75th percentile from real-user monitoring or the Chrome UX Report — "good" is LCP at most 2.5 s, INP at most 200 ms, CLS at most 0.1 — and TTFB, where a jump points at the backend. Server side: p95 latency by endpoint in Cloud Monitoring, slow spans in Cloud Trace, Cloud CDN cache-hit ratio (a deploy that changed cache headers is a classic), Cloud Run revision history, cold starts and concurrency, Cloud SQL Query Insights for the slowest queries, and third-party tags added by marketing itself (the most common answer nobody wants to hear). If the slow part is an AI feature: time to first token, whether streaming was switched off, and input-token growth per request. Communicate on a cadence ("investigating; next update at 15:30"), fix the cause, then write the post-mortem with the prevention item.
 
@@ -216,7 +216,7 @@ The sentence for the interviewer: "At ten thousand internal users this is an eng
 
 **Rehearsal plan.** Record yourself on each of the five topics (39b) at ten minutes; cut rambling; make sure each answer contains at least three product names, two numbers and one trade-off; run the follow-ups with a friend or the kit's `/interview-prep` mock; repeat until the structure is reflexive and the examples are yours.
 
-### Critic's additions: three rewrites from high level to specific, and the sentences for awkward moments
+### Three rewrites from high level to specific, and the sentences for awkward moments
 
 **Three rewrites — the same content at two altitudes.**
 
@@ -241,7 +241,7 @@ The sentence for the interviewer: "At ten thousand internal users this is an eng
 
 The companion coding interview is general software engineering, not AI: one medium problem in 20–30 lines of Python on a shared editor with no execution — strings, arrays, hash maps, heaps, trees/graphs, bit manipulation; no dynamic programming expected. Method: restate the problem and constraints; clarify input sizes and edge cases aloud; propose a brute force with its complexity; propose the better approach; write clean, typed Python with meaningful names; walk through two examples by hand (including an edge case); state time and space complexity; add tests you would write. Practice the three recurring shapes: (1) string/graph problem → complexity → tree variant; (2) a string problem plus "implement a tracker" mini-design with a heap or a bit array and its complexities; (3) a distributed-systems design discussion after a string-split warm-up. Thirty minutes a day for two weeks on those shapes is enough; chapter 39d covers the twenty coding patterns behind them, with tested templates and LeetCode practice sets, and chapter 49 covers the engineering fundamentals they probe along the way.
 
-### Critic's additions: the "tracker" shape worked end to end, and the distributed follow-up
+### The "tracker" shape worked end to end, and the distributed follow-up
 
 The editor does not run code and the interviewer expects real Python, not pseudocode. The order that scores: a working solution, then edge cases, then the optimization, then the tests you would write — saying each step before you do it.
 

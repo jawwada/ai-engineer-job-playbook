@@ -68,9 +68,9 @@ Choice: structured memory (a profile table with explicit write rules) plus a tem
 - Multimodal document pipeline + RAG over extracted text + human review.
 - Frontier model for planning/evaluation + small models for the high-volume steps + prompt caching everywhere.
 
-### Critic's additions: the anti-patterns interviewers listen for
+### The anti-patterns interviewers listen for
 
-Naming the wrong answer and why it is wrong is often more convincing than the right answer. The ones that come up most:
+The complement to those combinations is the list of wrong answers: naming the wrong answer and why it is wrong is often more convincing than the right answer. The ones that come up most:
 
 | Anti-pattern | Why it fails | What to say instead |
 |---|---|---|

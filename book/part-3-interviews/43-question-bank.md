@@ -172,7 +172,7 @@
 
 131. **MCP** — tool protocol. 132. **A2A** — agent protocol. 133. **RRF** — rank fusion. 134. **HNSW** — ANN graph. 135. **LoRA** — low-rank adapters. 136. **DPO** — direct preference optimization. 137. **OTLP** — OpenTelemetry protocol. 138. **RLS** — row-level security. 139. **OBO** — on-behalf-of token. 140. **PTU** — provisioned throughput unit. 141. **KV cache** — attention cache. 142. **RAG** — retrieval-augmented generation. 143. **CoT** — chain of thought. 144. **SLO** — service-level objective. 145. **CDC** — change data capture. 146. **IaC** — infrastructure as code. 147. **SHAP** — feature attribution. 148. **NDCG** — ranking metric. 149. **pass^k** — all-k-runs success. 150. **FinOps** — cloud financial operations.
 
-## Critic's additions: 23 rapid-fire questions for a Google Cloud role-related-knowledge round [39b, 39c, 41, 42]
+## Google Cloud role-related-knowledge round: 23 rapid-fire questions [39b, 39c, 41, 42]
 
 Each answer carries the number or parameter an interviewer listens for; check prices and limits the week of the interview.
 

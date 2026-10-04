@@ -81,7 +81,9 @@ The same request on Haiku 4.5 is about \$0.009; routing 80% of them there gives 
 
 Headline benchmarks in 2026: MMLU-Pro and GPQA Diamond (knowledge and reasoning), Humanity's Last Exam, AIME/HMMT (math), SWE-bench Verified and Terminal-Bench (software engineering agents), τ²-bench (tool-using agents with users), BrowseComp (web research agents), ARC-AGI-2/3 (abstraction), MMMU and Video-MME (multimodal), LMArena (human preference Elo), Artificial Analysis (price/speed/quality index). Read them with four cautions: contamination and saturation (a 95% score tells you nothing; MMLU and GSM8K are no longer informative), agentic benchmarks depend heavily on the harness (the same model scores ten points apart under two scaffolds), vendor-reported numbers use different sampling budgets (pass@1 at temperature 0 versus best-of-n with tools), and none of them is your workload. The right answer to "which model is best" is "on our eval set, X, by this margin, at this cost" — and chapter 32 shows how to build that set in a day.
 
-### Critic's additions: the questions behind "which model"
+### The questions behind "which model"
+
+Benchmarks settle the headline; the follow-up questions are about the trade-offs behind it, and each has a short answer worth having ready.
 
 - **"Why not always the frontier model?"** Latency and cost scale with the tier, and the eval set rarely shows a difference on the easy 80%. Say the number: on the RAG example above the frontier path is 2× the workhorse path and 10× the cheap path per request.
 - **"How do you handle a model deprecation?"** Dated IDs in config, a gateway alias, the eval suite re-run on the candidate, a canary at 5% of traffic, and a prompt-caching check (cache keys change with the model).

@@ -98,9 +98,9 @@ Lab automation and literature agents (FutureHouse, Google's co-scientist), mater
 
 A **permission-aware retrieval** layer; **typed tools** with approval thresholds; **evaluation** on real tasks with judges and human review; **observability** with per-run traces and cost; **memory** with explicit write policies; **guardrails** at input, tool and output; a **human handoff** that preserves context; and a **FinOps** model (cost per task) that the business understands. If you can draw those eight boxes for any product above and say where the hard part is, you can design any of them in an interview.
 
-### Critic's additions: build versus buy, category by category
+### Build versus buy, category by category
 
-The follow-up to "how is it built" is always "would you build it". The honest answer depends on where the differentiation sits:
+Once you can draw those boxes, the follow-up to "how is it built" is always "would you build it". The honest answer depends on where the differentiation sits:
 
 | Category | Buy when… | Build when… |
 |---|---|---|

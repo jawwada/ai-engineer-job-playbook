@@ -15,7 +15,7 @@
 
 Habits: say the trade-off every time you draw a box; put numbers on arrows (tokens, QPS, latency); name the human path; mention evals before they ask; when stuck, go back to the metric.
 
-### Critic's additions: the four calculations to write in the corner, and the lens check
+### The four calculations to write in the corner, and the lens check
 
 Interviewers who say "avoid being high level" are listening for arithmetic. Do these four in the first ten minutes, out loud, with round numbers:
 
@@ -34,7 +34,7 @@ Then run the lens check before minute 40 — AI/ML engineering (model choice and
 
 *Design.* Ingestion pipeline (connectors → parsing → structure-aware chunks with contextual summaries → embeddings + BM25 → index with ACL metadata; event-driven refresh). Query path: auth (OBO) → query rewrite (cheap model) → hybrid retrieval with permission filters → reranker to 8 chunks → answer with citations and abstention on a mid-tier model → grounding check → response; cache embeddings and frequent answers per permission set. Evals: retrieval set (recall@10 ≥ 0.85), answer set (faithfulness ≥ 0.95, abstention correct), ACL negative tests; p95 and cost tracked. Deep dive: permissions (ACL sync from source systems, filter semantics in the vector store, tenancy tests). Cost: ~6k input tokens with 2.5k cached, 400 output on a \$2/\$10 model ≈ \$0.012. Roadmap: HR corpus first, then legal with stricter review.
 
-### Critic's additions: Exercise A on Google Cloud, with the numbers and four follow-ups
+### Exercise A on Google Cloud, with the numbers and four follow-ups
 
 **The build in 2026 names.** Connectors into an access-controlled Agent Search data store (formerly Vertex AI Search) with document ACLs synced from the sources and Workforce Identity Federation to the company's IdP; the Layout Parser for PDFs and tables; the Ranking API to rerank and the Check Grounding API to verify the answer's claims against the passages; Gemini 3.8 Flash for the answer with citations, Flash-Lite for query rewriting; an ADK agent on Agent Runtime with an Agent Identity; Model Armor on prompts and retrieved passages; traces in Cloud Trace and judge scores in BigQuery. If the customer wants control of chunking and embeddings, RAG Engine or Vector Search with `restricts` for ACL groups instead of Agent Search — and then the ACL sync is yours to build.
 
@@ -52,7 +52,7 @@ Then run the lens check before minute 40 — AI/ML engineering (model choice and
 
 *Design.* Supervisor agent routing to billing/technical/account sub-agents with 3–5 typed tools each over the CRM/billing APIs; RAG over help content; deterministic steps for identity verification and refunds above threshold (approval queue); conversation memory in a session store; handoff to humans with summary and state; guardrails (policy statements, PII); judges sampling 5% daily; simulated-user evals for regression. Deep dive: tool design and authorization (refund tool enforces limits; policy engine; audit). Cost routing: Haiku/Flash tier for most turns, frontier for escalation decisions. Metrics: containment, CSAT, refund error rate, escalation accuracy, cost per conversation.
 
-### Critic's additions: the refund tool's contract, honest containment, the numbers, and four follow-ups
+### The refund tool's contract, honest containment, the numbers, and four follow-ups
 
 **The refund tool is where the design is judged.** `issue_refund(order_id, amount, reason_code)` resolves the customer from the session token (no customer-id argument), checks that the order belongs to that customer, enforces `amount ≤ min(100, order_total − refunds_so_far)` in code, allows one automatic refund per order and a velocity limit per account (for example two in 30 days), requires an idempotency key, and returns a structured status (`issued`, `needs_approval`, `rejected` with a reason). Anything above the limit goes to an approval queue with the conversation summary. The model can ask for a refund; it cannot grant one the policy forbids, however the customer phrases it.
 
@@ -70,9 +70,9 @@ Then run the lens check before minute 40 — AI/ML engineering (model choice and
 
 *Ask:* take orders at 500 restaurants with 95% order accuracy, first response under 1 s, handoff to crew when unsure. (Full design in chapter 41.) Highlights: microphone array and noise suppression; streaming ASR with endpointing and barge-in; menu grounding via a constrained catalog and entity resolution; an order state machine (deterministic) with an LLM for understanding and clarification; TTS with a short-utterance style; POS integration; confirmation step; escalation; evaluation with simulated and real audio; metrics: completion, accuracy, latency, interventions.
 
-### Critic's additions: the capacity numbers for 500 restaurants
+### The capacity numbers for 500 restaurants
 
-Chapter 41's additions carry the operation schema, the latency table and the cost per order; in a design round add the fleet arithmetic. At the lunch peak assume one active lane per restaurant: 500 concurrent conversations, a model turn every 8 seconds each, so about 60 turns a second. With a 9,000-token input per turn (an 8,000-token menu prefix plus 1,000 tokens of order state and transcript) that is over half a million input tokens a second at peak — a Provisioned Throughput and quota conversation weeks before launch, and the strongest argument for a smaller prefix or a catalog tool. The same peak is 500 concurrent recognition streams (or Live sessions) and several thousand speech requests a minute, well above default per-project quotas such as Dialogflow CX's 600 audio requests a minute; request the increases as a tracked launch task.
+Chapter 41 carries the operation schema, the latency table and the cost per order; in a design round add the fleet arithmetic. At the lunch peak assume one active lane per restaurant: 500 concurrent conversations, a model turn every 8 seconds each, so about 60 turns a second. With a 9,000-token input per turn (an 8,000-token menu prefix plus 1,000 tokens of order state and transcript) that is over half a million input tokens a second at peak — a Provisioned Throughput and quota conversation weeks before launch, and the strongest argument for a smaller prefix or a catalog tool. The same peak is 500 concurrent recognition streams (or Live sessions) and several thousand speech requests a minute, well above default per-project quotas such as Dialogflow CX's 600 audio requests a minute; request the increases as a tracked launch task.
 
 ## 40.5 Exercise D — Document extraction pipeline at scale
 
@@ -80,7 +80,7 @@ Chapter 41's additions carry the operation schema, the latency table and the cos
 
 *Design.* Ingest → layout/OCR model with field confidences → small fine-tuned/prompted extractor for the easy 90% → multimodal frontier model for low-confidence pages → business-rule validation (totals, VAT, vendor master) → human review queue for exceptions with bounding boxes → ERP posting via idempotent tool → monitoring of field-level accuracy and drift by layout. Batch API for backlog; cost per document by route. Deep dive: the confidence routing and the review UI. Metrics: field accuracy, straight-through rate, cost per document, exception aging.
 
-### Critic's additions: the routing threshold as an optimization, the QA sample size, and three follow-ups
+### The routing threshold as an optimization, the QA sample size, and three follow-ups
 
 **Choose the threshold by total cost, subject to the accuracy constraint.** Each page has a route: the parser alone, the parser plus a Gemini multimodal check, or a human. Total cost per document = model and parser cost + review probability × minutes per review × loaded cost per minute. On a labeled set, sweep the confidence threshold for amount fields and pick the cheapest point where measured amount accuracy on the automatic path stays at or above 99% with its interval; at Flash prices the model check is a fraction of a cent per page, so the human queue dominates the cost and the threshold is really a staffing decision. On Google Cloud: Document AI (the invoice parser or a custom extractor) for fields and confidences, Gemini on low-confidence pages, Cloud Run for the validation rules, a review UI over BigQuery, Batch inference for the backlog.
 
@@ -97,7 +97,7 @@ Chapter 41's additions carry the operation schema, the latency table and the cos
 
 *Design.* Knowledge graph of products → rules → disclosures; RAG over guidelines and precedents; drafting agent; parallel reviewer agents (brand, legal, regulatory) with rubrics and citations; conflict detection and resolution planner; human approval; versioned prompts/rubrics; eval on historical assets (escapes, false flags); cost per asset with caching; audit trail. Deep dive: why a graph for rules and how reviewer findings are structured.
 
-### Critic's additions: what "zero escapes" can and cannot mean
+### What "zero escapes" can and cannot mean
 
 "Zero regulatory escapes" is untestable as stated; translate it. Seed the evaluation set with assets that contain known violations: with zero escapes observed on 200 seeded violations, the 95% upper bound on the escape rate is about 1.5% (rule of three, 3/200); to claim under 0.5% you need about 600 seeded violations with none missed. Say this, then propose the gate: zero misses on the seeded set per release, a false-flag rate below the human reviewers' baseline, and human approval on every published asset — so the system lowers the human workload without being the last line of defence. 5,000 assets a month is about 250 a working day; with three reviewer agents in parallel the cycle time is bounded by the slowest reviewer plus the human approval queue, which is where the remaining days hide. The reviewer pattern and its ADK mapping are in 36.1 and 39b.3.
 
@@ -107,7 +107,7 @@ Chapter 41's additions carry the operation schema, the latency table and the cos
 
 *Design.* Paved road: an agent runtime (Amazon Bedrock AgentCore; Agent Runtime on the Gemini Enterprise Agent Platform, formerly Vertex AI Agent Engine; Foundry Agent Service in Microsoft Foundry, formerly Azure AI Foundry; or LangSmith Deployment, formerly LangGraph Platform), a gateway with identity, rate limits and cost attribution, an MCP tool registry with governance, a retrieval service with ACLs, an eval service (datasets, judges, CI integration), tracing with OTel GenAI conventions, guardrails as a shared service, templates (supervisor, RAG, workflow), and a review board for high-risk use cases. Deep dive: multi-tenancy and cost showback. Metrics: time to first production agent per team, incidents, cost per task, eval coverage.
 
-### Critic's additions: the paved road on Google Cloud, and four follow-ups
+### The paved road on Google Cloud, and four follow-ups
 
 **The road, component by component.** A project per team under a shared folder; agents built with ADK from templates (Agent Garden for starting points, the platform team's own templates for the supervisor, RAG and workflow patterns) and deployed to Agent Runtime, each with its own Agent Identity; every tool and MCP server registered in Agent Registry and reached only through Agent Gateway, where IAM unified access policies say which agent may call which tool; Model Armor floor settings at the folder level so no team template can weaken them; VPC Service Controls around the data projects; Agent Evaluation and a shared gold-set service for CI gates; Agent Observability and Cloud Trace with the GenAI semantic conventions; cost showback from labels on runtime resources plus `gen_ai` token attributes joined to the billing export; a review board for high-risk use cases with a one-page intake form.
 
@@ -119,13 +119,9 @@ Chapter 41's additions carry the operation schema, the latency table and the cos
 
 ## 40.8 Common pitfalls
 
-Jumping to the architecture before clarifying; drawing twelve boxes without a request path; no numbers; forgetting permissions and the human path; "we'll use GPT" as the design; ignoring cost; no evals; not asking the interviewer what they care about.
+Jumping to the architecture before clarifying; drawing twelve boxes without a request path; no numbers; forgetting permissions and the human path; "we'll use GPT" as the design; ignoring cost; no evals; not asking the interviewer what they care about. An Applied AI interviewer marks down five more: no capacity arithmetic (tokens per second at peak and the quotas it implies); naming only old products, or only products, with no parameter attached; no rollout plan (shadow, canary, gates, kill switch); no owner for the first week ("I would instrument, baseline and set the gate"); and treating the model bill as the whole cost when search, speech, warehouse scans, runtime and the human review queue are often larger.
 
-### Critic's additions: five more pitfalls an Applied AI interviewer marks down
-
-No capacity arithmetic (tokens per second at peak and the quotas it implies); naming only old products, or only products, with no parameter attached; no rollout plan (shadow, canary, gates, kill switch); no owner for the first week ("I would instrument, baseline and set the gate"); and treating the model bill as the whole cost when search, speech, warehouse scans, runtime and the human review queue are often larger.
-
-## 40.9 Critic's additions: two more exercises a Google Cloud Applied AI loop uses
+## 40.9 Two more exercises a Google Cloud Applied AI loop uses
 
 ### Exercise G — Customer-service agent for a retail bank (the guide's broad ask)
 

@@ -34,9 +34,9 @@ flowchart LR
 8. **Generate.** A system prompt that demands grounded answers, abstention when evidence is missing, and inline citations; structured outputs when downstream code consumes the answer.
 9. **Verify.** A grounding/faithfulness check (does every claim trace to a chunk), policy and PII filters, format validation; low-confidence answers go to a fallback (ask a clarifying question, escalate).
 
-### Critic's additions: a latency and cost budget for one RAG request
+### A latency and cost budget for one RAG request
 
-Interviewers ask "how would you get this under 3 seconds and two cents?" — answer with a budget, step by step (typical hosted-API figures for a 2026 stack; measure your own):
+With the nine steps in place, the next question is what each one costs. Interviewers ask "how would you get this under 3 seconds and two cents?" — answer with a budget, step by step (typical hosted-API figures for a 2026 stack; measure your own):
 
 | Step | p50 | p95 | Cost driver |
 |---|---|---|---|

@@ -97,9 +97,7 @@ Being able to sketch these three in an interview shows you know the shapes, not 
 
 ## 20.5 When to write it yourself
 
-A single-agent tool loop is about sixty lines against any model API: build messages, call the model with tools, execute tool calls, append results, repeat until no tool calls or a budget is hit. Write it yourself when you need full control of context, when a dependency's upgrade cadence is a risk, or when the "agent" is really a fixed pipeline. Use a framework when you need persistence, interrupts, multi-agent primitives, streaming UIs and tracing without building them. Either way, the eval set and the tool design matter more than the framework.
-
-### Critic's additions: the loop itself, so you can write it on a whiteboard
+A single-agent tool loop is about sixty lines against any model API: build messages, call the model with tools, execute tool calls, append results, repeat until no tool calls or a budget is hit. Write it yourself when you need full control of context, when a dependency's upgrade cadence is a risk, or when the "agent" is really a fixed pipeline. Use a framework when you need persistence, interrupts, multi-agent primitives, streaming UIs and tracing without building them. Either way, the eval set and the tool design matter more than the framework. The loop itself is short enough to write on a whiteboard:
 
 ```python
 def run(client, system, tools, user_msg, max_turns=25, max_cost=2.00):

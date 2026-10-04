@@ -23,7 +23,7 @@ The posting (`part-6-reference-guides/interview-practice/example-job-description
 
 **Reading 4 — 90 days.** "In 90 days: two use cases in production behind an API with structured outputs and traces; a supervisor/sub-agent template the team reuses; an eval gate in CI; a one-page cost and latency report per use case; business owners signing acceptance criteria before build."
 
-### Critic's additions: the same four readings for a cloud-provider Applied AI / FDE posting
+### The same four readings for a cloud-provider Applied AI / FDE posting
 
 The example above is a customer-side posting on AWS. A provider-side Applied AI / Forward Deployed Engineer posting (Google Cloud is the running example in chapters 39b and 39c) reads differently, and the reading must change with it.
 
@@ -46,37 +46,28 @@ The example above is a customer-side posting on AWS. A provider-side Applied AI 
 
 ## 35.4 Understand and practice the architectural components
 
-For every system you infer from a JD, list the components and make sure you can do three things with each: explain it in two sentences, name two alternatives, and say how you would test it. For the example above:
-
-| Component | Two sentences | Alternatives | How you test it |
-|---|---|---|---|
-| Supervisor / sub-agents | A router agent decomposes requests and delegates to specialists with their own tools and fresh context; it merges results and owns the conversation state. | single agent with many tools; fixed workflow graph | task-success evals, tool-selection accuracy, cost per request |
-| Retrieval pipeline | Documents are parsed, chunked with context, embedded and indexed with BM25 + vectors; queries are rewritten, hybrid-retrieved, reranked and filtered by permission. | managed KB (Bedrock), long context | recall@k on a gold set, ACL negative tests |
-| Structured outputs | Schemas (Pydantic/JSON Schema) constrain model output; validation and repair loops make it safe for downstream code. | free text + parsing | schema-pass rate, repair rate |
-| Async workflows | Long steps run as jobs (queue + workers + durable state); the API returns job ids; clients poll or receive webhooks. | synchronous calls with timeouts | load tests, idempotency tests |
-| Observability | OTel traces per request with model/tool/retrieval spans; metrics for p95, cost, errors; logs with trace ids. | vendor SDK only | a trace for a failing run; dashboards |
-| CI/CD and environments | IaC (Terraform/CDK), pipelines with tests and eval gates, dev/stage/prod with separate keys and data. | manual deploys | a pipeline run; rollback drill |
-| IAM and security | least-privilege roles, user identity propagated to tools, secrets in a vault, guardrails on inputs/outputs. | shared service accounts | negative access tests, injection tests |
-
-Practice means building a small version of each (chapter 34's labs) — the difference between "I know what a supervisor agent is" and "I built one; here is what broke" is the difference between a screen and an offer.
-
-### Critic's additions: three rows the table misses, and the "how it fails" column
-
-An interviewer who has been told to avoid high level will not accept "two sentences, two alternatives, one test" for a component without hearing how it fails in production. Add a fourth question to every row — *how does it fail, and how would I know* — and add the three rows that Applied AI postings in 2026 assume:
+For every system you infer from a JD, list the components and make sure you can do four things with each: explain it in two sentences, name two alternatives, say how you would test it, and say how it fails in production and how you would know. An interviewer who has been told to avoid high level will not accept "two sentences, two alternatives, one test" for a component without hearing how it fails. The table covers the example above plus the three rows that Applied AI postings in 2026 assume — cost attribution, a conversational or voice layer, and an evaluation service:
 
 | Component | Two sentences | Alternatives | How you test it | How it fails and how you know |
 |---|---|---|---|---|
+| Supervisor / sub-agents | A router agent decomposes requests and delegates to specialists with their own tools and fresh context; it merges results and owns the conversation state. | single agent with many tools; fixed workflow graph | task-success evals, tool-selection accuracy, cost per request | runaway loops and context bloat (max turns, cost per run, repeated-tool-call detection) |
+| Retrieval pipeline | Documents are parsed, chunked with context, embedded and indexed with BM25 + vectors; queries are rewritten, hybrid-retrieved, reranked and filtered by permission. | managed KB (Bedrock), long context | recall@k on a gold set, ACL negative tests | recall collapse after a filter or embedding change (recall@10 on the gold set in CI) |
+| Structured outputs | Schemas (Pydantic/JSON Schema) constrain model output; validation and repair loops make it safe for downstream code. | free text + parsing | schema-pass rate, repair rate | schema drift and repair loops (schema-pass and repair rates) |
+| Async workflows | Long steps run as jobs (queue + workers + durable state); the API returns job ids; clients poll or receive webhooks. | synchronous calls with timeouts | load tests, idempotency tests | duplicate side effects on retry (idempotency keys, dead-letter queue depth) |
+| Observability | OTel traces per request with model/tool/retrieval spans; metrics for p95, cost, errors; logs with trace ids. | vendor SDK only | a trace for a failing run; dashboards | traces without identity or token counts (a trace review in the first week) |
+| CI/CD and environments | IaC (Terraform/CDK), pipelines with tests and eval gates, dev/stage/prod with separate keys and data. | manual deploys | a pipeline run; rollback drill | prod keys in staging (environment separation tests) |
+| IAM and security | least-privilege roles, user identity propagated to tools, secrets in a vault, guardrails on inputs/outputs. | shared service accounts | negative access tests, injection tests | permissions in vector metadata but not enforced in the query (negative access tests) |
 | Cost attribution (FinOps) | Every model call carries feature, route, model, prompt version and token counts (input, cached, output, thinking) as trace attributes; a nightly join with the price table gives cost per request and per task. | billing export only (no per-feature view); gateway metering | a cost-per-task panel reconciled to the billing export within 5% | silent cost growth from loops and retries; alert when cost per task exceeds 2× the 7-day median or a run exceeds its budget |
 | Conversational / voice layer | Deterministic flows for identity, payment and confirmation; LLM playbooks or an agent for open requests; webhooks into the backend; streaming speech at every stage. | pure LLM chat; IVR menus | golden-transcript test cases in CI; a simulated-user suite; a latency budget per stage | no-match spirals, slow webhooks inside the turn budget, intent collisions; fallback rate per page and webhook p95 tell you |
 | Evaluation service (judges and gates) | Human-labeled gold sets per criterion, calibrated LLM judges, CI gates with thresholds, production sampling with a human review queue. | manual spot checks; vendor dashboards only | judge agreement with humans per criterion (κ ≥ 0.7) and the gate blocking a known-bad change | judge drift after a model change; one holistic score hiding regressions; re-calibrate on every judge change |
 
-For the existing rows, the failure column reads: supervisor/sub-agents — runaway loops and context bloat (max turns, cost per run, repeated-tool-call detection); retrieval — recall collapse after a filter or embedding change (recall@10 on the gold set in CI); structured outputs — schema drift and repair loops (schema-pass and repair rates); async workflows — duplicate side effects on retry (idempotency keys, dead-letter queue depth); observability — traces without identity or token counts (a trace review in the first week); CI/CD — prod keys in staging (environment separation tests); IAM — permissions in vector metadata but not enforced in the query (negative access tests).
+Practice means building a small version of each (chapter 34's labs) — the difference between "I know what a supervisor agent is" and "I built one; here is what broke" is the difference between a screen and an offer.
 
 ## 35.5 Red flags and how to read them
 
 "Rockstar/ninja", seven roles in one (data engineer + ML + full-stack + DevOps), "fast-paced" with no mention of testing, must-haves that no single person has (ten frameworks, three clouds, "expert" everywhere), vague "AI initiatives" with no product — these mean an unclear problem or an unclear owner. Still apply if the pay and the people are right, but ask the problem questions early; a company that cannot answer "what is broken" will not be able to tell you when you have succeeded.
 
-### Critic's additions: reading a provider-side Applied AI / FDE posting for what it does not say
+### Reading a provider-side Applied AI / FDE posting for what it does not say
 
 Provider-side postings are written to attract many profiles, so the signal is in the specifics and in what is missing:
 

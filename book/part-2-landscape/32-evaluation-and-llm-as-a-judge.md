@@ -69,7 +69,7 @@ The two consistency metrics are easy to confuse: **pass@k** is the probability t
 - **Production monitoring**: sample 1–5% of traffic through judges daily; alert on drops; mine failures into the eval set; review disagreements weekly with humans.
 - **Human evaluation** remains the anchor: periodic calibration sets, SME review of high-stakes outputs, and user feedback (thumbs, edits, escalations) tied to traces.
 
-### Critic's additions: the statistics behind "it got better"
+### The statistics behind "it got better"
 
 Most eval claims in interviews (and in production changelogs) do not survive a confidence interval. Four facts to have ready:
 

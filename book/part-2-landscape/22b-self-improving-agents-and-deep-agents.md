@@ -62,9 +62,7 @@ A "deep agent" is an agent built for long, multi-step tasks rather than one-shot
 
 ## 22b.5 Guardrails for anything that improves itself
 
-Frozen holdout sets; approval for prompt/rubric/memory changes in regulated contexts; change logs with rationale; budgets for optimizers; canary deployments of optimized prompts; drift monitors on behaviour (length, refusal rate, tool-call counts); and the ability to pin and roll back every artifact. The goal is a system that gets better *and* stays explainable.
-
-### Critic's additions: how self-improvement fails, and the control for each
+Frozen holdout sets; approval for prompt/rubric/memory changes in regulated contexts; change logs with rationale; budgets for optimizers; canary deployments of optimized prompts; drift monitors on behaviour (length, refusal rate, tool-call counts); and the ability to pin and roll back every artifact. The goal is a system that gets better *and* stays explainable. Each of those guardrails exists because of a specific way self-improvement fails:
 
 | Failure | Mechanism | Control |
 |---|---|---|

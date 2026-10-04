@@ -104,8 +104,7 @@ trainer.train()
 
 Sample k answers per prompt, score them, and push the policy toward above-average answers within the group; no reward model needed when a checker exists. Verifiers: unit tests, exact-match math, SQL execution against expected results, tool-call success in a sandbox, schema validators, and calibrated judges for soft criteria.
 
-### Critic's additions: GRPO mechanics and how it fails
-
+**GRPO mechanics, and how it fails.**
 - **The advantage is group-relative.** For one prompt, sample G completions (8–16 is typical), score them r₁…r_G, and give each the advantage Âᵢ = (rᵢ − mean(r)) / std(r); every token of completion i is pushed up or down by Âᵢ through a PPO-style clipped ratio, optionally with a KL penalty (β) to the reference. Replacing PPO's learned critic with the group mean is what removes the fourth model and most of the memory.
 - **No variance, no learning.** If all G samples fail (or all pass), every advantage is zero and the prompt contributes nothing. Prompts must sit at the edge of the model's ability: filter the dataset to prompts with a pass rate strictly between 0 and 1 under the starting policy, and refresh that filter as the model improves (curriculum). This is the single most common reason a first GRPO run "does nothing".
 - **Known biases and fixes.** Normalizing by sequence length rewards long wrong answers and penalizes long right ones less than it should; dividing by the group's standard deviation over-weights near-unanimous groups. "Dr. GRPO" removes both normalizations; DAPO (2025) adds asymmetric clipping ("clip-higher") to stop entropy collapse, dynamic sampling to drop zero-variance groups, token-level loss, and overlong-response shaping. Recent TRL versions default the KL coefficient to zero for the same reasons — set β deliberately rather than inheriting it.

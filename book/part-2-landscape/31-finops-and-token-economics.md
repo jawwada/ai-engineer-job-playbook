@@ -48,7 +48,7 @@ blended: 0.25 × 0.0217 + 0.75 × 0.0111 ≈ $0.0138 per turn → ~$1,380/day �
 
 Quality check: the eval set shows no change on resolution rate for routed turns; p95 latency drops because inputs are smaller. This is the shape of the answer interviewers want: numbers, levers, and the quality gate.
 
-### Critic's additions: why agent costs grow quadratically, and what caching does to the curve
+### Why agent costs grow quadratically, and what caching does to the curve
 
 A chat turn sends its context once; an agent loop re-sends the whole growing transcript on every step. If a run starts with a 10k-token prefix and each step adds 3k tokens (tool call, tool result, reasoning), step *i* sends 10k + 3k × (i − 1) input tokens, so a 30-step run sends 30 × 10k + 3k × (30 × 29 / 2) ≈ **1.6M input tokens** — quadratic in the number of steps. On a \$2/\$10 model:
 

@@ -37,9 +37,9 @@ For the protocols underneath these patterns (OAuth 2.0 flows, OpenID Connect, PK
 - **Output handling**: validate structured outputs against schemas; never execute model output directly (parameterized queries, sandboxed code execution with no network, HTML escaping); grounding checks and policy filters before display.
 - **Human approval for outbound actions** (email, payments, posting, deletes) — the rule this book's job agent lives by.
 
-### Critic's additions: architectural defenses that do not depend on the model behaving
+### Architectural defenses that do not depend on the model behaving
 
-Classifiers lower the success rate of injection; they do not bound it, and adaptive attackers routinely get past published detectors. The defenses that hold are architectural: once an agent has ingested untrusted input, it must be *impossible* for that input to trigger a consequential action. The 2025 paper "Design Patterns for Securing LLM Agents against Prompt Injections" (authors from IBM, Invariant Labs, ETH Zurich, Google and Microsoft) gives six patterns worth naming:
+The classifiers in the list above lower the success rate of injection; they do not bound it, and adaptive attackers routinely get past published detectors. The defenses that hold are architectural: once an agent has ingested untrusted input, it must be *impossible* for that input to trigger a consequential action. The 2025 paper "Design Patterns for Securing LLM Agents against Prompt Injections" (authors from IBM, Invariant Labs, ETH Zurich, Google and Microsoft) gives six patterns worth naming:
 
 | Pattern | How it works | Typical use |
 |---|---|---|

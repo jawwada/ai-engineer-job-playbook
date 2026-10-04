@@ -24,9 +24,9 @@
 
 **Voice building blocks (for custom stacks):** telephony (Twilio, Vonage, Telnyx, SIP trunks), real-time transport (WebRTC via LiveKit or Daily), ASR (Deepgram, AssemblyAI, Google, Azure, Whisper), TTS (ElevenLabs, Cartesia, Google, Azure, Polly), speech-to-speech (OpenAI Realtime, Gemini Live, Nova Sonic), turn detection (voice-activity detection plus semantic end-of-turn models such as LiveKit's turn detector, Pipecat Smart Turn, or ASR with built-in end-of-turn prediction), orchestration (LiveKit Agents, Pipecat, Vapi, Retell, Bland), and evaluation (simulated callers, call QA judges).
 
-### Critic's additions: turn-taking is the hard part of voice
+### Turn-taking is the hard part of voice
 
-Most voice agents that "feel robotic" fail on turn-taking, not on the language model. The mechanics to be able to explain:
+Of those building blocks, turn detection is the one that decides how the agent feels: most voice agents that "feel robotic" fail on turn-taking, not on the language model. The mechanics to be able to explain:
 
 - **Endpointing.** A pure silence threshold (voice-activity detection, typically 500–800 ms of silence) either cuts callers off mid-thought or adds dead air to every turn. Semantic end-of-turn models look at the partial transcript ("my account number is…" is not finished) and let you shorten the silence threshold to 200–300 ms on complete utterances while waiting longer on incomplete ones.
 - **Barge-in.** When the caller speaks over the agent, stop TTS within ~100–200 ms, discard the unspoken remainder from the conversation history (or the model will believe it said things the caller never heard), and distinguish real interruptions from backchannels ("uh-huh", "right") and background noise.

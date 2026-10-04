@@ -24,7 +24,7 @@
 
 **Trade-offs to name.** Routing adds a classification step and a risk of under-serving hard cases (mitigate with escalation on low confidence); aggressive context trimming can hurt recall (watch retrieval metrics); caching changes prompt ordering, which can change behaviour (re-run evals).
 
-### Critic's additions: the parameters, the Google Cloud version of the arithmetic, and five more follow-ups
+### The parameters, the Google Cloud version of the arithmetic, and five more follow-ups
 
 **Name the knobs, not the lever.** On Gemini: explicit context caching creates a `cachedContent` resource with a TTL (default one hour; you pay storage per million tokens per hour, so a cache that is read once an hour can cost more than it saves); implicit caching is on by default for Gemini 2.5 and later models and needs a minimum prefix (2,048 tokens on 2.5, 4,096 on the 3.x models); the response's `usage_metadata.cached_content_token_count` is your cache-hit measurement and `thoughts_token_count` your thinking spend. Thinking is set per call with `thinking_config` — `thinking_level` (`minimal`/`low`/`medium`/`high`, model-dependent) on Gemini 3 models, `thinking_budget` (a token count; 0 disables it on Flash, Pro cannot be disabled) on Gemini 2.5. `response_schema` and `max_output_tokens` bound output. Batch prediction is 50% off list price. Provisioned Throughput is bought in generative AI scale units (GSUs) on weekly to yearly commits; size it from measured peak tokens per second, never from a forecast.
 
@@ -56,7 +56,7 @@
 
 **What I instrument from the start.** `invoke_agent` root span; `chat`, `execute_tool`, `retrieval` children with tokens, latency, arguments (redacted) and result status; identity on every span; metrics for empty-result rate, tool error rate, p95 and cost; judge sampling; content capture opt-in and redacted.
 
-### Critic's additions: the Google Cloud specifics and the error signatures that decide the layer
+### The Google Cloud specifics and the error signatures that decide the layer
 
 **Where the trace lives.** An ADK agent deployed on Agent Runtime (formerly Agent Engine) exports traces to Cloud Trace when tracing is enabled on the app; Agent Observability adds the turnkey dashboards; metrics go to Cloud Monitoring and logs to Cloud Logging with the trace id in the log entry so you can pivot from a log line to the trace. For ad-hoc analysis, Log Analytics (BigQuery-backed) answers "how many `execute_tool` spans for `find_dataset` returned `status=empty` per day per tenant" in one query.
 
@@ -88,7 +88,7 @@
 
 **Numbers to offer.** "Adding a 4k thinking budget to the planner raised task success from 71% to 84% on our 200-task set at +18% cost; adding it to workers changed nothing at +60% cost — so it stays on the planner."
 
-### Critic's additions: what "latent reasoning" means precisely, the ADK knobs, and four more follow-ups
+### What "latent reasoning" means precisely, the ADK knobs, and four more follow-ups
 
 **Say what latent reasoning is, with the two reference points.** Chain-of-thought reasoning spends compute by generating tokens the model then conditions on. Latent reasoning spends it without emitting tokens: either by feeding the model's last hidden state back as the next input instead of a token (continuous chain of thought — "Coconut", Meta, December 2024), or by looping a block of layers a variable number of times per token at inference (recurrent-depth models — the 3.5-billion-parameter model of Geiping and colleagues, February 2025, which scales test-time compute by iterating a recurrent block). Both decouple reasoning from vocabulary and make the compute per answer a continuous knob. Production Gemini and Claude models expose reasoning as thinking tokens or effort levels, not as recurrent depth, so in practice the knob you set is `thinking_level` or a token budget; the design stance is the same.
 
@@ -120,7 +120,7 @@
 
 **Trade-offs to name.** Judges cost tokens (use a cheap calibrated judge for monitoring, a strong one for CI); they can drift when the judge model changes (pin and re-calibrate); they are not a substitute for humans on high-stakes decisions (sampled human review stays).
 
-### Critic's additions: the statistics behind the thresholds, the Google Cloud metric names, and four more follow-ups
+### The statistics behind the thresholds, the Google Cloud metric names, and four more follow-ups
 
 **Why 100–200 gold cases, and what a 0.95 gate can actually detect.** A binary metric at a 95% pass rate measured on 200 cases has a 95% confidence interval of about ±3 points; on 100 cases about ±4. So a 200-case gate can tell a 95% system from a 90% one and cannot reliably tell it from a 93% one; if the product needs to see a 2-point regression you need roughly 450 cases, or you gate on the worst slice rather than the mean. Say this when you name the threshold; it is the difference between a number and a measured number.
 
@@ -151,7 +151,7 @@
 
 **Trade-offs.** Per-user identity propagation complicates caching (cache per permission set, or cache only public content); strict retrieval filters reduce recall for broad questions (explain the limitation to the user); policy engines add latency (cache decisions). The alternative — trusting the prompt to enforce access — fails the first time someone writes "ignore previous instructions".
 
-### Critic's additions: the Google Cloud mechanisms with their syntax, and four more follow-ups
+### The Google Cloud mechanisms with their syntax, and four more follow-ups
 
 **Say the mechanism with its syntax.**
 - BigQuery row-level security: `CREATE ROW ACCESS POLICY eu_only ON dataset.customers GRANT TO ("group:eu-analysts@example.com") FILTER USING (region = "EU");` and, for per-user rows, `FILTER USING (SESSION_USER() = owner_email)`. Column-level security is a policy tag on the column (taxonomies now managed in Dataplex Universal Catalog; enforcement stays in BigQuery) with the Fine-Grained Reader role granted on the tag; without it the query fails on that column rather than returning nulls, which the tool must report as `forbidden`.
@@ -192,7 +192,7 @@
 19. **Drift?** Input/feature/prediction drift monitors, periodic judge sampling, retraining triggers, and change detection on upstream data.
 20. **Explaining AI to the business?** Problem, measure, baseline, result, cost, risk — in that order; demo over slides; acceptance criteria written together.
 
-### Critic's additions: eight more, for a Google Cloud loop
+### Eight more, for a Google Cloud loop
 
 21. **Agent Search vs RAG Engine vs your own index?** Agent Search when the sources are enterprise content with ACLs and connectors (Drive, SharePoint, Cloud Storage, BigQuery) and you want managed parsing, ranking and grounding; RAG Engine when you need control over chunking, embeddings and the vector store but still a managed pipeline; your own index (Vector Search, AlloyDB with pgvector, BigQuery vector search) when retrieval is part of a larger data model or needs custom filters and hybrid scoring.
 22. **Agent Runtime vs Cloud Run for an agent?** Agent Runtime gives managed sessions, Memory Bank, tracing, identity and scaling for ADK or LangGraph agents with no infrastructure; Cloud Run when you need custom networking, non-Python runtimes, or an existing service mesh — and you then build sessions and tracing yourself.
@@ -203,7 +203,7 @@
 27. **Model Armor vs safety settings on the model?** Safety settings filter the model's own generations by category; Model Armor screens prompts and responses as a policy layer (injection, sensitive data, URLs, responsible-AI categories) with org-level floors and audit; you use both.
 28. **How do you ship an agent through environments on Google Cloud?** Terraform for projects, IAM, VPC-SC and data stores; Cloud Build runs unit tests, the eval gate and the cost delta; deploy to Agent Runtime or Cloud Run with a canary; Cloud Deploy or tagged revisions for promotion and rollback; prompts and rubrics versioned with the code.
 
-### Critic's additions: five more that only exist since the 2026 renaming
+### Five more that only exist since the 2026 renaming
 
 29. **Gemini Enterprise versus the Gemini Enterprise Agent Platform?** Gemini Enterprise (formerly Agentspace) is the employee-facing app where people use agents; the Agent Platform (formerly Vertex AI) is where developers build, deploy, govern and evaluate them. Agents built on the platform can be published into the app.
 30. **CX Agent Studio versus Dialogflow CX?** CX Agent Studio, inside Gemini Enterprise for Customer Experience, is the ADK-based, low-code evolution: LLM agents with instructions, tools, Python callbacks, guardrails and handoff rules, bidirectional-streaming voice and asynchronous tool calls. Dialogflow CX (the Conversational Agents console; Google's documentation now files it under legacy conversational agents, with no shutdown date announced) stays for existing flow-based agents, and CX Agent Studio can call those flows as flow-based agents — so keep the transactional flows and move the open-ended parts.

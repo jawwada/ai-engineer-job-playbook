@@ -104,9 +104,9 @@ flowchart LR
 4. **What does it cost at 10× the pilot volume?** Per-token, per-query, per-session-hour and per-seat prices behave very differently at scale (chapter 31).
 5. **How do you evaluate it?** If you cannot name the eval set that would tell you the tool is better, you are choosing by brand.
 
-### Critic's additions: the lock-in surface, row by row
+### The lock-in surface, row by row
 
-Question 3 deserves numbers, because "lock-in" is what the architect across the table is really asking about. The pattern: the closer a component sits to the model call, the cheaper it is to swap; the closer it sits to state, the more expensive.
+Question 3 deserves numbers, because "lock-in" is what the architect across the table is really asking about. The pattern holds across the rows: the closer a component sits to the model call, the cheaper it is to swap; the closer it sits to state, the more expensive.
 
 | Row | What you would have to rewrite to leave | Typical effort | Mitigation |
 |---|---|---|---|

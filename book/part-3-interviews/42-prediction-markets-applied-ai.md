@@ -8,7 +8,9 @@ A **prediction market** lists binary (or multi-outcome) contracts that pay out 1
 
 The business runs on three loops: **supply** (creating many well-specified markets quickly), **integrity** (resolving them correctly and keeping manipulation, insider trading and fraud out), and **growth and operations** (support, compliance, finance, marketing at scale with small teams). AI touches all three.
 
-### Critic's additions: the two platforms side by side, with dates (check before the interview; this domain changes monthly)
+### The two platforms side by side, with dates (check before the interview; this domain changes monthly)
+
+Interviewers probe the differences between the two platforms, so have them side by side.
 
 | | Kalshi | Polymarket |
 |---|---|---|
@@ -31,7 +33,7 @@ Two public episodes worth knowing because they make the wording argument for you
 7. **Forecasting and research.** Models that forecast event probabilities from news and data (as benchmarks against the market and as inputs to market making), sentiment and news-impact models, and trader tools (summaries of what moved a market). Caution: anything that touches trading is heavily gated; research agents get read-only tools (chapter 30).
 8. **Content and growth.** Automated market summaries, explainers and multilingual content, with brand and compliance review (see the marketing-review use case in chapter 36).
 
-### Critic's additions: each problem with a metric, a threshold, a Google Cloud build and the human gate
+### Each problem with a metric, a threshold, a Google Cloud build and the human gate
 
 The thresholds below are illustrative starting points to propose and then agree with the customer; the point is that every agent ships with a number and a named human decision.
 
@@ -54,7 +56,9 @@ The thresholds below are illustrative starting points to propose and then agree 
 - **Ambiguity is the product risk.** Market wording decides outcomes; LLM assistance must *reduce* ambiguity (templates, checklists, examples of past disputes), never introduce it.
 - **Small teams, broad surface.** The AI Ops framing — one engineer serving many functions — rewards generalists who can ship full-stack and measure.
 
-### Critic's additions: each constraint turned into a design requirement with a number
+### Each constraint turned into a design requirement with a number
+
+Each constraint becomes a requirement you can state with a number.
 
 | Constraint | Design requirement |
 |---|---|
@@ -73,7 +77,7 @@ The thresholds below are illustrative starting points to propose and then agree 
 - **Expect these questions.** "How would you automate resolution without being wrong?" (allow-listed sources, claim verification, confidence thresholds, humans on anything below threshold, audit); "How would you detect insider trading around a resolution source?" (features: timing relative to source updates, account history, P&L concentration; graph of related accounts; alert triage with narratives); "How do you keep an internal copilot from leaking data between teams?" (chapter 30: identity, scoped tools, ACL retrieval); "What would you automate first in operations?" (map processes by volume × pain × data availability; start with support macros and finance reconciliations; measure hours saved).
 - **Rates and expectations.** Roles are often on-site in New York (both companies) or remote-friendly for contractors; emphasize shipping speed, ownership and measurement.
 
-### Critic's additions: six more questions with specific answers, the demo's acceptance numbers, and what not to say
+### Six more questions with specific answers, the demo's acceptance numbers, and what not to say
 
 Chapter 39c.3 has the resolution, insider-trading, leakage and build questions in interview form; these are the next six.
 

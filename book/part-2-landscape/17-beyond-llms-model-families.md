@@ -65,9 +65,9 @@ VLA models fine-tune a vision-language model to emit robot actions as tokens (RT
 
 A customer-service voice agent: ASR (audio family) → LLM with tools (transformer) → retrieval with embeddings and a reranker (encoder family) over documents parsed by a document model (vision family) → TTS (audio) — plus a gradient-boosted model scoring churn risk from the CRM to decide when to escalate, and a forecasting model sizing the call-center staffing the agent is deflecting. Being able to draw that in an interview is worth more than knowing any single architecture in depth.
 
-### Critic's additions: the cost and latency envelope of each family
+### The cost and latency envelope of each family
 
-The reason systems combine families is economics, and interviewers expect you to know the orders of magnitude. Per inference, on 2026 hardware and typical sizes (treat as ranges, not quotes):
+The reason systems combine families this way is economics, and interviewers expect you to know the orders of magnitude. Per inference, on 2026 hardware and typical sizes (treat as ranges, not quotes):
 
 | Family | Latency per call | Cost per 1,000 calls | Where it runs |
 |---|---|---|---|

@@ -21,7 +21,7 @@ The weak answer lists "use a smaller model and cache" and stops. The difference 
 
 **Input dominates anyway.** Chapter 31's rule that 60–80% of tokens are input is conservative for agents. Manus reported an input-to-output ratio near 100:1 in its production agent, and the FinOps Foundation's May 2026 paper on token pricing names "context window creep" (re-sending the whole history on every turn of a stateless API) "the single greatest hidden cost in most production AI applications": although an output token is priced around three times an input token, input tokens "will almost always dominate your total spend in any conversational application."
 
-**The quadratic term.** An agent re-sends its whole transcript every step. With a prefix of P tokens and an increment of d tokens per step, a run of n steps sends about nP + d·n(n−1)/2 input tokens. Twenty steps with a 12k prefix and 2.5k per step is 240k + 475k = 715k input tokens for one run. Chapter 31's critic's addition derives the same curve; the point here is that three of the levers below (caching, context engineering, sub-agents) exist to flatten it.
+**The quadratic term.** An agent re-sends its whole transcript every step. With a prefix of P tokens and an increment of d tokens per step, a run of n steps sends about nP + d·n(n−1)/2 input tokens. Twenty steps with a 12k prefix and 2.5k per step is 240k + 475k = 715k input tokens for one run. Chapter 31 derives the same curve; the point here is that three of the levers below (caching, context engineering, sub-agents) exist to flatten it.
 
 ```mermaid
 flowchart LR

@@ -49,9 +49,9 @@ S3 (with S3 Tables for Iceberg), Glue (catalog and ETL), Athena (serverless SQL)
 - **Semantic layers** (dbt semantic layer, Cortex Analyst semantic models/views, Unity Catalog metric views, Power BI semantic models, Looker, Fabric IQ ontology) as the foundation for reliable text-to-SQL. On public text-to-SQL benchmarks over realistic enterprise schemas (BIRD, Spider 2.0) raw generation is far from solved — Spider 2.0's enterprise tasks were in the 20–60% range for frontier agents through 2025 — which is the quantitative case for a semantic layer.
 - **Cost controls**: serverless autoscaling, cluster policies, query cost attribution, caching, Photon/BigQuery slot management, and budgets on LLM-in-SQL functions (they turn a cheap scan into millions of model calls).
 
-### Critic's additions: the LLM-in-SQL pattern and its failure modes
+### The LLM-in-SQL pattern and its failure modes
 
-Every platform now lets you call a model from SQL (`ai_query`, `AI_COMPLETE`, `AI.GENERATE`, Fabric AI functions). It is the fastest way to enrich a table — and the fastest way to burn a budget. What to say when asked:
+That last cost control deserves its own treatment. Every platform now lets you call a model from SQL (`ai_query`, `AI_COMPLETE`, `AI.GENERATE`, Fabric AI functions). It is the fastest way to enrich a table — and the fastest way to burn a budget. What to say when asked:
 
 - **Cost is rows × tokens.** 10M support tickets × 600 input tokens × a \$0.30/MTok model ≈ \$1,800 per full pass; the same pass on a \$3/MTok model is \$18,000. Run on new or changed rows only (incremental pipelines), materialize the results, and never put an LLM function in a dashboard query that re-runs on every refresh.
 - **Throughput and quotas.** The function fans out to the model endpoint; provisioned throughput or batch inference is cheaper and steadier than pay-per-token for large backfills (Databricks `ai_query` uses batch inference on provisioned endpoints; BigQuery and Snowflake have their own quotas).

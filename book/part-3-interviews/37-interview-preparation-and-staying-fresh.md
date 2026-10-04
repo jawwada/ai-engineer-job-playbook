@@ -19,7 +19,7 @@ AI-engineer and FDE loops in 2026 usually have five stages, each with a differen
 
 Ask the recruiter for the exact loop, the interviewers' roles, and what each stage looks for. Companies tell you; most candidates do not ask.
 
-### Critic's additions: what "scripted" changes about your preparation
+### What "scripted" changes about your preparation
 
 A scripted role-related-knowledge round is different from a technical deep dive in three ways, and each changes what you do the week before:
 
@@ -39,7 +39,7 @@ A scripted role-related-knowledge round is different from a technical deep dive 
 
 For a one-week window, do days 1–2, 3–5 compressed, 9, 11, 13.
 
-### Critic's additions: the 72-hour version for a scripted role-related-knowledge round
+### The 72-hour version for a scripted role-related-knowledge round
 
 When the round is days away, not weeks, spend the time on recall under time pressure, not on new reading:
 
@@ -76,7 +76,7 @@ A quiet room with a neutral background, a wired or strong connection, a second d
 - **Honesty about edges.** "I have not run Foundry Agent Service (Microsoft Foundry, formerly Azure AI Foundry) in production; I have done the equivalent on AgentCore and here is how I would approach the differences."
 - **Bring them in.** "How do you handle permissions today?" turns an interrogation into a design session — especially for FDE roles.
 
-### Critic's additions: the "not high level" self-check
+### The "not high level" self-check
 
 Run this on every rehearsed answer. If any line fails, the answer is high level, whatever it sounds like.
 

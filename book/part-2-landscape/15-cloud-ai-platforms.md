@@ -93,9 +93,9 @@ Hold this table in your head and every "do you know Bedrock?" question becomes "
 4. **Count the operational cost, not the token price.** Quotas, regional availability, PTUs, VPC endpoints and preview features are where projects slip; token prices differ by 20–40% between clouds, operations by 10×.
 5. **For an FDE answer**, lead with the customer's constraints (data residency, SSO, approved vendors), name the box on their cloud for each layer, and state what you would still build yourself.
 
-### Critic's additions: the operational questions the table hides
+### The operational questions behind the box names
 
-The box names are the easy half. The questions a Google, AWS or Microsoft interviewer asks next are about what happens at the edges, and the honest answers are the same on every cloud:
+Rule 4 is where most of the follow-up questions live. The box names are the easy half. The questions a Google, AWS or Microsoft interviewer asks next are about what happens at the edges, and the honest answers are the same on every cloud:
 
 | Topic | What to know | Where it bites |
 |---|---|---|

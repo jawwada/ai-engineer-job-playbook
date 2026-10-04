@@ -22,7 +22,7 @@ flowchart LR
 - **Monitoring**: data drift (PSI, KL, KS tests), prediction drift, performance decay when labels arrive, data quality, latency and errors, bias and fairness metrics, cost; tools: Evidently, Arize, WhyLabs, Fiddler, the cloud model monitors (model monitoring in the Gemini Enterprise Agent Platform, formerly Vertex AI Model Monitoring; Azure ML model monitoring), Lakehouse Monitoring. Note for AWS designs: SageMaker Model Monitor, Clarify, Ground Truth, Debugger and A2I entered maintenance mode in July 2026 (no new customers), so a new AWS build monitors with Lakehouse Monitoring, Evidently/Arize or a custom job over inference logs rather than Model Monitor.
 - **Governance**: model cards, documentation, approval workflows, audit, reproducibility for regulators (EU AI Act obligations phasing in from 2025; model risk management in finance — in US banking, SR 11-7 was superseded on 17 April 2026 by the Federal Reserve's SR 26-2, revised model-risk guidance issued jointly with the OCC and FDIC, which keeps "effective challenge" and independent validation but puts generative and agentic AI outside its scope as "novel and rapidly evolving", so banks govern those under their broader risk frameworks; chapter 54b).
 
-**Critic's additions: numbers and mechanisms behind the lifecycle.**
+**Numbers and mechanisms behind the lifecycle.** Each stage above comes with thresholds and checks an interviewer expects you to name:
 - **Drift thresholds.** The usual PSI rule of thumb: below 0.1 no action, 0.1–0.25 investigate, above 0.25 significant shift. Report drift per feature *and* its importance; a drifting feature the model barely uses is noise. For prediction drift compare the score distribution against the training-time distribution weekly and against the last 7 days daily.
 - **Label delay.** Most business labels arrive late (chargebacks in 60–90 days, churn in a quarter). Monitor proxies in the meantime (prediction distribution, feature drift, downstream business counters such as acceptance rate) and backfill the true metric when labels land; a dashboard that only shows AUC "as of 90 days ago" is not monitoring.
 - **Retraining triggers.** Three kinds, in order of maturity: schedule (weekly), drift-triggered (PSI above threshold on key features), and performance-triggered (metric below floor when labels arrive). Every trigger still runs the validation gate; a trigger without a gate is how a bad week of data becomes the production model.
@@ -46,7 +46,7 @@ flowchart LR
 
 Prompt management tools: Langfuse, LangSmith Hub, Braintrust, MLflow Prompt Registry (part of the GenAI features MLflow 3 added in 2025, alongside tracing and evaluation), PromptLayer, Agenta; evaluation and tracing tools in chapters 29 and 32; gateways in chapter 31.
 
-**Critic's additions: the release bundle, and the statistics of an eval gate.** "Version everything together" is abstract until you show the artifact. A release of an LLM feature is one manifest, stored in git and referenced from every trace:
+**The release bundle, and the statistics of an eval gate.** "Version everything together" is abstract until you show the artifact. A release of an LLM feature is one manifest, stored in git and referenced from every trace:
 
 ```yaml
 release: policy-assistant-2026.10.02-r3
@@ -81,8 +81,6 @@ Say which level the team is at and what moves it one level up — a concrete, bo
 **D. Agent with tools (LLMOps).** Tool schemas and policies versioned with the service; eval tasks with mocked tools and simulated users; trajectory metrics (tool-selection accuracy, steps, cost) gated in CI; traces with GenAI conventions in production; weekly review of low-score runs feeds new eval cases; model version pinned behind the gateway with a fallback.
 
 **E. Fine-tuned classifier (hybrid).** Frontier model labels a sample → human review → LoRA training pipeline on a GPU job → eval against frontier labels and a general-ability regression suite → registry → vLLM endpoint → drift monitor on label distribution; monthly refresh.
-
-**Critic's additions: more pipelines.**
 
 **F. Embedding model migration (blue/green index).** The embedding model is deprecated or a better one wins on the gold set. Re-embed all 40M chunks into a new index version (about 16B tokens; at \$0.02–0.13 per million tokens that is \$320–2,100 — cheap — but at a rate limit of one million tokens per minute it is eleven days single-stream, so the job is parallelized across keys or run through a batch endpoint), serve both indexes in shadow with the retrieval evals comparing recall@10 per collection, canary 10% of traffic, cut over, keep the old index for a week, delete. The release manifest's `retrieval.index` and `embed_model` change together; mixing embeddings from two models in one index is the classic silent failure.
 

@@ -15,7 +15,7 @@
 - **Azure, AWS and GCP** — all three clouds; be ready for "which do you know best and what did you build on each" (chapter 15).
 - **Built and led a 15-person AI team; directed engineering at a start-up; owns agentic marketing automation** — the leadership line; have the STAR stories (chapter 38).
 
-**Critic's additions: the two sentences for the headline terms, and the follow-up that comes next.** The lines above say what each term is; an interviewer wants to hear what you did with it and will immediately ask one harder question. Prepare both.
+**The two sentences for the headline terms, and the follow-up that comes next.** Knowing what each term is gets you only half-way; an interviewer wants to hear what you did with it and will immediately ask one harder question. Prepare both.
 
 | Headline term | Two sentences to say | The follow-up to expect |
 |---|---|---|
@@ -46,7 +46,7 @@
 - **LLM copilots** — assistants embedded in a workflow (the Ask-AI copilot; chapter 36.4).
 - **Conversational AI (Dialogflow CX)** — flows, pages, intents, entities, webhooks, playbooks (chapters 28, 39c, 41).
 
-**Critic's additions: the mechanisms behind four lines that interviewers probe.** "Structured outputs", "HITL", "multi-LLM orchestration" and "prompt/context management" are easy to claim and easy to expose. Say how, not that.
+**The mechanisms behind four lines that interviewers probe.** "Structured outputs", "HITL", "multi-LLM orchestration" and "prompt/context management" are easy to claim and easy to expose. Say how, not that.
 
 - *Structured outputs.* Ask for the schema through the model's native mechanism (a tool/function definition or JSON-schema mode), validate the result with Pydantic, and on failure re-prompt once with the validation error attached; after two failures, fall back to a smaller deterministic extractor or route to a human. Log the failure rate per schema; a rising rate usually means the schema grew too wide or the input distribution changed.
 - *HITL.* In LangGraph the gate is an interrupt before the side-effecting node; the checkpointer persists state, the reviewer sees a diff-style summary (what the agent will do, with evidence), and the run resumes with the reviewer's decision as input. The gate is policy-driven: dollar amount, external recipient, or low judge confidence triggers review; everything else is sampled for audit. Measure reviewer time per item and the override rate; an override rate near zero means the gate can be loosened, near 100% means the agent is not ready.
@@ -148,7 +148,7 @@
 - **Churn, next-best-product, risk, propensity, CLV, personalization models; +20% accuracy** — classic predictive modeling with actuaries (chapter 17.9).
 - **Pay-how-you-drive telematics (snap-to-road, accelerometer/gyroscope profiling, Hadoop, Spark, MongoDB); explainability and monitoring** — sensor-based driving features and model governance (chapters 36.6, 46).
 
-**Critic's additions: the measurement sentence behind every number (sections 55.9 to 55.14).** The sections above say "know how each was measured" without saying how. A number on a resume is only as good as the sentence that defines it; an interviewer who hears a vague definition discounts every other number. Use this pattern: *metric definition, baseline, comparison method, period, caveat.* Replace the illustrative definitions below with your own.
+**The measurement sentence behind every number (sections 55.9 to 55.14).** Sections 55.9 to 55.14 keep saying "know how each was measured"; this is what that means. A number on a resume is only as good as the sentence that defines it; an interviewer who hears a vague definition discounts every other number. Use this pattern: *metric definition, baseline, comparison method, period, caveat.* Replace the illustrative definitions below with your own.
 
 | Resume number | A defensible measurement sentence | The caveat to volunteer before you are asked |
 |---|---|---|
@@ -175,7 +175,7 @@ The habit to build: for every number you put on a resume, write this sentence in
 
 For each line, write your own two sentences and one number; where you cannot, either refresh the skill with a lab (chapter 34) or move the term off the resume. Interviewers do not penalize a shorter list; they penalize a term you cannot defend.
 
-**Critic's additions: the defense drill and the questions this resume invites.** Reading this chapter is not preparation; answering out loud is. A drill that works: put every bolded term above on a card (there are about eighty), draw ten at random each morning, and answer each in under a minute with the two sentences, the number and the follow-up. Record yourself once a week and listen for hedges ("sort of", "basically"), because those are what an interviewer hears. Then prepare the questions that a resume like this one reliably provokes:
+**The defense drill and the questions this resume invites.** Reading this chapter is not preparation; answering out loud is. A drill that works: put every bolded term above on a card (there are about eighty), draw ten at random each morning, and answer each in under a minute with the two sentences, the number and the follow-up. Record yourself once a week and listen for hedges ("sort of", "basically"), because those are what an interviewer hears. Then prepare the questions that a resume like this one reliably provokes:
 
 1. "You list three clouds. Which one would you choose for a new agent platform today, and what would you miss from the other two?" (chapter 15; have a real answer with trade-offs, not diplomacy.)
 2. "Eighty technologies is a lot. Which five did you use in the last six months?" (name them, with the lab or project.)

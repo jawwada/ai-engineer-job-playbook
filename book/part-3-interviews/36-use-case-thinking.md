@@ -45,9 +45,7 @@
 
 **Likely questions.** *How do you stop the agent from inventing a rule?* — findings must cite a graph node or a retrieved passage; unsupported findings are dropped and logged. *How did you measure success?* — escapes and false flags against human review on a frozen set, plus cycle time. *What did the humans do?* — approve, override with reasons, and their overrides fed the eval set.
 
-### Critic's additions: the probes behind the likely questions, and how such a system is typically built
-
-The three answers above will each get a second question. Prepare the mechanism, not the adjective. (Design detail below describes how a system of this kind is typically built; use only the parts that match what you actually did.)
+Each of those three answers will get a second question; prepare the mechanism, not the adjective. The design detail below describes how a system of this kind is typically built; use only the parts that match what you actually did.
 
 - *"Escapes are violations the humans missed too — how do you measure something nobody caught?"* — Two sources: retrospective findings (regulator or audit comments on already-published assets form the ground truth for escapes) and injected cases (a seeded set of assets with known violations run through the pipeline; escape rate is measured on those). Say which one you had and what the other would cost.
 - *"What is the unit of a finding?"* — A typical schema: `rule_id`, `span` (character offsets in the asset), `severity` (block / fix / note), `evidence` (the graph node or passage id that supports it), `suggested_fix`, `confidence`. Legal reviewers trust a finding they can click through to; a finding without `evidence` is dropped before it reaches a human.
@@ -81,8 +79,6 @@ The three answers above will each get a second question. Prepare the mechanism, 
 **Hard parts.** GPU cost discipline for a start-up; keeping research models deployable (packaging, versioning); designing HITL so creatives felt in control; Dialogflow CX's determinism versus the open-endedness of creative requests (solved by routing open requests to the agent and keeping navigation/transactions in flows).
 
 **Likely questions.** *Why Dialogflow CX for the chat layer?* — deterministic flows for navigation and account actions, built-in NLU and channels, webhooks to the agent for open requests. *How did you get 80% throughput?* — batching and precision changes measured with load tests; autoscaling policies. *How do you evaluate generated media?* — human rubric reviews, engagement A/B, and automatic checks (resolution, safety, duplication).
-
-### Critic's additions: the follow-ups on the two headline numbers and on the Dialogflow CX layer
 
 An interviewer at Google will spend most of this use case on the two numbers and the CX layer. Prepare these:
 
@@ -119,7 +115,7 @@ An interviewer at Google will spend most of this use case on the two numbers and
 
 **Likely questions.** *Why two-tower?* — it makes candidate retrieval a nearest-neighbor lookup at serving time; cross-features are added later in reranking. *How did you handle position bias?* — logging the position, debiasing via inverse propensity or position features at training with position set to a constant at inference. *What is in your A/B harness?* — randomization unit, guardrail metrics, sequential testing or fixed horizons, rollback criteria.
 
-### Critic's additions: the serving, skew and gating probes
+The second round of questions goes to serving, skew and the gate:
 
 - *"10K QPS with a p99 budget — where does the time go?"* — Typical budget for a system of this kind: feature fetch from a low-latency store 2–5 ms, user-tower inference 1–3 ms, ANN lookup over precomputed item embeddings 1–2 ms, scoring and business rules 2–5 ms; the p99 target is usually under 50 ms end to end. Name the tail risks: cold caches after a deploy, index rebuilds, garbage-collection pauses. Say which numbers were yours.
 - *"How fresh are the item embeddings, and what happens to a new ad?"* — Precomputed embeddings are refreshed on the retraining cadence (daily here); new items get an embedding at ingestion with a cold-start path (content features, exploration bonus). The failure to name: a daily index that silently serves yesterday's catalog; monitor index age and the share of traffic with missing embeddings.
@@ -156,7 +152,7 @@ An interviewer at Google will spend most of this use case on the two numbers and
 
 **Likely questions.** *How does the agent decide a reorder?* — it calls the forecast and inventory tools, applies policy thresholds, and proposes; a human approves above a threshold. *How did you measure revenue impact?* — before/after on stockouts and overstock with controls, attributed conservatively. *Why multi-LLM?* — cost routing and task fit; a cheap model classifies, a stronger one explains.
 
-### Critic's additions: the forecasting and decision-quality probes
+The second round goes to the forecast and to decision quality:
 
 - *"89% forecast accuracy — which metric, at which level, at which horizon?"* — Say the metric (1 − WAPE or 1 − MAPE are the usual definitions behind an "accuracy" figure; MAPE is undefined on zero-demand weeks, which matters for intermittent SKUs), the aggregation level (SKU × marketplace × week), the horizon (one to four weeks ahead), and the baseline (seasonal naive or the previous process). An interviewer will accept "weekly WAPE at SKU-marketplace level, 2-week horizon, versus a seasonal-naive baseline" and will not accept "89% accurate".
 - *"How do you forecast intermittent demand?"* — Typical methods: Croston or TSB for intermittent series, zero-inflated or hurdle models, or classifying SKUs by demand pattern (smooth, intermittent, lumpy) and routing each class to a different model; evaluate with scale-free metrics (RMSSE) rather than MAPE. Name the one you used or would use.
@@ -190,7 +186,7 @@ An interviewer at Google will spend most of this use case on the two numbers and
 
 **Likely questions.** *How did you cut cloud cost 25%?* — scheduled compute, right-sized clusters, incremental pipelines, cheaper storage tiers, fewer redundant retrains. *How do you evaluate an intent model in production?* — sampled labeling, confusion matrices on top intents, fallback rate, containment. *How did you prioritize the portfolio?* — value × feasibility × data readiness, with acceptance criteria agreed before build.
 
-### Critic's additions: the FinOps and customer-service probes an Applied AI interviewer will add
+An Applied AI interviewer will add FinOps and customer-service probes:
 
 - *"25% of what, and which lever gave the most?"* — State the baseline (monthly spend of the pipeline's resource group or project), the measurement (billing export by tag before and after), and rank the levers. In pipelines of this kind the largest single saving usually comes from not retraining what has not changed (incremental runs with a data-change trigger) and from scheduling clusters to terminate after jobs; right-sizing and storage tiers are second order. Be ready to say which was true for you.
 - *"+30% intent accuracy — from what, on what set?"* — Baseline model and its accuracy, the labeled test set size and how it was labeled (two annotators, agreement), and whether the gain held on production traffic (sampled weekly labeling). The follow-up "how did you handle class imbalance across hundreds of intents?" expects: per-class metrics on the top intents by volume, a fallback threshold tuned on the confidence distribution, and a "other" class.
@@ -220,7 +216,7 @@ An interviewer at Google will spend most of this use case on the two numbers and
 
 **Likely questions.** *How do you explain a gradient-boosting churn model to an actuary?* — SHAP values, partial dependence, monotonic constraints, and a validation report. *What is map matching?* — aligning noisy GPS traces to the road network with a probabilistic model (kernelized map matching in the PhD work). *How do you prevent leakage in churn models?* — point-in-time features, label windows, no post-outcome signals.
 
-### Critic's additions: the probes on telematics and governance
+The second round goes to telematics and governance:
 
 - *"20% accuracy gain — which metric and against which baseline?"* — For churn, AUC or lift in the top decile against the previous production model or a logistic baseline; for propensity, precision at the contact budget. Say the metric first; "accuracy" alone invites the follow-up.
 - *"Map matching: what did you compare against, and why kernelized?"* — The standard baseline is a hidden-Markov-model matcher (emission from GPS-to-road distance, transition from route plausibility, Viterbi decoding). A kernel method trades the explicit state model for a learned similarity between trace segments and road segments; the case for it is robustness to noisy, sparse traces. The interviewer wants the comparison and the failure cases (parallel roads, tunnels, low sampling rates), not the derivation.
@@ -233,7 +229,7 @@ An interviewer at Google will spend most of this use case on the two numbers and
 
 Write each of your three to six biggest projects under the twelve headings, two or three sentences each. Where a number is missing, either find it or describe the measurement you would run. Then compress each into a 90-second STAR story (chapter 38) and a 30-second headline. This file — not the resume — is what you study the night before an interview.
 
-### Critic's additions: the number-defense card
+### The number-defense card
 
 Every number on a resume is a question in waiting. For each one, write a five-line card before the interview and keep it next to the use-case file:
 

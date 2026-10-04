@@ -4,7 +4,7 @@
 
 ## 53c.1 How each self-improvement loop breaks
 
-Chapter 22b covers the five loops, their gate, and a critic's table of failures (eval overfitting, judge Goodharting, measurement tampering, memory poisoning, prompt bloat, slice regressions, optimizer cost).
+Chapter 22b covers the five loops, their gate, and a table of failures (eval overfitting, judge Goodharting, measurement tampering, memory poisoning, prompt bloat, slice regressions, optimizer cost).
 
 One principle to add: **self-improvement turns transient failures into durable ones.** A bad run is an incident. A bad run that writes a lesson, skill, routing rule or gradient update becomes the default and replays on every later run. That makes the write paths the most sensitive interfaces in the system.
 

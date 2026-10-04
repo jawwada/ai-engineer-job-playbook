@@ -41,7 +41,9 @@ flowchart LR
 5. **Evaluator–optimizer.** One model generates, another critiques against explicit criteria, and the loop repeats until the evaluator passes or a budget runs out. Use when clear evaluation criteria exist and iteration measurably helps (translation, code with tests, SQL that must execute). Example: generate SQL → run it → evaluator checks result shape and errors → regenerate.
 6. **Autonomous agent loop.** Model + tools + environment feedback until a stop condition; checkpoints and human approvals at risky steps. Use for open-ended work with verifiable feedback (tests pass, page loads, ticket closed). Example: Claude Code, operations runbooks, browser agents.
 
-### Critic's additions: what each pattern costs, and when it is a mistake
+### What each pattern costs, and when it is a mistake
+
+Each of the six has a price in model calls and latency, and a situation in which choosing it is a mistake:
 
 | Pattern | Model calls per request | Latency | It is a mistake when… |
 |---|---|---|---|

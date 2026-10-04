@@ -22,7 +22,7 @@ Dialogflow CX models a conversation as a **state machine**. The building blocks:
 
 **The chat-layer example from the reference resume.** A conversational layer for a creative platform: flows and pages for navigation, project actions and account tasks; intents and entities for commands; webhook fulfillment to the FastAPI backend that triggered the agentic workflows and returned results into the conversation; generative fallback for open requests. The lesson: deterministic UX for things users expect to be exact, LLM for the rest, one backend behind both.
 
-### Critic's additions: a CX design page by page, the five numbers to quote, and five follow-ups
+### A CX design page by page, the five numbers to quote, and five follow-ups
 
 "Explain how you would build X in Dialogflow CX" is answered page by page, not with the building-block list. For a voice ordering agent:
 
@@ -47,9 +47,7 @@ Dialogflow CX models a conversation as a **state machine**. The building blocks:
 
 ## 41.2 Amazon Lex and Connect in the same frame
 
-Lex V2 mirrors the vocabulary (intents, slots, slot types, fulfillment via Lambda, dialog code hooks, conversation logs) with generative additions (assisted NLU, QnAIntent over Bedrock Knowledge Bases, descriptive bot builder); Amazon Connect supplies telephony, routing, chat, the agent workspace, Contact Lens analytics, Amazon Q in Connect, and now Nova Sonic speech-to-speech for natural voice self-service. Microsoft's Copilot Studio uses *topics* (deterministic) plus generative orchestration, with voice through Dynamics 365 Contact Center. Rasa's CALM uses *flows* with an LLM mapping utterances to flow steps. The pattern is the same everywhere: rails plus generation.
-
-### Critic's additions: the same layers across the three clouds, with 2026 names
+Lex V2 mirrors the vocabulary (intents, slots, slot types, fulfillment via Lambda, dialog code hooks, conversation logs) with generative additions (assisted NLU, QnAIntent over Bedrock Knowledge Bases, descriptive bot builder); Amazon Connect supplies telephony, routing, chat, the agent workspace, Contact Lens analytics, Amazon Q in Connect, and now Nova Sonic speech-to-speech for natural voice self-service. Microsoft's Copilot Studio uses *topics* (deterministic) plus generative orchestration, with voice through Dynamics 365 Contact Center. Rasa's CALM uses *flows* with an LLM mapping utterances to flow steps. The pattern is the same everywhere: rails plus generation. Layer by layer, with the 2026 names:
 
 | Layer | Google Cloud | AWS | Microsoft |
 |---|---|---|---|
@@ -71,7 +69,9 @@ Say the mapping once if the interviewer comes from another cloud; then answer in
 - **Persona and brevity.** Short utterances, explicit confirmations for money, consistent voice; TTS style controls.
 - **Observability.** Per-turn latencies for each stage, ASR confidence, interruption counts, fallback and escalation rates, recordings for QA, judge sampling on transcripts.
 
-### Critic's additions: the settings and numbers behind each fundamental (Google Cloud, checked October 2026)
+### The settings and numbers behind each fundamental (Google Cloud, checked October 2026)
+
+Each fundamental above maps to a setting, a limit or a price on Google Cloud.
 
 **Gemini Live API (speech-to-speech).** Input audio is 16-bit PCM at 16 kHz and output audio is 24 kHz. Voice activity detection is configured under `automatic_activity_detection` with `start_of_speech_sensitivity`, `end_of_speech_sensitivity`, `prefix_padding_ms` and `silence_duration_ms` (Google suggests 500–800 ms for silence as the balance between latency and cutting people off). When the user barges in, the server marks the generation `interrupted`, and only what was already sent to the client stays in the session history — so the order state must be updated from confirmed operations, not from what the model intended to say. Turn on `input_audio_transcription` and `output_audio_transcription` so every turn has text to log, judge and screen (Model Armor does not screen audio). Audio-only sessions are limited to 15 minutes without context-window compression, a connection lives about 10 minutes (the server sends `GoAway` with the time left), and session-resumption handles stay valid for two hours; `contextWindowCompression` with a sliding window and a trigger token count keeps long sessions bounded. Audio is about 32 tokens per second, and the accumulated session context is billed again on every turn, so cost grows with the number of turns.
 
@@ -92,7 +92,7 @@ Say the mapping once if the interviewer comes from another cloud; then answer in
 
 ## 41.4 Case study: a drive-through voice ordering agent
 
-**Context (2026).** Large chains have piloted and scaled voice ordering with mixed results: McDonald's ended a multi-year IBM pilot in 2024; Wendy's keeps refining FreshAI with Google; Taco Bell/Yum has run the system at hundreds of locations and processed millions of orders while reassessing after viral failures (the "18,000 waters" prank); vendors such as SoundHound, Presto and Hi Auto serve other chains. The failure modes are known: noise (engines, wind), accents and dialects, complex customizations, pranks, compounding errors instead of recovery, and upsell that annoys. Any design must answer those.
+**Context (2026).** Large chains have piloted and scaled voice ordering with mixed results: McDonald's ended a multi-year IBM pilot in 2024; Wendy's keeps refining FreshAI with Google; Taco Bell/Yum has run the system at hundreds of locations and processed millions of orders while reassessing after viral failures (the "18,000 waters" prank); vendors such as SoundHound, Presto and Hi Auto serve other chains. The failure modes are known: noise (engines, wind), accents and dialects, complex customizations, pranks, compounding errors instead of recovery, and upsell that annoys. Any design must answer those. Google Cloud itself put an enhanced Food Ordering agent into Gemini Enterprise for Customer Experience in January 2026, citing its drive-thru work with fast-food chains; a custom build is justified only where that agent does not fit the chain's menu, POS or measurement (39c.2 has the decision table).
 
 **Requirements.** 95%+ order accuracy; first response under 1 s; handle interruptions; menu with 200 items and modifiers that change by store and daypart; promotions; handoff to crew when confidence is low or the customer asks; POS integration; works in rain and with trucks idling.
 
@@ -127,9 +127,9 @@ flowchart LR
 
 **What to say about the failures in the news.** Compounding errors come from state machines that do not model corrections; prank orders come from missing quantity caps and sanity rules; noise failures come from the audio front end, not the model; and "mixed results" usually means the crew-handoff and the measurement were designed last. Design them first.
 
-### Critic's additions: the operation schema, the state-machine rules, cost per order on current list prices, the evaluation corpus, privacy, and six follow-ups
+### The operation schema, the state-machine rules, cost per order on current list prices, the evaluation corpus, privacy, and six follow-ups
 
-**The 2026 product context in one line.** Google Cloud put an enhanced Food Ordering agent into Gemini Enterprise for Customer Experience in January 2026, citing its drive-thru work with fast-food chains; a custom build is justified only where that agent does not fit the chain's menu, POS or measurement (39c.2 has the decision table).
+The architecture is what you draw with the interviewer; these are the details they push on.
 
 **The contract between the model and the state machine.** The model never holds the order; it emits operations against catalog ids, constrained by a response schema whose item and modifier enums are generated per store and daypart:
 
@@ -174,9 +174,7 @@ Three things to say about the table: the model is a few cents per order either w
 
 ## 41.5 Other voice-agent cases to be ready for
 
-Appointment scheduling for clinics (identity verification, calendar tools, HIPAA), outbound collections or renewals (compliance scripts, consent, recording laws), IT helpdesk password resets (identity, MFA, handoff), and in-car assistants (offline fallback, safety). Same skeleton: rails for the exact parts, generation for understanding, tools for facts, humans one turn away.
-
-### Critic's additions: the one constraint per case that an interviewer expects you to name
+Appointment scheduling for clinics (identity verification, calendar tools, HIPAA), outbound collections or renewals (compliance scripts, consent, recording laws), IT helpdesk password resets (identity, MFA, handoff), and in-car assistants (offline fallback, safety). Same skeleton: rails for the exact parts, generation for understanding, tools for facts, humans one turn away. For each case there is one constraint that an interviewer expects you to name before the architecture:
 
 | Case | The constraint that shapes the design | What it forces |
 |---|---|---|

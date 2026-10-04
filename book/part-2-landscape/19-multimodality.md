@@ -27,9 +27,7 @@ Diffusion and flow models (Stable Diffusion/SDXL, FLUX, Imagen, GPT image models
 
 ## 19.4 Multimodal RAG and agents
 
-A multimodal RAG system indexes text chunks *and* images/pages, retrieves both, and sends the relevant page images plus text to a multimodal LLM; it cites page numbers and regions. Multimodal agents add tools: a chart-reading step, OCR on demand, a screenshot of a web page (computer use), a camera frame. Evaluation must include visual questions ("what does the dashed line represent in figure 3?") because text-only evals will not catch regressions in the vision path.
-
-### Critic's additions: evaluating and securing the vision path
+A multimodal RAG system indexes text chunks *and* images/pages, retrieves both, and sends the relevant page images plus text to a multimodal LLM; it cites page numbers and regions. Multimodal agents add tools: a chart-reading step, OCR on demand, a screenshot of a web page (computer use), a camera frame. Evaluation must include visual questions ("what does the dashed line represent in figure 3?") because text-only evals will not catch regressions in the vision path. Evaluating and securing that path comes down to five habits:
 
 - **Build a visual eval set** of 50–100 items with the real failure classes: rotated scans, low resolution (fax-quality), handwriting, charts without axis labels, tables with merged cells, multi-column text, screenshots with pop-ups. Score field-level accuracy, not "looks right".
 - **Measure the resolution budget.** Downscaling is where accuracy silently dies: a 300-dpi page downsized to 1,000 px makes 8-point text unreadable. Decide crop/tile strategy per document type and test it.

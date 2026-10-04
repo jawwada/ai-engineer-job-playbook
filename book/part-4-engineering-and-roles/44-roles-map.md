@@ -22,7 +22,7 @@
 | **Analytics Engineer** | the modeled, tested, documented tables and semantic layer that BI and text-to-SQL depend on | model test pass rate, dashboard trust, time-to-answer | SQL, dbt, dimensional modeling, semantic layers, data tests | SQL modeling case, dbt project walkthrough |
 | **Security Engineer (AppSec / AI security)** | the attack surface: identity, secrets, supply chain, prompt-injection and tool-abuse controls, red-team program | vulnerabilities found before production, time-to-remediate, red-team pass rate | OWASP (web, LLM, agentic), threat modeling, IAM, secrets, scanning, incident response | threat model of a design, secure code review, red-team scenario |
 
-**Critic's additions: the failure each role owns, and how to spot the role in a JD.** The sentence "each role owns a different failure" is the most useful lens for reading job descriptions, so here it is made explicit. When a JD mixes two rows, the role is a hybrid and the interview will test the failure listed first in the responsibilities section.
+Each role owns a different failure, and that is the most useful lens for reading job descriptions, so the table below makes it explicit. When a JD mixes two rows, the role is a hybrid and the interview will test the failure listed first in the responsibilities section.
 
 | Role | The failure it is paged for | JD phrases that reveal it | The question that exposes a mislabelled JD |
 |---|---|---|---|
@@ -37,7 +37,7 @@
 | FinOps | the bill surprised finance | "cloud cost", "unit economics", "commitments", "tagging", "showback" | "What share of spend is allocated to an owner today?" |
 | Solutions Architect | thirty teams built thirty incompatible things | "reference architectures", "build vs buy", "review board", "vendor evaluation" | "Which of your reference architectures was ignored, and why?" |
 
-**Critic's additions: adjacent titles you will meet in JDs.** *Research Engineer* (implements and scales research code; interview is coding plus paper discussion), *Evaluation Engineer / Model Quality Engineer* (owns eval sets, judges and quality dashboards; a growing title in 2026), *Prompt Engineer* (declining as a standalone title; the work moved into AI engineering and evaluation), *AI Solutions Engineer / Sales Engineer* (pre-sales demos and POCs; closer to FDE but without owning production), *Developer Advocate* (content, samples, community; judged on adoption), *Member of Technical Staff* (lab-style generic title; read the team description, not the title), *Staff/Principal* prefixes (scope across teams and the expectation that you write the ADRs others follow). *Analytics Engineer* and *Security Engineer* are in the table above because AI teams increasingly hire both.
+**Adjacent titles you will meet in JDs.** *Research Engineer* (implements and scales research code; interview is coding plus paper discussion), *Evaluation Engineer / Model Quality Engineer* (owns eval sets, judges and quality dashboards; a growing title in 2026), *Prompt Engineer* (declining as a standalone title; the work moved into AI engineering and evaluation), *AI Solutions Engineer / Sales Engineer* (pre-sales demos and POCs; closer to FDE but without owning production), *Developer Advocate* (content, samples, community; judged on adoption), *Member of Technical Staff* (lab-style generic title; read the team description, not the title), *Staff/Principal* prefixes (scope across teams and the expectation that you write the ADRs others follow). *Analytics Engineer* and *Security Engineer* are in the table above because AI teams increasingly hire both.
 
 ## 44.2 AI Engineer (Applied AI, LLM Engineer, GenAI Engineer)
 
@@ -83,7 +83,7 @@
 
 Take the policy assistant (40 A): the **data engineer** builds the document pipeline with ACLs; the **AI engineer** builds retrieval, prompts, agent and evals; the **MLOps engineer** wires the eval gate, tracing and index refresh; the **platform engineer** provides the runtime, gateway and CI/CD; the **SRE** sets SLOs and runs incidents; the **FinOps practitioner** attributes and trends cost; the **architect** approves the design and the vendor choices; the **data scientist** designs the adoption experiment; the **FDE** does all of it inside the customer's environment with a smaller team and tells the customer's executives what they got. Knowing which hat you are wearing in each conversation is half of being senior.
 
-**Critic's additions: the same project under incident — who does what, in what order.** Interviewers who ask "how would you work with the platform team?" are really asking whether you know the handoffs. Walk them through an incident.
+**The same project under incident: who does what, in what order.** Interviewers who ask "how would you work with the platform team?" are really asking whether you know the handoffs. Walk them through an incident.
 
 *Tuesday 09:12.* The nightly index refresh for the policy assistant shipped 1,800 new chunks without ACL principals because the SharePoint connector's permission field was renamed. At 09:40 an engineer asks about parental-leave policy and sees a quote from a restricted HR document.
 
