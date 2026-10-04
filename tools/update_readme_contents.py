@@ -26,7 +26,7 @@ PARTS = [
 PART6_LINE = ("- [Study library index](book/part-6-reference-guides/README.md) — agentic AI, retrieval, LLMs, "
               "machine learning, clouds, Python and backend, industries, interview practice")
 EXTRAS = [
-    "**Labs** (standard-library Python, each checked against brute force or reference implementations): "
+    "**[Labs](labs/README.md)** (standard-library Python, each checked against brute force or reference implementations, each with a README of intuition and worked examples): "
     "[Coding-interview patterns](labs/coding-patterns/README.md) — tested templates for the twenty LeetCode "
     "patterns and the families beyond them (chapter 39d); "
     "[Algorithm frameworks](labs/algorithm-frameworks/README.md) — data structures built from scratch, the ten "

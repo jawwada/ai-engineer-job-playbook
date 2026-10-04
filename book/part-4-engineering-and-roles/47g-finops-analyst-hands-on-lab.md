@@ -18,7 +18,7 @@ python3 finops_lab.py savings           # projected vs realized vs true savings,
 python3 finops_lab.py summary           # the one-page executive summary
 ```
 
-Every analysis takes `--data` (default `data`) and `--month` (default `2026-09`); `generate` takes `--out` and `--seed` (default 42). Two runs with the same seed produce byte-identical files, and every number in chapters 47d–47g comes from seed 42. The whole sequence runs in about 13 seconds. The lab's README lists every file and column and shows abridged expected output.
+Every analysis takes `--data` (default `data`) and `--month` (default `2026-09`); `generate` takes `--out` and `--seed` (default 42). Two runs with the same seed produce byte-identical files, and every number in chapters 47d–47g comes from seed 42. The whole sequence runs in a few seconds (about 4 on a 2026 laptop). The lab's README lists every file and column and shows the full expected output.
 
 Each analysis is a `compute_*` function that returns data and a `cmd_*` function that prints it, with the method in the docstring, so you can call them from your own scripts:
 
@@ -156,7 +156,7 @@ Each exercise names the responsibility it practices (paraphrased from the job de
 
 **5. Forecast across three clouds, with planned changes.** Run the forecast, then repeat it without drivers (`f.forecast_engine(D, D.last, f.date(2027, 9, 30), use_drivers=False)`) and compare. *Answer:* without drivers the next 12 months total \$16.15M instead of \$13.23M, \$2.9M higher, and November is \$1.215M instead of \$1.054M: the statistical model carries the Google Cloud build-out's growth forward and keeps the AWS platform running after its switch-off. This is why the job description wants planned changes in the forecast before they reach the bill.
 
-**6. Defend the method.** Recompute MAPE, WAPE and bias for the one-month backtest (47f.12 exercise 7 has the six rows). Then remove the trend damping (set the default `phi` to 1.0 in `growth_multiplier`) and rerun. *Answer:* MAPE 1.63%, WAPE 1.68%, bias −0.91%. Without damping, the 12-month total rises by \$0.21M and September 2027 from \$1.190M to \$1.237M. Decide which version you would defend to a CFO (damping is conservative when growth rates come from a short history).
+**6. Defend the method.** Recompute MAPE, WAPE and bias for the one-month backtest (47f.12 exercise 7 has the six rows). Then remove the trend damping (set the default `phi` to 1.0 in `growth_multiplier`) and rerun. *Answer:* MAPE 1.63%, WAPE 1.68%, bias −0.91%. Without damping, the 12-month total rises by \$0.21M and September 2027 from \$1.190M to \$1.238M. Decide which version you would defend to a CFO (damping is conservative when growth rates come from a short history).
 
 **7. Explain the variance in business terms.** Run `variance` and write three sentences on September for the CIO. *Answer:* compare yours with question 7 of 47f.10. It should give both comparisons (\$198k over budget, \$73k over forecast), split the budget gap into timing (\$117k), one-offs (\$48k and \$23k) and recurring (\$25k), and end with the year (+\$430k) and the decisions.
 

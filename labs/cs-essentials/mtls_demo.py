@@ -33,12 +33,14 @@ def make_pki(d: str) -> None:
     ec = ["-newkey", "ec", "-pkeyopt", "ec_paramgen_curve:P-256", "-nodes"]
     openssl("req", "-x509", *ec, "-keyout", "ca.key", "-out", "ca.pem", "-days", "2",
             "-subj", "/CN=Example Internal Root CA", "-addext", "basicConstraints=critical,CA:TRUE",
-            "-addext", "keyUsage=critical,keyCertSign,cRLSign", cwd=d)
+            "-addext", "keyUsage=critical,keyCertSign,cRLSign",
+            "-addext", "subjectKeyIdentifier=hash", cwd=d)
     leaves = {"server": ("/CN=orders.internal", "subjectAltName=DNS:orders.internal\nextendedKeyUsage=serverAuth\n"),
               "agent": ("/CN=support-agent", f"subjectAltName=URI:{SPIFFE_ID}\nextendedKeyUsage=clientAuth\n")}
     for name, (subject, extensions) in leaves.items():
         with open(os.path.join(d, f"{name}.ext"), "w") as f:
-            f.write(extensions + "keyUsage=critical,digitalSignature\n")
+            f.write(extensions + "keyUsage=critical,digitalSignature\n"
+                    "subjectKeyIdentifier=hash\nauthorityKeyIdentifier=keyid,issuer\n")
         openssl("req", *ec, "-keyout", f"{name}.key", "-out", f"{name}.csr", "-subj", subject, cwd=d)
         openssl("x509", "-req", "-in", f"{name}.csr", "-CA", "ca.pem", "-CAkey", "ca.key", "-CAcreateserial",
                 "-days", "1", "-extfile", f"{name}.ext", "-out", f"{name}.pem", cwd=d)
