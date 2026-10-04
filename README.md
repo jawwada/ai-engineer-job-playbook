@@ -99,6 +99,7 @@ Requirements: a Claude Pro, Max, Team or Enterprise plan (signed in with `/login
 - [39f. Algorithm frameworks I: the classic templates, binary-tree thinking, data-structure design and graph algorithms](book/part-3-interviews/39f-algorithm-frameworks-i-templates-trees-design-and-graphs.md)
 - [39g. Algorithm frameworks II: backtracking, BFS, dynamic programming, greedy and math techniques](book/part-3-interviews/39g-algorithm-frameworks-ii-search-dynamic-programming-greedy-and-math.md)
 - [40. AI system design: how to run the whiteboard, and eight worked exercises](book/part-3-interviews/40-ai-system-design-exercises.md)
+- [40b. Distributed systems design: the fundamentals, and eight Google-style questions for AI engineers](book/part-3-interviews/40b-distributed-systems-design-fundamentals-and-google-questions.md)
 - [41. Conversational AI in depth: Dialogflow CX, and designing a drive-through voice agent](book/part-3-interviews/41-conversational-ai-and-voice-agents.md)
 - [42. Applied AI at prediction markets (Kalshi, Polymarket and peers): what the work is and how to interview for it](book/part-3-interviews/42-prediction-markets-applied-ai.md)
 - [43. Question bank: 173 questions with short answers](book/part-3-interviews/43-question-bank.md)

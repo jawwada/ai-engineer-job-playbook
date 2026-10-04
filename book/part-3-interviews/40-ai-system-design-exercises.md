@@ -1,6 +1,6 @@
 # 40. AI system design: how to run the whiteboard, and eight worked exercises
 
-> **The idea:** system-design rounds for AI roles test whether you can turn a vague product ask into an architecture with trade-offs, numbers and a plan — in 45 minutes, while talking. The method is fixed; the content changes. Go deeper: Part 6 → *Agentic RAG system design walkthrough* and *AI/backend engineer deep dive* §12.
+> **The idea:** system-design rounds for AI roles test whether you can turn a vague product ask into an architecture with trade-offs, numbers and a plan — in 45 minutes, while talking. The method is fixed; the content changes. Chapter 40b has the distributed-systems fundamentals these exercises assume and eight infrastructure-level questions in the Google style. Go deeper: Part 6 → *Agentic RAG system design walkthrough* and *AI/backend engineer deep dive* §12.
 
 ## 40.1 The 45-minute method
 
