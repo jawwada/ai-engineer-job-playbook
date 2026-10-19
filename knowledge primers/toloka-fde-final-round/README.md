@@ -10,6 +10,7 @@ A 67-page preparation book for the final-round interview for Toloka's freelance 
 | `Toloka Forward Deployed AI Engineer - The Final-Round Book.pdf` | The same document as a 67-page US-letter PDF |
 | `images/llm-training-pipeline.png` | The six-stage LLM training pipeline and where Toloka's products sit |
 | `images/toloka-data-factory.png` | A data engagement as a factory: four phases, the rework loop, the roles |
+| `scoping-and-pricing-playbook.html` | Interactive scoping & pricing playbook (open in a browser): one card per product line — preference annotation, reasoning data, robotics video, coding environments, agentic gyms — each with discovery questions, metrics, non-functional requirements, a dataset record, system design, a pipeline diagram and illustrative pricing; plus a consultative script (discovery, BLUF, talking price, objections, red flags), an agentic-systems reference (τ-bench, Terminal-Bench, SWE-bench Verified, pass@k vs pass^k) and an LLM-as-a-judge setup for annotation QA with every metric's formula |
 
 ## Contents
 

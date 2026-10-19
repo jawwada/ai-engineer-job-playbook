@@ -1,0 +1,1508 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>*{box-sizing:border-box}html,body{margin:0}body{font:14px system-ui, sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Scoping &amp; Pricing Playbook</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+  /* Layout: the seven cards are the index; one panel opens below with seven tabs, summary strip before detail.
+     Palette: cool, green-biased neutrals; teal for navigation, amber for money, rose for risk; one hue per product line.
+     Type: Archivo for display and tabs, Source Sans 3 for body, JetBrains Mono for schemas, ids and figures. */
+  :root {
+    --bg: #f3f6f4; --surface: #ffffff; --surface-2: #e8eeea; --fg: #15201b; --muted: #54635c; --faint: #86948c; --border: #d2dbd5;
+    --accent: #0f766e; --money: #a86b12; --risk: #b4452d; --ok: #2f855a;
+    --t-pref: #6d5bd0; --t-reason: #2563a8; --t-video: #2e8b57; --t-code: #c27a1a; --t-gym: #c2416b; --t-consult: #0f766e; --t-concepts: #5b6b79; --t-judge: #8a5a00;
+    --display: "Archivo", "Helvetica Neue", Arial, sans-serif;
+    --sans: "Source Sans 3", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    --mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0e1311; --surface: #151c19; --surface-2: #1d2622; --fg: #e6ede9; --muted: #9fb0a7; --faint: #6f8078; --border: #27332e;
+      --accent: #3fc9b6; --money: #e3aa47; --risk: #f08a6e; --ok: #5fcf8a;
+      --t-pref: #a394ff; --t-reason: #6fa6e8; --t-video: #63c788; --t-code: #eaa24e; --t-gym: #ef7fa6; --t-consult: #3fc9b6; --t-concepts: #9fb0bf; --t-judge: #e0b35a;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0e1311; --surface: #151c19; --surface-2: #1d2622; --fg: #e6ede9; --muted: #9fb0a7; --faint: #6f8078; --border: #27332e;
+    --accent: #3fc9b6; --money: #e3aa47; --risk: #f08a6e; --ok: #5fcf8a;
+    --t-pref: #a394ff; --t-reason: #6fa6e8; --t-video: #63c788; --t-code: #eaa24e; --t-gym: #ef7fa6; --t-consult: #3fc9b6; --t-concepts: #9fb0bf; --t-judge: #e0b35a;
+    color-scheme: dark;
+  }
+
+  body { background: var(--bg); color: var(--fg); font-family: var(--sans); font-size: 15px; line-height: 1.5; }
+  .wrap { max-width: 1060px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 28px 64px; }
+  h1 { font-family: var(--display); font-weight: 700; font-size: clamp(1.7rem, 4.2vw, 2.4rem); letter-spacing: -0.02em; line-height: 1.08; margin: 0 0 .45rem; text-wrap: balance; }
+  .eyebrow { font-family: var(--mono); font-size: .7rem; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); font-weight: 600; margin: 0 0 6px; }
+  .lede { color: var(--muted); font-size: 1.02rem; max-width: 66ch; margin: 0; }
+  .how { font-size: .86rem; color: var(--faint); margin: 10px 0 0; }
+  code, .mono { font-family: var(--mono); }
+  p code, li code, td code, dd code { font-size: .86em; background: var(--surface-2); padding: 1px 5px; border-radius: 4px; }
+
+  /* cards */
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(172px, 1fr)); gap: 10px; margin-top: 22px; }
+  .card { --t: var(--accent); text-align: left; background: var(--surface); border: 1px solid var(--border); border-top: 3px solid var(--t); border-radius: 10px; padding: 12px 13px 11px; cursor: pointer; font: inherit; color: inherit; display: flex; flex-direction: column; gap: 5px; min-height: 118px; transition: border-color .15s, background .15s; }
+  .card:hover { border-color: var(--t); }
+  .card:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .card.active { background: color-mix(in srgb, var(--t) 10%, var(--surface)); border-color: var(--t); box-shadow: 0 0 0 1px var(--t); }
+  .card .n { font-family: var(--display); font-weight: 700; font-size: .95rem; line-height: 1.15; }
+  .card .d { font-size: .8rem; color: var(--muted); line-height: 1.35; }
+  .card .u { font-family: var(--mono); font-size: .66rem; color: var(--t); margin-top: auto; padding-top: 4px; }
+  .card.x { border-top-style: dashed; }
+
+  /* panel */
+  .panel { --t: var(--accent); margin-top: 22px; background: var(--surface); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; }
+  .phead { padding: 18px 20px 14px; border-bottom: 1px solid var(--border); background: color-mix(in srgb, var(--t) 7%, var(--surface)); }
+  .ptitle { font-family: var(--display); font-size: 1.35rem; font-weight: 700; margin: 0 0 4px; letter-spacing: -0.01em; }
+  .pdesc { color: var(--muted); max-width: 76ch; margin: 0; font-size: .95rem; }
+  .strip { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 10px; margin-top: 12px; }
+  .strip div { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 8px 10px; min-width: 0; }
+  .strip .k { font-family: var(--mono); font-size: .62rem; letter-spacing: .1em; text-transform: uppercase; color: var(--faint); }
+  .strip .v { font-size: .86rem; font-weight: 600; margin-top: 2px; }
+  .strip .v.money { color: var(--money); }
+  .strip .v.risk { color: var(--risk); }
+
+  .tabs { display: flex; flex-wrap: wrap; gap: 4px; padding: 10px 12px; border-bottom: 1px solid var(--border); background: var(--surface-2); }
+  .tab { font-family: var(--display); font-weight: 600; font-size: .78rem; letter-spacing: .01em; padding: 7px 11px; border-radius: 7px; border: 1px solid transparent; background: transparent; color: var(--muted); cursor: pointer; }
+  .tab:hover { color: var(--fg); }
+  .tab:focus-visible { outline: 2px solid var(--accent); }
+  .tab.active { background: var(--surface); color: var(--fg); border-color: var(--border); }
+  .pane { padding: 18px 20px 22px; }
+  .pane h3 { font-family: var(--display); font-size: 1.02rem; font-weight: 700; margin: 0 0 10px; }
+  .pane h3 + p { margin-top: -4px; }
+  .pane h4 { font-family: var(--mono); font-size: .68rem; letter-spacing: .1em; text-transform: uppercase; color: var(--faint); margin: 16px 0 8px; font-weight: 700; }
+  .pane p { margin: 0 0 10px; max-width: 80ch; }
+  .pane p.intro { color: var(--muted); }
+
+  /* discovery questions */
+  .qa { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; }
+  .qa li { display: grid; grid-template-columns: 26px 1fr; gap: 10px; padding: 10px 12px; border: 1px solid var(--border); border-radius: 9px; background: var(--surface); }
+  .qa .num { font-family: var(--mono); font-size: .72rem; color: var(--t); font-weight: 700; padding-top: 3px; }
+  .qa b { display: block; font-weight: 600; }
+  .qa span { color: var(--muted); font-size: .88rem; display: block; margin-top: 2px; }
+
+  /* tables */
+  .tbl { overflow-x: auto; border: 1px solid var(--border); border-radius: 10px; margin: 0 0 10px; }
+  table { width: 100%; min-width: 560px; border-collapse: collapse; font-size: .86rem; }
+  th { font-family: var(--mono); font-weight: 700; font-size: .64rem; letter-spacing: .08em; text-transform: uppercase; color: var(--faint); background: var(--surface-2); text-align: left; padding: 8px 11px; border-bottom: 1px solid var(--border); }
+  td { padding: 8px 11px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  tbody tr:last-child td { border-bottom: none; }
+  td.num { font-family: var(--mono); font-variant-numeric: tabular-nums; white-space: nowrap; font-size: .8rem; }
+  td.money { color: var(--money); font-weight: 600; }
+  td.tgt { font-weight: 600; white-space: nowrap; }
+  tr.total td { font-weight: 700; background: var(--surface-2); }
+  tr.total td.money { color: var(--money); }
+
+  /* nfr grid */
+  .nfr { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 10px; margin: 0; }
+  .nfr div { border: 1px solid var(--border); border-radius: 9px; padding: 10px 12px; background: var(--surface); min-width: 0; }
+  .nfr dt { font-family: var(--mono); font-weight: 700; font-size: .66rem; letter-spacing: .08em; text-transform: uppercase; color: var(--t); }
+  .nfr dd { margin: 4px 0 0; font-size: .86rem; color: var(--muted); }
+
+  pre { margin: 0 0 10px; background: var(--surface-2); border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; overflow-x: auto; font-family: var(--mono); font-size: .74rem; line-height: 1.55; color: var(--fg); }
+  pre .c { color: var(--muted); }
+
+  .cons { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; }
+  .cons li { padding: 9px 12px; border-left: 3px solid var(--t); background: var(--surface-2); border-radius: 0 8px 8px 0; font-size: .88rem; }
+  .cons b { font-weight: 700; }
+
+  .fig { margin: 0 0 10px; border: 1px solid var(--border); border-radius: 10px; padding: 12px; overflow-x: auto; background: var(--surface); }
+  .fig svg { display: block; width: 100%; min-width: 640px; height: auto; color: var(--fg); }
+  .fig figcaption { font-size: .82rem; color: var(--muted); margin-top: 6px; min-width: 0; }
+  .dg text { font-family: var(--mono); font-size: 10.5px; fill: currentColor; }
+  .dg .sm { font-size: 9.5px; fill: var(--muted); }
+  .dg .acc { fill: var(--t); font-weight: 600; }
+  .dg rect.n { fill: var(--surface-2); stroke: currentColor; stroke-opacity: .35; stroke-width: 1; }
+  .dg rect.k { fill: color-mix(in srgb, var(--t) 18%, var(--surface-2)); stroke: var(--t); stroke-width: 1.2; }
+  .dg .a { stroke: currentColor; stroke-opacity: .6; fill: none; stroke-width: 1.1; }
+  .dg .loop { stroke: var(--t); stroke-dasharray: 4 3; fill: none; stroke-width: 1.1; }
+  .dg marker path { fill: currentColor; }
+
+  .note { font-size: .84rem; color: var(--muted); border: 1px dashed var(--border); border-radius: 8px; padding: 9px 12px; margin: 10px 0 0; }
+  .talk { background: color-mix(in srgb, var(--accent) 8%, var(--surface)); border: 1px solid color-mix(in srgb, var(--accent) 30%, var(--border)); border-radius: 10px; padding: 11px 14px; margin-top: 14px; font-size: .9rem; }
+  .talk b { color: var(--accent); font-family: var(--mono); font-size: .66rem; letter-spacing: .1em; text-transform: uppercase; display: block; margin-bottom: 3px; }
+  .lab { font-size: .82rem; color: var(--muted); }
+  .lab a { color: var(--accent); }
+  a { color: var(--accent); }
+  .two { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px; }
+  .two > div { min-width: 0; }
+  .glist { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 8px; margin: 0; }
+  .glist div { border: 1px solid var(--border); border-radius: 8px; padding: 8px 11px; background: var(--surface); min-width: 0; }
+  .glist dt { font-family: var(--mono); font-weight: 600; font-size: .78rem; }
+  .glist dd { margin: 2px 0 0; font-size: .84rem; color: var(--muted); }
+  footer { margin-top: 36px; padding-top: 14px; border-top: 1px solid var(--border); color: var(--faint); font-size: .78rem; }
+  @media (prefers-reduced-motion: reduce) { .card { transition: none; } }
+</style>
+</head>
+<body>
+
+
+<div class="wrap">
+  <header>
+    <p class="eyebrow">Toloka FDE · final round · two practical use cases</p>
+    <h1>Scoping &amp; Pricing Playbook</h1>
+    <p class="lede">Five data products a frontier lab or enterprise buys, each scoped the way you would walk a client through it: the questions to ask, the metrics you commit to, the requirements that bite, what the record looks like, how the pipeline is built, and how the price is put together.</p>
+    <p class="how">Click a card. Every product line has seven tabs. Prices are illustrative — unit economics for framing a conversation, not a rate card.</p>
+  </header>
+
+  <nav class="cards" aria-label="Problem types">
+    <button class="card" data-target="p-pref" style="--t: var(--t-pref)"><span class="n">Preference annotation</span><span class="d">Query + two videos: which does a human prefer? No ground truth — agreement, not accuracy.</span><span class="u">unit: labeled pair</span></button>
+    <button class="card" data-target="p-reason" style="--t: var(--t-reason)"><span class="n">Reasoning data</span><span class="d">STEM, legal, math problems frontier models can't solve yet, with a clean chain of reasoning.</span><span class="u">unit: accepted problem</span></button>
+    <button class="card" data-target="p-video" style="--t: var(--t-video)"><span class="n">Robotics video</span><span class="d">Thousands of hours of egocentric video; actions, objects and timing annotated semi-automatically.</span><span class="u">unit: usable hour · label layer</span></button>
+    <button class="card" data-target="p-code" style="--t: var(--t-code)"><span class="n">Coding environments</span><span class="d">Terminal-Bench / SWE-bench style: a Docker box with a real-world fault and tests that prove it's fixed.</span><span class="u">unit: validated task</span></button>
+    <button class="card" data-target="p-gym" style="--t: var(--t-gym)"><span class="n">Agentic gyms</span><span class="d">τ-bench style: policies, mocked MCP tools, databases, a user simulator and a grader — a whole environment.</span><span class="u">unit: environment + tasks</span></button>
+    <button class="card x" data-target="p-consult" style="--t: var(--t-consult)"><span class="n">Consultative playbook</span><span class="d">Discovery script, BLUF, how to talk price, objections, red flags, checkpoints — for every product line.</span><span class="u">cross-cutting</span></button>
+    <button class="card x" data-target="p-concepts" style="--t: var(--t-concepts)"><span class="n">Agentic systems &amp; concepts</span><span class="d">Concrete environments (τ-bench, τ²-bench, Terminal-Bench, SWE-bench Verified, WebArena, OSWorld…) and the vocabulary.</span><span class="u">reference</span></button>
+    <button class="card x" data-target="p-judge" style="--t: var(--t-judge)"><span class="n">LLM-as-a-judge for annotation QA</span><span class="d">Where a judge sits in each of the five factories, how it is calibrated, and every metric with its formula.</span><span class="u">cross-cutting · metrics</span></button>
+  </nav>
+
+  <!-- ===================== PREFERENCE ANNOTATION ===================== -->
+  <section class="panel" id="p-pref" style="--t: var(--t-pref)" aria-label="Preference annotation">
+    <div class="phead">
+      <h2 class="ptitle">Preference annotation: query + two candidate videos</h2>
+      <p class="pdesc">The classic no-ground-truth product. Nobody can tell you the &ldquo;right&rdquo; answer, so the deliverable is not accuracy — it is a measured level of agreement, a confidence per item, and a rubric the client can audit.</p>
+      <div class="strip">
+        <div><div class="k">unit of sale</div><div class="v">aggregated labeled pair</div></div>
+        <div><div class="k">headline metric</div><div class="v">Krippendorff&rsquo;s α ≥ 0.80 (0.67–0.80 usable)</div></div>
+        <div><div class="k">illustrative price</div><div class="v money">$4–12 per pair · book example $9</div></div>
+        <div><div class="k">biggest risk</div><div class="v risk">rubric ambiguity misread as annotator noise</div></div>
+      </div>
+    </div>
+    <div class="tabs" role="tablist">
+      <button class="tab active" role="tab" aria-selected="true" data-tab="disc">Discovery</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="met">Metrics</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="nfr">Non-functional</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="data">Dataset example</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="sys">System design</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="dgm">Example design</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="price">Pricing</button>
+    </div>
+
+    <div class="pane" data-tab="disc">
+      <h3>Functional requirements: the discovery conversation</h3>
+      <p class="intro">Ask in this order. Each answer changes the design, the agreement you can promise, and the price.</p>
+      <ol class="qa">
+        <li><span class="num">01</span><div><b>What decision does this data feed?</b><span>Training a reward model for the ranker wants volume with modest redundancy; a launch gate or offline eval wants fewer items at high confidence. Everything downstream follows from this answer.</span></div></li>
+        <li><span class="num">02</span><div><b>Define &ldquo;prefer&rdquo; before anything else.</b><span>One holistic choice, or dimensions (relevance to intent, quality, freshness, safety) plus an overall? The rubric is the single biggest lever on agreement. Propose a one-page rubric with ten contrastive examples, written together in week one.</span></div></li>
+        <li><span class="num">03</span><div><b>Whose preference?</b><span>Locale, language, age band, expertise. Differences between populations are signal, not noise — but only if the pool is quota-sampled to the population the product serves.</span></div></li>
+        <li><span class="num">04</span><div><b>Unit of judgment.</b><span>Pairwise A/B with &ldquo;tie&rdquo; and &ldquo;can&rsquo;t judge&rdquo; is the most robust choice without ground truth. Likert scores drift between annotators; ranked lists of k multiply cost.</span></div></li>
+        <li><span class="num">05</span><div><b>What does the annotator actually see?</b><span>Two full 3-minute videos is 6+ minutes per task — the cost driver. First 60 s plus keyframes plus transcript, with a minimum watch time enforced, often preserves the judgment at a third of the cost. Ask what the product shows users.</span></div></li>
+        <li><span class="num">06</span><div><b>Volume, cadence, distribution.</b><span>One-off 100k pairs or 10k per week forever? Head vs tail queries, duplicates, languages. Cadence decides whether you build a standing pool or a project pool.</span></div></li>
+        <li><span class="num">07</span><div><b>What agreement is good enough?</b><span>Most clients don&rsquo;t know. Propose a 2,000-pair pilot to measure the natural agreement, then size the overlap to reach a target item confidence. Never promise an α before the pilot.</span></div></li>
+        <li><span class="num">08</span><div><b>Golden items.</b><span>Can the client supply 200 pairs with an obvious answer? If not, you build them in the pilot with expert adjudication. Without goldens there is no annotator quality signal.</span></div></li>
+        <li><span class="num">09</span><div><b>Content and people.</b><span>Unreleased videos (private hosting, no download, watermark), faces and PII (consent basis), NSFW or violent content (annotator wellbeing, opt-out, rotation). These set the pool, the tooling and the NDA.</span></div></li>
+        <li><span class="num">10</span><div><b>Delivery contract.</b><span>JSONL with every vote or the aggregate only? Rubric version and annotator ids in every record? Acceptance by client re-judging 2% of pairs, with a dispute window? Agree the schema before the pilot ships.</span></div></li>
+      </ol>
+      <div class="talk"><b>Say it to the client</b>Preference data has no answer key, so I won&rsquo;t promise accuracy. I&rsquo;ll promise an agreement level you can measure, a confidence on every pair you can filter on, and a rubric you can audit.</div>
+    </div>
+
+    <div class="pane" data-tab="met" hidden>
+      <h3>Metrics you commit to</h3>
+      <div class="tbl"><table>
+        <thead><tr><th>Metric</th><th>What it measures</th><th>Target</th><th>Why the client cares</th></tr></thead>
+        <tbody>
+          <tr><td><b>Krippendorff&rsquo;s α</b></td><td>Chance-corrected agreement; any number of raters, tolerates missing votes, nominal or ordinal.</td><td class="tgt">≥ 0.80 reliable · 0.67–0.80 usable · below: fix the rubric</td><td>The headline number in the quality SLA.</td></tr>
+          <tr><td><b>Cohen&rsquo;s / Fleiss&rsquo; κ</b></td><td>Two raters / fixed n raters. Report beside α.</td><td class="tgt">same bands</td><td>Clients ask for kappa by name.</td></tr>
+          <tr><td><b>Item confidence</b></td><td>Dawid–Skene posterior probability of the aggregated label, per pair.</td><td class="tgt">≥ 0.85 to ship; otherwise escalate</td><td>Lets them filter instead of discard.</td></tr>
+          <tr><td><b>Unanimity rate</b></td><td>Share of pairs with 3/3 (or ≥ 4/5) agreement.</td><td class="tgt">trend, not threshold</td><td>A drop flags rubric or pool drift before α moves.</td></tr>
+          <tr><td><b>Golden accuracy</b></td><td>Per-annotator accuracy on the obvious pairs injected at 5–10%.</td><td class="tgt">≥ 90% to stay in the pool</td><td>The pool-health gauge.</td></tr>
+          <tr><td><b>Position bias</b></td><td>P(choose left) after A/B randomisation.</td><td class="tgt">0.50 ± 0.03</td><td>Catches lazy clicking.</td></tr>
+          <tr><td><b>Time on task</b></td><td>Median and lower tail vs video length.</td><td class="tgt">flag &lt; 40% of required watch time</td><td>Catches speed-runners.</td></tr>
+          <tr><td><b>Throughput &amp; SLA</b></td><td>Pairs per day; batch lateness.</td><td class="tgt">per contract</td><td>The ops number watched weekly.</td></tr>
+          <tr><td><b>Downstream lift</b></td><td>Reward-model held-out accuracy; correlation with watch time, if the client shares it.</td><td class="tgt">report only</td><td>The number that justifies the spend.</td></tr>
+        </tbody>
+      </table></div>
+      <div class="talk"><b>Say it to the client</b>Disagreement is data about the rubric, not about the annotators. When α drops we fix the guideline first and the pool second.</div>
+    </div>
+
+    <div class="pane" data-tab="nfr" hidden>
+      <h3>Non-functional requirements</h3>
+      <dl class="nfr">
+        <div><dt>Asset security</dt><dd>Unreleased video stays on private hosting: streamed, not downloadable, watermarked per annotator, region-locked pool, NDA on every account.</dd></div>
+        <div><dt>Privacy</dt><dd>Faces and PII inside videos need a consent basis (GDPR/CCPA); blur if required. Annotator identities hashed in every delivered record.</dd></div>
+        <div><dt>Annotator wellbeing</dt><dd>NSFW or violent content: warnings, opt-out, rotation, daily limits, support channel. Price it in.</dd></div>
+        <div><dt>Scale &amp; latency</dt><dd>Pilot: 2,000 pairs in one week. Steady state: 15–30k pairs per week; burst by widening the qualified pool, not by lowering the bar.</dd></div>
+        <div><dt>Reproducibility</dt><dd>Versioned rubric, pool config and aggregation code; an audit trail per vote; re-runs produce the same aggregate.</dd></div>
+        <div><dt>Delivery</dt><dd>JSONL or parquet, schema-versioned, batch manifests with checksums, streaming batches rather than one drop.</dd></div>
+        <div><dt>Representativeness</dt><dd>Locale and language quotas enforced at routing time, not fixed afterwards.</dd></div>
+        <div><dt>Cost predictability</dt><dd>One price per pair that already includes overlap, escalation, goldens and QA. Rubric changes go through change control.</dd></div>
+      </dl>
+    </div>
+
+    <div class="pane" data-tab="data" hidden>
+      <h3>What one record looks like</h3>
+      <p class="intro">One line of JSONL per pair. Every vote is kept; the aggregate and its confidence sit beside them so the client can re-aggregate.</p>
+<pre>{"pair_id": "p_000481", "query": "how to fix a leaking kitchen tap", "locale": "en-US", "rubric_version": "v3",
+ "video_a": {"id": "v_7731", "duration_s": 214}, "video_b": {"id": "v_2210", "duration_s": 655},
+ "votes": [
+   {"annotator": "a_19f3", "choice": "A", "reasons": ["clearer_steps", "shorter"], "time_s": 188},
+   {"annotator": "a_02b7", "choice": "A", "reasons": ["clearer_steps"],            "time_s": 241},
+   {"annotator": "a_c4d1", "choice": "B", "reasons": ["more_thorough"],            "time_s": 312}],
+ "label": "A", "confidence": 0.81, "agreement": "2/3", "escalated": false, "golden": false,
+ "shown_order": "BA", "qa": {"position_bias_batch": 0.49, "alpha_batch": 0.78}}</pre>
+      <p class="lab">Runnable version with the agreement maths: <a href="https://github.com/jawwada/ai-engineer-job-playbook/tree/main/labs/dataset-examples/07-pairwise-annotation">labs/dataset-examples/07-pairwise-annotation</a> in the playbook repo.</p>
+      <h4>Fields worth defending in the schema review</h4>
+      <p><code>shown_order</code> proves randomisation and lets the client measure position bias themselves. <code>reasons</code> is a closed taxonomy, not free text — it is what makes disagreement reviewable. <code>confidence</code> comes from the aggregation model, not from vote counting, so a 2/3 split by two strong annotators can outrank a 3/3 by three weak ones.</p>
+    </div>
+
+    <div class="pane" data-tab="sys" hidden>
+      <h3>System design considerations</h3>
+      <ul class="cons">
+        <li><b>Task design first.</b> Randomise A/B position, allow tie and &ldquo;can&rsquo;t judge&rdquo; with a reason, enforce a minimum watch time, keep the query on screen. Half of all &ldquo;noisy annotator&rdquo; complaints are task-UI problems.</li>
+        <li><b>Adaptive redundancy.</b> Start with three votes; escalate to five only when the split is 2/1 and the item confidence is below threshold. That is where the book&rsquo;s COGS lever (5.75 → 3.60 per pair) comes from.</li>
+        <li><b>Aggregation that knows who voted.</b> Dawid–Skene (or a simpler weighted vote) learns per-annotator reliability, so the aggregate and its confidence reflect who voted, not just how many.</li>
+        <li><b>Pool as a system.</b> Qualification test on goldens, continuous golden injection at 5–10%, honeypots for speed-runners, skill scores that gate access to harder batches, rotation for content exposure.</li>
+        <li><b>Disagreement review loop.</b> Weekly rubric clinic on the lowest-confidence items with the client&rsquo;s owner present; every clinic ships a rubric version and a re-qualification.</li>
+        <li><b>Pipeline.</b> Ingest → dedupe → task generation → routing by quota → votes → aggregation → QA sampling by experts → export with manifests. Dashboards on α, unanimity, goldens and throughput per batch.</li>
+        <li><b>Cost control.</b> Shorter stimuli where the judgment survives it, adaptive overlap, and better qualification beat a lower hourly rate every time — and they raise α instead of lowering it.</li>
+      </ul>
+    </div>
+
+    <div class="pane" data-tab="dgm" hidden>
+      <h3>Example design</h3>
+      <figure class="fig">
+        <svg class="dg" viewBox="0 0 800 150" role="img" aria-label="Preference-pair pipeline: client pairs and rubric, task builder with randomisation, crowd pool with three-times overlap, Dawid–Skene aggregation, expert escalation for low-confidence items, QA and export; a dashed loop returns disagreement review to the rubric.">
+          <defs><marker id="ar1" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L8 4 L0 8 z"/></marker></defs>
+          <rect x="10" y="30" width="118" height="44" rx="7" class="n"/><text x="69" y="48" text-anchor="middle">Client pairs</text><text x="69" y="63" text-anchor="middle" class="sm">+ rubric v3</text>
+          <rect x="142" y="30" width="118" height="44" rx="7" class="n"/><text x="201" y="48" text-anchor="middle">Task builder</text><text x="201" y="63" text-anchor="middle" class="sm">randomise · tie</text>
+          <rect x="274" y="30" width="118" height="44" rx="7" class="n"/><text x="333" y="48" text-anchor="middle">Crowd pool</text><text x="333" y="63" text-anchor="middle" class="sm">3× overlap · goldens</text>
+          <rect x="406" y="30" width="118" height="44" rx="7" class="k"/><text x="465" y="48" text-anchor="middle" class="acc">Aggregate</text><text x="465" y="63" text-anchor="middle" class="sm">Dawid–Skene</text>
+          <rect x="538" y="30" width="118" height="44" rx="7" class="n"/><text x="597" y="48" text-anchor="middle">Expert 5×</text><text x="597" y="63" text-anchor="middle" class="sm">confidence &lt; 0.85</text>
+          <rect x="670" y="30" width="118" height="44" rx="7" class="n"/><text x="729" y="48" text-anchor="middle">QA + export</text><text x="729" y="63" text-anchor="middle" class="sm">α · bias · JSONL</text>
+          <line x1="128" y1="52" x2="140" y2="52" class="a" marker-end="url(#ar1)"/>
+          <line x1="260" y1="52" x2="272" y2="52" class="a" marker-end="url(#ar1)"/>
+          <line x1="392" y1="52" x2="404" y2="52" class="a" marker-end="url(#ar1)"/>
+          <line x1="524" y1="52" x2="536" y2="52" class="a" marker-end="url(#ar1)"/>
+          <line x1="656" y1="52" x2="668" y2="52" class="a" marker-end="url(#ar1)"/>
+          <path d="M729 74 V104 H69 V76" class="loop" marker-end="url(#ar1)"/>
+          <text x="400" y="122" text-anchor="middle" class="sm">weekly disagreement review → rubric v4 → re-qualify pool</text>
+          <text x="465" y="20" text-anchor="middle" class="sm">~80% of pairs ship here</text>
+        </svg>
+        <figcaption>Three votes on every pair, five only where the aggregate is unsure, experts only where the crowd cannot decide. The dashed loop is the part most proposals forget: disagreement goes back into the rubric, and the pool is re-qualified against it.</figcaption>
+      </figure>
+      <p><b>Walking the client through it:</b> start at the aggregator, because that is where confidence is produced; then show the escalation path, because that is what they are paying for beyond &ldquo;three clicks&rdquo;; end on the loop, because that is how α goes up over the engagement instead of down.</p>
+    </div>
+
+    <div class="pane" data-tab="price" hidden>
+      <h3>Pricing: how the number is built</h3>
+      <p class="intro">Per aggregated pair, 3-minute videos, en-US general pool. Matches the worked example in section 11 of the final-round book.</p>
+      <div class="tbl"><table>
+        <thead><tr><th>Line item</th><th>Basis</th><th>Per pair</th></tr></thead>
+        <tbody>
+          <tr><td>Annotation labour</td><td>3 votes × 4.5 min × $14/h effective (pay + platform fees)</td><td class="num money">$3.15</td></tr>
+          <tr><td>Adaptive escalation + goldens</td><td>20% of items get 2 more votes; 8% golden injection</td><td class="num money">$0.90</td></tr>
+          <tr><td>Expert adjudication + QA sampling</td><td>5% of items × $8 expert; 3% QA re-judging</td><td class="num money">$0.70</td></tr>
+          <tr><td>Platform, PM, tooling</td><td>~12% of labour + project management</td><td class="num money">$1.00</td></tr>
+          <tr class="total"><td>COGS</td><td></td><td class="num money">$5.75</td></tr>
+          <tr class="total"><td>Price → gross margin</td><td>$9.00 per pair</td><td class="num money">36%</td></tr>
+          <tr><td>After levers</td><td>adaptive overlap, tighter qualification, rubric v2 → COGS $3.60</td><td class="num money">GM 60%</td></tr>
+        </tbody>
+      </table></div>
+      <h4>Price-list shape</h4>
+      <div class="tbl"><table>
+        <thead><tr><th>Offer</th><th>Illustrative price</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>Pilot</td><td class="num money">$18k fixed · 2,000 pairs</td><td>Includes rubric workshop, goldens, agreement report. De-risks both sides.</td></tr>
+          <tr><td>Production, 3-min videos</td><td class="num money">$9.00 → $7.50 at 50k+</td><td>Volume tiers; price holds for a rubric version.</td></tr>
+          <tr><td>Short clips (≤ 60 s) or thumbnails</td><td class="num money">$4–5</td><td>Same overlap; shorter task.</td></tr>
+          <tr><td>Expert pool (medical, legal, local-language)</td><td class="num money">$18–25</td><td>Fewer, slower, better-paid annotators.</td></tr>
+          <tr><td>Rush (2× throughput)</td><td class="num money">+25%</td><td>Pays for pool expansion and weekend ops.</td></tr>
+          <tr><td>Rubric design &amp; calibration</td><td class="num money">$6–10k fixed</td><td>Only if the client has no rubric; otherwise folded into the pilot.</td></tr>
+        </tbody>
+      </table></div>
+      <div class="talk"><b>Say it to the client</b>The $9 buys three independent judgments, a fourth and fifth on the hard ones, goldens, and QA — not one click. If you want it cheaper, the levers are shorter stimuli and adaptive overlap, and both raise agreement rather than lowering it.</div>
+    </div>
+  </section>
+
+  <!-- ===================== REASONING DATA ===================== -->
+  <section class="panel" id="p-reason" style="--t: var(--t-reason)" aria-label="Reasoning data" hidden>
+    <div class="phead">
+      <h2 class="ptitle">Reasoning data: problems the frontier can&rsquo;t solve yet</h2>
+      <p class="pdesc">Subject-matter experts write the content; you design and run the factory around them. The product is an <em>accepted</em> problem — hard for named models on a named date, solved twice independently, with a rationale that reads cleanly — and the business is managing yield.</p>
+      <div class="strip">
+        <div><div class="k">unit of sale</div><div class="v">accepted problem + verified solution</div></div>
+        <div><div class="k">headline metric</div><div class="v">frontier failure ≥ 75% at pass@4 · 2nd-solver agreement ≥ 98%</div></div>
+        <div><div class="k">illustrative price</div><div class="v money">$1,300–1,800 per accepted PhD-level item</div></div>
+        <div><div class="k">biggest risk</div><div class="v risk">yield: 30% vs 60% accepted doubles the cost</div></div>
+      </div>
+    </div>
+    <div class="tabs" role="tablist">
+      <button class="tab active" role="tab" aria-selected="true" data-tab="disc">Discovery</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="met">Metrics</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="nfr">Non-functional</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="data">Dataset example</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="sys">System design</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="dgm">Example design</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="price">Pricing</button>
+    </div>
+
+    <div class="pane" data-tab="disc">
+      <h3>Functional requirements: the discovery conversation</h3>
+      <p class="intro">The first two answers decide the format, the verification protocol and the price; the rest size the factory.</p>
+      <ol class="qa">
+        <li><span class="num">01</span><div><b>What is the data for?</b><span>SFT needs the full rationale in a house style. RL with verifiable rewards needs a checkable final answer and can skip the prose. An evaluation benchmark needs calibrated difficulty and secrecy. Three different products with the same expert pool.</span></div></li>
+        <li><span class="num">02</span><div><b>Define &ldquo;can&rsquo;t solve&rdquo;.</b><span>Which models, how many samples, what threshold — e.g. three named frontier models, pass@4 below 25%, measured on the delivery date. Agree who pays for the model checks, and that hardness is stamped &ldquo;as of&rdquo; a date, because the models improve under you.</span></div></li>
+        <li><span class="num">03</span><div><b>Domains, depth, expert tier.</b><span>Olympiad vs research-level math; physics, chemistry, biology; law by jurisdiction. PhD/postdoc vs practising professionals (bar admission for law). Quotas per domain fix the expert pool you have to recruit.</span></div></li>
+        <li><span class="num">04</span><div><b>Problem format.</b><span>Verifiable answer (numeric, expression, multiple choice) is cheap to check and usable for RL. Proofs and open legal analysis need rubric grading by a second expert — slower, dearer, and the rubric becomes part of the deliverable.</span></div></li>
+        <li><span class="num">05</span><div><b>Solution and rationale spec.</b><span>Step granularity, notation, LaTeX, target length, &ldquo;no leaps&rdquo; rule, alternative solutions, common wrong paths. Write the style guide with five exemplar items before anyone else starts.</span></div></li>
+        <li><span class="num">06</span><div><b>Originality and IP.</b><span>Nothing from textbooks or the web (contamination kills the eval and the training value). Exclusive rights, expert contracts that assign IP, no publication, ever.</span></div></li>
+        <li><span class="num">07</span><div><b>Volume and difficulty mix.</b><span>Say 5,000 accepted: 70% hard, 30% very hard, quotas by domain, delivered in batches. Accepted, not attempted — the number the invoice is written against.</span></div></li>
+        <li><span class="num">08</span><div><b>Verification protocol.</b><span>Blind second solve, automatic answer equivalence, adjudication of mismatches; for proofs a rubric review by a third expert. Is model-assisted checking allowed, and is it disclosed?</span></div></li>
+        <li><span class="num">09</span><div><b>Acceptance criteria.</b><span>The client reviews 5–10% of each batch; a rejection-reason taxonomy (wrong, too easy, unclear, off-style, duplicate); rework SLA; the batch is accepted when the sample passes at ≥ 95%.</span></div></li>
+        <li><span class="num">10</span><div><b>Timeline and feedback cadence.</b><span>First 100 accepted in three weeks, then weekly batches; a style-guide revision after batch 1 and batch 3; a yield review every batch, because yield is the price.</span></div></li>
+      </ol>
+      <div class="talk"><b>Say it to the client</b>We price the accepted problem, not the attempt. The pilot&rsquo;s job is to discover the yield — and from then on yield is the number we manage together.</div>
+    </div>
+
+    <div class="pane" data-tab="met" hidden>
+      <h3>Metrics you commit to</h3>
+      <div class="tbl"><table>
+        <thead><tr><th>Metric</th><th>What it measures</th><th>Target</th><th>Why the client cares</th></tr></thead>
+        <tbody>
+          <tr><td><b>Frontier failure rate</b></td><td>pass@k of the named models on the delivery date.</td><td class="tgt">e.g. ≥ 3 models below 25% at pass@4</td><td>It is the product definition.</td></tr>
+          <tr><td><b>Correctness</b></td><td>Blind second solver reaches the same final answer (after adjudication).</td><td class="tgt">≥ 98%</td><td>One wrong answer poisons a training set.</td></tr>
+          <tr><td><b>Rationale quality</b></td><td>Rubric: completeness, no leaps, notation, length; reviewer agreement.</td><td class="tgt">mean ≥ 4/5 · κ ≥ 0.7</td><td>What makes it SFT-grade.</td></tr>
+          <tr><td><b>Novelty / contamination</b></td><td>Near-duplicate score vs web and public benchmarks (n-gram + embeddings).</td><td class="tgt">0 benchmark overlap · dup &lt; 0.2</td><td>Protects the eval and the IP.</td></tr>
+          <tr><td><b>Yield</b></td><td>Accepted ÷ submitted, per batch and per expert.</td><td class="tgt">30% batch 1 → 60% by batch 4</td><td>The cost driver.</td></tr>
+          <tr><td><b>Client acceptance</b></td><td>Accepted share of the reviewed sample.</td><td class="tgt">≥ 95%</td><td>The SLA.</td></tr>
+          <tr><td><b>Throughput per expert</b></td><td>Accepted problems per expert-week.</td><td class="tgt">3–6</td><td>Capacity planning and recruiting.</td></tr>
+          <tr><td><b>Verifiable share</b></td><td>Items with a machine-checkable answer.</td><td class="tgt">per spec, e.g. ≥ 70% for RL</td><td>RL usability.</td></tr>
+          <tr><td><b>Downstream gain</b></td><td>Model improvement on a held-out set after SFT/RL, if shared.</td><td class="tgt">report only</td><td>ROI.</td></tr>
+        </tbody>
+      </table></div>
+      <div class="talk"><b>Say it to the client</b>Difficulty is a moving target, so every item carries a &ldquo;hard as of&rdquo; date and we re-run the gauntlet before each delivery. What was very hard in March may be hard in September — it moves tier, it doesn&rsquo;t vanish.</div>
+    </div>
+
+    <div class="pane" data-tab="nfr" hidden>
+      <h3>Non-functional requirements</h3>
+      <dl class="nfr">
+        <div><dt>IP &amp; exclusivity</dt><dd>Experts assign rights; items are delivered exclusively; nothing is reused across clients or published.</dd></div>
+        <div><dt>Contamination control</dt><dd>Secure authoring portal, no copy-out, watermarked views, leak detection by searching exact phrasings, no public posting.</dd></div>
+        <div><dt>Expert vetting</dt><dd>Credential verification, paid test tasks against the style guide, probation on the first ten items, retention incentives for high-yield authors.</dd></div>
+        <div><dt>Model-check security</dt><dd>API keys in a secrets manager, per-item cost caps, logged calls, no problem text in third-party logs beyond what the contract allows.</dd></div>
+        <div><dt>Traceability</dt><dd>Author, verifier, adjudicator, style-guide version and gauntlet results stored on every item.</dd></div>
+        <div><dt>Legal-domain specifics</dt><dd>Jurisdiction and date of the law on every item; framed as reasoning exercises, never advice.</dd></div>
+        <div><dt>Burst capacity</dt><dd>A bench of pre-vetted experts at 30% of pool size so a doubled batch does not mean a new recruiting cycle.</dd></div>
+        <div><dt>Residency</dt><dd>If required, authoring and storage inside the client&rsquo;s region; experts restricted accordingly.</dd></div>
+      </dl>
+    </div>
+
+    <div class="pane" data-tab="data" hidden>
+      <h3>What one record looks like</h3>
+      <p class="intro">One accepted item. The answer is separate from the rationale so the same record serves SFT and verifiable-reward RL. The problem text is shortened here; a real item is far harder.</p>
+<pre>{"id": "math_04712", "domain": "math", "subdomain": "number_theory", "difficulty": "very_hard",
+ "answer_type": "expression", "license": "exclusive", "hard_as_of": "2026-10-01",
+ "problem": "Let p be an odd prime. Determine all p for which x^4 ≡ -1 (mod p) has a solution.",
+ "answer": "p ≡ 1 (mod 8)",
+ "solution": "Step 1. If x^4 ≡ -1 then x^8 ≡ 1 and x^4 ≢ 1, so ord_p(x) = 8 ... Step 5. Conversely, for p ≡ 1 (mod 8) the multiplicative group is cyclic of order divisible by 8 ...",
+ "rationale_style": "full_cot_v2",
+ "author": "exp_118", "verifier": "exp_042", "adjudicated": false,
+ "model_checks": [{"model": "frontier_a", "k": 4, "passes": 0}, {"model": "frontier_b", "k": 4, "passes": 1}, {"model": "frontier_c", "k": 4, "passes": 0}],
+ "checks": {"latex_compiles": true, "web_dup_score": 0.03, "benchmark_overlap": false, "answer_equivalence": "sympy"},
+ "status": "accepted", "client_review": "accepted_batch3", "rejection_history": ["too_easy_v1"]}</pre>
+      <p class="lab">Runnable version with the verifier and the review record: <a href="https://github.com/jawwada/ai-engineer-job-playbook/tree/main/labs/dataset-examples/08-reasoning">labs/dataset-examples/08-reasoning</a>.</p>
+      <h4>Fields worth defending in the schema review</h4>
+      <p><code>model_checks</code> is the evidence for the price tier — keep the raw passes, not a boolean. <code>rejection_history</code> is what yield coaching runs on. <code>hard_as_of</code> is the honest answer to &ldquo;is it still hard?&rdquo;.</p>
+    </div>
+
+    <div class="pane" data-tab="sys" hidden>
+      <h3>System design considerations</h3>
+      <ul class="cons">
+        <li><b>The pipeline.</b> Brief + style guide → authoring portal (LaTeX preview, versions, comments) → automatic checks (format, compile, dedupe, contamination) → model gauntlet → blind verification → adjudication → rationale review → client sample → delivery.</li>
+        <li><b>The gauntlet is the engineering centrepiece.</b> Batch APIs, response caching, cheap models first as a filter, K models × n samples, answer equivalence (SymPy canonical forms with tolerance; an LLM judge with a rubric for proofs and legal), and a cost cap per item.</li>
+        <li><b>Verification by design.</b> Second expert solves blind; final answers are compared automatically; humans adjudicate only mismatches. For proofs, a third expert grades against the rubric. Verification cost is a third of authoring cost — keep it there.</li>
+        <li><b>Yield management.</b> Rejection-reason taxonomy, per-expert yield and coaching, calibration items in every batch. Batch 1 yield sets the price of batches 2–10; treat it as the pilot&rsquo;s main output.</li>
+        <li><b>Difficulty drift.</b> Re-run the gauntlet before each delivery and stamp <code>hard_as_of</code>; items that became solvable move down a tier instead of being thrown away.</li>
+        <li><b>Secrecy as infrastructure.</b> No export from the portal, per-viewer watermarks, phrase-level leak detection, access logs — the same controls a benchmark owner expects.</li>
+        <li><b>Verifiable answers for RL.</b> Canonical answer forms, multiple-answer handling, tolerances, and the answer kept in its own field so a verifier never has to parse prose.</li>
+      </ul>
+    </div>
+
+    <div class="pane" data-tab="dgm" hidden>
+      <h3>Example design</h3>
+      <figure class="fig">
+        <svg class="dg" viewBox="0 0 800 170" role="img" aria-label="Reasoning-data pipeline: brief and style guide, expert authoring, automatic checks, model gauntlet, blind verification, client review and delivery; dashed loops return solved items and answer mismatches to authoring.">
+          <defs><marker id="ar2" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L8 4 L0 8 z"/></marker></defs>
+          <rect x="10" y="30" width="118" height="44" rx="7" class="n"/><text x="69" y="48" text-anchor="middle">Brief + style</text><text x="69" y="63" text-anchor="middle" class="sm">5 exemplar items</text>
+          <rect x="142" y="30" width="118" height="44" rx="7" class="n"/><text x="201" y="48" text-anchor="middle">Expert authoring</text><text x="201" y="63" text-anchor="middle" class="sm">secure portal</text>
+          <rect x="274" y="30" width="118" height="44" rx="7" class="n"/><text x="333" y="48" text-anchor="middle">Auto-checks</text><text x="333" y="63" text-anchor="middle" class="sm">dedupe · LaTeX · leak</text>
+          <rect x="406" y="30" width="118" height="44" rx="7" class="k"/><text x="465" y="48" text-anchor="middle" class="acc">Model gauntlet</text><text x="465" y="63" text-anchor="middle" class="sm">K models × n samples</text>
+          <rect x="538" y="30" width="118" height="44" rx="7" class="n"/><text x="597" y="48" text-anchor="middle">Blind verify</text><text x="597" y="63" text-anchor="middle" class="sm">2nd expert · SymPy</text>
+          <rect x="670" y="30" width="118" height="44" rx="7" class="n"/><text x="729" y="48" text-anchor="middle">Client review</text><text x="729" y="63" text-anchor="middle" class="sm">5–10% sample · deliver</text>
+          <line x1="128" y1="52" x2="140" y2="52" class="a" marker-end="url(#ar2)"/>
+          <line x1="260" y1="52" x2="272" y2="52" class="a" marker-end="url(#ar2)"/>
+          <line x1="392" y1="52" x2="404" y2="52" class="a" marker-end="url(#ar2)"/>
+          <line x1="524" y1="52" x2="536" y2="52" class="a" marker-end="url(#ar2)"/>
+          <line x1="656" y1="52" x2="668" y2="52" class="a" marker-end="url(#ar2)"/>
+          <path d="M465 74 V100 H201 V76" class="loop" marker-end="url(#ar2)"/>
+          <text x="333" y="112" text-anchor="middle" class="sm">a model solved it → back to the author as &ldquo;too easy&rdquo;</text>
+          <path d="M597 74 V134 H230 V76" class="loop" marker-end="url(#ar2)"/>
+          <text x="420" y="146" text-anchor="middle" class="sm">answers disagree → adjudicate, then re-author or discard</text>
+          <text x="465" y="20" text-anchor="middle" class="sm">the yield gate</text>
+        </svg>
+        <figcaption>Experts produce; the factory filters. The gauntlet is where most attempts die, and it is deliberately placed <em>before</em> the expensive blind verification so no one verifies a problem a model can already solve.</figcaption>
+      </figure>
+      <p><b>Walking the client through it:</b> start at the gauntlet, because it embodies their definition of &ldquo;hard&rdquo;; show the two loops, because that is where the yield is lost and where you manage it; finish at the review sample, because that is their lever on quality without reading every item.</p>
+    </div>
+
+    <div class="pane" data-tab="price" hidden>
+      <h3>Pricing: how the number is built</h3>
+      <p class="intro">Per accepted very-hard PhD-level STEM item, verifiable answer, at a 50% yield. Expert rates are blended and illustrative.</p>
+      <div class="tbl"><table>
+        <thead><tr><th>Line item</th><th>Basis</th><th>Per attempt</th><th>Per accepted (yield 50%)</th></tr></thead>
+        <tbody>
+          <tr><td>Authoring</td><td>3.5 h × $90/h</td><td class="num money">$315</td><td class="num money">$630</td></tr>
+          <tr><td>Blind verification</td><td>1.0 h × $90/h</td><td class="num money">$90</td><td class="num money">$180</td></tr>
+          <tr><td>Model gauntlet</td><td>3 models × 4 samples + judge</td><td class="num money">$6</td><td class="num money">$12</td></tr>
+          <tr><td>Checks, adjudication, rationale review</td><td>0.5 h × $90/h</td><td class="num money">$45</td><td class="num money">$90</td></tr>
+          <tr class="total"><td>Expert + compute cost</td><td></td><td class="num money">$456</td><td class="num money">$912</td></tr>
+          <tr><td>PM, portal, QA</td><td>15%</td><td></td><td class="num money">$137</td></tr>
+          <tr class="total"><td>COGS per accepted item</td><td></td><td></td><td class="num money">≈ $1,050</td></tr>
+          <tr class="total"><td>Price → gross margin</td><td>$1,500 per accepted item</td><td></td><td class="num money">30%</td></tr>
+          <tr><td>At 65% yield</td><td>same rates, better coaching</td><td></td><td class="num money">COGS ≈ $830 → GM 45%</td></tr>
+        </tbody>
+      </table></div>
+      <h4>Price-list shape</h4>
+      <div class="tbl"><table>
+        <thead><tr><th>Offer</th><th>Illustrative price</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>Pilot</td><td class="num money">$160k fixed · 100 accepted</td><td>Includes style guide, gauntlet setup, yield report. ≈ $1,600 each because yield is unknown.</td></tr>
+          <tr><td>Very hard, PhD STEM</td><td class="num money">$1,300–1,800</td><td>Per accepted item, verifiable answer.</td></tr>
+          <tr><td>Hard tier</td><td class="num money">$600–900</td><td>Models fail at pass@1 but not pass@4.</td></tr>
+          <tr><td>Legal reasoning (licensed, jurisdiction-specific)</td><td class="num money">$900–1,500</td><td>Rubric-graded; a third reviewer on contested items.</td></tr>
+          <tr><td>Benchmark-grade</td><td class="num money">+30–50%</td><td>Three independent verifications, contamination audit, secrecy controls, no reuse.</td></tr>
+          <tr><td>Pipeline engineering</td><td class="num money">T&amp;M, 2–4 engineer-weeks</td><td>Gauntlet, portal adapters, equivalence checkers.</td></tr>
+          <tr><td>Quarterly re-verification</td><td class="num money">$25–40 per item</td><td>Gauntlet re-run; items re-tiered.</td></tr>
+        </tbody>
+      </table></div>
+      <div class="talk"><b>Say it to the client</b>Half of what you pay for is the problems we throw away. The levers are coaching the yield up and automating the checks — not cutting the expert rate, which only lowers the yield further.</div>
+    </div>
+  </section>
+
+  <!-- ===================== ROBOTICS VIDEO ===================== -->
+  <section class="panel" id="p-video" style="--t: var(--t-video)" aria-label="Robotics video" hidden>
+    <div class="phead">
+      <h2 class="ptitle">Egocentric video for robotics: collect thousands of hours, annotate cheaply at scale</h2>
+      <p class="pdesc">Two products in one engagement: a collection operation (people, devices, consent, logistics) and an annotation factory whose whole point is driving human minutes per video minute down every week through model-assisted proposals and verification.</p>
+      <div class="strip">
+        <div><div class="k">unit of sale</div><div class="v">usable collected hour · annotated hour per label layer</div></div>
+        <div><div class="k">headline metric</div><div class="v">human-minutes per video-minute (semi-auto &lt; 2×) · temporal IoU ≥ 0.70</div></div>
+        <div><div class="k">illustrative price</div><div class="v money">$120–200 per collected hour · $80–250 per layer-hour</div></div>
+        <div><div class="k">biggest risk</div><div class="v risk">privacy/consent, and an automation curve that never bends</div></div>
+      </div>
+    </div>
+    <div class="tabs" role="tablist">
+      <button class="tab active" role="tab" aria-selected="true" data-tab="disc">Discovery</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="met">Metrics</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="nfr">Non-functional</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="data">Dataset example</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="sys">System design</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="dgm">Example design</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="price">Pricing</button>
+    </div>
+
+    <div class="pane" data-tab="disc">
+      <h3>Functional requirements: the discovery conversation</h3>
+      <p class="intro">Separate the collection questions from the annotation questions; they have different risks, teams and prices.</p>
+      <ol class="qa">
+        <li><span class="num">01</span><div><b>What will the robot learn from this?</b><span>Imitation from human video, vision-language-action pretraining, affordance detection, task planning. Only annotate what the model will consume — hand pose, narration, segments and object tracks each cost a layer.</span></div></li>
+        <li><span class="num">02</span><div><b>Environments and task list.</b><span>Kitchens, warehouses, assembly lines; a list of, say, 200 household tasks; a diversity matrix of scenes × tasks × participants × lighting × geography with target hours per cell.</span></div></li>
+        <li><span class="num">03</span><div><b>Capture specification.</b><span>Device (smart glasses, head-mounted action camera, headset), resolution and fps, stereo or depth, IMU, gaze, audio; synchronisation and calibration; gigabytes per hour. This sets logistics and storage cost.</span></div></li>
+        <li><span class="num">04</span><div><b>Who records, where, how much.</b><span>Crowd participants in their own homes (consent, privacy, shipped kits) or a staged studio; hours per participant; scripted prompts vs natural activity; the 5,000-hour target and the ramp.</span></div></li>
+        <li><span class="num">05</span><div><b>Annotation ontology.</b><span>Verb/noun narrations, temporal segments with boundaries, object boxes, masks and tracks, hand–object interaction, 3D poses. Who owns the taxonomy and how it is versioned.</span></div></li>
+        <li><span class="num">06</span><div><b>Automation appetite and the accuracy bar per layer.</b><span>Model-assisted proposals (ASR, VLM narration, SAM 2 tracks, hand-pose models) verified by humans — with the accuracy target and the provenance recorded per label, so the client knows which labels were machine-proposed.</span></div></li>
+        <li><span class="num">07</span><div><b>Privacy and consent.</b><span>Faces, bystanders and screens blurred; audio PII removed; consent for ML training; minors excluded; GDPR and biometric statutes (Illinois BIPA); data residency; a deletion workflow for withdrawn consent.</span></div></li>
+        <li><span class="num">08</span><div><b>Delivery.</b><span>MP4 + JSON, or LeRobot/RLDS if they train with those; manifests and checksums; transfer at terabyte scale into the client&rsquo;s own bucket.</span></div></li>
+        <li><span class="num">09</span><div><b>Quality assurance.</b><span>Gold clips with expert labels, a double-annotated sample, boundary tolerance, and read access to the review tool for the client&rsquo;s own spot checks.</span></div></li>
+        <li><span class="num">10</span><div><b>Cadence and ramp.</b><span>A 50-hour pilot in three weeks, weekly batches after, participant retention plan, device fleet size vs hours per week.</span></div></li>
+      </ol>
+      <div class="talk"><b>Say it to the client</b>The expensive part is not camera time — it is human minutes per video minute. Our job is to push that ratio down every week without the labels getting worse, and to show you the curve.</div>
+    </div>
+
+    <div class="pane" data-tab="met" hidden>
+      <h3>Metrics you commit to</h3>
+      <div class="tbl"><table>
+        <thead><tr><th>Metric</th><th>What it measures</th><th>Target</th><th>Why the client cares</th></tr></thead>
+        <tbody>
+          <tr><td><b>Usable-hour yield</b></td><td>Hours passing QA ÷ hours recorded.</td><td class="tgt">≥ 85%</td><td>What can be billed and trained on.</td></tr>
+          <tr><td><b>Diversity coverage</b></td><td>Cells of the scene × task × participant matrix at target hours.</td><td class="tgt">≥ 90% of cells ≥ 5 h</td><td>The dataset&rsquo;s generalisation value.</td></tr>
+          <tr><td><b>Temporal IoU</b></td><td>Action-segment boundaries vs gold.</td><td class="tgt">mean ≥ 0.70 · ±0.5 s tolerance</td><td>Segment quality for policy learning.</td></tr>
+          <tr><td><b>Object track quality</b></td><td>Mask/box IoU vs gold; identity switches.</td><td class="tgt">mIoU ≥ 0.75 · &lt; 1 switch/min</td><td>Manipulation targets.</td></tr>
+          <tr><td><b>Narration correctness</b></td><td>Human rating of verb and noun.</td><td class="tgt">≥ 95% verb · ≥ 90% noun</td><td>Language-conditioned policies.</td></tr>
+          <tr><td><b>Human-minutes per video-minute</b></td><td>Per label layer, per week.</td><td class="tgt">dense manual 10–30× → semi-auto &lt; 2×</td><td>The cost curve the price follows.</td></tr>
+          <tr><td><b>Proposal acceptance rate</b></td><td>Machine-proposed labels accepted unchanged.</td><td class="tgt">40% → 80% over the engagement</td><td>Proof the automation is real.</td></tr>
+          <tr><td><b>Privacy compliance</b></td><td>Unblurred faces or screens on frame audit.</td><td class="tgt">0</td><td>Contractual and legal.</td></tr>
+          <tr><td><b>Agreement</b></td><td>κ on verbs/nouns; boundary agreement on the double-annotated sample.</td><td class="tgt">≥ 0.80</td><td>Standard QC.</td></tr>
+        </tbody>
+      </table></div>
+      <div class="talk"><b>Say it to the client</b>Two numbers tell you if this engagement is working: the acceptance rate going up, and human minutes per video minute going down. Both are on the weekly dashboard.</div>
+    </div>
+
+    <div class="pane" data-tab="nfr" hidden>
+      <h3>Non-functional requirements</h3>
+      <dl class="nfr">
+        <div><dt>Storage &amp; transfer</dt><dd>5,000 h at 1080p is 10–25 TB raw plus derived artefacts; resumable uploads, checksums, and delivery into the client&rsquo;s bucket, never through laptops.</dd></div>
+        <div><dt>Privacy &amp; consent</dt><dd>GDPR and biometric statutes; bystander and screen blurring before anyone annotates; home interiors treated as sensitive; a withdrawal-to-deletion workflow with proof.</dd></div>
+        <div><dt>Device logistics</dt><dd>Kits, calibration, support line, loss and damage policy; a fleet sized to hours per week with 20% spare.</dd></div>
+        <div><dt>Security</dt><dd>Encryption at rest and in transit, access logs, no local copies in the annotation tool, region-restricted annotators if required.</dd></div>
+        <div><dt>Tooling scalability</dt><dd>Streaming review, precomputed proposals, keyboard-first accept/reject/correct; the tool&rsquo;s speed is the cost curve.</dd></div>
+        <div><dt>Provenance</dt><dd>Model and version behind every proposal recorded on the label; the client can filter machine-proposed labels out.</dd></div>
+        <div><dt>Participant management</dt><dd>Fair pay per recorded hour, payment cadence, retention, geographic spread; participants are the supply chain.</dd></div>
+        <div><dt>Latency</dt><dd>Pilot in three weeks; weekly batches after; annotation lags collection by at most two weeks.</dd></div>
+      </dl>
+    </div>
+
+    <div class="pane" data-tab="data" hidden>
+      <h3>What one record looks like</h3>
+      <p class="intro">One video with three label layers. Every label carries its source — a human who verified a proposal is not the same as a human who drew it from scratch.</p>
+<pre>{"video_id": "ego_01822", "participant": "p_311", "device": "glasses_gen2", "fps": 30, "duration_s": 1843,
+ "scene": "kitchen", "task_script": "make_coffee_v2", "ontology_version": "verbs_v4/nouns_v6",
+ "segments": [
+   {"start_s": 12.4, "end_s": 18.9, "verb": "open", "noun": "cabinet", "narration": "#C opens the upper cabinet",
+    "source": "vlm_proposal", "verified_by": "a_77", "edited": false, "confidence": 0.92},
+   {"start_s": 19.0, "end_s": 27.3, "verb": "take", "noun": "mug", "narration": "#C takes a mug from the shelf",
+    "source": "vlm_proposal", "verified_by": "a_77", "edited": true,  "confidence": 0.71}],
+ "objects": [{"track_id": "t_4", "label": "mug", "mask_source": "sam2_v1",
+              "frames": {"570": {"bbox": [812, 402, 896, 505]}, "600": {"bbox": [790, 388, 880, 496]}}}],
+ "hands": {"source": "hand_pose_v3", "verified": "sampled"},
+ "privacy": {"faces_blurred": true, "screens_blurred": true, "audio_pii_redacted": true, "consent_id": "c_9f21"},
+ "qa": {"gold_clip": false, "double_annotated": false}}</pre>
+      <p class="lab">Runnable version with the temporal-IoU scorer: <a href="https://github.com/jawwada/ai-engineer-job-playbook/tree/main/labs/dataset-examples/09-egocentric-video">labs/dataset-examples/09-egocentric-video</a>.</p>
+      <h4>Fields worth defending in the schema review</h4>
+      <p><code>source</code> and <code>edited</code> are what make the acceptance-rate metric computable. <code>consent_id</code> ties every frame to a consent record so withdrawal is a query, not a search. <code>ontology_version</code> prevents a renamed verb from silently splitting the dataset.</p>
+    </div>
+
+    <div class="pane" data-tab="sys" hidden>
+      <h3>System design considerations</h3>
+      <ul class="cons">
+        <li><b>Collection pipeline.</b> Onboarding and consent → device kits → capture app with task prompts and checklists → resumable upload → automatic QA (exposure, blur, sync, duration) → privacy pass (faces, plates, screens, audio PII) → catalogue with metadata.</li>
+        <li><b>Semi-automatic annotation stack.</b> ASR + VLM for narration proposals, shot and action boundary detection, SAM 2 for object tracks, a hand-pose model; humans verify in an accept/reject/correct tool built for speed, not for drawing.</li>
+        <li><b>Active-learning loop.</b> Route low-confidence proposals to humans; fine-tune the proposal models on verified labels every week; watch acceptance rise and human minutes fall. This loop is the engineering the client is paying for.</li>
+        <li><b>Measure the cost curve.</b> Human-minutes per video-minute per layer per week on one dashboard; the contract&rsquo;s price step-downs are tied to it.</li>
+        <li><b>Ontology management.</b> Versioned verb/noun taxonomies, mapping tables, deprecation rules; never rename silently.</li>
+        <li><b>Gold and audit.</b> Gold clips with expert labels (2%), double annotation (3%), privacy audit (1% of frames) — all sampled by the pipeline, not by hand.</li>
+        <li><b>Delivery.</b> Parquet or JSON with manifests and checksums; LeRobot/RLDS exporters when the client trains with them; batches lag collection by at most two weeks.</li>
+      </ul>
+    </div>
+
+    <div class="pane" data-tab="dgm" hidden>
+      <h3>Example design</h3>
+      <figure class="fig">
+        <svg class="dg" viewBox="0 0 800 150" role="img" aria-label="Egocentric-video pipeline: participants and device kits, capture app, upload with QA and privacy pass, automatic proposals from ASR, VLM and SAM 2, human verification, QA and delivery; a dashed loop retrains the proposal models on verified labels.">
+          <defs><marker id="ar3" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L8 4 L0 8 z"/></marker></defs>
+          <rect x="10" y="30" width="118" height="44" rx="7" class="n"/><text x="69" y="48" text-anchor="middle">Participants</text><text x="69" y="63" text-anchor="middle" class="sm">consent · device kits</text>
+          <rect x="142" y="30" width="118" height="44" rx="7" class="n"/><text x="201" y="48" text-anchor="middle">Capture app</text><text x="201" y="63" text-anchor="middle" class="sm">task prompts · upload</text>
+          <rect x="274" y="30" width="118" height="44" rx="7" class="n"/><text x="333" y="48" text-anchor="middle">QA + privacy</text><text x="333" y="63" text-anchor="middle" class="sm">blur · sync · catalogue</text>
+          <rect x="406" y="30" width="118" height="44" rx="7" class="k"/><text x="465" y="48" text-anchor="middle" class="acc">Auto-proposals</text><text x="465" y="63" text-anchor="middle" class="sm">ASR · VLM · SAM 2</text>
+          <rect x="538" y="30" width="118" height="44" rx="7" class="n"/><text x="597" y="48" text-anchor="middle">Human verify</text><text x="597" y="63" text-anchor="middle" class="sm">accept · correct</text>
+          <rect x="670" y="30" width="118" height="44" rx="7" class="n"/><text x="729" y="48" text-anchor="middle">QA + deliver</text><text x="729" y="63" text-anchor="middle" class="sm">gold · IoU · parquet</text>
+          <line x1="128" y1="52" x2="140" y2="52" class="a" marker-end="url(#ar3)"/>
+          <line x1="260" y1="52" x2="272" y2="52" class="a" marker-end="url(#ar3)"/>
+          <line x1="392" y1="52" x2="404" y2="52" class="a" marker-end="url(#ar3)"/>
+          <line x1="524" y1="52" x2="536" y2="52" class="a" marker-end="url(#ar3)"/>
+          <line x1="656" y1="52" x2="668" y2="52" class="a" marker-end="url(#ar3)"/>
+          <path d="M597 74 V104 H465 V76" class="loop" marker-end="url(#ar3)"/>
+          <text x="531" y="122" text-anchor="middle" class="sm">verified labels fine-tune the proposal models weekly</text>
+          <text x="465" y="20" text-anchor="middle" class="sm">where the cost curve bends</text>
+        </svg>
+        <figcaption>Collection on the left is an operations problem; everything from the highlighted node rightwards is the annotation factory. The dashed loop is why the price can step down over the engagement: each week&rsquo;s verified labels make next week&rsquo;s proposals better.</figcaption>
+      </figure>
+      <p><b>Walking the client through it:</b> name the privacy pass early, because it is the step that decides whether the project is legal; then spend the time on the proposal-and-verify loop, because that is the engineering that makes annotation cheap at scale, which is the sentence in their brief.</p>
+    </div>
+
+    <div class="pane" data-tab="price" hidden>
+      <h3>Pricing: how the number is built</h3>
+      <p class="intro">Two units: a collected usable hour, and an annotated hour per label layer. Rates are illustrative, US/EU participants, semi-automatic annotation with verification.</p>
+      <div class="tbl"><table>
+        <thead><tr><th>Collection — per usable hour</th><th>Basis</th><th>Per hour</th></tr></thead>
+        <tbody>
+          <tr><td>Participant pay</td><td>1.2 h recorded per usable hour × $28/h</td><td class="num money">$34</td></tr>
+          <tr><td>Device amortisation &amp; logistics</td><td>fleet, shipping, support, loss</td><td class="num money">$14</td></tr>
+          <tr><td>Upload, QA, privacy processing</td><td>compute + review</td><td class="num money">$18</td></tr>
+          <tr><td>Ops &amp; PM</td><td>12%</td><td class="num money">$8</td></tr>
+          <tr class="total"><td>COGS</td><td></td><td class="num money">$74</td></tr>
+          <tr class="total"><td>Price → gross margin</td><td>$150 per usable hour</td><td class="num money">51%</td></tr>
+        </tbody>
+      </table></div>
+      <div class="tbl"><table>
+        <thead><tr><th>Annotation — per video-hour, per layer</th><th>Basis (semi-auto + verification)</th><th>COGS</th><th>Price</th></tr></thead>
+        <tbody>
+          <tr><td>Narration (verb/noun)</td><td>proposals $4 + 1.5 h verify × $22/h</td><td class="num money">$37</td><td class="num money">$90</td></tr>
+          <tr><td>Temporal segments</td><td>proposals $5 + 2.0 h × $22/h</td><td class="num money">$49</td><td class="num money">$110</td></tr>
+          <tr><td>Object tracks (SAM 2 + verify)</td><td>compute $10 + 2.5 h × $22/h</td><td class="num money">$65</td><td class="num money">$150</td></tr>
+          <tr><td>Hand–object interaction</td><td>compute $8 + 3.0 h × $24/h</td><td class="num money">$80</td><td class="num money">$180</td></tr>
+          <tr><td>Dense manual (no automation, the baseline)</td><td>10–30 h × $22/h</td><td class="num money">$220–660</td><td class="num money">$400–900</td></tr>
+        </tbody>
+      </table></div>
+      <h4>Price-list shape</h4>
+      <div class="tbl"><table>
+        <thead><tr><th>Offer</th><th>Illustrative price</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>Pilot</td><td class="num money">$25k fixed · 50 h + 3 layers</td><td>Proves the capture spec, the privacy pass and the first acceptance-rate curve.</td></tr>
+          <tr><td>Collection</td><td class="num money">$120–200 per usable hour</td><td>By device and geography; studio capture priced separately.</td></tr>
+          <tr><td>Annotation layers</td><td class="num money">$80–250 per layer-hour</td><td>Step-down of 10% per quarter once acceptance rate passes 70%.</td></tr>
+          <tr><td>Privacy processing</td><td class="num money">$12 per hour</td><td>Faces, plates, screens, audio PII; audited.</td></tr>
+          <tr><td>Pipeline &amp; tooling setup</td><td class="num money">$40–80k fixed</td><td>Capture app, proposal models, verification tool, exporters.</td></tr>
+          <tr><td>Storage &amp; transfer</td><td class="num money">pass-through</td><td>Client bucket; no margin on egress.</td></tr>
+        </tbody>
+      </table></div>
+      <div class="talk"><b>Say it to the client</b>I price collection per usable hour and annotation per layer per hour, and I put a price step-down in the contract that triggers when our proposal acceptance rate crosses 70% — because that is the proof the automation is real, and you should share in it.</div>
+    </div>
+  </section>
+
+  <!-- ===================== CODING ENVIRONMENTS ===================== -->
+  <section class="panel" id="p-code" style="--t: var(--t-code)" aria-label="Coding environments" hidden>
+    <div class="phead">
+      <h2 class="ptitle">Coding environments: Terminal-Bench and SWE-bench style tasks</h2>
+      <p class="pdesc">A Docker image with a real-world fault baked in, an instruction, hidden tests that prove the fault is fixed, and an oracle that proves it can be. The engineering is in making tasks <em>valid</em> — deterministic, ungameable, solvable — and keeping them that way.</p>
+      <div class="strip">
+        <div><div class="k">unit of sale</div><div class="v">validated task: image + tests + oracle + calibration</div></div>
+        <div><div class="k">headline metric</div><div class="v">oracle passes · unsolved fails · 5/5 runs · reference-agent pass@1 in band</div></div>
+        <div><div class="k">illustrative price</div><div class="v money">$3,000–4,500 per hard terminal task · $1,800–4,000 per repo task</div></div>
+        <div><div class="k">biggest risk</div><div class="v risk">tests that can be gamed, and flaky tasks that turn the benchmark into noise</div></div>
+      </div>
+    </div>
+    <div class="tabs" role="tablist">
+      <button class="tab active" role="tab" aria-selected="true" data-tab="disc">Discovery</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="met">Metrics</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="nfr">Non-functional</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="data">Dataset example</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="sys">System design</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="dgm">Example design</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="price">Pricing</button>
+    </div>
+
+    <div class="pane" data-tab="disc">
+      <h3>Functional requirements: the discovery conversation</h3>
+      <p class="intro">The first answer splits the product in two; the test contract (06) is where most engagements go wrong.</p>
+      <ol class="qa">
+        <li><span class="num">01</span><div><b>Evaluation or training?</b><span>An eval set is held out, secret, calibrated, a few hundred tasks. RL training environments are thousands of instances with a verifiable reward, often templated variants, cheaper per task. Different factories, different prices.</span></div></li>
+        <li><span class="num">02</span><div><b>Archetypes and mix.</b><span>Terminal/devops faults (permissions, version drift, missing config, race conditions, networking, disk), repo-level bug fixes (issue → patch), feature work, migrations, security hardening. Which stacks, OS, package managers.</span></div></li>
+        <li><span class="num">03</span><div><b>Source of realism.</b><span>Forks of licence-compatible open-source repos, synthetic repos, or the client&rsquo;s own code under NDA? Seeded from real post-mortems? Realism is what separates a task from a puzzle.</span></div></li>
+        <li><span class="num">04</span><div><b>Difficulty target and how it is measured.</b><span>A reference agent harness (models, scaffold, budget) and a target pass@1 band, e.g. 10–40%; expert blind-solve time 15 min to 4 h; difficulty stamped &ldquo;as of&rdquo; a date.</span></div></li>
+        <li><span class="num">05</span><div><b>Harness and format.</b><span>Terminal-Bench/Harbor task layout, SWE-bench instance format (FAIL_TO_PASS / PASS_TO_PASS), or the client&rsquo;s own; how the agent receives the task; timeouts and resource caps.</span></div></li>
+        <li><span class="num">06</span><div><b>The test contract.</b><span>Hidden tests, behaviour-based probes rather than diff-matching, mounted after the agent finishes, immutable, deterministic. &ldquo;Solved&rdquo; means every FAIL_TO_PASS passes and every PASS_TO_PASS still passes. Flakiness tolerance in writing.</span></div></li>
+        <li><span class="num">07</span><div><b>The oracle.</b><span>A reference solution must exist and pass; who reviews it; solution length and steps as a difficulty proxy. No oracle, no task.</span></div></li>
+        <li><span class="num">08</span><div><b>Determinism and isolation.</b><span>Pinned images by digest, no network at solve time (or an allowlist), seeds, a sandbox runtime for untrusted agent code (gVisor, Firecracker).</span></div></li>
+        <li><span class="num">09</span><div><b>Secrecy and contamination.</b><span>Private registry, no public mention, nothing derived from public issues after the cutoff, dedupe against public Terminal-Bench and SWE-bench tasks, canary strings to detect leaks.</span></div></li>
+        <li><span class="num">10</span><div><b>Acceptance and maintenance.</b><span>The client runs an acceptance pass; a rejection taxonomy (unsolvable, ambiguous, flaky, trivial, gameable); nightly re-validation CI for the life of the contract, because base images and package mirrors move.</span></div></li>
+      </ol>
+      <div class="talk"><b>Say it to the client</b>A task is only a task when three things are true at once: the oracle passes, the unsolved state fails, and both hold five runs out of five. Everything else is a draft.</div>
+    </div>
+
+    <div class="pane" data-tab="met" hidden>
+      <h3>Metrics you commit to</h3>
+      <div class="tbl"><table>
+        <thead><tr><th>Metric</th><th>What it measures</th><th>Target</th><th>Why the client cares</th></tr></thead>
+        <tbody>
+          <tr><td><b>Validity triad</b></td><td>Oracle passes; unsolved state fails; repeated five times.</td><td class="tgt">100% · 100% · flakiness &lt; 1%</td><td>An invalid task is noise in the benchmark.</td></tr>
+          <tr><td><b>Difficulty band</b></td><td>pass@1 / pass@5 of the reference agents, per tier.</td><td class="tgt">e.g. 10–40% pass@1; distribution across buckets</td><td>It is the product.</td></tr>
+          <tr><td><b>Human solvability</b></td><td>Expert blind solve without hidden knowledge; time logged.</td><td class="tgt">100% solved</td><td>Guards against impossible tasks.</td></tr>
+          <tr><td><b>Gameability</b></td><td>Tasks solvable by editing or deleting tests; tampering detected in runs.</td><td class="tgt">0</td><td>The integrity of the number.</td></tr>
+          <tr><td><b>Diversity</b></td><td>Coverage over archetypes × stacks; near-duplicate rate.</td><td class="tgt">per plan · dup &lt; 5%</td><td>Breadth of what is measured.</td></tr>
+          <tr><td><b>Contamination</b></td><td>Overlap with public benchmarks and post-cutoff public issues.</td><td class="tgt">0</td><td>Eval validity.</td></tr>
+          <tr><td><b>Acceptance rate</b></td><td>Client-accepted ÷ delivered.</td><td class="tgt">≥ 90%</td><td>The SLA.</td></tr>
+          <tr><td><b>Build and run cost</b></td><td>Image build time, size, CPU-minutes per evaluation.</td><td class="tgt">&lt; 10 min · &lt; 2 GB · &lt; 15 CPU-min</td><td>What every eval run costs them.</td></tr>
+          <tr><td><b>Reviewer agreement on tiers</b></td><td>κ between reviewers on difficulty labels.</td><td class="tgt">≥ 0.70</td><td>Consistent tiering and pricing.</td></tr>
+        </tbody>
+      </table></div>
+      <div class="talk"><b>Say it to the client</b>We report difficulty as a distribution of reference-agent pass rates on a date, never as an adjective — and we re-run it before each delivery, because the agents improve.</div>
+    </div>
+
+    <div class="pane" data-tab="nfr" hidden>
+      <h3>Non-functional requirements</h3>
+      <dl class="nfr">
+        <div><dt>Reproducibility</dt><dd>Base images pinned by digest, dependencies vendored, offline-capable, archived in a private registry with checksums.</dd></div>
+        <div><dt>Isolation</dt><dd>The agent runs untrusted code: gVisor or Firecracker, no outbound network, CPU/memory/disk caps, hard time limits.</dd></div>
+        <div><dt>Portability</dt><dd>Harbor/Terminal-Bench task spec, SWE-bench harness; Docker, and Apptainer if the client evaluates on HPC.</dd></div>
+        <div><dt>Confidentiality</dt><dd>Private repos and registry; licence-compatible forks only; client code never leaves the agreed boundary.</dd></div>
+        <div><dt>Maintainability</dt><dd>Nightly re-validation CI across all tasks; semver per task; changelog; a task that fails validation is quarantined, not silently kept.</dd></div>
+        <div><dt>Cost</dt><dd>Image size and CPU-minutes per eval are budgeted per task; parallelism tested.</dd></div>
+        <div><dt>Documentation</dt><dd><code>task.yaml</code> carries difficulty, tags, expert time, timeouts; a solution write-up for reviewers only.</dd></div>
+        <div><dt>Secrecy</dt><dd>No public references; canary strings in instructions and files so a leak is detectable by search.</dd></div>
+      </dl>
+    </div>
+
+    <div class="pane" data-tab="data" hidden>
+      <h3>What one task looks like</h3>
+      <p class="intro">A Terminal-Bench-style task directory, then a SWE-bench-style instance. The tests probe behaviour from outside; the oracle never ships to the agent.</p>
+<pre>tasks/cron-backup-0042/
+├── task.yaml               <span class="c"># instruction, difficulty, tags, timeouts, expert_time, canary</span>
+├── Dockerfile              <span class="c"># ubuntu:22.04@sha256:… with the fault baked in</span>
+├── solution/solve.sh       <span class="c"># the oracle — hidden from the agent</span>
+├── tests/test_outputs.py   <span class="c"># behaviour checks, mounted after the agent finishes</span>
+└── run-tests.sh
+
+<span class="c"># task.yaml</span>
+instruction: |
+  The nightly backup job stopped writing to /var/backups after last week's OS upgrade.
+  Make backups run again on the existing schedule. Do not change the cron schedule itself.
+difficulty: hard
+tags: [permissions, cron, version-drift, logrotate]
+max_agent_timeout_sec: 1800
+expert_time_estimate_min: 45
+flakiness_runs: 5
+canary: "tb-canary-7f3a9c2e"
+
+<span class="c"># tests/test_outputs.py (excerpt) — probes behaviour, not the diff</span>
+def test_backup_runs_on_schedule():
+    out = run("run-parts --test /etc/cron.daily"); assert "backup" in out
+    run("run-parts /etc/cron.daily")
+    newest = latest_file("/var/backups"); assert newest and age_seconds(newest) &lt; 120
+def test_schedule_unchanged():
+    assert sha256("/etc/cron.d/backup") == ORIGINAL_SHA
+def test_no_world_writable_backups():
+    assert mode("/var/backups") &amp; 0o002 == 0</pre>
+<pre>{"instance_id": "acme__ledger-1187", "repo": "acme/ledger", "base_commit": "9c1f0e2", "version": "2.4",
+ "problem_statement": "Rounding error in Ledger.total() when mixing currencies ... (issue text)",
+ "FAIL_TO_PASS": ["tests/test_ledger.py::test_total_mixed_currency_rounding"],
+ "PASS_TO_PASS": ["tests/test_ledger.py::test_total_single_currency", "tests/test_ledger.py::test_empty"],
+ "patch": "&lt;oracle diff, hidden&gt;", "test_patch": "&lt;diff adding the failing test&gt;",
+ "difficulty": "15 min – 1 h", "environment_image": "registry.internal/swe/acme-ledger:2.4@sha256:…",
+ "calibration": {"frontier_a": {"pass_at_1": 0.2, "n": 5}, "frontier_b": {"pass_at_1": 0.4, "n": 5}}, "hard_as_of": "2026-10-01"}</pre>
+      <p class="lab">Runnable versions with the validators: <a href="https://github.com/jawwada/ai-engineer-job-playbook/tree/main/labs/dataset-examples/10-terminal-task">10-terminal-task</a> and <a href="https://github.com/jawwada/ai-engineer-job-playbook/tree/main/labs/dataset-examples/11-swe-task">11-swe-task</a> in the playbook repo.</p>
+      <h4>Fields worth defending in the schema review</h4>
+      <p><code>flakiness_runs</code> and the validity triad belong in the task metadata, not in a spreadsheet. <code>canary</code> is how you prove a leak. <code>calibration</code> keeps the raw pass counts so the client can re-tier with their own models.</p>
+    </div>
+
+    <div class="pane" data-tab="sys" hidden>
+      <h3>System design considerations</h3>
+      <ul class="cons">
+        <li><b>Authoring workflow.</b> Scenario from a real post-mortem → Dockerfile that bakes the broken state → oracle → behaviour tests → self-validation CI (oracle passes, unsolved fails, five runs) → blind human solve → agent gauntlet (K models × N trials) → difficulty tier → registry.</li>
+        <li><b>Tests that cannot be gamed.</b> Probe from outside (run the cron job, check permissions, hit the port) instead of diffing files; mount the tests after the agent finishes; keep the test directory immutable; detect test edits; plant canaries.</li>
+        <li><b>Races that reproduce.</b> A race condition is a task only if the fault reproduces every run: controlled scheduling, barriers, stress tools, fault injection by seed. Otherwise it is a flaky test with a story.</li>
+        <li><b>Realism.</b> Multiple interacting faults, red herrings, logs that mislead — the way production actually fails. Single-fault tasks are solved by pattern matching.</li>
+        <li><b>Infrastructure.</b> A build farm with an image cache, a private registry with digests, a sandboxed parallel eval runner, cost tracking per run.</li>
+        <li><b>Harness adapters.</b> One task source, exporters for Terminal-Bench/Harbor, SWE-bench and the client&rsquo;s harness; never maintain three copies of a task.</li>
+        <li><b>Calibration drift.</b> Re-run the gauntlet before delivery; stamp <code>hard_as_of</code>; nightly validation for the contract&rsquo;s life; quarantine tasks that stop reproducing.</li>
+      </ul>
+    </div>
+
+    <div class="pane" data-tab="dgm" hidden>
+      <h3>Example design</h3>
+      <figure class="fig">
+        <svg class="dg" viewBox="0 0 800 150" role="img" aria-label="Coding-task pipeline: scenario from a post-mortem, Docker image with the broken state, oracle and hidden tests, CI validation of the validity triad over five runs, blind human solve and agent gauntlet, private registry with task metadata; a dashed loop returns failed validation to the oracle and tests.">
+          <defs><marker id="ar4" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L8 4 L0 8 z"/></marker></defs>
+          <rect x="10" y="30" width="118" height="44" rx="7" class="n"/><text x="69" y="48" text-anchor="middle">Scenario</text><text x="69" y="63" text-anchor="middle" class="sm">from a post-mortem</text>
+          <rect x="142" y="30" width="118" height="44" rx="7" class="n"/><text x="201" y="48" text-anchor="middle">Docker image</text><text x="201" y="63" text-anchor="middle" class="sm">fault baked in</text>
+          <rect x="274" y="30" width="118" height="44" rx="7" class="n"/><text x="333" y="48" text-anchor="middle">Oracle + tests</text><text x="333" y="63" text-anchor="middle" class="sm">behaviour probes</text>
+          <rect x="406" y="30" width="118" height="44" rx="7" class="k"/><text x="465" y="48" text-anchor="middle" class="acc">CI validation</text><text x="465" y="63" text-anchor="middle" class="sm">3 checks × 5 runs</text>
+          <rect x="538" y="30" width="118" height="44" rx="7" class="n"/><text x="597" y="48" text-anchor="middle">Blind solve</text><text x="597" y="63" text-anchor="middle" class="sm">+ agent gauntlet</text>
+          <rect x="670" y="30" width="118" height="44" rx="7" class="n"/><text x="729" y="48" text-anchor="middle">Registry</text><text x="729" y="63" text-anchor="middle" class="sm">digest · task.yaml</text>
+          <line x1="128" y1="52" x2="140" y2="52" class="a" marker-end="url(#ar4)"/>
+          <line x1="260" y1="52" x2="272" y2="52" class="a" marker-end="url(#ar4)"/>
+          <line x1="392" y1="52" x2="404" y2="52" class="a" marker-end="url(#ar4)"/>
+          <line x1="524" y1="52" x2="536" y2="52" class="a" marker-end="url(#ar4)"/>
+          <line x1="656" y1="52" x2="668" y2="52" class="a" marker-end="url(#ar4)"/>
+          <path d="M465 74 V104 H333 V76" class="loop" marker-end="url(#ar4)"/>
+          <text x="399" y="122" text-anchor="middle" class="sm">oracle fails, unsolved passes, or flaky → fix before anyone solves it</text>
+          <text x="729" y="20" text-anchor="middle" class="sm">nightly re-validation</text>
+          <text x="465" y="20" text-anchor="middle" class="sm">the validity gate</text>
+        </svg>
+        <figcaption>The validity gate sits before the expensive human and agent runs, so nobody calibrates an invalid task. The registry re-runs the gate nightly because base images and package mirrors move under a task.</figcaption>
+      </figure>
+      <p><b>Walking the client through it:</b> lead with the test contract (behaviour probes, mounted afterwards, immutable), because that is what makes the pass rate mean something; then the triad; then the gauntlet as the source of the difficulty label they will quote.</p>
+    </div>
+
+    <div class="pane" data-tab="price" hidden>
+      <h3>Pricing: how the number is built</h3>
+      <p class="intro">Per validated hard terminal/devops task at a 70% authoring yield. Engineer rates are loaded and illustrative.</p>
+      <div class="tbl"><table>
+        <thead><tr><th>Line item</th><th>Basis</th><th>Per attempt</th><th>Per accepted (yield 70%)</th></tr></thead>
+        <tbody>
+          <tr><td>Authoring: scenario, image, oracle, tests</td><td>10 h × $110/h</td><td class="num money">$1,100</td><td class="num money">$1,571</td></tr>
+          <tr><td>Blind review solve</td><td>2 h × $110/h</td><td class="num money">$220</td><td class="num money">$314</td></tr>
+          <tr><td>Agent gauntlet compute</td><td>3 models × 5 trials</td><td class="num money">$40</td><td class="num money">$57</td></tr>
+          <tr><td>CI, registry, infrastructure</td><td>per task</td><td class="num money">$30</td><td class="num money">$43</td></tr>
+          <tr class="total"><td>Engineering + compute</td><td></td><td class="num money">$1,390</td><td class="num money">$1,986</td></tr>
+          <tr><td>PM, QA, documentation</td><td>15%</td><td></td><td class="num money">$298</td></tr>
+          <tr class="total"><td>COGS per accepted task</td><td></td><td></td><td class="num money">≈ $2,280</td></tr>
+          <tr class="total"><td>Price → gross margin</td><td>$3,500</td><td></td><td class="num money">35%</td></tr>
+          <tr><td>At 85% yield</td><td>mature authors, templates</td><td></td><td class="num money">COGS ≈ $1,900 → GM 46%</td></tr>
+        </tbody>
+      </table></div>
+      <h4>Price-list shape</h4>
+      <div class="tbl"><table>
+        <thead><tr><th>Offer</th><th>Illustrative price</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>Pilot</td><td class="num money">$90k fixed · 20 tasks</td><td>Harness adapters, first calibration run, acceptance criteria agreed on real tasks.</td></tr>
+          <tr><td>Terminal/devops, hard</td><td class="num money">$3,000–4,500</td><td>Per validated task.</td></tr>
+          <tr><td>Very hard (multi-fault, races)</td><td class="num money">$4,500–6,000</td><td>Deterministic reproduction is most of the cost.</td></tr>
+          <tr><td>SWE-bench-style repository task</td><td class="num money">$1,800–4,000</td><td>By repository complexity and test-suite health.</td></tr>
+          <tr><td>RL training instances (templated variants)</td><td class="num money">$300–800</td><td>Same fault family, varied parameters; validated by CI, sampled by humans.</td></tr>
+          <tr><td>Benchmark-grade</td><td class="num money">+30%</td><td>Three reviewers, canaries, secrecy controls, no reuse.</td></tr>
+          <tr><td>Nightly re-validation &amp; maintenance</td><td class="num money">$150 per task per year</td><td>Quarantine and fix drifted tasks.</td></tr>
+          <tr><td>Hosted evaluation runs</td><td class="num money">compute pass-through + 20%</td><td>Sandboxed parallel runner.</td></tr>
+        </tbody>
+      </table></div>
+      <div class="talk"><b>Say it to the client</b>You are not buying Dockerfiles. You are buying tasks that are valid five runs out of five, that a human solved blind, and that we re-validate every night — because a benchmark that drifts is worse than no benchmark.</div>
+    </div>
+  </section>
+
+  <!-- ===================== AGENTIC GYMS ===================== -->
+  <section class="panel" id="p-gym" style="--t: var(--t-gym)" aria-label="Agentic gyms" hidden>
+    <div class="phead">
+      <h2 class="ptitle">Agentic gyms: a whole environment, τ-bench style</h2>
+      <p class="pdesc">The deliverable is an environment: a policy document, mocked tools behind MCP servers, a seeded database, a user simulator, a task bank and a grader. Four of those can be wrong on their own, and the agent gets blamed for all of them — so each is measured before any model is.</p>
+      <div class="strip">
+        <div><div class="k">unit of sale</div><div class="v">environment build (milestones) + task instances + maintenance</div></div>
+        <div><div class="k">headline metric</div><div class="v">task validity 100% · grader P/R ≥ 95% · pass^k reported</div></div>
+        <div><div class="k">illustrative price</div><div class="v money">$180–350k per domain · $300–1,200 per extra task</div></div>
+        <div><div class="k">biggest risk</div><div class="v risk">a simulator or grader that fails more often than the agent</div></div>
+      </div>
+    </div>
+    <div class="tabs" role="tablist">
+      <button class="tab active" role="tab" aria-selected="true" data-tab="disc">Discovery</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="met">Metrics</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="nfr">Non-functional</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="data">Dataset example</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="sys">System design</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="dgm">Example design</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="price">Pricing</button>
+    </div>
+
+    <div class="pane" data-tab="disc">
+      <h3>Functional requirements: the discovery conversation</h3>
+      <p class="intro">Eval and training need different environments; the policy document is the spec for everything else.</p>
+      <ol class="qa">
+        <li><span class="num">01</span><div><b>Evaluate or train?</b><span>Evaluation: a frozen task set, pass^k, secrecy. Training: a reset/step API, thousands of parallel episodes, reward design, anti-exploit controls, a curriculum. Both: one versioned environment with a frozen eval split.</span></div></li>
+        <li><span class="num">02</span><div><b>Domain and the policy source.</b><span>Customer support (airline, retail, telecom), IT operations, finance ops, healthcare scheduling. Real SOPs sanitised, or authored by us? Every tool, task and grader rule is derived from the policy document — get it first.</span></div></li>
+        <li><span class="num">03</span><div><b>Tools and state.</b><span>Which APIs, with schemas from the real systems where possible; roughly a dozen tools per domain is the τ-bench scale; the entities in the seeded database; realistic failure modes — errors, pagination, rate limits, latency.</span></div></li>
+        <li><span class="num">04</span><div><b>The user simulator.</b><span>Persona, goal, hidden information, emotion, cooperativeness; scripted or an LLM with its own policy; dual-control (the user also acts in the environment, as in τ²-bench&rsquo;s telecom domain)?</span></div></li>
+        <li><span class="num">05</span><div><b>Tasks.</b><span>How many per domain (τ-bench ships on the order of 50 airline and 115 retail); difficulty levers — policy conflicts, ambiguity, multi-entity, long horizons, red herrings; each task carries an expected end state, forbidden actions and an output rubric.</span></div></li>
+        <li><span class="num">06</span><div><b>The grader.</b><span>State diff (deterministic) + action constraints + a rubric judge for the text; partial credit only if asked; what a pass is; who audits the grader and how often.</span></div></li>
+        <li><span class="num">07</span><div><b>Determinism and versioning.</b><span>Seeds, a pinned simulator model and prompt (model drift silently changes difficulty), environment semver, a frozen eval split, nightly validation with reference agents.</span></div></li>
+        <li><span class="num">08</span><div><b>Integration.</b><span>MCP servers (stdio or HTTP), tool schemas for the model APIs in use, a Gym-like reset/step interface, the client&rsquo;s RL framework, a trajectory export format.</span></div></li>
+        <li><span class="num">09</span><div><b>Scale and cost.</b><span>Episodes per hour, simulator cost per episode, parallelism, reset time. Training economics live here.</span></div></li>
+        <li><span class="num">10</span><div><b>Acceptance and maintenance.</b><span>Client runs reference agents; task validity by a human following the SOP; grader audit; simulator-induced failure rate below 5%; a retainer for model drift and schema changes.</span></div></li>
+      </ol>
+      <div class="talk"><b>Say it to the client</b>An environment has four parts that can each be wrong — policy, tools, simulator, grader — and the agent gets blamed for all of them. I measure each part separately before any model is measured.</div>
+    </div>
+
+    <div class="pane" data-tab="met" hidden>
+      <h3>Metrics you commit to</h3>
+      <div class="tbl"><table>
+        <thead><tr><th>Metric</th><th>What it measures</th><th>Target</th><th>Why the client cares</th></tr></thead>
+        <tbody>
+          <tr><td><b>Task validity</b></td><td>A human following the SOP (or the oracle trajectory) succeeds.</td><td class="tgt">100%</td><td>The floor.</td></tr>
+          <tr><td><b>Grader precision / recall</b></td><td>Against human-audited episodes.</td><td class="tgt">≥ 95% / ≥ 95%</td><td>The reward is only as good as this.</td></tr>
+          <tr><td><b>Simulator fidelity</b></td><td>Human realism rating; hidden-info leakage; goal consistency across runs.</td><td class="tgt">≥ 4/5 · leakage 0 · ≥ 95%</td><td>A leaky simulator makes tasks trivial.</td></tr>
+          <tr><td><b>Simulator-induced failures</b></td><td>Failures caused by the simulator rather than the agent.</td><td class="tgt">&lt; 5%</td><td>Fairness of the number.</td></tr>
+          <tr><td><b>pass@1 and pass^k</b></td><td>Reference agents per tier; pass^k is the chance all k of k trials succeed.</td><td class="tgt">report k = 1, 2, 4, 8</td><td>Reliability, not just ability.</td></tr>
+          <tr><td><b>Policy-violation rate</b></td><td>Forbidden actions and policy breaches per episode.</td><td class="tgt">reported per task</td><td>What they care about in production.</td></tr>
+          <tr><td><b>Determinism</b></td><td>Pass-rate variance across seeds for a fixed agent.</td><td class="tgt">&lt; 2 points</td><td>Reproducibility.</td></tr>
+          <tr><td><b>Throughput and cost</b></td><td>Episodes per hour per core; cost per episode.</td><td class="tgt">e.g. &gt; 500/h · &lt; $0.30</td><td>RL feasibility.</td></tr>
+          <tr><td><b>Reward-hacking audit</b></td><td>Episodes rewarded with the goal unmet.</td><td class="tgt">0 in the audit sample</td><td>Training integrity.</td></tr>
+          <tr><td><b>Coverage</b></td><td>Tasks per policy clause; entity variety.</td><td class="tgt">every clause ≥ 3 tasks</td><td>Breadth.</td></tr>
+        </tbody>
+      </table></div>
+      <div class="talk"><b>Say it to the client</b>pass@1 tells you whether an agent <em>can</em> do the task; pass^k tells you whether you can <em>deploy</em> it. We report both, and we report the simulator&rsquo;s own failure rate next to them.</div>
+    </div>
+
+    <div class="pane" data-tab="nfr" hidden>
+      <h3>Non-functional requirements</h3>
+      <dl class="nfr">
+        <div><dt>Determinism</dt><dd>Seeds everywhere; the simulator&rsquo;s model and prompt pinned and versioned; environment semver; a changelog.</dd></div>
+        <div><dt>Scalability</dt><dd>Thousands of parallel episodes; stateless mocks with per-episode state; reset under a second from a snapshot.</dd></div>
+        <div><dt>Isolation</dt><dd>No real external calls, ever; sandboxed; no network from the agent&rsquo;s process.</dd></div>
+        <div><dt>Versioning</dt><dd>Frozen eval split; migration notes when schemas change; old versions kept runnable.</dd></div>
+        <div><dt>Observability</dt><dd>Every episode is a trace with agent, tool, simulator and grader spans; replay from the store. The trace is also the training record.</dd></div>
+        <div><dt>Confidentiality</dt><dd>Sanitised policies, synthetic PII, private registry; the client&rsquo;s SOPs never appear in prompts to third parties without consent.</dd></div>
+        <div><dt>Portability</dt><dd>Gym-like API, MCP for tools, Docker; Python first.</dd></div>
+        <div><dt>Cost control</dt><dd>Simulator cost per episode budgeted; responses cached where determinism allows.</dd></div>
+        <div><dt>Maintainability</dt><dd>Unit tests for every tool mock; schema evolution rules; nightly validation.</dd></div>
+        <div><dt>Documentation</dt><dd>Policy document, tool specs, task-authoring guide, grader spec, simulator spec.</dd></div>
+      </dl>
+    </div>
+
+    <div class="pane" data-tab="data" hidden>
+      <h3>What one task and one tool look like</h3>
+      <p class="intro">A task instance in the airline domain, then the MCP schema of one mocked tool with its injected failure modes.</p>
+<pre>{"task_id": "airline_0417", "domain": "airline", "env_version": "2.3.0", "difficulty": "medium",
+ "user_sim": {"persona": "Mia Chen, user_id mia_chen_4421, frequent flyer, polite but hurried",
+              "goal": "move the return flight on reservation R7K2PQ to the next day",
+              "constraints": ["will not pay more than $150 in change fees", "prefers a window seat if asked"],
+              "hidden": ["loyalty tier: gold — reveal only if asked"], "behaviour": "cooperative"},
+ "initial_state": "db_snapshot_v12", "policy": "airline_policy_v3.md#4.2",
+ "expected_actions": [{"tool": "get_reservation_details", "args": {"reservation_id": "R7K2PQ"}},
+                      {"tool": "update_reservation_flights", "args": {"reservation_id": "R7K2PQ",
+                        "flights": ["HAT045-2026-11-03"], "payment_id": "card_8812"}}],
+ "expected_end_state": {"reservations.R7K2PQ.flights[1].date": "2026-11-03",
+                        "payments.card_8812.charges[-1].amount": 120.0},
+ "forbidden_actions": [{"tool": "cancel_reservation"}],
+ "output_rubric": ["states the change fee before applying it", "does not promise a refund outside policy §4.2"],
+ "reference": {"n_trials": 8, "successes": 6, "pass_hat_k": {"1": 0.75, "2": 0.536, "4": 0.214, "8": 0.0}}}</pre>
+<pre>{"name": "update_reservation_flights",
+ "description": "Change the flights on an existing reservation. Change fees apply per policy §4.2; the fee must be stated to the user before calling.",
+ "inputSchema": {"type": "object",
+   "properties": {"reservation_id": {"type": "string"}, "flights": {"type": "array", "items": {"type": "string"}},
+                  "payment_id": {"type": "string"}},
+   "required": ["reservation_id", "flights", "payment_id"]},
+ "mock": {"backed_by": "sqlite:episode.db", "errors": {"RESERVATION_NOT_FOUND": 0.02, "PAYMENT_DECLINED": 0.05},
+          "latency_ms": [120, 900], "seeded": true}}</pre>
+      <p class="lab">Runnable gym that replays trajectories against the policy, database and tools and prints pass^k: <a href="https://github.com/jawwada/ai-engineer-job-playbook/tree/main/labs/dataset-examples/12-agentic-gym">labs/dataset-examples/12-agentic-gym</a>.</p>
+      <h4>Fields worth defending in the schema review</h4>
+      <p><code>expected_end_state</code> is what the deterministic grader diffs — it is the ground truth, the rubric is secondary. <code>hidden</code> on the simulator is what a leakage audit checks. <code>pass_hat_k</code> with the raw trial counts is the reliability number the client will quote.</p>
+    </div>
+
+    <div class="pane" data-tab="sys" hidden>
+      <h3>System design considerations</h3>
+      <ul class="cons">
+        <li><b>Architecture.</b> A runner drives the episode loop between the agent under test, the user simulator and a tool gateway of MCP mocks backed by a per-episode database snapshot; a grader reads the end state, the action trace and the transcript; every episode is stored as a trace.</li>
+        <li><b>Task authoring.</b> Policy clause → scenario → initial state → user instruction → expected end state and forbidden actions. Subject-matter experts write, engineers encode, an oracle agent validates each task before it enters the bank.</li>
+        <li><b>Mock fidelity.</b> Schemas from the real APIs, realistic errors, pagination, rate limits and latency, with faults injected by seed so a run is reproducible.</li>
+        <li><b>Reward design.</b> Binary success on the end state plus penalties for forbidden actions; partial credit only when the client asks; audit sampled episodes for reward hacking — simulator jailbreaks and shortcuts that satisfy the diff without serving the user.</li>
+        <li><b>Simulator robustness.</b> The simulator follows its own policy, detects manipulation by the agent, has its model and prompt pinned, and is evaluated separately with human realism ratings before any agent is scored.</li>
+        <li><b>RL interface.</b> <code>reset(seed)</code> returns an observation; <code>step(action)</code> returns observation, reward, done and info; batched; curriculum by difficulty; episode caps.</li>
+        <li><b>Versioning and drift.</b> Environment semver; a frozen eval split; nightly validation runs with reference agents; a changelog that explains every pass-rate shift.</li>
+        <li><b>Observability.</b> Agent, tool, simulator and grader spans in one trace per episode; replay from the store; the same trace feeds the training set when the client trains.</li>
+      </ul>
+    </div>
+
+    <div class="pane" data-tab="dgm" hidden>
+      <h3>Example design</h3>
+      <figure class="fig">
+        <svg class="dg" viewBox="0 0 800 250" role="img" aria-label="Agentic gym architecture: a task bank and policy document feed a runner; the runner exchanges messages with the agent under test and with a user simulator; the agent calls MCP tool mocks backed by a per-episode database; a grader reads the database diff, the action trace and the transcript and emits reward and pass^k; every episode is stored as a trace.">
+          <defs><marker id="ar5" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L8 4 L0 8 z"/></marker></defs>
+          <rect x="310" y="8" width="180" height="40" rx="7" class="n"/><text x="400" y="25" text-anchor="middle">Task bank + policy doc</text><text x="400" y="39" text-anchor="middle" class="sm">150 tasks · 40 clauses · v2.3.0</text>
+          <rect x="40" y="88" width="170" height="44" rx="7" class="n"/><text x="125" y="106" text-anchor="middle">Agent under test</text><text x="125" y="121" text-anchor="middle" class="sm">any model · tool schemas</text>
+          <rect x="310" y="88" width="180" height="44" rx="7" class="k"/><text x="400" y="106" text-anchor="middle" class="acc">Runner · episode loop</text><text x="400" y="121" text-anchor="middle" class="sm">reset(seed) · step() · caps</text>
+          <rect x="590" y="88" width="170" height="44" rx="7" class="n"/><text x="675" y="106" text-anchor="middle">User simulator</text><text x="675" y="121" text-anchor="middle" class="sm">persona · goal · hidden info</text>
+          <rect x="40" y="168" width="170" height="44" rx="7" class="n"/><text x="125" y="186" text-anchor="middle">MCP tool mocks</text><text x="125" y="201" text-anchor="middle" class="sm">12 tools · errors · latency</text>
+          <rect x="310" y="168" width="180" height="44" rx="7" class="n"/><text x="400" y="186" text-anchor="middle">Per-episode DB</text><text x="400" y="201" text-anchor="middle" class="sm">snapshot · restored on reset</text>
+          <rect x="590" y="168" width="170" height="44" rx="7" class="n"/><text x="675" y="186" text-anchor="middle">Grader</text><text x="675" y="201" text-anchor="middle" class="sm">state diff · actions · rubric</text>
+          <line x1="400" y1="48" x2="400" y2="86" class="a" marker-end="url(#ar5)"/>
+          <line x1="310" y1="104" x2="212" y2="104" class="a" marker-end="url(#ar5)"/>
+          <line x1="210" y1="116" x2="308" y2="116" class="a" marker-end="url(#ar5)"/>
+          <text x="260" y="98" text-anchor="middle" class="sm">observation</text>
+          <text x="260" y="130" text-anchor="middle" class="sm">action / reply</text>
+          <line x1="490" y1="104" x2="588" y2="104" class="a" marker-end="url(#ar5)"/>
+          <line x1="588" y1="116" x2="492" y2="116" class="a" marker-end="url(#ar5)"/>
+          <text x="539" y="98" text-anchor="middle" class="sm">agent reply</text>
+          <text x="539" y="130" text-anchor="middle" class="sm">user turn</text>
+          <line x1="125" y1="132" x2="125" y2="166" class="a" marker-end="url(#ar5)"/>
+          <text x="152" y="153" class="sm">tool calls</text>
+          <line x1="210" y1="190" x2="308" y2="190" class="a" marker-end="url(#ar5)"/>
+          <text x="259" y="184" text-anchor="middle" class="sm">reads / writes</text>
+          <line x1="490" y1="190" x2="588" y2="190" class="a" marker-end="url(#ar5)"/>
+          <text x="539" y="184" text-anchor="middle" class="sm">end-state diff</text>
+          <line x1="675" y1="132" x2="675" y2="166" class="a" marker-end="url(#ar5)"/>
+          <text x="700" y="153" class="sm">transcript</text>
+          <line x1="675" y1="212" x2="675" y2="234" class="loop" marker-end="url(#ar5)"/>
+          <text x="760" y="247" text-anchor="end" class="sm">reward · pass^k · trajectory trace stored</text>
+        </svg>
+        <figcaption>The runner is the only component that talks to everything. Tool calls go through mocks that read and write a database snapshot restored on every reset, so the grader can diff the end state deterministically; the rubric judge only sees the transcript the simulator produced.</figcaption>
+      </figure>
+      <p><b>Walking the client through it:</b> start at the grader, because the reward is what they are buying; then the simulator, because it is the part most likely to be wrong; then the mocks and the snapshot, because determinism is what makes pass^k meaningful; finish at the task bank, because that is what grows after the build.</p>
+    </div>
+
+    <div class="pane" data-tab="price" hidden>
+      <h3>Pricing: how the number is built</h3>
+      <p class="intro">One domain environment — telecom support: 12 tools, 40 policy clauses, 150 validated tasks, a simulator and a grader. Loaded engineer-week $4,800; SME $90/h. Illustrative.</p>
+      <div class="tbl"><table>
+        <thead><tr><th>Work package</th><th>Basis</th><th>Cost</th></tr></thead>
+        <tbody>
+          <tr><td>Discovery &amp; policy encoding</td><td>2 weeks × 2 people</td><td class="num money">$19,200</td></tr>
+          <tr><td>Tool mocks + state model + MCP servers</td><td>4 engineer-weeks</td><td class="num money">$19,200</td></tr>
+          <tr><td>User simulator + its own evaluation</td><td>3 engineer-weeks</td><td class="num money">$14,400</td></tr>
+          <tr><td>Grader + audit tooling</td><td>2 engineer-weeks</td><td class="num money">$9,600</td></tr>
+          <tr><td>Task authoring (150)</td><td>SME 2.5 h × $90 + engineer 1 h × $120, per task</td><td class="num money">$51,750</td></tr>
+          <tr><td>Validation: oracle, human, gauntlet</td><td>2 weeks × 1.5 people</td><td class="num money">$14,400</td></tr>
+          <tr class="total"><td>Build cost</td><td></td><td class="num money">$128,550</td></tr>
+          <tr><td>PM, QA, documentation</td><td>15%</td><td class="num money">$19,300</td></tr>
+          <tr class="total"><td>COGS</td><td></td><td class="num money">≈ $148k</td></tr>
+          <tr class="total"><td>Price → gross margin</td><td>$240k fixed, four milestones</td><td class="num money">38%</td></tr>
+        </tbody>
+      </table></div>
+      <h4>Price-list shape</h4>
+      <div class="tbl"><table>
+        <thead><tr><th>Offer</th><th>Illustrative price</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>Domain environment</td><td class="num money">$180–350k fixed</td><td>Milestones: M1 policy + tools · M2 simulator + grader with audits · M3 tasks validated · M4 acceptance with reference agents.</td></tr>
+          <tr><td>Additional tasks</td><td class="num money">$300–1,200 each</td><td>Templated variants at the low end, bespoke multi-entity tasks at the high end.</td></tr>
+          <tr><td>Dual-control variant</td><td class="num money">+25%</td><td>The user also acts; simulator and grader both get harder.</td></tr>
+          <tr><td>RL hosting</td><td class="num money">compute pass-through + 20%, or per episode</td><td>Parallel runner, reset service, trajectory store.</td></tr>
+          <tr><td>Maintenance retainer</td><td class="num money">$3–6k per month</td><td>Simulator model drift, schema changes, nightly validation, changelog.</td></tr>
+          <tr><td>Graded trajectory datasets</td><td class="num money">$40–120 per episode</td><td>Reference-agent runs, graded and audited, for SFT or preference data.</td></tr>
+          <tr><td>Discovery workshop</td><td class="num money">T&amp;M, 2 weeks</td><td>Policy extraction, tool inventory, task taxonomy — before any fixed price.</td></tr>
+        </tbody>
+      </table></div>
+      <div class="talk"><b>Say it to the client</b>The environment is priced by milestone because each part can be accepted on its own: policy and tools first, then the simulator and grader with their audits, then the tasks. You never pay for tasks graded by a grader you haven&rsquo;t trusted yet.</div>
+    </div>
+  </section>
+
+  <!-- ===================== CONSULTATIVE PLAYBOOK ===================== -->
+  <section class="panel" id="p-consult" style="--t: var(--t-consult)" aria-label="Consultative playbook" hidden>
+    <div class="phead">
+      <h2 class="ptitle">Consultative playbook: how to run the conversation</h2>
+      <p class="pdesc">The interview judges approach, structure, questions, communication and technical decisions. This is the structure that produces all five — the same script for every product line, with the product-specific questions plugged in from the other cards.</p>
+      <div class="strip">
+        <div><div class="k">order of play</div><div class="v">clarify → scope → design → measure → price → risks</div></div>
+        <div><div class="k">first sentence</div><div class="v">the decision this data will change</div></div>
+        <div><div class="k">last sentence</div><div class="v">a pilot that discovers the unknown (yield, agreement, acceptance rate)</div></div>
+        <div><div class="k">never</div><div class="v risk">promise accuracy on a no-ground-truth task, or a price without its unit</div></div>
+      </div>
+    </div>
+    <div class="tabs" role="tablist">
+      <button class="tab active" role="tab" aria-selected="true" data-tab="disc">Discovery script</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="bluf">Structure &amp; BLUF</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="price">Talking price</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="obj">Objections</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="flags">Red flags &amp; checkpoints</button>
+    </div>
+
+    <div class="pane" data-tab="disc">
+      <h3>The seven questions, in order</h3>
+      <p class="intro">Restate what you heard in the client&rsquo;s words before each one. The question behind the question is always &ldquo;what decision does this change?&rdquo;</p>
+      <ol class="qa">
+        <li><span class="num">01</span><div><b>What decision will this data change?</b><span>A model that ships or doesn&rsquo;t, a benchmark that ranks vendors, a policy that trains. Name it back to them. Everything else is sized from this.</span></div></li>
+        <li><span class="num">02</span><div><b>What does done look like, and who signs it?</b><span>A number, a sample review, a downstream eval. If there is no owner who can say &ldquo;accepted&rdquo;, find one before pricing.</span></div></li>
+        <li><span class="num">03</span><div><b>What happens if quality is 80% instead of 95%?</b><span>The honest answer tells you where the bar really is and what bad data costs them — a wasted training run, a missed launch. That number is your pricing ceiling.</span></div></li>
+        <li><span class="num">04</span><div><b>What already exists?</b><span>A rubric, goldens, a previous pilot, a previous vendor and why it stopped. Reuse shortens the pilot; the reason the last vendor stopped is the risk you must design out.</span></div></li>
+        <li><span class="num">05</span><div><b>What is the shape of the volume?</b><span>One-off, ramp, or steady state; the deadline that is real versus the one in the brief. Steady state buys a standing pool and a lower unit price.</span></div></li>
+        <li><span class="num">06</span><div><b>What is non-negotiable?</b><span>Security, privacy, residency, expert credentials, IP exclusivity, no public mention. Each one is a design constraint and often a line item.</span></div></li>
+        <li><span class="num">07</span><div><b>What is the budget envelope, and which surprise would you prefer?</b><span>Fewer items at higher quality, or more at the same quality. The answer tells you which lever to lead with — and whether a pilot fits.</span></div></li>
+      </ol>
+      <div class="talk"><b>Then close the loop</b>&ldquo;So the decision is X, done means Y signed by Z, and the constraint that shapes the design is W. Here is how I would build it, and here is the pilot that tells us the one number we don&rsquo;t know yet.&rdquo;</div>
+    </div>
+
+    <div class="pane" data-tab="bluf" hidden>
+      <h3>Structure for the use case and the proposal</h3>
+      <p class="intro">Bottom line up front, then the evidence. Same skeleton whether you are talking for ten minutes or writing twelve pages.</p>
+      <div class="tbl"><table>
+        <thead><tr><th>Section</th><th>What goes in it</th><th>One-line example (preference pairs)</th></tr></thead>
+        <tbody>
+          <tr><td><b>1. Recommendation</b></td><td>What you would build and the number it delivers.</td><td>&ldquo;Pairwise preference labels at measured α ≥ 0.8, 50k pairs in eight weeks, after a two-week pilot.&rdquo;</td></tr>
+          <tr><td><b>2. Approach</b></td><td>The pipeline in one picture and five sentences.</td><td>&ldquo;Three votes, adaptive escalation, expert adjudication, weekly rubric clinic.&rdquo;</td></tr>
+          <tr><td><b>3. Quality</b></td><td>The metrics, their targets, and how they are measured.</td><td>&ldquo;α per batch, item confidence, goldens, position bias — on a dashboard you can see.&rdquo;</td></tr>
+          <tr><td><b>4. Plan</b></td><td>Pilot → readout → production in batches, with checkpoints.</td><td>&ldquo;2k pairs, agreement report, then 6k a week.&rdquo;</td></tr>
+          <tr><td><b>5. Price</b></td><td>The unit, the price, what is inside it, the levers.</td><td>&ldquo;$9 a pair including overlap and QA; shorter stimuli bring it to $5.&rdquo;</td></tr>
+          <tr><td><b>6. Risks</b></td><td>Top three with the mitigation for each.</td><td>&ldquo;Rubric ambiguity — clinic cadence; content exposure — rotation; locale drift — quotas.&rdquo;</td></tr>
+          <tr><td><b>7. Asks</b></td><td>What you need from them and by when.</td><td>&ldquo;An owner for acceptance, 200 goldens or a day of an expert&rsquo;s time, asset access by Monday.&rdquo;</td></tr>
+        </tbody>
+      </table></div>
+      <h4>Thinking aloud in the room</h4>
+      <p>Clarify (two or three questions, not ten) → scope (what is in, what is out, the unit) → design (the pipeline, the parts that can be wrong) → measure (how you will know) → price (the unit and the levers) → risks (what you would watch first). Say which step you are on. Interviewers grade structure they can see.</p>
+    </div>
+
+    <div class="pane" data-tab="price" hidden>
+      <h3>How to talk about price</h3>
+      <ul class="cons">
+        <li><b>Price the unit the client gets value from.</b> An accepted problem, a usable hour, a validated task, an environment milestone. Never an hour of annotator time — that hides the yield and the quality inside their risk.</li>
+        <li><b>Show what is inside the unit.</b> Overlap, escalation, goldens, QA, PM. A competitor&rsquo;s cheaper unit usually has less in it; put yours side by side.</li>
+        <li><b>Give a range with its assumptions.</b> &ldquo;$1,300–1,800 per accepted item at 50–65% yield, PhD authors, verifiable answers.&rdquo; A single number without assumptions is a promise you can&rsquo;t keep.</li>
+        <li><b>Name the levers and who holds them.</b> Shorter stimuli, adaptive overlap, expert tier, automation, difficulty tier. Most levers raise quality and lower cost together; say which ones don&rsquo;t.</li>
+        <li><b>Price the pilot to discover the unknown.</b> Yield, natural agreement, acceptance rate, human-minutes per video-minute. The pilot is fixed-price; production is priced on what the pilot found.</li>
+        <li><b>Tie step-downs to measurable improvement.</b> Price falls when the proposal acceptance rate crosses 70%, or when yield passes 60%. The client shares in the engineering gain and has a reason to help.</li>
+        <li><b>Change control for the spec.</b> A rubric or ontology change re-baselines the price; say so on day one, kindly.</li>
+        <li><b>Know your own margin; never say it.</b> The book&rsquo;s example: COGS $5.75 on a $9 pair is 36% gross margin; the levers take COGS to $3.60 and margin to 60%. That is why you fight for the levers, not for the rate.</li>
+      </ul>
+    </div>
+
+    <div class="pane" data-tab="obj" hidden>
+      <h3>Objections and the answer that keeps the conversation technical</h3>
+      <div class="tbl"><table>
+        <thead><tr><th>They say</th><th>What it usually means</th><th>Answer</th></tr></thead>
+        <tbody>
+          <tr><td>&ldquo;Too expensive.&rdquo;</td><td>They are comparing against a unit with less in it, or against no data at all.</td><td>Put the unit side by side; price the cost of a wasted training run or a missed launch; show the two levers that cut 30% without touching quality.</td></tr>
+          <tr><td>&ldquo;Can&rsquo;t we just automate it?&rdquo;</td><td>They have seen a demo of a model labelling things.</td><td>Yes, wherever verification can be made cheap — show the semi-automatic economics and the acceptance-rate curve as the proof; keep humans where the human judgment <em>is</em> the product.</td></tr>
+          <tr><td>&ldquo;We need it in two weeks.&rdquo;</td><td>A real deadline, or a test of whether you push back.</td><td>Scope what two weeks can honestly deliver (a pilot with a readout), name what it can&rsquo;t, and offer the ramp.</td></tr>
+          <tr><td>&ldquo;Our interns could do this.&rdquo;</td><td>They haven&rsquo;t seen the QC maths.</td><td>Agreement, goldens, pool management, throughput, and what a 0.6 α does to a reward model. Offer to measure their interns&rsquo; α on the pilot set.</td></tr>
+          <tr><td>&ldquo;Just give me a per-hour rate.&rdquo;</td><td>Procurement habit.</td><td>Per-unit pricing puts yield and quality risk on us, not on them; a per-hour rate hides it. Offer per-unit with full transparency on what is inside.</td></tr>
+          <tr><td>&ldquo;Another vendor is 40% cheaper.&rdquo;</td><td>Different unit, different overlap, or no QA.</td><td>Ask what is inside their unit; compare α, rework rate and acceptance terms. Then decide together whether cheaper is cheaper.</td></tr>
+          <tr><td>&ldquo;We&rsquo;ll know quality when we see it.&rdquo;</td><td>No definition of done yet.</td><td>Write acceptance sampling and the agreement metrics into the pilot; the readout becomes the definition.</td></tr>
+          <tr><td>&ldquo;Can you guarantee the model improves?&rdquo;</td><td>They want the outcome, not the data.</td><td>No — nobody honest can. We guarantee the data&rsquo;s measured properties, and we propose a held-out eval we build together so the lift is visible.</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+
+    <div class="pane" data-tab="flags" hidden>
+      <h3>Red flags before you price, and the checkpoints after</h3>
+      <div class="two">
+        <div>
+          <h4>Red flags</h4>
+          <ul class="cons">
+            <li><b>No decision owner.</b> Nobody can say &ldquo;accepted&rdquo;; every batch becomes a negotiation.</li>
+            <li><b>No definition of done.</b> &ldquo;High quality&rdquo; without a metric or a sample review.</li>
+            <li><b>No goldens and no appetite to make them.</b> You cannot measure annotators or a judge.</li>
+            <li><b>The rubric changes weekly.</b> Every change re-baselines; price it or stop it.</li>
+            <li><b>&ldquo;We&rsquo;ll sort the format later.&rdquo;</b> Delivery disputes at the end.</li>
+            <li><b>Unlimited revisions in the contract.</b> Yield risk with no cap.</li>
+            <li><b>Data that can&rsquo;t legally be used.</b> Consent, licences, residency — ask early.</li>
+            <li><b>A deadline the pilot can&rsquo;t fit inside.</b> You will be pricing blind.</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Checkpoint cadence</h4>
+          <ul class="cons">
+            <li><b>Kickoff.</b> Decision, done, owner, constraints, schema draft.</li>
+            <li><b>Spec sign-off.</b> Rubric or style guide or policy document, goldens, acceptance criteria, in writing.</li>
+            <li><b>Pilot readout.</b> The unknown number (yield, α, acceptance rate) and the production price it implies.</li>
+            <li><b>Batch reviews.</b> Acceptance sampling, metrics vs targets, rejection taxonomy, rework.</li>
+            <li><b>Monthly steering.</b> Levers pulled, step-downs earned, change requests, risks.</li>
+            <li><b>Close-out.</b> Provenance pack: versions, annotator and expert pools, agreement history, audit trail.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== AGENTIC SYSTEMS & CONCEPTS ===================== -->
+  <section class="panel" id="p-concepts" style="--t: var(--t-concepts)" aria-label="Agentic systems and concepts" hidden>
+    <div class="phead">
+      <h2 class="ptitle">Agentic systems and the vocabulary behind them</h2>
+      <p class="pdesc">The concrete environments a client will name, what each one actually contains, and the terms that come up when scoping a gym or a coding environment — including the two words that mean two things.</p>
+      <div class="strip">
+        <div><div class="k">the template</div><div class="v">τ-bench: policy + tools + DB + user simulator + grader</div></div>
+        <div><div class="k">the coding formats</div><div class="v">Terminal-Bench (Harbor) · SWE-bench Verified</div></div>
+        <div><div class="k">the reliability number</div><div class="v">pass^k = C(c,k) / C(n,k)</div></div>
+        <div><div class="k">the ambiguous word</div><div class="v risk">&ldquo;policy&rdquo; — the SOP, or the RL policy</div></div>
+      </div>
+    </div>
+    <div class="tabs" role="tablist">
+      <button class="tab active" role="tab" aria-selected="true" data-tab="sys">Concrete environments</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="gloss">Concepts</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="passk">pass@k vs pass^k</button>
+    </div>
+
+    <div class="pane" data-tab="sys">
+      <h3>Environments a client will name</h3>
+      <div class="tbl"><table>
+        <thead><tr><th>Environment</th><th>What it contains</th><th>Domain / tasks</th><th>Metric</th><th>Why it matters when scoping</th></tr></thead>
+        <tbody>
+          <tr><td><b>τ-bench</b> (Sierra, 2024)</td><td>A policy document, about a dozen tools per domain, a seeded database, an LLM user simulator with goals and hidden info, state-based grading.</td><td>Airline and retail customer service; on the order of 50 and 115 tasks.</td><td>pass@1 and pass^k</td><td>The four-part template for every agentic gym; the simulator and grader are first-class deliverables.</td></tr>
+          <tr><td><b>τ²-bench</b> (2025)</td><td>Adds a telecom domain where the user also acts in the environment (dual control); the simulator must follow instructions the agent gives it.</td><td>Telecom troubleshooting plus the original domains.</td><td>pass^k</td><td>Dual control makes both simulator and grader harder — a pricing driver.</td></tr>
+          <tr><td><b>Terminal-Bench</b> (2025, Harbor)</td><td>Terminal tasks in Docker: instruction, image with the state baked in, hidden tests, an oracle solution; a harness for running agents.</td><td>Devops, sysadmin, data, scientific computing.</td><td>Task pass rate</td><td>The task format for terminal environments; the validity triad comes from here.</td></tr>
+          <tr><td><b>SWE-bench</b> / <b>SWE-bench Verified</b></td><td>GitHub issues to resolve in real repos; FAIL_TO_PASS and PASS_TO_PASS tests; Verified is a human-validated subset of about 500 instances.</td><td>Python open-source repositories.</td><td>% resolved</td><td>The repository-task format; &ldquo;Verified&rdquo; is what human validation of tasks buys.</td></tr>
+          <tr><td><b>WebArena</b> / <b>VisualWebArena</b></td><td>Self-hosted web apps (shopping, forum, GitLab, maps) with functional end-state checks.</td><td>Web navigation and transactions.</td><td>Task success</td><td>State-based grading for browser agents; self-hosting is what makes it reproducible.</td></tr>
+          <tr><td><b>OSWorld</b></td><td>Real operating-system VMs with execution-based evaluation of desktop tasks.</td><td>Computer use across apps.</td><td>Task success</td><td>The heaviest environment class: VMs, snapshots, long resets.</td></tr>
+          <tr><td><b>AppWorld</b></td><td>Simulated apps with APIs, a database, and state-based unit tests; agents write code to call APIs.</td><td>Everyday app tasks.</td><td>Task goal completion</td><td>A gym whose grader is unit tests on state — the same pattern as the DB diff.</td></tr>
+          <tr><td><b>BFCL</b> (Berkeley Function Calling Leaderboard)</td><td>Function-calling prompts with AST or execution matching, single and multi-turn.</td><td>Tool-call correctness.</td><td>Call accuracy</td><td>The reference for &ldquo;right tool, right arguments&rdquo; as a metric on its own.</td></tr>
+          <tr><td><b>GAIA</b></td><td>General-assistant questions that need browsing, files and tools, with exact-match answers.</td><td>Multi-step reasoning with tools.</td><td>Exact match</td><td>Shows how far a deterministic grader goes before you need a judge.</td></tr>
+          <tr><td><b>AgentBench</b></td><td>Eight environments: OS, database, knowledge graph, web, games and more.</td><td>Breadth.</td><td>Success rate per env</td><td>A reminder that one environment measures one thing.</td></tr>
+          <tr><td><b>MCP</b> (Model Context Protocol)</td><td>Not a benchmark: the standard interface (list tools, call tool, resources) used to expose a gym&rsquo;s mocked tools to any agent.</td><td>—</td><td>—</td><td>Build the mocks as MCP servers once; every client harness can talk to them.</td></tr>
+        </tbody>
+      </table></div>
+      <p class="note">Toloka&rsquo;s own agentic line — environments, trajectories, benchmark extensions, red-teaming — is the commercial version of this table; the book&rsquo;s section 1 has the product names.</p>
+    </div>
+
+    <div class="pane" data-tab="gloss" hidden>
+      <h3>Concepts</h3>
+      <dl class="glist">
+        <div><dt>environment</dt><dd>Everything the agent can observe and act on: state, tools, the simulator, the rules. The deliverable of a gym.</dd></div>
+        <div><dt>state</dt><dd>The database snapshot plus any world variables; restored on reset; diffed by the grader.</dd></div>
+        <div><dt>observation</dt><dd>What the agent sees each step: the user turn, tool results, sometimes a screen.</dd></div>
+        <div><dt>action space</dt><dd>The tools the agent may call and the replies it may send; narrower is easier to grade.</dd></div>
+        <div><dt>tool / API</dt><dd>A function with a schema the agent can call; in a gym it is mocked, deterministic and fault-injectable.</dd></div>
+        <div><dt>policy (SOP)</dt><dd>The document of rules the agent must follow — &ldquo;change fees apply per §4.2&rdquo;. The spec for tasks and grader.</dd></div>
+        <div><dt>policy (RL)</dt><dd>The model&rsquo;s behaviour function being trained. Say which one you mean, every time.</dd></div>
+        <div><dt>user simulator</dt><dd>A model given a persona, goal, hidden information and a behaviour profile that plays the user; pinned and evaluated on its own.</dd></div>
+        <div><dt>task instance</dt><dd>Initial state + user goal + expected end state + forbidden actions + rubric; the unit a task bank is counted in.</dd></div>
+        <div><dt>oracle / golden trajectory</dt><dd>A reference sequence of actions that solves the task; proves validity; also used as a few-shot exemplar or a trajectory-level reference.</dd></div>
+        <div><dt>grader / reward</dt><dd>State diff (deterministic), action constraints, and a rubric judge for text; produces the reward and the pass.</dd></div>
+        <div><dt>state-based vs output-based grading</dt><dd>Check what changed in the world vs check what was said. Prefer state; use output only where state can&rsquo;t capture it.</dd></div>
+        <div><dt>trajectory / episode</dt><dd>One run of a task from reset to done: every observation, action, tool call and reward; stored as a trace.</dd></div>
+        <div><dt>reset / horizon</dt><dd>Restore the initial state with a seed; the maximum steps before the episode is cut.</dd></div>
+        <div><dt>determinism / seeding</dt><dd>Same seed, same faults, same simulator behaviour — the condition for pass^k to mean anything.</dd></div>
+        <div><dt>pass@k</dt><dd>Probability at least one of k attempts succeeds. Optimistic; ability.</dd></div>
+        <div><dt>pass^k</dt><dd>Probability all k attempts succeed. Pessimistic; reliability; what deployment needs.</dd></div>
+        <div><dt>reward hacking</dt><dd>Satisfying the grader without serving the goal — jailbreaking the simulator, shortcuts through the diff. Audit for it.</dd></div>
+        <div><dt>forbidden actions</dt><dd>Tool calls the task disallows (cancel instead of change); a violation fails the episode regardless of end state.</dd></div>
+        <div><dt>dual control</dt><dd>The user also acts in the environment and must follow the agent&rsquo;s instructions; the simulator becomes an actor.</dd></div>
+        <div><dt>sandbox</dt><dd>Isolated execution for untrusted agent code: container or micro-VM, no network, resource caps.</dd></div>
+        <div><dt>HITL</dt><dd>Human in the loop: an interrupt before irreversible actions; in a gym, the human audit of grader and simulator.</dd></div>
+        <div><dt>MCP server</dt><dd>A process exposing tools and resources over the Model Context Protocol; how a gym&rsquo;s mocks are served.</dd></div>
+        <div><dt>trace / span</dt><dd>The observability record of an episode: one trace, a span per model call, tool call and simulator turn. See the <a href="https://claude.ai/artifact/MwS8o4VSHBRnUYHfk3sCsB">Agent Trace Anatomy</a> page.</dd></div>
+      </dl>
+    </div>
+
+    <div class="pane" data-tab="passk" hidden>
+      <h3>pass@k versus pass^k</h3>
+      <p>Run a task <code>n</code> times and count <code>c</code> successes. Two different questions have two different estimators:</p>
+      <div class="two">
+        <div>
+          <h4>pass@k — can it?</h4>
+<pre>pass@k = 1 − C(n − c, k) / C(n, k)
+<span class="c"># probability that at least one of k attempts succeeds</span>
+<span class="c"># n = 8, c = 6:  pass@1 = 0.75   pass@2 = 0.964   pass@4 = 1.0</span></pre>
+          <p class="lab">Rewards ability. Rises with k. Fine for &ldquo;is this task solvable by this model&rdquo;.</p>
+        </div>
+        <div>
+          <h4>pass^k — can you deploy it?</h4>
+<pre>pass^k = C(c, k) / C(n, k)      <span class="c"># ≈ (c / n)^k for large n</span>
+<span class="c"># probability that all k attempts succeed</span>
+<span class="c"># n = 8, c = 6:  pass^1 = 0.75   pass^2 = 0.536   pass^4 = 0.214   pass^8 = 0.0</span></pre>
+          <p class="lab">Rewards reliability. Falls with k. The τ-bench number; the one a customer-facing deployment needs.</p>
+        </div>
+      </div>
+      <p>The numbers above are the ones <code>labs/dataset-examples/12-agentic-gym/gym.py</code> prints for six successes in eight trials. The gap between the two curves is the variance you would ship. Two scoping consequences: pass^k is only meaningful if the environment is deterministic (same seed, same simulator), and a simulator that fails 5% of the time by itself puts a ceiling of about 0.95<sup>k</sup> on any agent&rsquo;s pass^k — which is why the simulator&rsquo;s own failure rate is reported next to the agent&rsquo;s.</p>
+    </div>
+  </section>
+
+  <!-- ===================== LLM-AS-A-JUDGE FOR ANNOTATION QA ===================== -->
+  <section class="panel" id="p-judge" style="--t: var(--t-judge)" aria-label="LLM-as-a-judge for annotation QA" hidden>
+    <div class="phead">
+      <h2 class="ptitle">LLM-as-a-judge inside a data factory</h2>
+      <p class="pdesc">A judge is a compression of human judgment, calibrated against the experts who define quality, and it is only as good as that calibration. In a data factory it has three jobs — pre-screen, triage, audit — and one rule: where human judgment is the product, the judge measures the humans; it never replaces them. Built on sections 13–14 of the Agentic AI field guide.</p>
+      <div class="strip">
+        <div><div class="k">anatomy</div><div class="v">task · inputs · rubric · reason-first · schema — at temperature 0, versioned</div></div>
+        <div><div class="k">headline metrics</div><div class="v">κ vs experts · FAIL recall · swap consistency · ECE</div></div>
+        <div><div class="k">the ceiling</div><div class="v">inter-expert κ — a judge cannot beat it, and shouldn&rsquo;t be asked to</div></div>
+        <div><div class="k">biggest risk</div><div class="v risk">a judge that quietly becomes the label</div></div>
+      </div>
+    </div>
+    <div class="tabs" role="tablist">
+      <button class="tab active" role="tab" aria-selected="true" data-tab="role">Role per data type</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="design">Judge designs</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="cal">Calibration protocol</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="met">Metrics &amp; formulas</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="bias">Bias controls &amp; pitfalls</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="code">Code</button>
+    </div>
+
+    <div class="pane" data-tab="role">
+      <h3>Where the judge sits in each of the five factories</h3>
+      <p class="intro">The deterministic grader comes first wherever one exists — tests, state diffs, SymPy, exact match. The judge covers what the grader cannot, and is measured against humans on exactly that.</p>
+      <div class="tbl"><table>
+        <thead><tr><th>Data type</th><th>Jobs for the judge</th><th>Judge type</th><th>Calibrated against</th><th>Must never</th></tr></thead>
+        <tbody>
+          <tr><td><b>Preference pairs</b></td><td>Pre-screen obvious pairs; triage low-confidence items to experts; expand the golden set; audit crowd votes; at most a reliability-weighted extra vote.</td><td>Pairwise with swap and tie</td><td>Expert adjudications; the crowd aggregate</td><td>Replace the crowd where human preference <em>is</em> the product; be visible to annotators before they vote.</td></tr>
+          <tr><td><b>Reasoning data</b></td><td>Answer equivalence when symbolic checks fail; rationale grading against the style guide (completeness, no leaps); style compliance. The difficulty gauntlet is a model run, not a judge.</td><td>Pointwise reference-based; rubric-based</td><td>Blind second solver; expert rationale ratings</td><td>Accept an answer a human or SymPy rejected; share a model family with the gauntlet it is checking.</td></tr>
+          <tr><td><b>Robotics video</b></td><td>Multimodal verifier of proposed labels — is the narration right for this clip, is the boundary close; privacy audit assist (a face present?).</td><td>Pointwise, reference-free, multimodal</td><td>Human verification sample; gold clips</td><td>Be the only verifier of object tracks; its FAIL recall on gold clips is the number to watch — VLMs hallucinate presence.</td></tr>
+          <tr><td><b>Coding environments</b></td><td>Task-quality review (unambiguous? behaviour-based tests? gameable? realistic?); process grading of agent transcripts where tests can&rsquo;t see. Tests remain the grader.</td><td>Rubric-based pointwise; trajectory</td><td>Human reviewer acceptance; known test-tampering cases</td><td>Decide &ldquo;solved&rdquo; — the tests do; be fooled by a transcript that edited the tests (check the diff, not the words).</td></tr>
+          <tr><td><b>Agentic gyms</b></td><td>Rubric judge on the transcript (fee stated before the action, no promises outside policy); trajectory judge (right tools, right order, no forbidden calls); simulator-fidelity judge. The state diff remains the reward.</td><td>Trajectory; conversation</td><td>Human-audited episodes</td><td>Override the state diff; share a family with the agent under test or the simulator.</td></tr>
+        </tbody>
+      </table></div>
+      <div class="talk"><b>Say it to the client</b>Wherever a test, a diff or an equation can decide, it decides. The judge handles what they can&rsquo;t, and we publish its agreement with your experts next to every number it produces.</div>
+    </div>
+
+    <div class="pane" data-tab="design" hidden>
+      <h3>Judge designs per data type</h3>
+      <p class="intro">Every judge is the same five-part prompt with a contract: the task definition, the inputs the criterion needs and nothing else, a precise rubric with boundary examples, a reasoning-first instruction, and a structured schema with the verdict last. Temperature zero; prompt version on every score; agreement with humans published.</p>
+      <div class="glist">
+        <div><dt>Preference pre-screen</dt><dd>Pairwise, both display orders, tie allowed. Output: winner, confidence, and <em>the same closed reason taxonomy the annotators use</em>, so judge reasons and human reasons can be compared item by item.</dd></div>
+        <div><dt>Reasoning — equivalence</dt><dd>Inputs: reference answer, candidate answer, answer type. Runs only after exact match and SymPy fail. Output: equivalent true/false plus the normalisation it applied. Measured as FAIL recall on known mismatches.</dd></div>
+        <div><dt>Reasoning — rationale</dt><dd>Inputs: problem, solution, style guide. Checklist: every step justified, no leaps, notation consistent, final answer matches the answer field. Output: per-check pass/fail, then the verdict.</dd></div>
+        <div><dt>Video — label verifier</dt><dd>Inputs: sampled frames for the interval, the ASR, the proposed narration and boundaries. Question: &ldquo;does the camera wearer perform &lt;verb&gt; on &lt;noun&gt; within this interval?&rdquo; Output: yes/no, boundary adjustment, confidence.</dd></div>
+        <div><dt>Coding — task review</dt><dd>Inputs: instruction, Dockerfile, tests, oracle. Checklist: instruction unambiguous; tests probe behaviour; not solvable by editing tests; realistic; difficulty estimate. Output: per-check, then verdict. A human still accepts.</dd></div>
+        <div><dt>Gym — trajectory and transcript</dt><dd>Inputs: task, policy excerpt, expected actions, the actual tool calls, the transcript. Checks: tool-call accuracy and order, forbidden actions, the output rubric. Output: per-check, then verdict. Reward still comes from the state diff.</dd></div>
+      </div>
+      <h4>A pairwise judge with the swap built in</h4>
+<pre>PAIRWISE = """You are judging which of two video results better satisfies the search query, using rubric v3.
+Rubric: relevance to the query's intent first; then clarity of the steps; length is not quality.
+Give your reasoning first, then the winner: "A", "B" or "tie", and the reasons from the taxonomy.
+&lt;query&gt;{q}&lt;/query&gt;
+&lt;video_A&gt;{a}&lt;/video_A&gt;
+&lt;video_B&gt;{b}&lt;/video_B&gt;"""
+
+FLIP = {"A": "B", "B": "A", "tie": "tie"}
+
+def judge_pair(q, a, b):
+    v1 = call_judge(PAIRWISE.format(q=q, a=a, b=b))     <span class="c"># A shown first; temperature 0; JSON schema</span>
+    v2 = call_judge(PAIRWISE.format(q=q, a=b, b=a))     <span class="c"># B shown first</span>
+    w1 = v1["winner"]
+    w2 = FLIP[v2["winner"]]                              <span class="c"># map the second verdict back to response ids</span>
+    consistent = (w1 == w2)
+    return {"winner": w1 if consistent else "tie", "swap_consistent": consistent,
+            "confidence": min(v1["confidence"], v2["confidence"]) if consistent else 0.5,
+            "reasons": sorted(set(v1["reasons"]) | set(v2["reasons"])),
+            "judge": JUDGE_MODEL, "rubric_version": "v3", "temperature": 0}</pre>
+      <p class="note">A preference is counted only if it survives the swap; otherwise it is a tie with low confidence, which routes the pair to humans. The judge model is from a different family than any model that produced the videos&rsquo; rankings.</p>
+    </div>
+
+    <div class="pane" data-tab="cal" hidden>
+      <h3>The calibration protocol</h3>
+      <p class="intro">The same loop used to improve any classifier, with the judge prompt as the model — and two rules specific to a data factory: the calibration set is labelled by the experts who own the rubric, and it is disjoint from the goldens that annotators are paid against.</p>
+      <ol class="qa">
+        <li><span class="num">01</span><div><b>Measure the humans first.</b><span>Two experts label the same 100 items. Their κ is the ceiling. Below 0.6, fix the rubric before touching the judge — a criterion experts disagree on cannot be judged.</span></div></li>
+        <li><span class="num">02</span><div><b>Build the calibration set.</b><span>300–500 items, stratified by difficulty and by label, each with a one-line critique. The critique is what makes a label teachable. Keep it disjoint from any eval or golden set.</span></div></li>
+        <li><span class="num">03</span><div><b>Run the judge under the contract.</b><span>Temperature 0, a fixed prompt version, both display orders for pairwise, structured output, a model family different from the one under test.</span></div></li>
+        <li><span class="num">04</span><div><b>Compute and publish.</b><span>Accuracy, κ against the experts (and its ratio to the inter-expert κ), FAIL precision and recall, swap consistency, ECE. These numbers travel with every score the judge ever produces.</span></div></li>
+        <li><span class="num">05</span><div><b>Read every disagreement.</b><span>They cluster: a rule the rubric never stated, a boundary case humans handle one way, a formatting pattern that confuses the judge.</span></div></li>
+        <li><span class="num">06</span><div><b>Edit the rubric, not the verdicts.</b><span>Add the missing rule; add two or three few-shot examples from the critiques per failure mode; tighten the definition.</span></div></li>
+        <li><span class="num">07</span><div><b>Re-measure, version, re-baseline.</b><span>Agreement should rise. The new rubric gets a version; old scores are not compared with new ones.</span></div></li>
+        <li><span class="num">08</span><div><b>Deploy by role, with thresholds.</b><span>Pre-screen only with high-precision PASS; triage by confidence; audit by random sample. Judge verdicts are never shown to annotators before they vote.</span></div></li>
+        <li><span class="num">09</span><div><b>Monitor drift weekly.</b><span>A fresh 100-item human sample; alarm if κ drops by more than 0.10 or FAIL recall falls below target; the rubric or the distribution moved.</span></div></li>
+        <li><span class="num">10</span><div><b>When prompt editing plateaus.</b><span>An ensemble of two or three families with majority vote and disagreement routed to humans; or a judge fine-tuned on the calibration labels and critiques, evaluated the same way.</span></div></li>
+      </ol>
+      <h4>Where the judge pays for itself (preference pairs, per pair)</h4>
+      <div class="tbl"><table>
+        <thead><tr><th>Use</th><th>Effect</th><th>Saving</th></tr></thead>
+        <tbody>
+          <tr><td>Pre-screen</td><td>30% of pairs are obvious; they get 2 votes + the judge instead of 3</td><td class="num money">≈ $0.30</td></tr>
+          <tr><td>Triage</td><td>Confidence-routed escalation cuts expert adjudication from 5% to 2% of items</td><td class="num money">≈ $0.24</td></tr>
+          <tr><td>Audit</td><td>Replaces half of the QA re-judging sample</td><td class="num money">≈ $0.10</td></tr>
+          <tr><td>Judge cost</td><td>two calls per pair at temperature 0</td><td class="num money">− $0.03</td></tr>
+          <tr class="total"><td>Net</td><td>on a $5.75 COGS</td><td class="num money">≈ $0.60 (10%)</td></tr>
+        </tbody>
+      </table></div>
+      <div class="talk"><b>Say it to the client</b>The judge is a measuring instrument with a published error bar. It earns the right to pre-screen by agreeing with your experts; it never earns the right to be the label.</div>
+    </div>
+
+    <div class="pane" data-tab="met" hidden>
+      <h3>Metrics and their formulations</h3>
+      <p class="intro">Notation: <code>N</code> items; judge verdicts compared with human labels; <code>TP/FP/FN/TN</code> counted for the FAIL class unless stated. Agreement bands for κ and α follow the book: ≥ 0.80 reliable, 0.67–0.80 tentative.</p>
+      <div class="tbl"><table>
+        <thead><tr><th>Metric</th><th>Formula</th><th>Use it for</th><th>Target / note</th></tr></thead>
+        <tbody>
+          <tr><td><b>Accuracy</b></td><td><code>Acc = (TP + TN) / N</code></td><td>First look; misleading when PASS dominates</td><td>report with class balance</td></tr>
+          <tr><td><b>FAIL precision, recall, F1</b></td><td><code>P = TP / (TP + FP)</code><br><code>R = TP / (TP + FN)</code><br><code>F1 = 2PR / (P + R)</code></td><td>The costly error is a missed failure; recall of FAIL is the gate metric</td><td>R ≥ 0.90 for pre-screen; P ≥ 0.90 for auto-reject</td></tr>
+          <tr><td><b>Balanced accuracy, MCC</b></td><td><code>BA = (TPR + TNR) / 2</code><br><code>MCC = (TP·TN − FP·FN) / √((TP+FP)(TP+FN)(TN+FP)(TN+FN))</code></td><td>Imbalanced sets (95% PASS)</td><td>MCC ≥ 0.6 usable</td></tr>
+          <tr><td><b>Cohen&rsquo;s κ</b></td><td><code>κ = (p_o − p_e) / (1 − p_e)</code><br><code>p_o = Σ_k n_kk / N</code> &nbsp; <code>p_e = Σ_k (n_k· / N)(n_·k / N)</code></td><td>Judge vs one human; two humans (the ceiling)</td><td>≥ 0.80 reliable; report κ_judge / κ_human</td></tr>
+          <tr><td><b>Fleiss&rsquo; κ</b></td><td><code>P_i = Σ_k n_ik(n_ik − 1) / (n(n − 1))</code><br><code>P̄ = Σ_i P_i / N</code> &nbsp; <code>p_k = Σ_i n_ik / (N n)</code> &nbsp; <code>P̄_e = Σ_k p_k²</code><br><code>κ = (P̄ − P̄_e) / (1 − P̄_e)</code></td><td>Fixed n raters per item, e.g. 3 annotators + judge</td><td>same bands</td></tr>
+          <tr><td><b>Krippendorff&rsquo;s α</b></td><td><code>α = 1 − D_o / D_e</code><br><code>D_o = (1/n) Σ_c Σ_k o_ck δ(c,k)</code> &nbsp; <code>D_e = Σ_c Σ_k n_c n_k δ(c,k) / (n(n − 1))</code><br>nominal <code>δ(c,k) = 1 if c ≠ k</code>; ordinal and interval metrics for scales</td><td>Any number of raters, missing votes, any scale — the factory&rsquo;s headline</td><td>≥ 0.80 reliable · 0.67–0.80 tentative</td></tr>
+          <tr><td><b>Swap consistency</b></td><td><code>S = (1/N) Σ 1[winner(A,B) = winner(B,A)]</code></td><td>Pairwise judges; count a preference only if it survives the swap</td><td>S ≥ 0.90</td></tr>
+          <tr><td><b>Position bias</b></td><td><code>PB = P(first-shown wins over both orders) − 0.5</code></td><td>Pairwise judges and annotators alike</td><td>|PB| ≤ 0.03</td></tr>
+          <tr><td><b>Verbosity bias</b></td><td><code>VB = P_judge(longer wins) − P_human(longer wins)</code> on pairs whose lengths differ by &gt; 20%</td><td>Rationale and transcript judges</td><td>|VB| ≤ 0.05; add a conciseness criterion if not</td></tr>
+          <tr><td><b>Self-preference</b></td><td><code>SP = P_judge(same-family wins) − P_human(same-family wins)</code></td><td>Any judge that could meet its own family&rsquo;s output</td><td>|SP| ≤ 0.05; else change family or ensemble</td></tr>
+          <tr><td><b>Calibration (ECE, Brier)</b></td><td><code>ECE = Σ_b (|B_b| / N) · |acc(B_b) − conf(B_b)|</code><br><code>Brier = (1/N) Σ (p_i − y_i)²</code></td><td>Whether the judge&rsquo;s confidence can route items to humans</td><td>ECE ≤ 0.05</td></tr>
+          <tr><td><b>Routing AUROC</b></td><td><code>AUROC = P(conf_correct &gt; conf_incorrect)</code> over random pairs</td><td>Choosing the confidence threshold for triage</td><td>≥ 0.80</td></tr>
+          <tr><td><b>Win rate, Bradley–Terry</b></td><td><code>WR = (wins + 0.5·ties) / N</code><br><code>P(i ≻ j) = e^{β_i} / (e^{β_i} + e^{β_j})</code>, fit by maximum likelihood</td><td>Ranking versions, models or rubrics from pairwise verdicts</td><td>report with the number of comparisons</td></tr>
+          <tr><td><b>Wilson interval</b></td><td><code>centre = (p̂ + z²/2n) / (1 + z²/n)</code><br><code>half = z·√(p̂(1−p̂)/n + z²/4n²) / (1 + z²/n)</code><br>needed <code>n ≈ z² p̂(1−p̂) / m²</code> → 385 for ±5 points at p̂ = 0.5</td><td>Reporting any pass rate or agreement from a sample</td><td>always show the interval</td></tr>
+          <tr><td><b>Tool-call accuracy</b></td><td><code>TCA = correct (name, args) calls / expected calls</code>; trajectory precision/recall and in-order match</td><td>Trajectory judges in gyms and coding transcripts</td><td>per task tier</td></tr>
+          <tr><td><b>Temporal IoU</b></td><td><code>IoU = |A ∩ B| / |A ∪ B|</code> on intervals; boundary hit if <code>|Δstart| ≤ τ and |Δend| ≤ τ</code></td><td>Video verifier vs gold boundaries</td><td>mean ≥ 0.70; τ = 0.5 s</td></tr>
+          <tr><td><b>pass@k, pass^k</b></td><td><code>pass@k = 1 − C(n−c,k)/C(n,k)</code> &nbsp; <code>pass^k = C(c,k)/C(n,k)</code></td><td>Grader-derived reliability in gyms and coding tasks</td><td>report k = 1, 2, 4, 8</td></tr>
+          <tr><td><b>Drift</b></td><td>weekly <code>κ_t</code> on a fresh human sample; alarm if <code>κ_{t−1} − κ_t &gt; 0.10</code> or FAIL recall &lt; target</td><td>Keeping a deployed judge honest</td><td>re-calibrate on alarm</td></tr>
+        </tbody>
+      </table></div>
+      <p class="note">What to publish next to every judge score: the prompt version, the judge model, κ against the experts and the inter-expert κ it is bounded by, FAIL recall, swap consistency where pairwise, and the sample size with its Wilson interval.</p>
+    </div>
+
+    <div class="pane" data-tab="bias" hidden>
+      <h3>Bias controls and the factory-specific pitfalls</h3>
+      <div class="tbl"><table>
+        <thead><tr><th>Anti-pattern</th><th>What happens</th><th>Control</th></tr></thead>
+        <tbody>
+          <tr><td>One holistic score</td><td>Correctness, tone and safety collapse into a number nobody can act on</td><td>One criterion per judge, binary where possible, aggregated separately</td></tr>
+          <tr><td>Verdict before reasoning</td><td>The judge commits, then rationalises</td><td>Reasoning and evidence first in the schema, verdict last</td></tr>
+          <tr><td>Position bias</td><td>The first (or second) response wins regardless of quality</td><td>Judge both orders; count a preference only if it survives the swap</td></tr>
+          <tr><td>Verbosity bias</td><td>Longer wins</td><td>&ldquo;Length is not quality&rdquo; in the rubric; a conciseness criterion; measure VB</td></tr>
+          <tr><td>Self-preference</td><td>A model prefers its own family&rsquo;s outputs</td><td>Different family from the model under test; ensemble on contested criteria</td></tr>
+          <tr><td>Judging without context</td><td>A groundedness or trajectory judge without the context or the tool log</td><td>Exactly the inputs the criterion needs, nothing else</td></tr>
+          <tr><td>Rubric drift</td><td>Old scores become incomparable</td><td>Version the rubric; record it on every score; re-baseline</td></tr>
+          <tr><td>Calibrating on the eval set</td><td>Few-shot examples from the eval set inflate agreement</td><td>Calibration, golden and eval sets disjoint</td></tr>
+          <tr><td>Trusting the judge</td><td>Scores with no error bar</td><td>Publish agreement with humans beside every score</td></tr>
+          <tr><td><b>The judge becomes the label</b></td><td>Judge verdicts leak into the aggregate; the client is buying model opinions at human prices</td><td>Judge as pre-screen, triage and audit only; at most a reliability-weighted extra vote; disclosed in the schema</td></tr>
+          <tr><td><b>Herding</b></td><td>Annotators see the judge&rsquo;s pick and follow it; α rises for the wrong reason</td><td>Judge verdicts hidden until after the vote; measure α with and without the judge</td></tr>
+          <tr><td><b>Hallucinated presence (video)</b></td><td>The VLM confirms an object or action that isn&rsquo;t there</td><td>FAIL recall on gold clips; never the sole verifier of tracks; sampled human audit</td></tr>
+          <tr><td><b>Judge beats the tests (coding)</b></td><td>A transcript reads as solved while the tests were edited</td><td>Tests decide; the judge checks the diff for tampering, not the prose</td></tr>
+          <tr><td><b>Grader vs judge confusion (gyms)</b></td><td>The rubric judge overrides a failed state diff</td><td>State diff is the reward; the judge adds penalties and process scores only</td></tr>
+          <tr><td><b>Synchronous judge everywhere</b></td><td>Latency and cost double for a check that rarely fires</td><td>Synchronous only for the one failure that must never ship; everything else asynchronous</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+
+    <div class="pane" data-tab="code" hidden>
+      <h3>The metrics, as code</h3>
+      <p class="intro">Standard library only. Verdicts are strings; items are lists. Drop into the calibration script and publish the output with the judge&rsquo;s scores.</p>
+<pre><span class="c"># judge_metrics.py — standard library only</span>
+from math import comb, sqrt
+from collections import Counter
+
+def cohen_kappa(a, b):
+    <span class="c">"""Two raters, equal-length label lists. Chance-corrected agreement."""</span>
+    n = len(a); cats = set(a) | set(b)
+    po = sum(x == y for x, y in zip(a, b)) / n
+    ca, cb = Counter(a), Counter(b)
+    pe = sum((ca[c] / n) * (cb[c] / n) for c in cats)
+    return (po - pe) / (1 - pe) if pe &lt; 1 else 1.0
+
+def fail_precision_recall(judge, human, fail="FAIL"):
+    tp = sum(j == fail and h == fail for j, h in zip(judge, human))
+    fp = sum(j == fail and h != fail for j, h in zip(judge, human))
+    fn = sum(j != fail and h == fail for j, h in zip(judge, human))
+    p = tp / (tp + fp) if tp + fp else 0.0
+    r = tp / (tp + fn) if tp + fn else 0.0
+    return p, r
+
+def krippendorff_alpha_nominal(units):
+    <span class="c">"""units: one list of labels per item (any number of raters; items with &lt; 2 votes are skipped)."""</span>
+    units = [u for u in units if len(u) &gt;= 2]
+    n = sum(len(u) for u in units)
+    do = sum(sum(1 for i in range(len(u)) for j in range(len(u)) if i != j and u[i] != u[j]) / (len(u) - 1)
+             for u in units) / n
+    counts = Counter(l for u in units for l in u)
+    de = sum(counts[c] * counts[k] for c in counts for k in counts if c != k) / (n * (n - 1))
+    return 1 - do / de if de else 1.0
+
+def swap_consistency(win_order1, win_order2):
+    <span class="c">"""Winner ids ('A', 'B', 'tie') for the same pairs judged in both display orders."""</span>
+    return sum(w1 == w2 for w1, w2 in zip(win_order1, win_order2)) / len(win_order1)
+
+def position_bias(win_order1, win_order2):
+    <span class="c">"""order1 shows A first, order2 shows B first. P(first-shown wins) - 0.5 over decided pairs."""</span>
+    first = sum(w == "A" for w in win_order1) + sum(w == "B" for w in win_order2)
+    decided = sum(w != "tie" for w in win_order1) + sum(w != "tie" for w in win_order2)
+    return first / decided - 0.5 if decided else 0.0
+
+def ece(conf, correct, bins=10):
+    <span class="c">"""conf: judge's stated P(verdict correct); correct: 1 if it matched the human label."""</span>
+    n = len(conf); total = 0.0
+    for b in range(bins):
+        lo, hi = b / bins, (b + 1) / bins
+        idx = [i for i, c in enumerate(conf) if (lo &lt; c &lt;= hi) or (b == 0 and c == 0)]
+        if idx:
+            acc = sum(correct[i] for i in idx) / len(idx)
+            avg = sum(conf[i] for i in idx) / len(idx)
+            total += len(idx) / n * abs(acc - avg)
+    return total
+
+def wilson(p_hat, n, z=1.96):
+    d = 1 + z * z / n
+    centre = (p_hat + z * z / (2 * n)) / d
+    half = z * sqrt(p_hat * (1 - p_hat) / n + z * z / (4 * n * n)) / d
+    return centre - half, centre + half
+
+def pass_at_k(n, c, k):  return 1 - comb(n - c, k) / comb(n, k)
+def pass_hat_k(n, c, k): return comb(c, k) / comb(n, k)
+
+<span class="c"># n = 8 trials, c = 6 successes → pass_hat_k: 0.75, 0.536, 0.214, 0.0 for k = 1, 2, 4, 8</span></pre>
+      <p class="lab">The agreement, interval and pass^k functions mirror what <a href="https://github.com/jawwada/ai-engineer-job-playbook/tree/main/labs/dataset-examples">labs/dataset-examples/how_models_use_it.py</a> prints in the playbook repo; the Krippendorff implementation here is the nominal case only.</p>
+    </div>
+  </section>
+
+  <footer>
+    <p>Prepared for the Toloka Forward Deployed AI Engineer final round, October 2026. Agreement bands follow Krippendorff (α ≥ 0.80 reliable, 0.67–0.80 tentative). All prices are illustrative unit economics for a scoping conversation, not a rate card; the runnable dataset records, graders and the τ-bench-style gym are in the playbook repo under <code>labs/dataset-examples</code>.</p>
+  </footer>
+</div>
+
+<script>
+(function () {
+  var cards = Array.prototype.slice.call(document.querySelectorAll('.card'));
+  var panels = Array.prototype.slice.call(document.querySelectorAll('.panel'));
+  var slug = { 'p-pref': 'preferences', 'p-reason': 'reasoning', 'p-video': 'video', 'p-code': 'coding', 'p-gym': 'gyms', 'p-consult': 'consult', 'p-concepts': 'concepts', 'p-judge': 'judge' };
+  var bySlug = {}; Object.keys(slug).forEach(function (k) { bySlug[slug[k]] = k; });
+  function show(id, setHash) {
+    cards.forEach(function (c) { c.classList.toggle('active', c.getAttribute('data-target') === id); c.setAttribute('aria-pressed', c.getAttribute('data-target') === id ? 'true' : 'false'); });
+    panels.forEach(function (p) { p.hidden = (p.id !== id); });
+    if (setHash) { try { history.replaceState(null, '', '#' + slug[id]); } catch (e) {} }
+  }
+  cards.forEach(function (c) {
+    c.addEventListener('click', function () {
+      var id = c.getAttribute('data-target');
+      show(id, true);
+      var el = document.getElementById(id);
+      if (el) { el.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+    });
+  });
+  panels.forEach(function (p) {
+    var tabs = Array.prototype.slice.call(p.querySelectorAll('.tab'));
+    var panes = Array.prototype.slice.call(p.querySelectorAll('.pane'));
+    tabs.forEach(function (t) {
+      t.addEventListener('click', function () {
+        var key = t.getAttribute('data-tab');
+        tabs.forEach(function (x) { var on = (x === t); x.classList.toggle('active', on); x.setAttribute('aria-selected', on ? 'true' : 'false'); });
+        panes.forEach(function (q) { q.hidden = (q.getAttribute('data-tab') !== key); });
+      });
+    });
+  });
+  var h = (location.hash || '').replace('#', '');
+  show(bySlug[h] || 'p-pref', false);
+})();
+</script>
+
+</body>
+</html>
