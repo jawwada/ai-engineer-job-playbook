@@ -1,0 +1,582 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>*{box-sizing:border-box}html,body{margin:0}body{font:14px system-ui, sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Self-Improving Agents</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700&family=Manrope:wght@400;500;600&family=Fira+Code:wght@400;600&display=swap">
+<style>
+  /* Layout: one reading column with a numbered anchor nav; the improvement loop is the opening figure and the
+     reference architecture the closing one. Palette: cool blue-biased neutrals; indigo for the loop, amber for memory,
+     cyan for tools, violet for critique, red for pitfalls. Type: Sora for display, Manrope for body, Fira Code for code. */
+  :root {
+    --bg: #f7f7fb; --surface: #ffffff; --surface-2: #eceef5; --fg: #171a2b; --muted: #585d75; --faint: #8b90a6; --border: #d9dce8;
+    --accent: #4f46e5; --mem: #b45309; --tool: #0e7490; --crit: #7c3aed; --risk: #b91c1c; --ok: #15803d;
+    --display: "Sora", "Avenir Next", "Segoe UI", sans-serif;
+    --sans: "Manrope", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    --mono: "Fira Code", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0f1018; --surface: #171927; --surface-2: #1f2233; --fg: #e8e9f3; --muted: #a3a8c2; --faint: #6f7490; --border: #2b2f45;
+      --accent: #8b85ff; --mem: #f0a84a; --tool: #38bdf8; --crit: #c4a7ff; --risk: #ff7b7b; --ok: #4ade80;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0f1018; --surface: #171927; --surface-2: #1f2233; --fg: #e8e9f3; --muted: #a3a8c2; --faint: #6f7490; --border: #2b2f45;
+    --accent: #8b85ff; --mem: #f0a84a; --tool: #38bdf8; --crit: #c4a7ff; --risk: #ff7b7b; --ok: #4ade80;
+    color-scheme: dark;
+  }
+
+  body { background: var(--bg); color: var(--fg); font-family: var(--sans); font-size: 15.5px; line-height: 1.58; }
+  .wrap { max-width: 900px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 30px 64px; }
+  h1 { font-family: var(--display); font-weight: 700; font-size: clamp(1.9rem, 4.6vw, 2.7rem); letter-spacing: -0.025em; line-height: 1.06; margin: 0 0 .5rem; text-wrap: balance; }
+  h2 { font-family: var(--display); font-weight: 600; font-size: 1.45rem; letter-spacing: -0.015em; margin: 0 0 .5rem; text-wrap: balance; }
+  h3 { font-family: var(--display); font-weight: 600; font-size: 1.08rem; margin: 22px 0 8px; }
+  h4 { font-family: var(--mono); font-size: .68rem; letter-spacing: .1em; text-transform: uppercase; color: var(--faint); margin: 16px 0 8px; font-weight: 600; }
+  p { margin: 0 0 12px; max-width: 72ch; }
+  .eyebrow { font-family: var(--mono); font-size: .7rem; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); font-weight: 600; margin: 0 0 8px; }
+  .lede { color: var(--muted); font-size: 1.08rem; max-width: 64ch; }
+  .thesis { border-left: 3px solid var(--accent); padding: 10px 16px; background: color-mix(in srgb, var(--accent) 7%, var(--surface)); border-radius: 0 10px 10px 0; margin: 18px 0 0; font-size: 1.02rem; max-width: none; }
+  .thesis b { color: var(--accent); }
+  code, .mono { font-family: var(--mono); }
+  p code, li code, td code, dd code { font-size: .86em; background: var(--surface-2); padding: 1px 5px; border-radius: 4px; }
+  a { color: var(--accent); }
+
+  nav.toc { display: flex; flex-wrap: wrap; gap: 6px; margin: 22px 0 0; }
+  nav.toc a { font-family: var(--display); font-weight: 600; font-size: .78rem; text-decoration: none; color: var(--fg); background: var(--surface); border: 1px solid var(--border); border-radius: 999px; padding: 6px 12px; }
+  nav.toc a:hover { border-color: var(--accent); color: var(--accent); }
+  nav.toc a .n { color: var(--faint); font-family: var(--mono); font-weight: 500; margin-right: 5px; }
+
+  section { margin-top: 46px; scroll-margin-top: 16px; }
+  .sec-n { font-family: var(--mono); font-size: .7rem; letter-spacing: .14em; color: var(--faint); margin: 0 0 6px; }
+
+  .fig { margin: 16px 0; border: 1px solid var(--border); border-radius: 12px; padding: 14px; background: var(--surface); overflow-x: auto; }
+  .fig svg { display: block; width: 100%; min-width: 640px; height: auto; color: var(--fg); }
+  .fig figcaption { font-size: .84rem; color: var(--muted); margin-top: 8px; min-width: 0; max-width: 80ch; }
+  .dg text { font-family: var(--mono); font-size: 10.5px; fill: currentColor; }
+  .dg .sm { font-size: 9.5px; fill: var(--muted); }
+  .dg rect.n { fill: var(--surface-2); stroke: currentColor; stroke-opacity: .35; stroke-width: 1; }
+  .dg rect.acc { fill: color-mix(in srgb, var(--accent) 16%, var(--surface-2)); stroke: var(--accent); stroke-width: 1.2; }
+  .dg rect.mem { fill: color-mix(in srgb, var(--mem) 16%, var(--surface-2)); stroke: var(--mem); stroke-width: 1.2; }
+  .dg rect.tool { fill: color-mix(in srgb, var(--tool) 16%, var(--surface-2)); stroke: var(--tool); stroke-width: 1.2; }
+  .dg rect.crit { fill: color-mix(in srgb, var(--crit) 16%, var(--surface-2)); stroke: var(--crit); stroke-width: 1.2; }
+  .dg rect.risk { fill: none; stroke: var(--risk); stroke-dasharray: 5 4; stroke-width: 1.2; }
+  .dg rect.grp { fill: none; stroke: currentColor; stroke-opacity: .28; stroke-dasharray: 2 3; stroke-width: 1; }
+  .dg text.tacc { fill: var(--accent); font-weight: 600; }
+  .dg text.tmem { fill: var(--mem); font-weight: 600; }
+  .dg text.ttool { fill: var(--tool); font-weight: 600; }
+  .dg text.tcrit { fill: var(--crit); font-weight: 600; }
+  .dg text.trisk { fill: var(--risk); }
+  .dg .a { stroke: currentColor; stroke-opacity: .6; fill: none; stroke-width: 1.1; }
+  .dg .loop { stroke: var(--accent); stroke-dasharray: 4 3; fill: none; stroke-width: 1.2; }
+  .dg marker path { fill: currentColor; }
+
+  .tbl { overflow-x: auto; border: 1px solid var(--border); border-radius: 10px; margin: 12px 0 14px; }
+  table { width: 100%; min-width: 560px; border-collapse: collapse; font-size: .88rem; }
+  th { font-family: var(--mono); font-weight: 600; font-size: .64rem; letter-spacing: .08em; text-transform: uppercase; color: var(--faint); background: var(--surface-2); text-align: left; padding: 8px 11px; border-bottom: 1px solid var(--border); }
+  td { padding: 8px 11px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  tbody tr:last-child td { border-bottom: none; }
+  td.k { font-family: var(--mono); font-size: .8rem; white-space: nowrap; font-weight: 600; }
+
+  pre { margin: 10px 0 14px; background: var(--surface-2); border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; overflow-x: auto; font-family: var(--mono); font-size: .76rem; line-height: 1.55; color: var(--fg); }
+  pre .c { color: var(--muted); }
+  pre .k { color: var(--accent); }
+  pre .s { color: var(--ok); }
+
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 10px; margin: 12px 0 14px; }
+  .cardx { --t: var(--accent); background: var(--surface); border: 1px solid var(--border); border-top: 3px solid var(--t); border-radius: 10px; padding: 12px 14px; min-width: 0; }
+  .cardx .t { font-family: var(--display); font-weight: 600; font-size: .95rem; margin: 0 0 4px; }
+  .cardx p { font-size: .88rem; color: var(--muted); margin: 0; max-width: none; }
+  .cardx .ex { font-family: var(--mono); font-size: .74rem; color: var(--t); margin-top: 6px; display: block; }
+  .mem { --t: var(--mem); } .tool { --t: var(--tool); } .crit { --t: var(--crit); } .riskc { --t: var(--risk); } .acc { --t: var(--accent); }
+
+  ul.tight { margin: 0 0 12px; padding-left: 20px; }
+  ul.tight li { margin: 0 0 6px; max-width: 72ch; }
+  .callout { background: color-mix(in srgb, var(--accent) 8%, var(--surface)); border: 1px solid color-mix(in srgb, var(--accent) 28%, var(--border)); border-radius: 10px; padding: 12px 16px; margin: 14px 0; }
+  .callout b { color: var(--accent); }
+  .warn { background: color-mix(in srgb, var(--risk) 7%, var(--surface)); border: 1px solid color-mix(in srgb, var(--risk) 30%, var(--border)); border-radius: 10px; padding: 12px 16px; margin: 14px 0; }
+  .warn b { color: var(--risk); }
+  .two { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px; }
+  .two > div { min-width: 0; }
+  dl.defs { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 8px; margin: 10px 0 14px; }
+  dl.defs div { border: 1px solid var(--border); border-radius: 8px; padding: 8px 11px; background: var(--surface); min-width: 0; }
+  dl.defs dt { font-family: var(--mono); font-weight: 600; font-size: .78rem; }
+  dl.defs dd { margin: 2px 0 0; font-size: .86rem; color: var(--muted); }
+  footer { margin-top: 44px; padding-top: 14px; border-top: 1px solid var(--border); color: var(--faint); font-size: .8rem; }
+  footer p { max-width: none; }
+</style>
+</head>
+<body>
+
+
+<div class="wrap">
+  <header>
+    <p class="eyebrow">Agentic AI · knowledge primer</p>
+    <h1>Self-Improving Agents</h1>
+    <p class="lede">How an agent gets better at a job when its model never changes: the benchmarks that measure it, the gyms it practises in, and the five mechanisms — prompts, memory, critique, discovery, tools — that carry the improvement, with the pitfalls that come with each.</p>
+    <p class="thesis"><b>Thesis.</b> With the weights frozen, every gain has to live in the harness: in what the model is told, what it can remember, what it can call, how it checks itself, and who gets to say no. The harness is the thing you engineer, the gym is where you measure it, and pass^k on a frozen task set is the number that tells you whether it worked.</p>
+    <nav class="toc" aria-label="Sections">
+      <a href="#loop"><span class="n">0</span>The loop</a>
+      <a href="#tau"><span class="n">1</span>τ-bench</a>
+      <a href="#gyms"><span class="n">2</span>Agent gyms</a>
+      <a href="#frozen"><span class="n">3</span>Improving without fine-tuning</a>
+      <a href="#golden"><span class="n">4</span>Golden trajectories</a>
+      <a href="#tools"><span class="n">5</span>Right tool, right API</a>
+      <a href="#prompt"><span class="n">6.1</span>Prompt optimisation</a>
+      <a href="#memory"><span class="n">6.2</span>Episodic memory</a>
+      <a href="#critique"><span class="n">6.3</span>Critique &amp; Reflexion</a>
+      <a href="#discovery"><span class="n">6.4</span>Dynamic discovery</a>
+      <a href="#shell"><span class="n">6.5</span>Shell &amp; web search</a>
+      <a href="#pitfalls"><span class="n">7</span>Pitfalls</a>
+      <a href="#arch"><span class="n">8</span>Reference architecture</a>
+    </nav>
+  </header>
+
+  <!-- 0 THE LOOP -->
+  <section id="loop">
+    <p class="sec-n">0 · THE LOOP</p>
+    <h2>One picture: where improvement comes from when the model is frozen</h2>
+    <figure class="fig">
+      <svg class="dg" viewBox="0 0 800 300" role="img" aria-label="The self-improvement loop: a task enters an episode in which a frozen model acts in a sandboxed environment; the episode produces a trace; a grader or critic scores it; a reflection step turns the score into lessons; the lessons update three stores — the prompt, episodic memory, and the tool registry — which feed the next episode. A human-in-the-loop gate sits before irreversible actions, and the sandbox boundary encloses the environment.">
+        <defs><marker id="arL" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L8 4 L0 8 z"/></marker></defs>
+        <rect x="10" y="60" width="110" height="44" rx="7" class="n"/><text x="65" y="78" text-anchor="middle">Task</text><text x="65" y="93" text-anchor="middle" class="sm">from the gym</text>
+        <rect x="140" y="40" width="220" height="84" rx="8" class="risk"/><text x="250" y="54" text-anchor="middle" class="trisk sm">sandbox · ephemeral · egress allowlist</text>
+        <rect x="160" y="60" width="180" height="44" rx="7" class="acc"/><text x="250" y="78" text-anchor="middle" class="tacc">Episode</text><text x="250" y="93" text-anchor="middle" class="sm">frozen model acts via tools</text>
+        <rect x="380" y="60" width="110" height="44" rx="7" class="n"/><text x="435" y="78" text-anchor="middle">Trace</text><text x="435" y="93" text-anchor="middle" class="sm">spans · calls · state</text>
+        <rect x="520" y="60" width="120" height="44" rx="7" class="crit"/><text x="580" y="78" text-anchor="middle" class="tcrit">Grade / critique</text><text x="580" y="93" text-anchor="middle" class="sm">grader, then judge</text>
+        <rect x="670" y="60" width="120" height="44" rx="7" class="crit"/><text x="730" y="78" text-anchor="middle" class="tcrit">Reflect</text><text x="730" y="93" text-anchor="middle" class="sm">what to change</text>
+        <line x1="120" y1="82" x2="158" y2="82" class="a" marker-end="url(#arL)"/>
+        <line x1="340" y1="82" x2="378" y2="82" class="a" marker-end="url(#arL)"/>
+        <line x1="490" y1="82" x2="518" y2="82" class="a" marker-end="url(#arL)"/>
+        <line x1="640" y1="82" x2="668" y2="82" class="a" marker-end="url(#arL)"/>
+        <rect x="150" y="190" width="150" height="44" rx="7" class="acc"/><text x="225" y="208" text-anchor="middle" class="tacc">Prompt store</text><text x="225" y="223" text-anchor="middle" class="sm">instructions · exemplars</text>
+        <rect x="325" y="190" width="150" height="44" rx="7" class="mem"/><text x="400" y="208" text-anchor="middle" class="tmem">Episodic memory</text><text x="400" y="223" text-anchor="middle" class="sm">verified cases in RAG</text>
+        <rect x="500" y="190" width="150" height="44" rx="7" class="tool"/><text x="575" y="208" text-anchor="middle" class="ttool">Tool registry</text><text x="575" y="223" text-anchor="middle" class="sm">MCP · discovered · skills</text>
+        <path d="M730 104 V160 H225 V188" class="loop" marker-end="url(#arL)"/>
+        <path d="M730 160 H400 V188" class="loop" marker-end="url(#arL)"/>
+        <path d="M730 160 H575 V188" class="loop" marker-end="url(#arL)"/>
+        <text x="470" y="152" text-anchor="middle" class="sm">lessons, only from grader-verified episodes</text>
+        <path d="M225 234 V262 H250 V128" class="loop" marker-end="url(#arL)"/>
+        <path d="M400 234 V262 H250" class="loop"/>
+        <path d="M575 234 V262 H400" class="loop"/>
+        <text x="400" y="278" text-anchor="middle" class="sm">retrieved into the next episode&rsquo;s context and tool set</text>
+        <rect x="15" y="160" width="112" height="34" rx="7" class="n"/><text x="71" y="174" text-anchor="middle">HITL gate</text><text x="71" y="187" text-anchor="middle" class="sm">before irreversible</text>
+        <line x1="127" y1="175" x2="162" y2="110" class="a" marker-end="url(#arL)"/>
+      </svg>
+      <figcaption>Nothing in this loop changes a weight. Each episode produces a trace; a grader (tests, a state diff) or a judge scores it; a reflection step turns the score into something storable; and three stores — the prompt, a case memory, the tool registry — carry it into the next episode. The red box is the boundary that makes the loop safe to run unattended; the gate is the human who can say no.</figcaption>
+    </figure>
+    <p>Every section below is one part of this picture. Sections 1 and 2 are where you measure it (τ-bench, the gyms). Section 3 is the claim that frozen weights still leave room to improve, and the taxonomy of where. Sections 4 and 5 are two inputs the loop depends on — reference trajectories and correct tool use. Section 6 is the five mechanisms. Section 7 is what goes wrong. Section 8 puts the parts in one architecture.</p>
+  </section>
+
+  <!-- 1 TAU-BENCH -->
+  <section id="tau">
+    <p class="sec-n">1 · τ-BENCH</p>
+    <h2>What τ-bench is, and how to read a τ-bench number</h2>
+    <p>τ-bench (Sierra, 2024) is a benchmark for <em>tool-agent-user</em> interaction. An agent has to complete a customer-service task by talking to a simulated user and calling tools against a database, while following a written policy. It was the first widely used benchmark where all four things an agentic deployment needs are present at once — and the first to report reliability rather than ability.</p>
+    <div class="cards">
+      <div class="cardx acc"><p class="t">A policy document</p><p>The rules the agent must follow — which changes are allowed, what fees apply, what needs confirmation. Written like a real SOP. Violating it fails the task even if the user is happy.</p><span class="ex">airline_policy.md §4.2 change fees</span></div>
+      <div class="cardx tool"><p class="t">Tools over a database</p><p>About a dozen functions per domain (look up a reservation, change flights, issue a refund) that read and write a seeded database. The database is the ground truth the grader inspects.</p><span class="ex">update_reservation_flights(...)</span></div>
+      <div class="cardx crit"><p class="t">A simulated user</p><p>An LLM given a persona, a goal, constraints and hidden information. It plays the customer; it reveals the loyalty tier only if asked; it refuses to pay more than it said.</p><span class="ex">goal: move the return flight; max fee $150</span></div>
+      <div class="cardx mem"><p class="t">State-based grading</p><p>Success is decided by comparing the final database state to the expected one, plus checks on the final answer the user received. Not by reading the transcript.</p><span class="ex">reservations.R7K2PQ.flights[1].date == 2026-11-03</span></div>
+    </div>
+    <h3>Two domains, one reliability metric</h3>
+    <p>The original release has an airline domain (on the order of 50 tasks) and a retail domain (on the order of 115 tasks). τ²-bench (2025) added a telecom domain with <em>dual control</em>: the user also acts in the environment and has to follow the agent&rsquo;s troubleshooting instructions, so the simulator becomes an actor the agent must direct.</p>
+    <p>The metric that made the benchmark matter is <strong>pass^k</strong> — the probability that <em>all k</em> of k independent trials on the same task succeed — rather than pass@k, the probability that at least one does. Run a task <code>n</code> times with <code>c</code> successes:</p>
+<pre>pass@k = 1 − C(n − c, k) / C(n, k)    <span class="c"># at least one of k succeeds  — ability   (rises with k)</span>
+pass^k = C(c, k) / C(n, k)            <span class="c"># all k succeed               — reliability (falls with k)</span>
+
+<span class="c"># n = 8 trials, c = 6 successes:</span>
+<span class="c">#   pass@1 0.75   pass@2 0.964   pass@4 1.0</span>
+<span class="c">#   pass^1 0.75   pass^2 0.536   pass^4 0.214   pass^8 0.0</span></pre>
+    <p>The gap between the two curves is the variance you would ship to customers. Frontier agents that score well on pass@1 fall off steeply on pass^k, which is the honest statement of how far they are from a deployment that behaves the same way every time. Three things follow for anyone building or buying a gym: pass^k only means something when the environment is deterministic (same seed, same simulator); a simulator that fails 5% of the time by itself caps every agent near 0.95<sup>k</sup>; and improving pass^k — the same task, every time — is exactly what the self-improvement mechanisms in section 6 are for.</p>
+    <div class="callout"><b>How to read a τ-bench result.</b> Ask four questions: which domain; pass@1 or pass^k and at what k; was the simulator pinned (which model, which prompt version); and what fraction of failures were policy violations versus wrong end state versus simulator breakdown. A number without those four is a headline, not a measurement.</div>
+  </section>
+
+  <!-- 2 AGENT GYMS -->
+  <section id="gyms">
+    <p class="sec-n">2 · AGENT GYMS</p>
+    <h2>Agent gyms: the environments agents practise and are measured in</h2>
+    <p>A gym is an environment with a reset, a step, and a reward, built so an agent can run thousands of episodes against it. τ-bench is one; so are Terminal-Bench and SWE-bench (tasks in Docker with tests as the grader), WebArena and OSWorld (self-hosted sites and real OS VMs with state checks), AppWorld (apps with unit tests on state), and the bespoke environments labs commission for their own domains. They all have the same six parts.</p>
+    <dl class="defs">
+      <div><dt>tasks</dt><dd>Initial state + goal + expected end state + forbidden actions. Frozen for evaluation; generated in volume for training.</dd></div>
+      <div><dt>state</dt><dd>A database, a filesystem, a VM snapshot — restored on every reset so episodes are comparable.</dd></div>
+      <div><dt>tools / action space</dt><dd>What the agent can do: API calls, a shell, a browser. Mocked and deterministic in a gym; real in production.</dd></div>
+      <div><dt>simulator / world</dt><dd>Whatever answers back: a user simulator, a mocked API with failure modes, a container.</dd></div>
+      <div><dt>grader / reward</dt><dd>Tests, a state diff, forbidden-action checks, and a rubric judge for the parts only text can show.</dd></div>
+      <div><dt>runner</dt><dd>The loop that resets, steps, enforces caps, records the trace and calls the grader.</dd></div>
+    </dl>
+    <h3>Evaluation gyms versus training gyms</h3>
+    <div class="tbl"><table>
+      <thead><tr><th></th><th>Evaluation</th><th>Training (RL, or the harness loop in this page)</th></tr></thead>
+      <tbody>
+        <tr><td class="k">tasks</td><td>Frozen, secret, a few hundred, calibrated</td><td>Thousands, generated from templates, with a curriculum</td></tr>
+        <tr><td class="k">determinism</td><td>Required — pass^k is meaningless without it</td><td>Required for reproducibility; seeds vary across episodes</td></tr>
+        <tr><td class="k">reward</td><td>Binary pass, reported with intervals</td><td>Binary plus penalties; partial credit is dangerous (it gets hacked)</td></tr>
+        <tr><td class="k">throughput</td><td>Hundreds of episodes per run</td><td>Hundreds of thousands; parallel resets, cheap simulators</td></tr>
+        <tr><td class="k">what it feeds</td><td>A decision about a model or a harness version</td><td>Weights (RL) — or, with weights frozen, the prompt, memory and tool stores in section 6</td></tr>
+      </tbody>
+    </table></div>
+    <p>The second column is the point of this page. A gym built for RL is exactly the gym you need to run the frozen-weight loop: the reward that would have become a gradient becomes a signal that decides whether an episode&rsquo;s lesson is worth storing. Scoping and pricing one is covered in the companion <a href="https://claude.ai/artifact/KnVJQ5SmhwaQzrpa9uXGTk">Scoping &amp; Pricing Playbook</a>; the trace every episode produces is dissected in <a href="https://claude.ai/artifact/MwS8o4VSHBRnUYHfk3sCsB">Agent Trace Anatomy</a>.</p>
+  </section>
+
+  <!-- 3 FROZEN -->
+  <section id="frozen">
+    <p class="sec-n">3 · IMPROVING WITHOUT FINE-TUNING</p>
+    <h2>Where improvement can live when the weights cannot change</h2>
+    <p>Fine-tuning moves knowledge into the parameters. Everything else moves it into the context the model sees at inference time, the tools it can reach, or the loop around it. That gives five places a frozen agent can get better, and each has its own signal, store and failure mode.</p>
+    <div class="tbl"><table>
+      <thead><tr><th>Lever</th><th>What changes</th><th>Signal that drives it</th><th>Where it is stored</th><th>Main risk</th></tr></thead>
+      <tbody>
+        <tr><td class="k">prompt</td><td>Instructions, rubric, few-shot exemplars, output format</td><td>Pass rate on a dev set of tasks</td><td>A versioned prompt store</td><td>Overfitting the dev set; silent regressions</td></tr>
+        <tr><td class="k">memory</td><td>Past situations and what worked; facts learned about this environment</td><td>Grader-verified success on an episode</td><td>A case store with embeddings (RAG)</td><td>Poisoned or stale cases; retrieval of the wrong one</td></tr>
+        <tr><td class="k">critique</td><td>The agent&rsquo;s own second look before acting or after failing</td><td>A grader or judge verdict, or a self-check</td><td>Nothing persistent — the loop itself; reflections may be stored</td><td>Self-rationalising; cost per step</td></tr>
+        <tr><td class="k">discovery</td><td>Which tools, resources and environment facts the agent knows exist</td><td>Finding a tool that fits; a dry run that succeeds</td><td>The tool registry; a skills library</td><td>Trusting a discovered tool; capability creep</td></tr>
+        <tr><td class="k">control loop</td><td>Retries, budgets, routing, approval gates</td><td>Cost and failure statistics</td><td>Harness configuration</td><td>Loops that never terminate; approvals that get rubber-stamped</td></tr>
+      </tbody>
+    </table></div>
+    <div class="callout"><b>Why this works at all.</b> Most agent failures on a fixed job are not capability failures. They are missing context (the model did not know the Docker socket needs a group), missing procedure (it did not know to check <code>--help</code> first), or missing a check (it did not run the tests). All three are fixable by changing what the model is shown and what it is allowed to do — which is why pass^k on the same task set rises without a single gradient step.</div>
+    <p>The discipline that makes it safe is the same in every case: a lesson enters a store only when a grader said the episode succeeded, every store is versioned, and a frozen eval split is re-run before a new version of any store is promoted. Improvement that is not measured on a frozen set is drift with good intentions.</p>
+  </section>
+
+  <!-- 4 GOLDEN TRAJECTORIES -->
+  <section id="golden">
+    <p class="sec-n">4 · GOLDEN TRAJECTORIES</p>
+    <h2>Golden trajectories: the reference runs everything else is measured against</h2>
+    <p>A golden trajectory is a complete, verified run of a task: every observation, every tool call with its arguments, every result, the final state and the reward. It is the agentic equivalent of a reference answer. In a gym it is also the proof that the task is valid — if no trajectory reaches the expected end state within the policy, the task is broken, not the agent.</p>
+    <div class="two">
+      <div>
+        <h4>How they are produced</h4>
+        <ul class="tight">
+          <li><b>Human demonstration</b> through the same tool interface, recorded as a trace. Expensive, highest trust.</li>
+          <li><b>Verified agent runs</b>: a strong agent&rsquo;s episode that the grader passed and a human audited for policy and reward hacking.</li>
+          <li><b>Oracle scripts</b> written by the task author (the <code>solve.sh</code> in a terminal task).</li>
+          <li><b>Filtered rollouts</b>: many runs, keep the ones that pass, dedupe by action sequence, audit a sample.</li>
+        </ul>
+      </div>
+      <div>
+        <h4>What they are used for</h4>
+        <ul class="tight">
+          <li><b>Validity oracle</b>: the task is accepted only once a golden trajectory passes the grader.</li>
+          <li><b>Exemplars</b>: the best few become few-shot demonstrations in the prompt, or the seed cases in episodic memory.</li>
+          <li><b>Trajectory evaluation</b>: precision, recall and in-order match of an agent&rsquo;s tool calls against the reference.</li>
+          <li><b>Targets</b> for distillation or SFT later, if fine-tuning ever enters the picture.</li>
+        </ul>
+      </div>
+    </div>
+<pre>{"task_id": "airline_0417", "golden": true, "source": "human_demo", "audited_by": "sme_12", "reward": 1.0,
+ "steps": [
+   {"t": 1, "obs": "user: I need to move my return flight to the next day (R7K2PQ)",
+    "action": {"tool": "get_reservation_details", "args": {"reservation_id": "R7K2PQ"}}},
+   {"t": 2, "obs": "{...reservation...}", "action": {"reply": "The change fee is $120 under policy 4.2. Shall I proceed?"}},
+   {"t": 3, "obs": "user: yes",
+    "action": {"tool": "update_reservation_flights", "args": {"reservation_id": "R7K2PQ",
+               "flights": ["HAT045-2026-11-03"], "payment_id": "card_8812"}}},
+   {"t": 4, "obs": "{\"status\": \"ok\"}", "action": {"reply": "Done — your return is now on 3 November."}}],
+ "end_state_hash": "9f2c…", "policy_clauses_touched": ["4.2"], "forbidden_actions_taken": []}</pre>
+    <div class="warn"><b>The trap.</b> There is rarely one right trajectory. Grading an agent by exact match to the golden path punishes a valid different route (look up the flight before the reservation). Grade the <em>end state</em> and the <em>constraints</em>; use the golden trajectory for validity, exemplars and diagnostics, not as the answer key.</div>
+  </section>
+
+  <!-- 5 TOOLS -->
+  <section id="tools">
+    <p class="sec-n">5 · RIGHT TOOL, RIGHT API</p>
+    <h2>Right tool usage: selection, arguments, contracts</h2>
+    <p>Most agent episodes are a sequence of tool calls, so &ldquo;did it use the right tool, with the right arguments, in a sensible order&rdquo; is a metric on its own — the Berkeley Function Calling Leaderboard measures exactly that with syntax-tree and execution matching — and it is the single most improvable thing in a frozen-weight system, because tool descriptions are prompts.</p>
+    <div class="cards">
+      <div class="cardx tool"><p class="t">Selection</p><p>The model picks a tool from its descriptions. A description that says what the tool is <em>for</em>, when <em>not</em> to use it, and what it returns, is worth more than any instruction elsewhere in the prompt.</p><span class="ex">"Use for one reservation by id. For search, use find_reservations."</span></div>
+      <div class="cardx tool"><p class="t">Arguments</p><p>Typed schemas with enums and examples; required fields; units in the name (<code>amount_usd</code>); ids not names. Validate before calling; return the validation error to the model, not an exception.</p><span class="ex">"payment_id": {"pattern": "^card_"}</span></div>
+      <div class="cardx tool"><p class="t">Contracts</p><p>Idempotent writes with a request key; explicit error types the model can act on; pagination and limits stated; side effects declared so the HITL gate can key on them.</p><span class="ex">side_effect: "financial" → requires approval</span></div>
+      <div class="cardx tool"><p class="t">Least privilege</p><p>The right tool is also the narrowest one that does the job: a <code>get_reservation</code> tool over a raw SQL tool, a read-only shell over a root shell.</p><span class="ex">prefer read tools; gate write tools</span></div>
+    </div>
+    <h3>The metric and the loop that improves it</h3>
+<pre><span class="c"># tool-call accuracy against a golden trajectory (order-insensitive form)</span>
+expected = {("get_reservation_details", "R7K2PQ"), ("update_reservation_flights", "R7K2PQ")}
+actual   = {(c.name, c.args["reservation_id"]) for c in trace.tool_calls}
+precision = len(expected &amp; actual) / len(actual)      <span class="c"># did it call things it shouldn't have?</span>
+recall    = len(expected &amp; actual) / len(expected)    <span class="c"># did it miss a required call?</span>
+in_order  = is_subsequence([e[0] for e in golden_order], [c.name for c in trace.tool_calls])</pre>
+    <p>When precision is low, the fix is usually in a description (the model reached for a tool it should not have); when recall is low, in the instructions or an exemplar (it did not know a step was required); when arguments are wrong, in the schema. All three are prompt-store changes, measured on the dev set, versioned — the first mechanism of section 6.</p>
+    <p>Two patterns from the large-catalog world are worth knowing. <b>Deferred tool loading</b>: with hundreds of tools, only names are in context and the agent searches for and loads the schema it needs — the harness this page was written in does exactly this. <b>Result validation</b>: a tool result is data; a schema check on the way back catches a broken mock or an injected payload before the model reads it (section 7).</p>
+  </section>
+
+  <!-- 6.1 PROMPT OPTIMISATION -->
+  <section id="prompt">
+    <p class="sec-n">6 · THE MECHANISMS &nbsp;·&nbsp; 6.1 DYNAMIC PROMPT OPTIMISATION</p>
+    <h2>Dynamic prompt optimisation: the prompt as a parameter</h2>
+    <p>Treat the instructions, the few-shot exemplars and the output format as parameters, and optimise them against a metric on a development set — by a program, on a schedule, with a held-out set to catch overfitting. Four families exist, and production systems usually combine the first and the last.</p>
+    <div class="tbl"><table>
+      <thead><tr><th>Family</th><th>How it works</th><th>Known as</th><th>Best for</th></tr></thead>
+      <tbody>
+        <tr><td class="k">exemplar bootstrapping</td><td>Run the agent on the dev set; keep traces the grader passed; select the most informative as few-shot demonstrations.</td><td>DSPy <code>BootstrapFewShot</code></td><td>Format and procedure errors; cheap; first thing to try.</td></tr>
+        <tr><td class="k">instruction search</td><td>An LLM proposes instruction variants; each is scored on the dev set; the best survive and are mutated again.</td><td>OPRO; DSPy <code>MIPROv2</code> (joint instructions + demos, Bayesian search)</td><td>Ambiguous task definitions; rubric wording.</td></tr>
+        <tr><td class="k">textual gradients</td><td>A critic writes natural-language feedback on each failure; an editor applies the feedback to the prompt; execution traces are the evidence.</td><td>TextGrad; DSPy <code>GEPA</code> (reflective evolution over traces, Pareto frontier of candidates)</td><td>Agentic tasks where the failure is visible in the trace.</td></tr>
+        <tr><td class="k">failure-driven rules</td><td>Cluster the failures, write one rule per cluster, add it to the prompt, re-measure — the same loop as improving a judge&rsquo;s rubric.</td><td>the manual version of the above</td><td>Every system, every week.</td></tr>
+      </tbody>
+    </table></div>
+<pre><span class="c"># a minimal evolutionary prompt optimiser; grader(task, output) -> 0/1 is the gym's grader</span>
+<span class="k">def</span> score(prompt, tasks, k=3):
+    <span class="c"># pass^k-style: a task counts only if all k runs pass — optimise reliability, not luck</span>
+    <span class="k">return</span> sum(all(grader(t, run_agent(prompt, t, seed=s)) <span class="k">for</span> s <span class="k">in</span> range(k)) <span class="k">for</span> t <span class="k">in</span> tasks) / len(tasks)
+
+<span class="k">def</span> optimise(base_prompt, dev, holdout, rounds=6, beam=4):
+    pool = [(score(base_prompt, dev), base_prompt)]
+    <span class="k">for</span> r <span class="k">in</span> range(rounds):
+        parents = sorted(pool, reverse=True)[:beam]
+        children = []
+        <span class="k">for</span> s, p <span class="k">in</span> parents:
+            failures = [(t, run_agent(p, t)) <span class="k">for</span> t <span class="k">in</span> dev <span class="k">if</span> <span class="k">not</span> grader(t, run_agent(p, t))]
+            feedback = critic_llm(p, failures)                 <span class="c"># "the agent never checks --help before running a CLI"</span>
+            children.append(editor_llm(p, feedback))           <span class="c"># returns a revised prompt</span>
+        pool = parents + [(score(c, dev), c) <span class="k">for</span> c <span class="k">in</span> children]
+    best_s, best = max(pool)
+    <span class="k">assert</span> score(best, holdout) &gt;= score(base_prompt, holdout)    <span class="c"># promote only if it generalises</span>
+    <span class="k">return</span> register_prompt_version(best, dev_score=best_s)</pre>
+    <div class="warn"><b>What goes wrong.</b> Overfitting the dev set (keep a held-out split and a frozen eval); gaming the metric (a grader that checks output format gets prompts that produce format and nothing else); prompt bloat (every round adds a sentence; prune); non-determinism (score with several seeds, as above); and silent regressions when a new prompt version is promoted without re-running the frozen split.</div>
+  </section>
+
+  <!-- 6.2 EPISODIC MEMORY -->
+  <section id="memory">
+    <p class="sec-n">6.2 · EPISODIC MEMORY IN RAG</p>
+    <h2>Episodic memory: successful patterns stored and retrieved</h2>
+    <p>The most direct way a frozen agent learns is the way a support engineer does: remember what worked last time. An episode that the grader passed is distilled into a <em>case</em> — the situation, what was tried, what fixed it, how it was verified — embedded, and stored. The next time a similar situation appears, the case is retrieved into context as evidence. Three kinds of memory come out of this, and they are stored differently.</p>
+    <div class="cards">
+      <div class="cardx mem"><p class="t">Episodic</p><p>What happened: a situation and its resolution, with the evidence. Retrieved by similarity of the current error or state.</p><span class="ex">"docker.sock permission denied → add user to docker group"</span></div>
+      <div class="cardx mem"><p class="t">Semantic</p><p>Facts about this environment, learned once: the staging database is read-only; the CI runner has no network; tests live under <code>tests/</code> not <code>test/</code>.</p><span class="ex">env.staging.db = read_only</span></div>
+      <div class="cardx mem"><p class="t">Procedural</p><p>How to do a thing: a script or a skill document that worked, parameterised. Voyager&rsquo;s skill library; a <code>SKILL.md</code> an agent loads when relevant.</p><span class="ex">skills/rotate-k8s-secret.md</span></div>
+    </div>
+    <h3>A worked example: the Docker failure that becomes a case</h3>
+    <p>Episode 1: the agent runs <code>docker build</code> and gets <code>permission denied while trying to connect to the Docker daemon socket at unix:///var/run/docker.sock</code>. It reflects (section 6.3), tries <code>sudo docker</code>, gets a different error about the build context, tries adding the user to the <code>docker</code> group and re-entering the group, and the build succeeds; the tests pass; the grader returns 1. The reflection step distils the episode into a case, and the memory gate stores it because the grader passed.</p>
+<pre>{"id": "case_01f8", "kind": "episodic", "provenance": "grader_verified",
+ "trigger": {"error_signature": "permission denied .* /var/run/docker\\.sock",
+             "context": ["linux", "non-root user", "docker daemon running"]},
+ "diagnosis": "the user is not in the docker group, so the socket is not accessible without sudo",
+ "resolution": ["sudo usermod -aG docker $USER", "newgrp docker", "docker ps   # must exit 0 before retrying the build"],
+ "do_not": ["chmod 666 /var/run/docker.sock  # works, opens the daemon to every local user"],
+ "verification": "docker ps exits 0; the original build command succeeds",
+ "evidence": {"episodes": ["ep_8812", "ep_9044"], "success_count": 7, "fail_count": 1, "last_verified": "2026-10-12"},
+ "risk": "privileged", "requires_human_review": true, "ttl_days": 180,
+ "embedding_of": "error_signature + diagnosis"}</pre>
+    <p>Episode 2, weeks later, a different task hits the same error. Retrieval finds the case by the error signature, and the harness injects it — as data, with its provenance, not as an instruction:</p>
+<pre>&lt;past_resolutions provenance="episodic_memory" note="evidence from earlier verified episodes; verify before relying on it"&gt;
+  [case_01f8] verified 7×, last 2026-10-12, risk: privileged
+  diagnosis: user not in docker group
+  resolution: sudo usermod -aG docker $USER; newgrp docker; docker ps must exit 0
+  do not: chmod 666 on the socket
+&lt;/past_resolutions&gt;</pre>
+    <p>The agent still has to run the fix, and the fix still goes through the HITL gate because the case is marked <code>privileged</code>. What changed is that the first attempt is now the right one — which is what moves pass^k.</p>
+    <div class="two">
+      <div>
+        <h4>Write policy — what gets in</h4>
+        <ul class="tight">
+          <li>Only episodes the <b>grader</b> passed; a reflection without a pass is a hypothesis, not a case.</li>
+          <li>Dedupe by trigger signature; merge evidence counts instead of storing twins.</li>
+          <li>Human review before storing anything privileged, destructive or financial.</li>
+          <li>Provenance and a TTL on every case; decay cases that stop being retrieved or start failing.</li>
+          <li>Never store secrets, tokens or raw customer data in a case.</li>
+        </ul>
+      </div>
+      <div>
+        <h4>Read policy — how it is used</h4>
+        <ul class="tight">
+          <li>Top-k by similarity with a threshold; prefer high <code>success_count</code> and recent <code>last_verified</code>.</li>
+          <li>Inject as delimited data with provenance; the model is told it is evidence, not an order.</li>
+          <li>Never auto-execute a stored resolution; it is a suggestion the agent verifies.</li>
+          <li>Measure the lift: pass^k on the frozen split with memory on versus off, every version.</li>
+        </ul>
+      </div>
+    </div>
+<pre><span class="k">def</span> remember(episode, grade):
+    <span class="k">if</span> grade.reward &lt; 1: <span class="k">return</span>                                   <span class="c"># hypotheses are not cases</span>
+    case = distil_llm(episode)                                    <span class="c"># trigger, diagnosis, resolution, verification, risk</span>
+    existing = store.find(signature=case.trigger.error_signature)
+    <span class="k">if</span> existing: existing.evidence.merge(episode.id); <span class="k">return</span>
+    <span class="k">if</span> case.risk <span class="k">in</span> {"privileged", "destructive", "financial"}:
+        review_queue.put(case); <span class="k">return</span>                          <span class="c"># a human promotes it</span>
+    store.add(case, embedding=embed(case.trigger.error_signature + case.diagnosis), ttl_days=180)
+
+<span class="k">def</span> recall(observation, k=3, min_sim=0.82):
+    hits = store.search(embed(observation.error_text), k=k)
+    hits = [h <span class="k">for</span> h <span class="k">in</span> hits <span class="k">if</span> h.sim &gt;= min_sim <span class="k">and</span> h.evidence.success_count &gt; h.evidence.fail_count]
+    <span class="k">return</span> render_as_data(hits)                                   <span class="c"># delimited block with provenance, never bare text</span></pre>
+    <p>The systems to know by name: <b>Reflexion</b>&rsquo;s episodic buffer of reflections; <b>Voyager</b>&rsquo;s skill library of verified programs; <b>ExpeL</b>, which turns experiences into reusable insights; the <b>Generative Agents</b> memory stream with recency, importance and relevance scoring; <b>MemGPT/Letta</b> for paging memory in and out of context; and the production stores — LangGraph&rsquo;s store, Mem0 — that give an agent a namespaced, searchable memory across threads.</p>
+  </section>
+
+  <!-- 6.3 CRITIQUE & REFLEXION -->
+  <section id="critique">
+    <p class="sec-n">6.3 · AUTOMATED CRITIQUE AND REFLEXION</p>
+    <h2>Automated critique and Reflexion: the second look</h2>
+    <p>Reflexion (Shinn et al., 2023) is the pattern most harness loops descend from: an <em>actor</em> attempts the task, an <em>evaluator</em> scores the attempt, a <em>self-reflection</em> step writes, in words, what went wrong and what to do differently, and that reflection is placed in memory for the next attempt. It was called verbal reinforcement learning because the reflection plays the role a gradient would — and it works when, and only when, the evaluator is trustworthy.</p>
+    <div class="tbl"><table>
+      <thead><tr><th>Pattern</th><th>Who critiques</th><th>Grounded in</th><th>Helps with</th><th>Fails when</th></tr></thead>
+      <tbody>
+        <tr><td class="k">Reflexion</td><td>The model, after an external verdict</td><td>A grader: tests, exact match, a state diff</td><td>Multi-attempt tasks with a real signal</td><td>The verdict is noisy; the reflection then rationalises noise</td></tr>
+        <tr><td class="k">Self-Refine</td><td>The same model, on its own output</td><td>Nothing external</td><td>Style, format, completeness checklists</td><td>Correctness — a model that was wrong is wrong again, confidently</td></tr>
+        <tr><td class="k">CRITIC</td><td>The model, using tools</td><td>Running the code, searching, calculating</td><td>Anything verifiable with a tool</td><td>No tool can check the claim</td></tr>
+        <tr><td class="k">Judge in the loop</td><td>A separate model, different family</td><td>A rubric calibrated against humans</td><td>Policy adherence, tone, process quality</td><td>The judge is unmeasured; the agent learns to please it</td></tr>
+      </tbody>
+    </table></div>
+<pre><span class="k">def</span> reflexion(task, max_attempts=3):
+    reflections = []                                               <span class="c"># episodic buffer for this task</span>
+    <span class="k">for</span> attempt <span class="k">in</span> range(max_attempts):
+        episode = run_agent(task, context=render_as_data(reflections))
+        grade = grader(task, episode)                              <span class="c"># tests / state diff first ...</span>
+        <span class="k">if</span> grade.reward == 1:
+            remember(episode, grade)                               <span class="c"># ... then the case goes to memory (6.2)</span>
+            <span class="k">return</span> episode
+        verdict = judge(task, episode) <span class="k">if</span> grade.reason <span class="k">is</span> None <span class="k">else</span> grade  <span class="c"># ... judge only where the grader is blind</span>
+        reflections.append(reflect_llm(task, episode, verdict))    <span class="c"># "I edited the test instead of the code; next time ..."</span>
+    <span class="k">return</span> escalate(task, episode, reflections)                   <span class="c"># HITL after the budget is spent</span></pre>
+    <p>Three rules keep critique honest. Ground it: a critic with a tool or a test beats a critic with an opinion. Separate it: the judge is a different model family and is itself measured against humans. Budget it: two or three reflections, then a human — an unbounded reflect-retry loop is the most expensive way to fail.</p>
+  </section>
+
+  <!-- 6.4 DYNAMIC DISCOVERY -->
+  <section id="discovery">
+    <p class="sec-n">6.4 · DYNAMIC DISCOVERY</p>
+    <h2>Dynamic discovery of tools and environments</h2>
+    <p>An agent that only knows the tools it was launched with cannot improve its reach. Discovery is the mechanism by which it learns what exists — tools, resources, procedures, and the facts of the environment it is standing in — and the registry is where what it learned is kept.</p>
+    <div class="two">
+      <div>
+        <h4>Tool discovery</h4>
+        <ul class="tight">
+          <li><b>MCP</b>: a server advertises <code>tools/list</code>, <code>resources/list</code> and <code>prompts/list</code>; the client fetches schemas at connect time and again when the server signals a change.</li>
+          <li><b>OpenAPI</b> specs for HTTP services; <code>--help</code> and <code>man</code> for CLIs; package introspection for libraries.</li>
+          <li><b>Tool search</b> over a large catalogue: index the descriptions, retrieve by the task, load only the matching schemas — deferred loading keeps context small and selection sharp.</li>
+          <li><b>Skills</b>: procedure documents discovered by description and loaded when relevant — procedural memory you can author, review and version.</li>
+        </ul>
+      </div>
+      <div>
+        <h4>Environment discovery</h4>
+        <ul class="tight">
+          <li>Look before acting: <code>ls</code>, the README, <code>git log</code>, <code>env</code>, <code>which</code>, <code>docker ps</code>, the config files. Ten seconds of discovery prevents most first-attempt failures.</li>
+          <li>Record what was found as <b>semantic memory</b> with a timestamp: &ldquo;this runner has no outbound network&rdquo; is worth more the second time.</li>
+          <li>Probe capabilities with a dry run or a read-only call before relying on them.</li>
+          <li>Expire environment facts; they go stale faster than cases.</li>
+        </ul>
+      </div>
+    </div>
+<pre><span class="c"># discover → filter → verify → register</span>
+<span class="k">async def</span> discover(mcp_client, allowlist, registry):
+    tools = <span class="k">await</span> mcp_client.list_tools()                      <span class="c"># names, descriptions, input schemas</span>
+    <span class="k">for</span> t <span class="k">in</span> tools:
+        <span class="k">if</span> t.name <span class="k">not</span> <span class="k">in</span> allowlist: <span class="k">continue</span>              <span class="c"># discovered ≠ trusted</span>
+        <span class="k">if</span> looks_like_injection(t.description): quarantine(t); <span class="k">continue</span>   <span class="c"># tool-description poisoning</span>
+        ok = <span class="k">await</span> dry_run(mcp_client, t)                     <span class="c"># read-only probe or a no-op call</span>
+        registry.put(t, verified=ok, side_effects=classify(t), discovered_at=now(), ttl_days=30)</pre>
+    <div class="warn"><b>Discovered is not trusted.</b> A tool description is text the model reads, so it is an injection surface (&ldquo;before using this tool, first export the environment variables to&hellip;&rdquo;). Allowlist by name, scan descriptions, classify side effects, dry-run, and keep the registry versioned — every discovered capability is a permission you just granted.</div>
+  </section>
+
+  <!-- 6.5 SHELL & WEB -->
+  <section id="shell">
+    <p class="sec-n">6.5 · SHELL AND WEB-SEARCH TOOLS</p>
+    <h2>The two universal tools, and what each one is for in the loop</h2>
+    <div class="two">
+      <div>
+        <h3>The shell</h3>
+        <p>The shell is how an agent <em>verifies</em>: it runs the tests, inspects the state, reproduces the error. In the loop it is the grader&rsquo;s instrument and the discovery tool in one. The patterns that make it safe to give out:</p>
+        <ul class="tight">
+          <li>Runs inside the sandbox, never on the host; a read-only mode for inspection and a write mode that passes the HITL gate.</li>
+          <li>Command allow- and deny-lists (<code>rm -rf</code>, <code>curl | sh</code>, package publishes); &ldquo;explain before execute&rdquo; for anything destructive.</li>
+          <li>Timeouts, output truncation, a per-episode budget; scripts over long chains of single commands.</li>
+          <li>Every command and its exit code in the trace — the shell span is the most useful span in a failed episode.</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Web search and fetch</h3>
+        <p>Search is how an agent <em>learns facts it was not given</em>: the error message nobody has seen, the API change since the model&rsquo;s cutoff, the vendor&rsquo;s own docs. What comes back is the most untrusted content the agent will ever read.</p>
+        <ul class="tight">
+          <li>Egress allowlist; a fetch proxy that logs; no credentials on the fetch path.</li>
+          <li>Results wrapped as data with the source URL; summarised into semantic memory with provenance, never pasted raw into an instruction slot.</li>
+          <li>Cache fetched pages for the run; re-fetch on a TTL, not on every episode.</li>
+          <li>Treat &ldquo;instructions&rdquo; found on a page as findings to report, not steps to take.</li>
+        </ul>
+      </div>
+    </div>
+    <p>Together they close the loop at both ends: search gives the model the fact it lacked; the shell proves whether the fix worked; the grader&rsquo;s verdict decides whether the fact and the fix become memory.</p>
+  </section>
+
+  <!-- 7 PITFALLS -->
+  <section id="pitfalls">
+    <p class="sec-n">7 · PITFALLS</p>
+    <h2>Pitfalls: the four that decide whether the loop can run unattended</h2>
+    <div class="tbl"><table>
+      <thead><tr><th>Pitfall</th><th>How it shows up</th><th>Controls</th></tr></thead>
+      <tbody>
+        <tr><td class="k">prompt injection</td><td>Instructions arrive inside tool results, web pages, files, tool descriptions — and, in a self-improving system, inside <b>memory</b>: a poisoned case stored once is retrieved on every similar episode.</td><td>Every tool result and retrieved case is delimited data with provenance; an instruction hierarchy the model is reminded of; action allowlists; an injection detector on retrieved content; the memory write gate (grader-verified, deduped, human review for privileged cases); never executing instructions found in content.</td></tr>
+        <tr><td class="k">ephemeral sandboxing</td><td>A fresh container or micro-VM per episode is what makes failure cheap and compromise temporary — and it is also why nothing learned survives unless it is written to a store outside the sandbox. Warm-up cost tempts people to reuse containers.</td><td>gVisor or Firecracker, snapshot and restore, no secrets inside, memory and traces externalised through a narrow API, image caches for warm-up, a kill switch per episode.</td></tr>
+        <tr><td class="k">network segregation</td><td>The agent&rsquo;s shell reaches the host network, the cloud metadata endpoint, or production from a test gym; a fetched page triggers a request to an attacker&rsquo;s host.</td><td>Egress allowlist through a logging proxy; block link-local and metadata addresses; separate networks for eval, training and production; DNS control; the sandbox&rsquo;s network is not the host&rsquo;s.</td></tr>
+        <tr><td class="k">human in the loop</td><td>No gate before a payment, a delete, a send or a deploy; or a gate that approves everything because it shows nothing useful.</td><td>An interrupt before irreversible or side-effecting actions, keyed on the tool&rsquo;s declared side effect; the diff and the reason shown to the approver; approval rate limits; budgets and a stop button; escalation when confidence is low; every approval in the audit log.</td></tr>
+      </tbody>
+    </table></div>
+    <h3>And three that are specific to improvement loops</h3>
+    <ul class="tight">
+      <li><b>Reward hacking becomes memory.</b> If the grader can be satisfied without the goal (editing the test, telling the simulator what it wants to hear), the loop stores the hack as a case and retrieves it forever. Audit a sample of passed episodes for the goal, not the reward, before their cases are promoted.</li>
+      <li><b>Optimising on the eval.</b> A prompt tuned on the frozen split is no longer being evaluated by it. Dev, held-out and frozen eval are three disjoint sets, and promotion requires the third.</li>
+      <li><b>Cost without a ceiling.</b> Reflection and retry loops, discovery probes and judge calls multiply tokens per task. Budget per episode, per task and per day; report cost next to pass^k.</li>
+    </ul>
+  </section>
+
+  <!-- 8 ARCHITECTURE -->
+  <section id="arch">
+    <p class="sec-n">8 · REFERENCE ARCHITECTURE</p>
+    <h2>Putting it together</h2>
+    <figure class="fig">
+      <svg class="dg" viewBox="0 0 880 340" role="img" aria-label="Reference architecture for a self-improving agent with a frozen model: the model exchanges actions and context with a runner inside the harness; the harness holds versioned stores — prompt store, episodic memory, tool registry, skills library — a human-in-the-loop gate on the path to the sandbox, a critic and a reflect step that write verified lessons back to the stores, a trace store and an evaluation split that gates store promotion; the sandbox holds the shell, allowlisted web fetch, APIs or mocks, and the grader, and returns results as data.">
+        <defs><marker id="arA" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L8 4 L0 8 z"/></marker></defs>
+        <rect x="160" y="12" width="510" height="318" rx="10" class="grp"/><text x="172" y="27" class="sm">HARNESS — what you engineer and version</text>
+        <rect x="340" y="36" width="320" height="106" rx="8" class="grp"/><text x="352" y="49" class="sm">stores, versioned</text>
+        <rect x="350" y="58" width="140" height="38" rx="7" class="acc"/><text x="420" y="73" text-anchor="middle" class="tacc">Prompt store</text><text x="420" y="87" text-anchor="middle" class="sm">instructions · demos</text>
+        <rect x="510" y="58" width="140" height="38" rx="7" class="mem"/><text x="580" y="73" text-anchor="middle" class="tmem">Episodic memory</text><text x="580" y="87" text-anchor="middle" class="sm">cases · facts</text>
+        <rect x="350" y="100" width="140" height="38" rx="7" class="tool"/><text x="420" y="115" text-anchor="middle" class="ttool">Tool registry</text><text x="420" y="129" text-anchor="middle" class="sm">MCP · allowlist</text>
+        <rect x="510" y="100" width="140" height="38" rx="7" class="tool"/><text x="580" y="115" text-anchor="middle" class="ttool">Skills library</text><text x="580" y="129" text-anchor="middle" class="sm">procedures · versioned</text>
+        <rect x="10" y="160" width="120" height="46" rx="7" class="n"/><text x="70" y="179" text-anchor="middle">Frozen model</text><text x="70" y="194" text-anchor="middle" class="sm">no weight changes</text>
+        <rect x="170" y="160" width="150" height="46" rx="7" class="acc"/><text x="245" y="179" text-anchor="middle" class="tacc">Runner</text><text x="245" y="194" text-anchor="middle" class="sm">budgets · retries · routing</text>
+        <rect x="350" y="160" width="140" height="46" rx="7" class="n"/><text x="420" y="179" text-anchor="middle">HITL gate</text><text x="420" y="194" text-anchor="middle" class="sm">side effects</text>
+        <rect x="170" y="232" width="150" height="38" rx="7" class="n"/><text x="245" y="247" text-anchor="middle">Trace store</text><text x="245" y="261" text-anchor="middle" class="sm">one trace per episode</text>
+        <rect x="170" y="280" width="150" height="38" rx="7" class="n"/><text x="245" y="295" text-anchor="middle">Evals · frozen split</text><text x="245" y="309" text-anchor="middle" class="sm">pass^k gates promotion</text>
+        <rect x="350" y="232" width="140" height="38" rx="7" class="crit"/><text x="420" y="247" text-anchor="middle" class="tcrit">Critic / judge</text><text x="420" y="261" text-anchor="middle" class="sm">other family</text>
+        <rect x="510" y="232" width="140" height="38" rx="7" class="crit"/><text x="580" y="247" text-anchor="middle" class="tcrit">Reflect → store</text><text x="580" y="261" text-anchor="middle" class="sm">verified only</text>
+        <rect x="700" y="36" width="170" height="282" rx="8" class="risk"/><text x="785" y="50" text-anchor="middle" class="trisk sm">SANDBOX</text><text x="785" y="62" text-anchor="middle" class="trisk sm">ephemeral · egress allowlist</text>
+        <rect x="712" y="72" width="146" height="36" rx="7" class="tool"/><text x="785" y="87" text-anchor="middle" class="ttool">Shell</text><text x="785" y="101" text-anchor="middle" class="sm">read / write modes</text>
+        <rect x="712" y="116" width="146" height="36" rx="7" class="tool"/><text x="785" y="131" text-anchor="middle" class="ttool">Web search / fetch</text><text x="785" y="145" text-anchor="middle" class="sm">allowlisted · as data</text>
+        <rect x="712" y="160" width="146" height="36" rx="7" class="tool"/><text x="785" y="175" text-anchor="middle" class="ttool">APIs / MCP mocks</text><text x="785" y="189" text-anchor="middle" class="sm">deterministic in a gym</text>
+        <rect x="712" y="232" width="146" height="38" rx="7" class="crit"/><text x="785" y="247" text-anchor="middle" class="tcrit">Grader</text><text x="785" y="261" text-anchor="middle" class="sm">tests · state diff</text>
+        <line x1="130" y1="176" x2="168" y2="176" class="a" marker-end="url(#arA)"/><text x="150" y="171" text-anchor="middle" class="sm">action</text>
+        <line x1="168" y1="192" x2="132" y2="192" class="a" marker-end="url(#arA)"/><text x="150" y="206" text-anchor="middle" class="sm">context</text>
+        <path d="M340 119 H300 V158" class="a" marker-end="url(#arA)"/><text x="318" y="113" text-anchor="end" class="sm">stores → context</text>
+        <line x1="320" y1="176" x2="348" y2="176" class="a" marker-end="url(#arA)"/>
+        <line x1="348" y1="192" x2="322" y2="192" class="a" marker-end="url(#arA)"/>
+        <line x1="490" y1="176" x2="698" y2="176" class="a" marker-end="url(#arA)"/><text x="594" y="170" text-anchor="middle" class="sm">approved tool calls</text>
+        <line x1="698" y1="192" x2="492" y2="192" class="a" marker-end="url(#arA)"/><text x="594" y="207" text-anchor="middle" class="sm">results, as data</text>
+        <line x1="245" y1="206" x2="245" y2="230" class="a" marker-end="url(#arA)"/>
+        <line x1="245" y1="270" x2="245" y2="278" class="a" marker-end="url(#arA)"/>
+        <line x1="320" y1="251" x2="348" y2="251" class="a" marker-end="url(#arA)"/>
+        <line x1="490" y1="251" x2="508" y2="251" class="a" marker-end="url(#arA)"/>
+        <line x1="712" y1="251" x2="652" y2="251" class="a" marker-end="url(#arA)"/><text x="682" y="246" text-anchor="middle" class="sm">verdict</text>
+        <path d="M580 232 V144" class="loop" marker-end="url(#arA)"/><text x="596" y="155" class="sm">lessons</text>
+      </svg>
+      <figcaption>The model is a fixed component; everything that improves is a versioned store the runner reads from, and every path by which a store changes passes a grader and, for anything privileged, a human. The sandbox returns results as data and never reaches the stores directly.</figcaption>
+    </figure>
+    <h3>A maturity ladder, with the number to watch</h3>
+    <div class="tbl"><table>
+      <thead><tr><th>Level</th><th>What the harness does</th><th>Typical gain</th><th>What to measure</th></tr></thead>
+      <tbody>
+        <tr><td class="k">0 · static</td><td>One prompt, fixed tools, no retries.</td><td>baseline</td><td>pass@1 and pass^k on the frozen gym split; cost per episode</td></tr>
+        <tr><td class="k">1 · verify &amp; retry</td><td>Grader in the loop; bounded Reflexion; escalation to a human.</td><td>large on verifiable tasks</td><td>pass^k rises faster than pass@1; attempts per success</td></tr>
+        <tr><td class="k">2 · remember</td><td>Episodic and semantic memory with a write gate; retrieval as data.</td><td>compounding on recurring situations</td><td>first-attempt success rate; lift with memory on vs off</td></tr>
+        <tr><td class="k">3 · optimise</td><td>Prompt and exemplar optimisation on a dev set, promoted through the frozen split.</td><td>steady, measurable</td><td>held-out score vs dev score (overfitting gap)</td></tr>
+        <tr><td class="k">4 · discover</td><td>Tool and environment discovery with verification; skills library.</td><td>reach, not just reliability</td><td>tasks newly solvable; tool-call precision</td></tr>
+        <tr><td class="k">5 · train</td><td>Golden trajectories and graded episodes become SFT or RL data.</td><td>out of scope here</td><td>everything above, on a model you must re-validate</td></tr>
+      </tbody>
+    </table></div>
+    <div class="callout"><b>The one-sentence version.</b> A self-improving agent is a frozen model plus four versioned stores — prompt, memory, tools, and the critic that guards them — in a loop where a grader decides what gets stored, a human decides what gets executed, and a frozen gym split decides what gets promoted.</div>
+  </section>
+
+  <footer>
+    <p>Written October 2026 as a companion to the Agentic AI Field Guide and the Scoping &amp; Pricing Playbook in the AI Engineer Job Playbook repo. Sources consulted: the τ-bench and τ²-bench papers (Sierra), Terminal-Bench and SWE-bench, the Reflexion, Self-Refine and CRITIC papers, DSPy (and its MIPROv2 and GEPA optimisers), OPRO and TextGrad, Voyager, ExpeL and Generative Agents for memory, the Model Context Protocol specification, and the published prompt-injection guidance from the major labs. Benchmark figures are approximate and dated; verify before quoting.</p>
+  </footer>
+</div>
+
+</body>
+</html>
