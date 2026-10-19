@@ -20,56 +20,39 @@
   :root[data-theme="dark"]{--paper:#171b19;--sheet:#202622;--ink:#eef1ed;--muted:#b4bcb6;--faint:#879189;--line:#39413c;--sage:#9bc2aa;--sage-soft:#25372d;--peach:#e5a180;--peach-soft:#3b2b24;--lilac:#b3a8d6;--lilac-soft:#302c3c;--blue:#8fb7ca;--blue-soft:#24343b;--gold:#d2ad64;--gold-soft:#393222;--rose:#d59aaa;--rose-soft:#3b2930;color-scheme:dark}
   body{font-family:var(--sans);font-size:15px;line-height:1.58;background:var(--paper);color:var(--ink)}
   button,input{font:inherit}.shell{max-width:1180px;margin:auto;padding:28px max(18px,env(safe-area-inset-right)) 80px max(18px,env(safe-area-inset-left))}
-  .hero{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(280px,.7fr);gap:26px;align-items:end;padding:28px 0 22px;border-bottom:1px solid var(--line)}
+  .hero{padding:28px 0 22px;border-bottom:1px solid var(--line)}
   .eyebrow{font:500 .68rem var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--peach);margin:0 0 8px}
   h1{font:600 clamp(2.1rem,6vw,4.5rem)/.98 var(--serif);letter-spacing:-.035em;margin:0;max-width:15ch;text-wrap:balance}
-  .lede{font-size:1.02rem;color:var(--muted);max-width:67ch;margin:16px 0 0}.promise{background:var(--sage-soft);border:1px solid color-mix(in srgb,var(--sage) 34%,var(--line));border-radius:18px;padding:18px}
-  .promise b{font:500 .68rem var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--sage);display:block;margin-bottom:7px}.promise p{margin:0;color:var(--muted)}
-  .lens{display:grid;grid-template-columns:repeat(5,minmax(150px,1fr));gap:10px;margin:18px 0}.lens div{background:var(--sheet);border:1px solid var(--line);border-radius:12px;padding:11px 12px}.lens b{display:block;color:var(--peach);font:500 .68rem var(--mono);letter-spacing:.08em;text-transform:uppercase;margin-bottom:4px}.lens span{font-size:.82rem;color:var(--muted)}
+  .lede{font-size:1.02rem;color:var(--muted);max-width:74ch;margin:16px 0 0}
   .toolbar{position:sticky;top:0;z-index:10;margin:14px 0;background:color-mix(in srgb,var(--paper) 88%,transparent);backdrop-filter:blur(12px);padding:10px 0;border-bottom:1px solid var(--line)}
-  .tools{display:grid;grid-template-columns:minmax(240px,1fr) auto auto;gap:8px}.search{width:100%;border:1px solid var(--line);background:var(--sheet);color:var(--ink);border-radius:10px;padding:10px 12px;outline:none}.search:focus{border-color:var(--sage);box-shadow:0 0 0 3px color-mix(in srgb,var(--sage) 15%,transparent)}
-  .quiet-btn{border:1px solid var(--line);border-radius:10px;background:var(--sheet);color:var(--muted);padding:9px 12px;cursor:pointer}.quiet-btn:hover{color:var(--ink);border-color:var(--sage)}
+  .tools{display:grid;grid-template-columns:minmax(240px,1fr) auto;gap:8px}.search{width:100%;border:1px solid var(--line);background:var(--sheet);color:var(--ink);border-radius:10px;padding:10px 12px;outline:none}.search:focus{border-color:var(--sage);box-shadow:0 0 0 3px color-mix(in srgb,var(--sage) 15%,transparent)}
   .stats{font:500 .72rem var(--mono);color:var(--faint);display:flex;align-items:center;justify-content:flex-end;white-space:nowrap}
   .category-nav{display:grid;grid-template-columns:repeat(auto-fit,minmax(165px,1fr));gap:8px;margin:16px 0 22px}.cat-btn{--cat:var(--sage);text-align:left;border:1px solid var(--line);border-top:3px solid var(--cat);border-radius:12px;background:var(--sheet);color:var(--ink);padding:10px 11px;cursor:pointer;min-height:76px}.cat-btn:hover,.cat-btn.active{border-color:var(--cat);background:color-mix(in srgb,var(--cat) 9%,var(--sheet));box-shadow:0 0 0 1px var(--cat)}.cat-btn b{display:block;font-size:.88rem}.cat-btn span{display:block;font:400 .66rem var(--mono);color:var(--muted);margin-top:5px}
-  .section{--cat:var(--sage);background:var(--sheet);border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow);overflow:hidden}.section-head{padding:22px 24px 18px;background:color-mix(in srgb,var(--cat) 9%,var(--sheet));border-bottom:1px solid var(--line)}.section-head .kicker{font:500 .66rem var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--cat);margin:0 0 5px}.section-head h2{font:600 clamp(1.5rem,4vw,2.3rem)/1.05 var(--serif);margin:0}.section-head p{margin:8px 0 0;color:var(--muted);max-width:82ch}.section-head .tell{margin-top:12px;padding:10px 12px;border-left:3px solid var(--cat);background:var(--sheet);border-radius:0 8px 8px 0;font-size:.88rem}.list{padding:10px}
-  details.topic{border:1px solid var(--line);border-radius:13px;background:var(--sheet);margin:8px 0;overflow:hidden}details.topic[open]{border-color:color-mix(in srgb,var(--cat) 50%,var(--line));box-shadow:0 8px 24px rgba(42,52,48,.06)}summary{list-style:none;cursor:pointer;padding:13px 14px;display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:11px;align-items:center}summary::-webkit-details-marker{display:none}.num{width:29px;height:29px;border-radius:50%;background:color-mix(in srgb,var(--cat) 15%,var(--sheet));color:var(--cat);display:grid;place-items:center;font:500 .68rem var(--mono)}.sum-title b{display:block;font-size:.94rem}.sum-title span{display:block;color:var(--muted);font-size:.79rem;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.badges{display:flex;gap:6px}.badge{font:500 .61rem var(--mono);letter-spacing:.06em;text-transform:uppercase;border:1px solid var(--line);border-radius:999px;padding:4px 7px;color:var(--muted)}.badge.hard{color:var(--rose);border-color:color-mix(in srgb,var(--rose) 45%,var(--line))}
-  .body{border-top:1px solid var(--line);padding:15px 16px 17px}.body-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.idea{border-radius:10px;padding:11px 12px;background:var(--paper)}.idea.wide{grid-column:1/-1}.idea h3{font:500 .64rem var(--mono);letter-spacing:.09em;text-transform:uppercase;color:var(--cat);margin:0 0 5px}.idea p{margin:0;color:var(--muted);font-size:.88rem}.idea p strong{color:var(--ink)}
-  .topic-foot{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-top:11px}.master{border:1px solid var(--line);border-radius:9px;background:var(--sheet);color:var(--muted);padding:7px 10px;cursor:pointer;font-size:.78rem}.master.done{background:var(--sage-soft);color:var(--sage);border-color:var(--sage)}.next-clue{font-size:.76rem;color:var(--faint)}
+  .section{--cat:var(--sage);background:var(--sheet);border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow);overflow:hidden}.section-head{padding:22px 24px 18px;background:color-mix(in srgb,var(--cat) 9%,var(--sheet));border-bottom:1px solid var(--line)}.section-head .kicker{font:500 .66rem var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--cat);margin:0 0 5px}.section-head h2{font:600 clamp(1.5rem,4vw,2.3rem)/1.05 var(--serif);margin:0}.section-head p{margin:8px 0 0;color:var(--muted);max-width:82ch}.list{padding:10px}
+  .topic{--cat:var(--sage);display:grid;grid-template-columns:auto minmax(0,1fr);gap:12px 14px;border:1px solid var(--line);border-radius:13px;background:var(--sheet);margin:8px 0;padding:15px 16px}.topic:hover{border-color:color-mix(in srgb,var(--cat) 48%,var(--line))}.num{grid-row:1/3;width:31px;height:31px;border-radius:50%;background:color-mix(in srgb,var(--cat) 15%,var(--sheet));color:var(--cat);display:grid;place-items:center;font:500 .68rem var(--mono)}.topic-head{display:flex;align-items:center;justify-content:space-between;gap:10px}.topic h3{font-size:.98rem;line-height:1.3;margin:0}.badge{flex:none;font:500 .61rem var(--mono);letter-spacing:.06em;text-transform:uppercase;border:1px solid var(--line);border-radius:999px;padding:4px 7px;color:var(--muted)}.badge.hard{color:var(--rose);border-color:color-mix(in srgb,var(--rose) 45%,var(--line))}.topic p{grid-column:2;margin:0;color:var(--muted);font-size:.91rem;max-width:88ch}
   .empty{padding:50px 24px;text-align:center;color:var(--muted)}footer{margin-top:28px;border-top:1px solid var(--line);padding-top:16px;color:var(--faint);font-size:.78rem}
-  @media(max-width:860px){.hero{grid-template-columns:1fr}.lens{grid-template-columns:repeat(2,1fr)}.lens div:last-child{grid-column:1/-1}.tools{grid-template-columns:1fr auto}.stats{grid-column:1/-1;justify-content:flex-start}.body-grid{grid-template-columns:1fr}.idea.wide{grid-column:auto}}
-  @media(max-width:520px){.shell{padding-top:14px}.hero{padding-top:14px}.lens{grid-template-columns:1fr}.lens div:last-child{grid-column:auto}.category-nav{grid-template-columns:repeat(2,minmax(0,1fr))}.cat-btn{min-height:82px}.section-head{padding:18px 16px}.list{padding:6px}summary{grid-template-columns:auto minmax(0,1fr)}.badges{grid-column:2/-1}.topic-foot{align-items:flex-start;flex-direction:column}.tools{grid-template-columns:1fr}.quiet-btn{display:none}}
+  @media(max-width:860px){.stats{justify-content:flex-start}}
+  @media(max-width:520px){.shell{padding-top:14px}.hero{padding-top:14px}.category-nav{grid-template-columns:repeat(2,minmax(0,1fr))}.cat-btn{min-height:82px}.section-head{padding:18px 16px}.list{padding:6px}.tools{grid-template-columns:1fr}.topic{padding:13px 12px;gap:9px 11px}.topic-head{align-items:flex-start}.topic p{font-size:.89rem}}
   @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 </style>
 </head>
 <body>
 <main class="shell">
   <header class="hero">
-    <div>
-      <p class="eyebrow">Intuition before implementation · 95 lessons</p>
-      <h1>Algorithm Intuition Field Guide</h1>
-      <p class="lede">A calm, plain-English path through medium and hard patterns. No code and no pseudocode. Each lesson teaches the shape of the problem, the move that unlocks it, the truth you must keep intact, and the mental movie that makes implementation feel inevitable.</p>
-    </div>
-    <aside class="promise"><b>The promise</b><p>You are not memorizing finished answers. You are learning what to notice, why the pattern fits, and what state your eventual code must faithfully represent.</p></aside>
+    <p class="eyebrow">Intuition before implementation · 95 lessons</p>
+    <h1>Algorithm Intuition Field Guide</h1>
+    <p class="lede">A calm, plain-English path through medium and hard problems. Every lesson gives you one clear idea to hold in your head before you begin coding—nothing more complicated than necessary, and no code or pseudocode.</p>
   </header>
-
-  <section class="lens" aria-label="How to read each lesson">
-    <div><b>Shape clue</b><span>What wording should make the pattern come to mind?</span></div>
-    <div><b>Driving idea</b><span>The one move that turns the problem from tangled to manageable.</span></div>
-    <div><b>Invariant</b><span>The fact that must remain true as the solution moves.</span></div>
-    <div><b>Mental movie</b><span>A small example you can replay without symbols.</span></div>
-    <div><b>Bridge to code</b><span>What state and transitions the implementation will need—still in English.</span></div>
-  </section>
 
   <div class="toolbar">
     <div class="tools">
-      <input id="search" class="search" type="search" placeholder="Search a problem, clue, or idea…" aria-label="Search lessons">
-      <button id="expand" class="quiet-btn" type="button">Open all</button>
+      <input id="search" class="search" type="search" placeholder="Search a problem or idea…" aria-label="Search lessons">
       <span id="stats" class="stats"></span>
     </div>
   </div>
   <nav id="categoryNav" class="category-nav" aria-label="Algorithm categories"></nav>
   <section id="content" aria-live="polite"></section>
-  <footer>Built for reasoning practice. Complexity matters, but it becomes memorable only after the shape, invariant, and tradeoff make sense.</footer>
+  <footer>Built for reasoning practice: understand the idea first, then turn it into code.</footer>
 </main>
 
 <script>
@@ -223,14 +206,13 @@ const editorialOmissions=new Set([
 sections.forEach(s=>{s.items=s.items.filter(x=>!editorialOmissions.has(`${s.id}:${x.title}`))});
 // CONTENT END
 
-const state={category:sections[0]?.id||'',query:'',openAll:false,mastered:new Set(JSON.parse(localStorage.getItem('algorithm-intuition-mastered')||'[]'))};
-const nav=document.getElementById('categoryNav'),content=document.getElementById('content'),search=document.getElementById('search'),stats=document.getElementById('stats'),expand=document.getElementById('expand');
-function searchable(x){return Object.values(x).join(' ').toLowerCase()}
-function save(){localStorage.setItem('algorithm-intuition-mastered',JSON.stringify([...state.mastered]))}
+const state={category:sections[0]?.id||'',query:''};
+const nav=document.getElementById('categoryNav'),content=document.getElementById('content'),search=document.getElementById('search'),stats=document.getElementById('stats');
+function searchable(x){return `${x.title} ${x.idea}`.toLowerCase()}
 function renderNav(){nav.innerHTML=sections.map(s=>`<button class="cat-btn ${s.id===state.category?'active':''}" style="--cat:${s.color}" data-id="${s.id}"><b>${s.name}</b><span>${s.items.length} lessons · ${s.short}</span></button>`).join('');nav.querySelectorAll('button').forEach(b=>b.onclick=()=>{state.category=b.dataset.id;state.query='';search.value='';render()})}
-function topicHTML(x,i,s){const key=`${s.id}:${x.title}`;const done=state.mastered.has(key);return `<details class="topic" style="--cat:${s.color}" ${state.openAll?'open':''}><summary><span class="num">${String(i+1).padStart(2,'0')}</span><span class="sum-title"><b>${x.title}</b><span>${x.signal}</span></span><span class="badges"><span class="badge ${x.level==='Hard'?'hard':''}">${x.level}</span></span></summary><div class="body"><div class="body-grid"><div class="idea wide"><h3>Driving idea</h3><p>${x.idea}</p></div><div class="idea"><h3>When & why it fits</h3><p>${x.signal}</p></div><div class="idea"><h3>Invariant to protect</h3><p>${x.invariant}</p></div><div class="idea"><h3>Mental movie</h3><p>${x.movie}</p></div><div class="idea"><h3>Bridge to implementation</h3><p>${x.bridge}</p></div><div class="idea wide"><h3>Where people get stuck</h3><p>${x.trap}</p></div></div><div class="topic-foot"><button class="master ${done?'done':''}" data-key="${key}">${done?'✓ I can explain this':'Mark as understood'}</button><span class="next-clue">Try explaining the invariant aloud before thinking about syntax.</span></div></div></details>`}
-function render(){renderNav();const q=state.query.trim().toLowerCase();let groups=q?sections:sections.filter(s=>s.id===state.category);let total=0;let html='';for(const s of groups){const items=q?s.items.filter(x=>searchable(x).includes(q)):s.items;if(!items.length)continue;total+=items.length;html+=`<article class="section" style="--cat:${s.color}"><header class="section-head"><p class="kicker">${items.length} intuition lessons</p><h2>${s.name}</h2><p>${s.intro}</p><div class="tell"><strong>Recognition question:</strong> ${s.tell}</div></header><div class="list">${items.map((x,i)=>topicHTML(x,i,s)).join('')}</div></article>`}content.innerHTML=html||`<div class="empty">No lesson matched that phrase. Try the problem family or the shape of the input.</div>`;stats.textContent=`${total} shown · ${state.mastered.size} understood`;content.querySelectorAll('.master').forEach(b=>b.onclick=()=>{state.mastered.has(b.dataset.key)?state.mastered.delete(b.dataset.key):state.mastered.add(b.dataset.key);save();render()})}
-search.addEventListener('input',e=>{state.query=e.target.value;render()});expand.onclick=()=>{state.openAll=!state.openAll;expand.textContent=state.openAll?'Close all':'Open all';render()};
+function topicHTML(x,i,s){return `<article class="topic" style="--cat:${s.color}"><span class="num">${String(i+1).padStart(2,'0')}</span><div class="topic-head"><h3>${x.title}</h3><span class="badge ${x.level==='Hard'?'hard':''}">${x.level}</span></div><p>${x.idea}</p></article>`}
+function render(){renderNav();const q=state.query.trim().toLowerCase();let groups=q?sections:sections.filter(s=>s.id===state.category);let total=0;let html='';for(const s of groups){const items=q?s.items.filter(x=>searchable(x).includes(q)):s.items;if(!items.length)continue;total+=items.length;html+=`<article class="section" style="--cat:${s.color}"><header class="section-head"><p class="kicker">${items.length} intuition lessons</p><h2>${s.name}</h2><p>${s.intro}</p></header><div class="list">${items.map((x,i)=>topicHTML(x,i,s)).join('')}</div></article>`}content.innerHTML=html||`<div class="empty">No lesson matched that phrase. Try the problem name or its central idea.</div>`;stats.textContent=`${total} shown`}
+search.addEventListener('input',e=>{state.query=e.target.value;render()});
 render();
 </script>
 </body>
