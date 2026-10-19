@@ -133,6 +133,25 @@
   .glist div { border: 1px solid var(--border); border-radius: 8px; padding: 8px 11px; background: var(--surface); min-width: 0; }
   .glist dt { font-family: var(--mono); font-weight: 600; font-size: .78rem; }
   .glist dd { margin: 2px 0 0; font-size: .84rem; color: var(--muted); }
+  .lesson { border: 1px solid color-mix(in srgb, var(--t) 34%, var(--border)); border-radius: 12px; overflow: hidden; margin: 0 0 14px; background: color-mix(in srgb, var(--t) 4%, var(--surface)); }
+  .lesson-head { padding: 11px 14px; border-bottom: 1px solid color-mix(in srgb, var(--t) 22%, var(--border)); }
+  .lesson-head .label { margin: 0 0 3px; font-family: var(--mono); font-size: .64rem; letter-spacing: .1em; text-transform: uppercase; color: var(--t); font-weight: 700; }
+  .lesson-head h4 { margin: 0; color: var(--fg); font-family: var(--display); font-size: 1rem; letter-spacing: 0; text-transform: none; }
+  .lesson-body { padding: 12px 14px 14px; }
+  .lesson-body > :last-child { margin-bottom: 0; }
+  .formula { display: block; margin: 9px 0; padding: 9px 11px; border-left: 3px solid var(--t); background: var(--surface-2); font-family: var(--mono); font-size: .82rem; line-height: 1.55; overflow-x: auto; }
+  .est-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 10px; margin: 0 0 14px; }
+  .est-card { border: 1px solid var(--border); border-radius: 9px; padding: 10px 12px; background: var(--surface); min-width: 0; }
+  .est-card h4 { margin: 0 0 5px; color: var(--t); }
+  .est-card p { margin: 0 0 7px; font-size: .86rem; }
+  .est-card p:last-child { margin-bottom: 0; }
+  .worked { counter-reset: est-step; display: grid; gap: 8px; margin: 0 0 12px; padding: 0; list-style: none; }
+  .worked li { position: relative; padding: 9px 11px 9px 42px; border: 1px solid var(--border); border-radius: 8px; background: var(--surface); font-size: .88rem; }
+  .worked li::before { counter-increment: est-step; content: counter(est-step); position: absolute; left: 11px; top: 10px; width: 20px; height: 20px; display: grid; place-items: center; border-radius: 50%; background: var(--t); color: var(--surface); font-family: var(--mono); font-size: .65rem; font-weight: 700; }
+  .checkpoint { margin: 12px 0; padding: 10px 12px; border: 1px solid color-mix(in srgb, var(--money) 35%, var(--border)); border-radius: 9px; background: color-mix(in srgb, var(--money) 7%, var(--surface)); font-size: .88rem; }
+  .checkpoint b { color: var(--money); }
+  .metric-example { border-left: 3px solid var(--t); padding: 9px 12px; margin: 10px 0; background: var(--surface-2); border-radius: 0 8px 8px 0; font-size: .88rem; }
+  .metric-example b { color: var(--t); }
   footer { margin-top: 36px; padding-top: 14px; border-top: 1px solid var(--border); color: var(--faint); font-size: .78rem; }
   @media (prefers-reduced-motion: reduce) { .card { transition: none; } }
 </style>
@@ -144,8 +163,8 @@
   <header>
     <p class="eyebrow">Toloka FDE · final round · two practical use cases</p>
     <h1>Scoping &amp; Pricing Playbook</h1>
-    <p class="lede">Five data products a frontier lab or enterprise buys, each scoped the way you would walk a client through it: the questions to ask, the metrics you commit to, the requirements that bite, what the record looks like, how the pipeline is built, and how the price is put together.</p>
-    <p class="how">Click a card. Every product line has seven tabs. Prices are illustrative — unit economics for framing a conversation, not a rate card.</p>
+    <p class="lede">A self-contained workbook for estimating five data products: translate ambiguity into units, model volume and yield, size people and time, define measurable quality, calculate cost, price uncertainty, and explain the result to a client.</p>
+    <p class="how">Start with Estimation fundamentals, then use each product&rsquo;s Estimation lab. Every number is illustrative and every worked example shows its assumptions so you can replace them in the interview.</p>
   </header>
 
   <nav class="cards" aria-label="Problem types">
@@ -154,6 +173,7 @@
     <button class="card" data-target="p-video" style="--t: var(--t-video)"><span class="n">Robotics video</span><span class="d">Thousands of hours of egocentric video; actions, objects and timing annotated semi-automatically.</span><span class="u">unit: usable hour · label layer</span></button>
     <button class="card" data-target="p-code" style="--t: var(--t-code)"><span class="n">Coding environments</span><span class="d">Terminal-Bench / SWE-bench style: a Docker box with a real-world fault and tests that prove it's fixed.</span><span class="u">unit: validated task</span></button>
     <button class="card" data-target="p-gym" style="--t: var(--t-gym)"><span class="n">Agentic gyms</span><span class="d">τ-bench style: policies, mocked MCP tools, databases, a user simulator and a grader — a whole environment.</span><span class="u">unit: environment + tasks</span></button>
+    <button class="card x" data-target="p-est" style="--t: var(--t-consult)"><span class="n">Estimation fundamentals</span><span class="d">From assumptions to volume, capacity, yield, confidence, cost, margin and a defensible range—with worked calculations.</span><span class="u">start here · workbook</span></button>
     <button class="card x" data-target="p-consult" style="--t: var(--t-consult)"><span class="n">Consultative playbook</span><span class="d">Discovery script, BLUF, how to talk price, objections, red flags, checkpoints — for every product line.</span><span class="u">cross-cutting</span></button>
     <button class="card x" data-target="p-concepts" style="--t: var(--t-concepts)"><span class="n">Agentic systems &amp; concepts</span><span class="d">Concrete environments (τ-bench, τ²-bench, Terminal-Bench, SWE-bench Verified, WebArena, OSWorld…) and the vocabulary.</span><span class="u">reference</span></button>
     <button class="card x" data-target="p-judge" style="--t: var(--t-judge)"><span class="n">LLM-as-a-judge for annotation QA</span><span class="d">Where a judge sits in each of the five factories, how it is calibrated, and every metric with its formula.</span><span class="u">cross-cutting · metrics</span></button>
@@ -179,6 +199,7 @@
       <button class="tab" role="tab" aria-selected="false" data-tab="sys">System design</button>
       <button class="tab" role="tab" aria-selected="false" data-tab="dgm">Example design</button>
       <button class="tab" role="tab" aria-selected="false" data-tab="price">Pricing</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="est">Estimation lab</button>
     </div>
 
     <div class="pane" data-tab="disc">
@@ -315,6 +336,91 @@
       </table></div>
       <div class="talk"><b>Say it to the client</b>The $9 buys three independent judgments, a fourth and fifth on the hard ones, goldens, and QA — not one click. If you want it cheaper, the levers are shorter stimuli and adaptive overlap, and both raise agreement rather than lowering it.</div>
     </div>
+
+    <div class="pane" data-tab="est" hidden>
+      <h3>Estimation lab: size a 50,000-pair preference program</h3>
+      <p class="intro">This lab starts with the client&rsquo;s requested output and works backwards to judgments, hours, annotators, calendar time, quality evidence, cost, and price. The important habit is to keep <em>items</em>, <em>judgments</em>, and <em>accepted items</em> separate. A request for 50,000 labeled pairs is not a request for 50,000 clicks.</p>
+
+      <div class="lesson"><div class="lesson-head"><p class="label">Intuition</p><h4>The unit multiplies before it moves through the factory</h4></div><div class="lesson-body">
+        <p>One pair first becomes several independent judgments. Some pairs then receive extra judgments because the first votes disagree. A fraction is reworked or adjudicated. Goldens consume annotator time even though they are not delivered. Finally, only accepted pairs count toward the contract. Estimation is the accounting system that follows those transformations without mixing them together.</p>
+        <span class="formula">delivered pairs → base judgments → escalation judgments → golden judgments → QA/rework → accepted pairs</span>
+        <p>If you quote only &ldquo;three raters per pair,&rdquo; you omit the work that makes the three ratings trustworthy. The largest errors usually come from forgetting escalation, assuming every paid hour is productive, and dividing total hours by headcount without allowing for ramp-up.</p>
+      </div></div>
+
+      <h4>Step 1 · Write the assumptions before calculating</h4>
+      <div class="tbl"><table>
+        <thead><tr><th>Assumption</th><th>Base case</th><th>Why it matters</th><th>How the pilot measures it</th></tr></thead>
+        <tbody>
+          <tr><td>Delivered pairs</td><td class="num">50,000</td><td>The contract output, after replacement of rejects.</td><td>Fixed by client scope.</td></tr>
+          <tr><td>Base overlap</td><td class="num">3 judgments</td><td>Creates a majority and lets agreement be estimated.</td><td>Compare confidence from 3 vs 5 votes.</td></tr>
+          <tr><td>Escalation rate</td><td class="num">20%</td><td>Ambiguous pairs receive two extra judgments.</td><td>Share of pilot items below confidence 0.85 after three votes.</td></tr>
+          <tr><td>Golden injection</td><td class="num">8%</td><td>Measures worker quality but produces no client item.</td><td>Enough exposures to estimate per-worker accuracy.</td></tr>
+          <tr><td>Rework/replacement</td><td class="num">5%</td><td>Rejected or corrupted pairs must be replaced.</td><td>Expert audit rejection rate.</td></tr>
+          <tr><td>Median task time</td><td class="num">4.5 min</td><td>Largest direct labor driver.</td><td>Use valid tasks only; report median and p90.</td></tr>
+          <tr><td>Paid productive time</td><td class="num">4.5 h/day</td><td>An eight-hour day is not eight hours of annotation.</td><td>Login-to-valid-task telemetry, excluding breaks and idle queue time.</td></tr>
+          <tr><td>Schedule</td><td class="num">20 workdays</td><td>Sets the active pool required.</td><td>Client deadline minus calibration and acceptance buffer.</td></tr>
+        </tbody>
+      </table></div>
+
+      <h4>Step 2 · Convert delivered pairs into judgments</h4>
+      <ol class="worked">
+        <li><b>Base judgments.</b> <code>50,000 pairs × 3 = 150,000 judgments</code>.</li>
+        <li><b>Adaptive escalation.</b> Twenty percent of pairs get two additional votes: <code>50,000 × 0.20 × 2 = 20,000</code>.</li>
+        <li><b>Goldens.</b> If 8% of the queue is golden, productive judgments are 92% of all judgments. Therefore <code>(150,000 + 20,000) / 0.92 = 184,783 total judgments</code>, of which about 14,783 are golden exposures. Do not add 8% to the final total unless &ldquo;8% injection&rdquo; explicitly means 8 goldens per 100 production tasks; both conventions exist.</li>
+        <li><b>Replacement.</b> Five percent of delivered pairs are replaced after audit. A simple planning approximation is <code>184,783 / (1 − 0.05) = 194,508 judgment attempts</code>. A more precise model applies rejection separately to base and escalated work, but the approximation is sufficient before the pilot.</li>
+        <li><b>Convert to hours.</b> <code>194,508 × 4.5 / 60 = 14,588 annotation hours</code>.</li>
+      </ol>
+      <div class="checkpoint"><b>Sanity check:</b> each delivered pair consumes about <code>194,508 / 50,000 = 3.89</code> judgment attempts. At 4.5 minutes, that is 17.5 human minutes per delivered pair. If someone quotes 13.5 minutes, they counted only the three base votes.</div>
+
+      <h4>Step 3 · Turn hours into a pool and a schedule</h4>
+      <p>An active annotator supplies about <code>4.5 productive hours/day × 20 days = 90 hours</code> during the production month. The mathematical minimum is <code>14,588 / 90 = 162 active annotators</code>. That is not the recruiting target. Some workers never qualify, some churn, and demand varies by language and hour.</p>
+      <div class="est-grid">
+        <div class="est-card"><h4>Qualification funnel</h4><p>Suppose 70% of invited workers start qualification, 60% of starters pass, and 80% of passers remain active for two weeks.</p><span class="formula">invite yield = .70 × .60 × .80 = 33.6%</span><p>To retain 200 active workers, invite about <code>200 / .336 = 596</code>.</p></div>
+        <div class="est-card"><h4>Operational headroom</h4><p>Use 20–25% headroom above the mathematical minimum for absence, locale imbalance, and demand spikes.</p><span class="formula">target active pool = 162 × 1.25 ≈ 203</span><p>Round to 200–210, not to a false-precision 203-person promise.</p></div>
+        <div class="est-card"><h4>Ramp shape</h4><p>Week one rarely reaches steady-state. A realistic curve might be 40%, 75%, 100%, 100% capacity across four weeks.</p><span class="formula">effective month = 0.40 + 0.75 + 1 + 1 = 3.15 steady weeks</span><p>If the deadline begins at kickoff, recruit earlier or add a fifth week.</p></div>
+      </div>
+
+      <h4>Step 4 · Understand the quality metrics with numbers</h4>
+      <div class="metric-example"><b>Raw agreement versus chance-corrected agreement.</b> Imagine 100 pairs and two labels, A or B. Raters agree on 85 pairs, so observed agreement is 0.85. If both raters choose A 90% of the time, chance agreement is <code>0.9² + 0.1² = 0.82</code>. Cohen&rsquo;s κ is <code>(0.85 − 0.82) / (1 − 0.82) = 0.17</code>, which is poor despite 85% agreement. The intuition: when one label dominates, two inattentive raters can agree often by always choosing it.</div>
+      <div class="metric-example"><b>Krippendorff&rsquo;s α.</b> α uses disagreement rather than agreement: <code>α = 1 − D<sub>o</sub>/D<sub>e</sub></code>. If observed disagreement is 0.12 and disagreement expected by chance is 0.50, α is <code>1 − .12/.50 = .76</code>. That lands in the tentative band. α handles more than two raters and missing votes, which is why it fits a live factory better than pairwise percent agreement.</div>
+      <div class="metric-example"><b>Golden accuracy uncertainty.</b> A worker who passes 18 of 20 goldens has 90% observed accuracy, but twenty trials are too few to know whether true accuracy exceeds 90%. The approximate 95% Wilson interval is roughly 70%–97%. After 90 of 100, the interval narrows to about 83%–94%. Use a minimum exposure count before suspending someone on a percentage.</div>
+      <div class="metric-example"><b>Position bias.</b> In 10,000 decided pairs, left is chosen 5,300 times. The left rate is 53%. Its standard error near 50% is <code>sqrt(.5×.5/10,000) = 0.5%</code>, so 53% is about six standard errors from neutral—unlikely to be random. Inspect UI placement and worker segments.</div>
+      <div class="metric-example"><b>Item confidence.</b> A 2–1 vote does not always mean 67% confidence. If the dissenting worker has 98% golden accuracy and the other two are near 75%, a reliability-aware model may remain uncertain or even favor the dissenter. Confidence summarizes the evidence for this item; α summarizes consistency across a batch. They answer different questions.</div>
+
+      <h4>Step 5 · Build cost from operational quantities</h4>
+      <p>At an effective labor cost of $14 per productive hour, direct judgment labor is <code>14,588 × $14 = $204,232</code>, or $4.08 per delivered pair. Add expert adjudication, program management, platform, media delivery, and a rework reserve rather than hiding them in a markup.</p>
+      <div class="tbl"><table>
+        <thead><tr><th>Cost block</th><th>Computation</th><th>Total</th><th>Per pair</th></tr></thead>
+        <tbody>
+          <tr><td>Judgment labor</td><td>14,588 h × $14</td><td class="num money">$204,232</td><td class="num money">$4.08</td></tr>
+          <tr><td>Expert review</td><td>2,500 audited/escalated pairs × $8</td><td class="num money">$20,000</td><td class="num money">$0.40</td></tr>
+          <tr><td>Platform and media</td><td>storage, streaming, task UI, observability</td><td class="num money">$22,500</td><td class="num money">$0.45</td></tr>
+          <tr><td>PM and QA operations</td><td>2 PM/QA FTE-months × $16,000 loaded</td><td class="num money">$32,000</td><td class="num money">$0.64</td></tr>
+          <tr><td>Contingency</td><td>7% of the preceding variable program cost</td><td class="num money">$19,511</td><td class="num money">$0.39</td></tr>
+          <tr class="total"><td>Estimated COGS</td><td></td><td class="num money">$298,243</td><td class="num money">$5.96</td></tr>
+        </tbody>
+      </table></div>
+      <p>At a $9 unit price, revenue is $450,000 and gross margin is <code>($450,000 − $298,243) / $450,000 = 33.7%</code>. That is close to the summary example. If the client negotiates $7.50 without changing the design, margin falls to 20.5%. The correct response is not immediately to cut worker pay; it is to change a cost driver—shorter stimuli, lower escalation after calibration, or a larger committed volume that amortizes setup.</p>
+
+      <h4>Step 6 · Show a range, not a theatrical point estimate</h4>
+      <div class="tbl"><table>
+        <thead><tr><th>Scenario</th><th>Task time</th><th>Escalation</th><th>Replacement</th><th>Approx. COGS / pair</th><th>Interpretation</th></tr></thead>
+        <tbody>
+          <tr><td>Optimistic</td><td class="num">3.5 min</td><td class="num">12%</td><td class="num">3%</td><td class="num money">$4.55</td><td>Short stimuli and a mature rubric.</td></tr>
+          <tr><td>Base</td><td class="num">4.5 min</td><td class="num">20%</td><td class="num">5%</td><td class="num money">$5.96</td><td>Pilot-derived planning case.</td></tr>
+          <tr><td>Conservative</td><td class="num">6.0 min</td><td class="num">30%</td><td class="num">8%</td><td class="num money">$8.05</td><td>Long viewing and ambiguous rubric; fixed $9 price is unsafe.</td></tr>
+        </tbody>
+      </table></div>
+      <p>The sensitivity tells you what to learn in the pilot. Here, task time and escalation dominate. A 2,000-pair pilot should therefore test full video versus a shorter stimulus, measure time distributions, and compare three-vote confidence with five-vote outcomes. It does not need to estimate storage to four decimal places.</p>
+
+      <h4>Practice prompts</h4>
+      <div class="est-grid">
+        <div class="est-card"><h4>Deadline changes</h4><p>The client wants the same 50,000 pairs in ten workdays. Recalculate the active pool. What new risks appear when recruiting doubles? Explain why a rush premium buys more than overtime.</p></div>
+        <div class="est-card"><h4>Expert locale</h4><p>Only 35 qualified Japanese medical annotators are available and each supplies three hours per day. Calculate the maximum monthly volume before promising a date.</p></div>
+        <div class="est-card"><h4>Quality trade</h4><p>Model how moving from three votes on every item to two votes plus a third on disagreements changes cost and whether it still supports α and per-item confidence.</p></div>
+      </div>
+      <div class="talk"><b>Interview-ready summary</b>For 50,000 delivered pairs I estimate roughly 195,000 judgment attempts after three-way overlap, adaptive escalation, goldens and replacement. At 4.5 minutes that is about 14,600 productive hours, or a 200-person active pool over twenty days with headroom. Base COGS is about $6 per pair; the pilot must measure task time and escalation because those two assumptions move the price most.</div>
+    </div>
   </section>
 
   <!-- ===================== REASONING DATA ===================== -->
@@ -337,6 +443,7 @@
       <button class="tab" role="tab" aria-selected="false" data-tab="sys">System design</button>
       <button class="tab" role="tab" aria-selected="false" data-tab="dgm">Example design</button>
       <button class="tab" role="tab" aria-selected="false" data-tab="price">Pricing</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="est">Estimation lab</button>
     </div>
 
     <div class="pane" data-tab="disc">
@@ -480,6 +587,95 @@
       </table></div>
       <div class="talk"><b>Say it to the client</b>Half of what you pay for is the problems we throw away. The levers are coaching the yield up and automating the checks — not cutting the expert rate, which only lowers the yield further.</div>
     </div>
+
+    <div class="pane" data-tab="est" hidden>
+      <h3>Estimation lab: deliver 500 accepted reasoning problems</h3>
+      <p class="intro">Reasoning-data estimates are yield models. The client buys accepted problems, but the factory pays for every serious attempt, including candidates rejected as too easy, invalid, ambiguous, contaminated, or incorrectly solved. The first question is therefore not &ldquo;how long does one problem take?&rdquo; It is &ldquo;how many authored candidates must enter each stage for 500 to leave?&rdquo;</p>
+
+      <div class="lesson"><div class="lesson-head"><p class="label">Intuition</p><h4>Estimate a funnel, not an assembly line</h4></div><div class="lesson-body">
+        <p>In a simple annotation job, most inputs become outputs after predictable work. In frontier reasoning data, the product must satisfy several independent gates: valid question, unique or well-defined answer, verified solution, desired difficulty, clean rationale, and contamination controls. A candidate can consume most of its cost before failing the final difficulty test.</p>
+        <span class="formula">accepted = authored × validity yield × verification yield × difficulty yield × editorial yield</span>
+        <p>Multiplying separate yields exposes where loss occurs. Treating &ldquo;overall yield = 50%&rdquo; as a permanent constant hides the operational lever. If difficulty screening rejects 40%, improve prompts and pre-screening; if second solvers disagree, improve author qualification and verification tooling.</p>
+      </div></div>
+
+      <h4>Step 1 · Define acceptance as a checklist</h4>
+      <p>An accepted item in this example must be self-contained, have one defensible answer, include a complete expert solution, be solved independently by a second expert, fail at least three of four samples from a named frontier-model suite, pass contamination checks, and meet an editorial rubric. If any one of those is missing, the item is not merely &ldquo;lower quality&rdquo;; it is a different product.</p>
+      <div class="tbl"><table>
+        <thead><tr><th>Gate</th><th>Conditional pass rate</th><th>Cumulative survivors from 1,000</th><th>Evidence</th></tr></thead>
+        <tbody>
+          <tr><td>Author submits complete candidate</td><td class="num">90%</td><td class="num">900</td><td>Required fields, source permissions, solution included.</td></tr>
+          <tr><td>Automated validity and duplication checks</td><td class="num">92%</td><td class="num">828</td><td>Schema, units, symbolic/numeric checks, near-duplicate search.</td></tr>
+          <tr><td>Independent solver agrees</td><td class="num">85%</td><td class="num">704</td><td>Blind solve reaches the same answer or an approved equivalent.</td></tr>
+          <tr><td>Difficulty gate</td><td class="num">78%</td><td class="num">549</td><td>At least 3 of 4 reference samples fail.</td></tr>
+          <tr><td>Editorial and final QA</td><td class="num">95%</td><td class="num">522</td><td>Rationale clarity, formatting, citation and leakage review.</td></tr>
+        </tbody>
+      </table></div>
+      <p>The compounded yield is <code>.90 × .92 × .85 × .78 × .95 = .522</code>. To deliver 500 accepted items, start approximately <code>500 / .522 = 958</code> candidates. Round to 1,000 because each percentage is uncertain. The cumulative-survivor column is useful in interviews because it makes a fifty-percent overall yield feel concrete rather than magical.</p>
+
+      <h4>Step 2 · Calculate expected labor by stage</h4>
+      <p>Do not multiply every stage&rsquo;s hours by all 1,000 candidates. Later stages see only survivors. Conversely, do not divide authoring time by the final accepted count without charging rejected candidates to the product.</p>
+      <div class="tbl"><table>
+        <thead><tr><th>Stage</th><th>Items entering</th><th>Hours per entering item</th><th>Total hours</th><th>Role / rate</th><th>Cost</th></tr></thead>
+        <tbody>
+          <tr><td>Authoring and solution</td><td class="num">1,000</td><td class="num">2.5</td><td class="num">2,500</td><td>SME · $90/h</td><td class="num money">$225,000</td></tr>
+          <tr><td>Automated-check triage</td><td class="num">900</td><td class="num">0.15</td><td class="num">135</td><td>QA engineer · $60/h</td><td class="num money">$8,100</td></tr>
+          <tr><td>Blind independent solve</td><td class="num">828</td><td class="num">1.25</td><td class="num">1,035</td><td>SME · $90/h</td><td class="num money">$93,150</td></tr>
+          <tr><td>Disagreement adjudication</td><td class="num">124</td><td class="num">0.75</td><td class="num">93</td><td>Senior SME · $130/h</td><td class="num money">$12,090</td></tr>
+          <tr><td>Difficulty gauntlet</td><td class="num">704</td><td class="num">12 samples</td><td class="num">—</td><td>models + judge</td><td class="num money">$8,448</td></tr>
+          <tr><td>Editorial final pass</td><td class="num">549</td><td class="num">0.35</td><td class="num">192</td><td>editor · $55/h</td><td class="num money">$10,560</td></tr>
+          <tr class="total"><td>Direct production</td><td></td><td></td><td class="num">3,955 h</td><td></td><td class="num money">$357,348</td></tr>
+        </tbody>
+      </table></div>
+      <p>Add portal engineering, project management, calibration workshops, reviewer coaching, and a contingency for fields with sparse experts. If those total $115,000, COGS is about $472,000, or $944 per accepted item. At a price of $1,500, revenue is $750,000 and gross margin is 37.1%.</p>
+      <div class="checkpoint"><b>Sanity check:</b> each accepted item absorbs about <code>3,955 / 500 = 7.9 expert/QA hours</code> across the funnel. That does not mean any individual spends eight hours on the final record. It means rejected candidates and verification are amortized into accepted output.</div>
+
+      <h4>Step 3 · Size experts by constrained stage</h4>
+      <p>Total hours alone are insufficient because authoring and verification require different people, and a specialist cannot spend 100% of paid time producing. Assume 4 productive hours per day, 20 days per month, and a two-month production window.</p>
+      <div class="est-grid">
+        <div class="est-card"><h4>Authors</h4><span class="formula">2,500 h / (4 × 20 × 2) = 15.6</span><p>Plan for 18–20 active authors to cover topic quotas and variance. If algebra needs 30% of items but only two algebraists qualify, that topic—not overall headcount—sets the schedule.</p></div>
+        <div class="est-card"><h4>Independent solvers</h4><span class="formula">1,035 h / 160 h = 6.5</span><p>Use 8–10 solvers so authors do not verify their own work and conflicts can be rerouted.</p></div>
+        <div class="est-card"><h4>Editorial and adjudication</h4><span class="formula">(192 + 93) h / 160 h = 1.8</span><p>Two full-time equivalents may be mathematically enough; three named people avoid a single approval bottleneck.</p></div>
+      </div>
+      <p>A ramp matters. If only half the authors are qualified in week one, the two-month arithmetic fails. A credible plan reserves two weeks before production for recruiting, qualification, style-guide examples, and the first calibration batch. The client schedule should say ten weeks end-to-end, not &ldquo;two months&rdquo; while silently treating setup as free.</p>
+
+      <h4>Step 4 · Understand difficulty metrics through examples</h4>
+      <div class="metric-example"><b>pass@1 is a probability.</b> If a reference model solves 30 of 100 single attempts, empirical pass@1 is 30%. It says a random attempt succeeds about three times in ten. It does not say the model solved exactly 30% of distinct problems unless every item was sampled once under the same protocol.</div>
+      <div class="metric-example"><b>pass@4 is “at least one success.”</b> If independent attempts each succeed with probability 0.30, the chance at least one of four succeeds is <code>1 − (1 − .30)^4 = 0.760</code>. Requiring failure on at least three of four attempts is a different item-level rule. Always state whether the metric summarizes attempts across items or gates each item.</div>
+      <div class="metric-example"><b>Observed four-sample result is noisy.</b> A model going 1/4 on one item does not prove its true success probability is 25%. Four trials distinguish obviously easy from obviously hard items, not fine difficulty bands. For benchmark claims, run more seeds or aggregate many items with confidence intervals.</div>
+      <div class="metric-example"><b>Second-solver agreement.</b> If 490 of 500 accepted items have an independently matching answer, agreement is 98%. But if twenty disagreements were simply discarded before the denominator was defined, the statistic is misleading. Report agreement among items entering blind verification and the reasons items exited.</div>
+      <div class="metric-example"><b>Contamination rate.</b> Suppose semantic search flags 40 of 1,000 candidates, human review confirms 12 copied or near-copied items, and misses are estimated from a random sample. The confirmed rate is 1.2%, but detector precision is 30%. Report both; a noisy detector can create large review cost without implying widespread contamination.</div>
+
+      <h4>Step 5 · Sensitivity: yield is the commercial variable</h4>
+      <div class="tbl"><table>
+        <thead><tr><th>Overall yield</th><th>Candidates needed for 500</th><th>Authoring cost alone</th><th>Approx. total COGS / accepted</th><th>Meaning</th></tr></thead>
+        <tbody>
+          <tr><td class="num">35%</td><td class="num">1,429</td><td class="num money">$321k</td><td class="num money">$1,280</td><td>Weak author calibration; $1,500 price leaves little room.</td></tr>
+          <tr><td class="num">52%</td><td class="num">962</td><td class="num money">$216k</td><td class="num money">$945</td><td>Base case.</td></tr>
+          <tr><td class="num">65%</td><td class="num">770</td><td class="num money">$173k</td><td class="num money">$790</td><td>Mature pool with good pre-screening.</td></tr>
+        </tbody>
+      </table></div>
+      <p>That table explains why pilots exist. A 50-item accepted pilot is too small to estimate every subject separately, but it can reveal which gate loses work. Contractually, separate a fixed-price calibration phase from production unit pricing, and state a yield assumption. If the client changes the target model or raises the failure threshold, the difficulty yield changes and so does price.</p>
+
+      <h4>Step 6 · Separate leading and lagging indicators</h4>
+      <p>Accepted yield is a lagging metric: by the time it falls, money has already been spent. Leading indicators include qualification scores, automated-check failure reasons, author resubmission rate, time to resolve verifier disagreements, and the fraction of candidates that fail every reference model on the first gauntlet. Use these weekly to coach the pool.</p>
+      <div class="tbl"><table>
+        <thead><tr><th>Signal</th><th>Example value</th><th>Interpretation</th><th>Action</th></tr></thead>
+        <tbody>
+          <tr><td>Schema/check failure</td><td class="num">8%</td><td>Mechanical quality is weak.</td><td>Improve portal validation; do not spend senior-expert time.</td></tr>
+          <tr><td>Blind-solve disagreement</td><td class="num">15%</td><td>Ambiguity or wrong author solution.</td><td>Review author-specific patterns and rubric examples.</td></tr>
+          <tr><td>Too-easy rejection</td><td class="num">22%</td><td>Difficulty targeting misses.</td><td>Give authors model outputs and hardening techniques.</td></tr>
+          <tr><td>Median adjudication age</td><td class="num">3.5 days</td><td>Queue is becoming a schedule bottleneck.</td><td>Add senior reviewers or batch office hours.</td></tr>
+        </tbody>
+      </table></div>
+
+      <h4>Practice prompts</h4>
+      <div class="est-grid">
+        <div class="est-card"><h4>Harder target</h4><p>The client changes from &ldquo;3 of 4 failures&rdquo; to &ldquo;4 of 4 failures,&rdquo; dropping difficulty yield from 78% to 55%. Recalculate candidates and margin. Which contract clause should cover this?</p></div>
+        <div class="est-card"><h4>Licensed experts</h4><p>Legal items require $180/h experts and only twelve are available for ten productive hours a week. Find the throughput ceiling before discussing price.</p></div>
+        <div class="est-card"><h4>Automation investment</h4><p>A symbolic checker costs $30,000 to build and saves twelve minutes of QA on each submitted candidate. At what volume does it break even if QA costs $60/h?</p></div>
+      </div>
+      <div class="talk"><b>Interview-ready summary</b>To deliver 500 accepted problems at a 52% compounded yield, I would plan roughly 1,000 authored candidates. Stage-weighted labor is about 4,000 hours, concentrated in authoring and blind verification, with a ten-week calendar including calibration. Base COGS is about $945 per accepted item. The pilot&rsquo;s job is to estimate yield by gate, because moving overall yield from 35% to 65% changes unit cost by nearly $500.</div>
+    </div>
   </section>
 
   <!-- ===================== ROBOTICS VIDEO ===================== -->
@@ -502,6 +698,7 @@
       <button class="tab" role="tab" aria-selected="false" data-tab="sys">System design</button>
       <button class="tab" role="tab" aria-selected="false" data-tab="dgm">Example design</button>
       <button class="tab" role="tab" aria-selected="false" data-tab="price">Pricing</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="est">Estimation lab</button>
     </div>
 
     <div class="pane" data-tab="disc">
@@ -651,6 +848,106 @@
       </table></div>
       <div class="talk"><b>Say it to the client</b>I price collection per usable hour and annotation per layer per hour, and I put a price step-down in the contract that triggers when our proposal acceptance rate crosses 70% — because that is the proof the automation is real, and you should share in it.</div>
     </div>
+
+    <div class="pane" data-tab="est" hidden>
+      <h3>Estimation lab: collect and annotate 5,000 usable video hours</h3>
+      <p class="intro">Video programs fail when &ldquo;hour&rdquo; is left undefined. A recorded hour is not necessarily uploaded, consent-valid, technically usable, privacy-processed, diverse, or accepted. An annotated hour may also contain several label layers whose costs differ by an order of magnitude. This lab keeps collection yield, media volume, annotation expansion, and automation separate.</p>
+
+      <div class="lesson"><div class="lesson-head"><p class="label">Intuition</p><h4>There are two linked factories with different units</h4></div><div class="lesson-body">
+        <p>The collection factory turns participant time into accepted media hours. Its losses come from setup, failed uploads, poor framing, consent problems, duplication, privacy rejection, and quota imbalance. The annotation factory turns accepted media minutes into labels. Its expansion factor is human minutes per video minute, which depends on the label layer and proposal-model quality.</p>
+        <span class="formula">recorded hours × collection yield = usable hours<br>usable video minutes × human-minutes/video-minute = human work minutes</span>
+        <p>Never combine those into one blended &ldquo;cost per hour&rdquo; until the two models are shown. Otherwise the client cannot tell whether the expense comes from recruiting and logistics or from dense annotation.</p>
+      </div></div>
+
+      <h4>Step 1 · Define the deliverable and coverage matrix</h4>
+      <p>The client wants 5,000 usable egocentric hours across five task families and three regions, with at least 30% of hours from left-handed participants, no participant contributing more than twenty hours, 1080p/30fps source, privacy redaction, verb–noun narration, temporal segments, and hand–object interaction labels. The maximum-per-person rule implies at least 250 participants even before diversity and attrition.</p>
+      <div class="tbl"><table>
+        <thead><tr><th>Dimension</th><th>Quota</th><th>Why it changes estimation</th><th>Acceptance evidence</th></tr></thead>
+        <tbody>
+          <tr><td>Task families</td><td>1,000 h each</td><td>Cooking may be easy to recruit; tool repair may require skilled participants.</td><td>Manifest with task taxonomy and duration.</td></tr>
+          <tr><td>Regions</td><td>40% US · 30% EU · 30% Japan</td><td>Recruiting rates, shipping, consent text, and data residency differ.</td><td>Participant and storage-region metadata.</td></tr>
+          <tr><td>Handedness</td><td>≥ 30% left-handed</td><td>A scarce segment can set the whole schedule.</td><td>Profile plus periodic visual audit.</td></tr>
+          <tr><td>Participant cap</td><td>20 accepted h/person</td><td>Prevents a few people from dominating movement style.</td><td>Contributor-level accepted-duration report.</td></tr>
+          <tr><td>Technical quality</td><td>1080p/30fps; blur and occlusion thresholds</td><td>Rejected media still consumed capture incentives and bandwidth.</td><td>Automated media checks plus sample review.</td></tr>
+        </tbody>
+      </table></div>
+
+      <h4>Step 2 · Work backwards through collection yield</h4>
+      <p>Assume a pilot measures 82% technical acceptance, 96% consent/privacy eligibility, and 94% quota usefulness. These are conditional yields: quota usefulness is assessed among media that already passed the earlier gates.</p>
+      <span class="formula">overall collection yield = .82 × .96 × .94 = .740<br>recorded hours required = 5,000 / .740 = 6,757 hours</span>
+      <ol class="worked">
+        <li><b>Participant recording capacity.</b> If an enrolled participant records twelve raw hours on average, the base enrollment need is <code>6,757 / 12 = 563</code> participants.</li>
+        <li><b>Onboarding attrition.</b> If 80% of enrolled people complete setup and submit any valid session, recruit <code>563 / .80 = 704</code>.</li>
+        <li><b>Quota headroom.</b> Because left-handed and skilled-task cells are harder to fill, add targeted recruitment rather than a flat percentage. Plan perhaps 760 recruits, with the last 56 reserved for underfilled cells.</li>
+        <li><b>Device fleet.</b> If each kit cycles through four participants per month and the program records over three months, one kit supports twelve participants. The theoretical need is <code>704 / 12 = 59</code>; add 15% for loss, repair, and shipping lag, yielding 68 kits.</li>
+      </ol>
+      <div class="checkpoint"><b>Sanity check:</b> five thousand accepted hours over twelve production weeks means 417 accepted hours per week. At 74% yield, ingest must average 563 raw hours per week. Monitor raw and accepted hours by quota cell; a healthy global total can hide a failing Japan/left-handed/tool-repair cell.</div>
+
+      <h4>Step 3 · Estimate storage and transfer</h4>
+      <p>At 1080p/30fps with an average compressed bitrate of 8 Mb/s, storage is about 3.6 GB per recorded hour: <code>8 megabits/s × 3,600 s ÷ 8 bits/byte = 3,600 MB</code>. Raw capture volume is therefore roughly <code>6,757 × 3.6 GB = 24.3 TB</code>. Keep source, privacy-redacted derivative, and working proxies.</p>
+      <div class="tbl"><table>
+        <thead><tr><th>Asset</th><th>Rule of thumb</th><th>Volume</th><th>Planning note</th></tr></thead>
+        <tbody>
+          <tr><td>Source video</td><td>3.6 GB/raw h</td><td class="num">24.3 TB</td><td>Immutable; restricted access.</td></tr>
+          <tr><td>Redacted master</td><td>3.6 GB/usable h</td><td class="num">18.0 TB</td><td>May differ after trims; safe annotation source.</td></tr>
+          <tr><td>Annotation proxy</td><td>0.6 GB/usable h</td><td class="num">3.0 TB</td><td>Lower bitrate for browser tools.</td></tr>
+          <tr><td>Derived frames / masks / indexes</td><td>25% of redacted master</td><td class="num">4.5 TB</td><td>Highly workload-dependent.</td></tr>
+          <tr class="total"><td>Stored footprint before replicas</td><td></td><td class="num">≈ 50 TB</td><td>Add backups and client delivery separately.</td></tr>
+        </tbody>
+      </table></div>
+      <p>Storage cost is rarely the dominant program cost, but transfer and privacy processing can affect schedule. At an average sustained upload of 20 Mb/s, one twelve-hour participant upload is about 43 GB and takes nearly five hours. Offline-capable capture, resumable multipart upload, and regional ingest points are operational requirements, not architecture polish.</p>
+
+      <h4>Step 4 · Convert video hours into annotation labor</h4>
+      <p>Each layer has its own expansion factor. Suppose the pilot produces the following human-minutes per video-minute (HM/VM): narration 0.8, temporal segmentation 1.4, and hand–object interaction 2.8. These already include proposal review and corrections but not final QA sampling.</p>
+      <div class="tbl"><table>
+        <thead><tr><th>Layer</th><th>HM/VM</th><th>Human hours per video hour</th><th>For 5,000 h</th><th>Rate</th><th>Direct labor</th></tr></thead>
+        <tbody>
+          <tr><td>Verb–noun narration</td><td class="num">0.8</td><td class="num">48 min = 0.8 h</td><td class="num">4,000 h</td><td class="num money">$22/h</td><td class="num money">$88,000</td></tr>
+          <tr><td>Temporal segments</td><td class="num">1.4</td><td class="num">84 min = 1.4 h</td><td class="num">7,000 h</td><td class="num money">$22/h</td><td class="num money">$154,000</td></tr>
+          <tr><td>Hand–object interaction</td><td class="num">2.8</td><td class="num">168 min = 2.8 h</td><td class="num">14,000 h</td><td class="num money">$24/h</td><td class="num money">$336,000</td></tr>
+          <tr class="total"><td>All three layers</td><td class="num">5.0</td><td class="num">5.0 h/video h</td><td class="num">25,000 h</td><td></td><td class="num money">$578,000</td></tr>
+        </tbody>
+      </table></div>
+      <p>Add 5% expert QA and 7% rework. If QA takes 0.5 human hours per sampled video hour at $45/h, that is <code>5,000 × .05 × .5 × $45 = $5,625</code>. A simple 7% labor reserve adds roughly $40,460. Proposal inference might add $15–30 per video hour depending on model and frame sampling. The lesson is that interaction annotation—not storage—is the dominant cost.</p>
+
+      <h4>Step 5 · Size the annotation pool</h4>
+      <p>To complete 25,000 human hours in sixteen weeks, with annotators contributing 25 productive hours per week, the mathematical minimum is <code>25,000 / (16 × 25) = 62.5</code> full-active equivalents. Split by skill: interaction labels may require a smaller qualified pool than narration. With 20% operational headroom and staggered training, plan 75–80 active annotators plus reviewers.</p>
+      <div class="est-grid">
+        <div class="est-card"><h4>Why median speed is not capacity</h4><p>A 2.8 HM/VM median can hide a long tail. Use total valid human minutes divided by total accepted video minutes for cost, and median/p90 per task for coaching.</p></div>
+        <div class="est-card"><h4>Queue balance</h4><p>If narration finishes before interaction, the program still misses delivery. Forecast capacity per layer and cross-train only where qualification evidence supports it.</p></div>
+        <div class="est-card"><h4>Learning curve</h4><p>New annotators may begin at 4.0 HM/VM and reach 2.5 after 20 hours. Include ramp cohorts in the schedule instead of pricing at mature speed from day one.</p></div>
+      </div>
+
+      <h4>Step 6 · Understand quality metrics with concrete segments</h4>
+      <div class="metric-example"><b>Temporal IoU.</b> The reference action runs from 10 s to 20 s; an annotator marks 12 s to 21 s. Intersection is 8 s (12–20), union is 11 s (10–21), so IoU is <code>8/11 = .727</code>. It passes a 0.70 target. If the annotator marked 14–22, IoU would be 6/12 = 0.50 despite identifying the right action.</div>
+      <div class="metric-example"><b>Boundary error complements IoU.</b> For the 12–21 prediction, start error is 2 s and end error is 1 s. On a two-second action, the same errors would be catastrophic; IoU captures that scale dependence. Report median absolute boundary error as an interpretable operational metric and IoU as the overlap metric.</div>
+      <div class="metric-example"><b>Proposal acceptance rate.</b> If the model proposes 10,000 segments and annotators accept 7,200 unchanged, acceptance is 72%. But a model could propose only obvious actions and miss half the video. Pair acceptance with proposal recall from a human-labeled audit set. High precision with low recall does not reduce total work as expected.</div>
+      <div class="metric-example"><b>Track quality.</b> For object masks, frame-level IoU may average 0.82 while identity switches make the track unusable. Include track continuity or ID-switch rate. Metrics must match how the downstream policy consumes the labels.</div>
+      <div class="metric-example"><b>Usable-hour yield.</b> If 1,000 recorded hours produce 740 accepted hours, yield is 74%. Report rejection reasons: 12% framing, 5% privacy/consent, 4% upload corruption, 5% quota excess. Percentages should reconcile to the funnel rather than becoming an unrelated dashboard list.</div>
+
+      <h4>Step 7 · Combine collection and annotation economics</h4>
+      <div class="tbl"><table>
+        <thead><tr><th>Cost block</th><th>Base estimate</th><th>Per usable hour</th><th>Main uncertainty</th></tr></thead>
+        <tbody>
+          <tr><td>Participant incentives and support</td><td class="num money">$285,000</td><td class="num money">$57</td><td>Recorded-hours per participant and attrition.</td></tr>
+          <tr><td>Device fleet, shipping, loss, repair</td><td class="num money">$145,000</td><td class="num money">$29</td><td>Cycle time and regional logistics.</td></tr>
+          <tr><td>Privacy processing, storage, transfer</td><td class="num money">$90,000</td><td class="num money">$18</td><td>Redaction review and egress.</td></tr>
+          <tr><td>Three annotation layers</td><td class="num money">$578,000</td><td class="num money">$116</td><td>HM/VM by layer.</td></tr>
+          <tr><td>QA, rework, proposal compute</td><td class="num money">$145,000</td><td class="num money">$29</td><td>Acceptance and recall curves.</td></tr>
+          <tr><td>Program, tooling, compliance</td><td class="num money">$260,000</td><td class="num money">$52</td><td>Fixed setup amortized over volume.</td></tr>
+          <tr class="total"><td>COGS</td><td class="num money">$1.503M</td><td class="num money">$301</td><td>For collection + three layers.</td></tr>
+        </tbody>
+      </table></div>
+      <p>A proposed $450 per fully collected-and-annotated hour produces $2.25M revenue and about 33% gross margin. Quote components separately: roughly $150 for collection and privacy, plus layer prices. That lets the client remove a label layer without reopening the entire commercial model.</p>
+
+      <h4>Practice prompts</h4>
+      <div class="est-grid">
+        <div class="est-card"><h4>Bitrate surprise</h4><p>The real source bitrate is 25 Mb/s, not 8. Recalculate source storage and participant upload time. Which architecture requirements change even if labor cost does not?</p></div>
+        <div class="est-card"><h4>Automation curve</h4><p>Interaction HM/VM falls from 2.8 to 1.8 after the first 1,000 hours. Estimate the savings over the remaining 4,000 and propose a shared-savings price step.</p></div>
+        <div class="est-card"><h4>Scarce quota</h4><p>Only 12% of recruited participants are left-handed but the deliverable needs 30% of hours. Calculate targeted recruitment and explain why oversampling random recruits is inefficient.</p></div>
+      </div>
+      <div class="talk"><b>Interview-ready summary</b>Five thousand usable hours at a 74% collection yield require about 6,750 recorded hours, roughly 700 completing recruits, and a 68-kit fleet under the stated cycle assumptions. Three annotation layers expand to about 25,000 human hours. Base combined COGS is about $300 per usable, fully annotated hour; the pilot must measure collection rejection reasons, HM/VM by layer, and proposal recall because those drive both schedule and price.</div>
+    </div>
   </section>
 
   <!-- ===================== CODING ENVIRONMENTS ===================== -->
@@ -673,6 +970,7 @@
       <button class="tab" role="tab" aria-selected="false" data-tab="sys">System design</button>
       <button class="tab" role="tab" aria-selected="false" data-tab="dgm">Example design</button>
       <button class="tab" role="tab" aria-selected="false" data-tab="price">Pricing</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="est">Estimation lab</button>
     </div>
 
     <div class="pane" data-tab="disc">
@@ -840,6 +1138,98 @@ def test_no_world_writable_backups():
       </table></div>
       <div class="talk"><b>Say it to the client</b>You are not buying Dockerfiles. You are buying tasks that are valid five runs out of five, that a human solved blind, and that we re-validate every night — because a benchmark that drifts is worse than no benchmark.</div>
     </div>
+
+    <div class="pane" data-tab="est" hidden>
+      <h3>Estimation lab: produce 100 validated coding tasks</h3>
+      <p class="intro">A coding task is accepted only after authoring, environment construction, oracle creation, hidden-test review, blind solving, repeated determinism runs, and difficulty calibration. The naive estimate—author hours times an hourly rate—usually misses rejection, infrastructure, review loops, and maintenance. Treat the task as a small software product with a validation funnel.</p>
+
+      <div class="lesson"><div class="lesson-head"><p class="label">Intuition</p><h4>Separate task creation from proof that the task is valid</h4></div><div class="lesson-body">
+        <p>The visible artifact may be a repository or Docker image, but the purchased value is evidence: the initial state really fails, the oracle really passes, hidden tests measure behavior rather than a specific patch, the task does not leak its answer, repeated runs are deterministic, a competent human can solve it, and reference agents land in the desired difficulty band.</p>
+        <span class="formula">accepted tasks = candidates × build yield × blind-solve yield × determinism yield × difficulty-band yield</span>
+        <p>The final difficulty gate often happens after most engineering cost has been spent. That makes early screening and reusable templates valuable, but it also means a cheap task author who produces invalid scenarios can be more expensive than a senior author.</p>
+      </div></div>
+
+      <h4>Step 1 · Define task mix before averaging</h4>
+      <p>The request is 100 accepted tasks: 40 repository bug fixes, 30 terminal/devops incidents, 20 data or dependency failures, and 10 concurrency tasks. Average hours are dangerous because concurrency tasks have lower yield and much longer determinism work.</p>
+      <div class="tbl"><table>
+        <thead><tr><th>Family</th><th>Accepted count</th><th>Candidate yield</th><th>Author/build hours per candidate</th><th>Review hours per survivor</th></tr></thead>
+        <tbody>
+          <tr><td>Repository bug fix</td><td class="num">40</td><td class="num">80%</td><td class="num">8 h</td><td class="num">3 h</td></tr>
+          <tr><td>Terminal/devops</td><td class="num">30</td><td class="num">72%</td><td class="num">11 h</td><td class="num">4 h</td></tr>
+          <tr><td>Data/dependency</td><td class="num">20</td><td class="num">75%</td><td class="num">9 h</td><td class="num">3.5 h</td></tr>
+          <tr><td>Concurrency/race</td><td class="num">10</td><td class="num">50%</td><td class="num">18 h</td><td class="num">7 h</td></tr>
+        </tbody>
+      </table></div>
+      <p>Candidate counts are <code>40/.80 = 50</code>, <code>30/.72 = 41.7</code>, <code>20/.75 = 26.7</code>, and <code>10/.50 = 20</code>. Round up by family: 50 + 42 + 27 + 20 = 139 authored candidates. A single blended 72% yield also gives about 139, but the family model tells you that twenty expensive concurrency candidates are required for ten outputs and prevents the easy category from masking that risk.</p>
+
+      <h4>Step 2 · Build stage-weighted engineering hours</h4>
+      <div class="tbl"><table>
+        <thead><tr><th>Work</th><th>Computation</th><th>Hours</th><th>Rate</th><th>Cost</th></tr></thead>
+        <tbody>
+          <tr><td>Repo candidates</td><td>50 × 8 h</td><td class="num">400</td><td class="num money">$110/h</td><td class="num money">$44,000</td></tr>
+          <tr><td>Terminal candidates</td><td>42 × 11 h</td><td class="num">462</td><td class="num money">$120/h</td><td class="num money">$55,440</td></tr>
+          <tr><td>Data/dependency candidates</td><td>27 × 9 h</td><td class="num">243</td><td class="num money">$110/h</td><td class="num money">$26,730</td></tr>
+          <tr><td>Concurrency candidates</td><td>20 × 18 h</td><td class="num">360</td><td class="num money">$140/h</td><td class="num money">$50,400</td></tr>
+          <tr><td>Blind solve and review</td><td>accepted mix × review hours</td><td class="num">365</td><td class="num money">$115/h</td><td class="num money">$41,975</td></tr>
+          <tr><td>Rework from review</td><td>25% of survivors × 2.5 h avg</td><td class="num">63</td><td class="num money">$115/h</td><td class="num money">$7,245</td></tr>
+          <tr class="total"><td>Direct engineering</td><td></td><td class="num">1,893 h</td><td></td><td class="num money">$225,790</td></tr>
+        </tbody>
+      </table></div>
+      <p>Add shared harness work rather than smearing it invisibly across tasks: $45,000 for runners, registry, sandboxing and reporting; $18,000 for agent-gauntlet compute and model fees; $40,000 for PM, QA and documentation; and a 10% contingency on direct plus platform costs. Base COGS becomes roughly <code>($225,790 + $45,000 + $18,000 + $40,000) × 1.10 = $361,669</code>, or $3,617 per accepted task.</p>
+
+      <h4>Step 3 · Size the team and critical path</h4>
+      <p>If an engineer provides 26 productive task hours per week after reviews, meetings and CI support, 1,893 direct hours require 72.8 engineer-weeks. With eight task engineers, raw production takes about 9.1 weeks. But work is not perfectly parallel: harness foundations precede many tasks, reviewers must remain independent, and late difficulty calibration can trigger rework.</p>
+      <ol class="worked">
+        <li><b>Weeks 1–2: foundations.</b> Finalize task contract, create templates, establish base images, build validation CLI and acceptance dashboard. Two platform engineers plus lead authors.</li>
+        <li><b>Weeks 2–4: calibration batch.</b> Produce 12 candidates across all families, blind-solve them, run five seeds, and compare agent difficulty. Update templates before scaling.</li>
+        <li><b>Weeks 4–11: production waves.</b> Authors build in weekly batches; reviewers work one wave behind; invalid tasks return quickly rather than accumulating for final QA.</li>
+        <li><b>Weeks 10–13: final calibration and acceptance.</b> Re-run clean images, freeze dependencies, complete difficulty bands, replace rejects, and produce manifests.</li>
+      </ol>
+      <div class="checkpoint"><b>Critical-path check:</b> adding authors after week eight may not shorten delivery if blind-review and deterministic reruns are the bottleneck. Track queue age at each gate, not just tasks authored per week.</div>
+
+      <h4>Step 4 · Estimate compute and concurrency</h4>
+      <p>Each accepted task runs an oracle, an unsolved-state test, five deterministic replays, and fifteen reference-agent attempts (three agents × five seeds). Suppose environment validation consumes six CPU-hours per run set and agent attempts average 25 minutes on 4 vCPU.</p>
+      <div class="tbl"><table>
+        <thead><tr><th>Workload</th><th>Runs</th><th>Compute per run</th><th>Total compute</th><th>Why it matters</th></tr></thead>
+        <tbody>
+          <tr><td>Validation on 139 candidates</td><td class="num">139 × 7</td><td class="num">1 CPU-h</td><td class="num">973 CPU-h</td><td>Failures should be caught before model gauntlet.</td></tr>
+          <tr><td>Agent gauntlet on 110 late-stage tasks</td><td class="num">1,650 attempts</td><td class="num">1.67 vCPU-h</td><td class="num">2,756 vCPU-h</td><td>Model API cost may dominate raw CPU.</td></tr>
+          <tr><td>Nightly accepted-suite rerun</td><td class="num">100 × 30 nights</td><td class="num">1 CPU-h</td><td class="num">3,000 CPU-h</td><td>Finds drift while dependencies still can be repaired.</td></tr>
+        </tbody>
+      </table></div>
+      <p>If the runner supports fifty concurrent sandboxes, 1,650 agent attempts with a 25-minute mean have a theoretical wall-clock floor of <code>1,650 × 25 / 60 / 50 = 13.75 hours</code>. Add image pulls, rate limits, retries and long-tail tasks; plan two days, not fourteen hours. Capacity calculations identify whether a requested overnight refresh is plausible.</p>
+
+      <h4>Step 5 · Understand validation metrics with examples</h4>
+      <div class="metric-example"><b>Determinism rate.</b> Ninety-six tasks pass 5/5 clean replays, four pass 4/5. Reporting 98.8% successful runs hides that 4% of tasks are flaky. For benchmark validity, the task-level metric is stricter: only 96% are deterministic. Quarantine the four rather than averaging them away.</div>
+      <div class="metric-example"><b>Oracle and unsolved-state checks.</b> The oracle passing proves at least one valid solution exists. The initial state failing proves work is required. Neither proves the hidden tests reject shortcuts. Add mutation or adversarial solutions: if deleting the failing check, hard-coding output, or editing tests passes, the task is gameable.</div>
+      <div class="metric-example"><b>Reference-agent pass@1.</b> If three agents run five seeds each, a task with 3 successes in 15 attempts has empirical success 20%. Its sample is small; use difficulty bands such as 0%, 1–20%, 21–50%, not a claim that true difficulty is exactly 20%.</div>
+      <div class="metric-example"><b>Human solve rate and time.</b> If nine of ten qualified humans solve a task within two hours, human solve rate is 90% and median time may be 55 minutes. One expert taking six hours could indicate ambiguity or simply a mismatch in specialization. Capture failure reasons before rejecting.</div>
+      <div class="metric-example"><b>Hidden-test precision and recall.</b> Create known-good alternative solutions and known-bad partial fixes. If tests accept 18 of 20 good solutions, recall is 90%. If they reject 27 of 30 bad solutions, specificity is 90%. A test suite can be deterministic and still encode the wrong behavior.</div>
+
+      <h4>Step 6 · Price by family or protect the mix</h4>
+      <p>A flat $4,800 average price yields $480,000 revenue and about 24.7% gross margin in this conservative build. That may be acceptable for a pilot but weak for production. A better commercial model prices families or constrains the mix.</p>
+      <div class="tbl"><table>
+        <thead><tr><th>Family</th><th>Estimated COGS / accepted</th><th>Illustrative price</th><th>Gross margin</th></tr></thead>
+        <tbody>
+          <tr><td>Repository bug fix</td><td class="num money">$2,450</td><td class="num money">$3,800</td><td class="num">36%</td></tr>
+          <tr><td>Terminal/devops</td><td class="num money">$3,500</td><td class="num money">$5,200</td><td class="num">33%</td></tr>
+          <tr><td>Data/dependency</td><td class="num money">$2,900</td><td class="num money">$4,400</td><td class="num">34%</td></tr>
+          <tr><td>Concurrency/race</td><td class="num money">$6,600</td><td class="num money">$9,500</td><td class="num">31%</td></tr>
+        </tbody>
+      </table></div>
+      <p>This mix produces about $492,000 revenue. If the client later replaces easy repository tasks with concurrency tasks, the price follows the family instead of creating an argument about &ldquo;the same 100 tasks.&rdquo; For a fixed-price pilot, state the family mix, repository access, language/toolchain, maximum environment size, and maintenance period as assumptions.</p>
+
+      <h4>Step 7 · Maintenance is a forecast, not an afterthought</h4>
+      <p>Suppose 2% of tasks drift each month due to dependency, base-image, or external-resource changes. A 100-task suite creates two repairs per month. At six engineering hours plus validation compute per repair, annual maintenance is roughly 144 engineering hours before platform overhead. For 1,000 tasks, the same drift rate creates twenty repairs every month and requires a standing team. Price maintenance from observed drift and response-time SLA.</p>
+
+      <h4>Practice prompts</h4>
+      <div class="est-grid">
+        <div class="est-card"><h4>Yield shock</h4><p>Concurrency yield falls from 50% to 30%. Recalculate candidates, engineering hours, and the effect on a flat-price contract.</p></div>
+        <div class="est-card"><h4>Difficulty shift</h4><p>The client wants every accepted task below 10% reference-agent pass@1 instead of below 40%. Which late-stage rejection increases, and what should the pilot measure?</p></div>
+        <div class="est-card"><h4>Faster deadline</h4><p>Delivery moves from thirteen to eight weeks. Identify which work can parallelize and which gates cannot. Calculate the reviewer and sandbox capacity required.</p></div>
+      </div>
+      <div class="talk"><b>Interview-ready summary</b>A 100-task mixed benchmark at the stated family yields requires about 139 authored candidates and roughly 1,900 direct engineering hours, plus shared harness, compute and program work. With eight task engineers and independent review, I would plan thirteen weeks. Conservative COGS is about $3,600 per accepted task, but family-specific pricing is safer because concurrency tasks cost more than twice a typical repository task.</div>
+    </div>
   </section>
 
   <!-- ===================== AGENTIC GYMS ===================== -->
@@ -862,6 +1252,7 @@ def test_no_world_writable_backups():
       <button class="tab" role="tab" aria-selected="false" data-tab="sys">System design</button>
       <button class="tab" role="tab" aria-selected="false" data-tab="dgm">Example design</button>
       <button class="tab" role="tab" aria-selected="false" data-tab="price">Pricing</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="est">Estimation lab</button>
     </div>
 
     <div class="pane" data-tab="disc">
@@ -1031,6 +1422,810 @@ def test_no_world_writable_backups():
         </tbody>
       </table></div>
       <div class="talk"><b>Say it to the client</b>The environment is priced by milestone because each part can be accepted on its own: policy and tools first, then the simulator and grader with their audits, then the tasks. You never pay for tasks graded by a grader you haven&rsquo;t trusted yet.</div>
+    </div>
+
+    <div class="pane" data-tab="est" hidden>
+      <h3>Estimation lab: build a customer-support agent gym</h3>
+      <p class="intro">An agentic gym is not just a task bank. It is a coupled system: policy, state, tools, user simulator, grader, reset service, task distribution, trajectory storage, and evaluation runner. Estimate it by work package first, then estimate task production and episode operations. A per-task quote alone underprices the environment that makes tasks meaningful.</p>
+
+      <div class="lesson"><div class="lesson-head"><p class="label">Intuition</p><h4>Estimate the world, then the situations inside it</h4></div><div class="lesson-body">
+        <p>The environment is the stage; tasks are scenes performed on that stage. Building the first 50 tasks still requires almost all of the policy, tools, simulator, grader, and state machinery. After the stage is stable, incremental tasks become cheaper—but only if they reuse supported tools and state transitions.</p>
+        <span class="formula">program cost = fixed environment build + variable validated tasks + evaluation episodes + maintenance</span>
+        <p>Keep those four terms visible. It explains why a 50-task pilot can cost more than half of a 200-task program and why a &ldquo;small tool change&rdquo; may invalidate simulator and grader assumptions across the suite.</p>
+      </div></div>
+
+      <h4>Step 1 · Bound the domain with counts</h4>
+      <p>The proposed gym models retail customer support. It has 18 tools, 14 database entities, 45 policy rules, four user intents, and 150 accepted tasks. Episodes average twelve agent turns and three tool calls. The system must reset deterministically, run 100 episodes concurrently, and produce outcome plus policy-compliance grades.</p>
+      <div class="tbl"><table>
+        <thead><tr><th>Scope dimension</th><th>Base</th><th>Complexity driver</th><th>Change-control trigger</th></tr></thead>
+        <tbody>
+          <tr><td>Tools</td><td class="num">18</td><td>Arguments, permission rules, error modes, idempotency.</td><td>New tool or breaking schema.</td></tr>
+          <tr><td>Entities</td><td class="num">14</td><td>Relationships, invariants, reset and seed logic.</td><td>New entity or state transition family.</td></tr>
+          <tr><td>Policy rules</td><td class="num">45</td><td>Exceptions and cross-rule conflicts drive grader complexity.</td><td>New policy chapter or changed authority boundary.</td></tr>
+          <tr><td>User intents</td><td class="num">4</td><td>Simulator goals, language variation, adversarial behavior.</td><td>New simulator persona or dual-control behavior.</td></tr>
+          <tr><td>Task archetypes</td><td class="num">15</td><td>Each archetype needs templates, oracle path, and negative cases.</td><td>New archetype outside existing tool/state coverage.</td></tr>
+        </tbody>
+      </table></div>
+      <p>Avoid using &ldquo;150 tasks&rdquo; as the sole size. One hundred parameter variations of address changes are cheaper than twenty tasks spanning refunds, fraud flags, exchanges, partial shipments, and manager approvals. Count archetypes and unique state transitions.</p>
+
+      <h4>Step 2 · Estimate fixed environment work by deliverable</h4>
+      <div class="tbl"><table>
+        <thead><tr><th>Work package</th><th>People</th><th>Duration</th><th>Person-weeks</th><th>Acceptance artifact</th></tr></thead>
+        <tbody>
+          <tr><td>Discovery and policy formalization</td><td>FDE + domain SME</td><td>3 weeks</td><td class="num">6</td><td>Versioned rules, examples, conflict register.</td></tr>
+          <tr><td>State model and seed generator</td><td>2 engineers</td><td>4 weeks</td><td class="num">8</td><td>Schema, invariants, deterministic seed/reset tests.</td></tr>
+          <tr><td>Tool implementations and MCP surface</td><td>3 engineers</td><td>5 weeks</td><td class="num">15</td><td>18 tools with contracts, errors, audit log.</td></tr>
+          <tr><td>User simulator</td><td>ML engineer + SME</td><td>4 weeks</td><td class="num">8</td><td>Goal adherence and leakage evaluation.</td></tr>
+          <tr><td>Outcome and policy grader</td><td>ML engineer + QA</td><td>4 weeks</td><td class="num">8</td><td>Human-labeled audit set; precision/recall report.</td></tr>
+          <tr><td>Runner, resets, trajectories, dashboard</td><td>2 platform engineers</td><td>5 weeks</td><td class="num">10</td><td>100-way load test; replayable trace export.</td></tr>
+          <tr><td>Integration, security, documentation</td><td>team mix</td><td>3 weeks</td><td class="num">7</td><td>Threat model, runbook, client handoff.</td></tr>
+          <tr class="total"><td>Fixed build</td><td></td><td>overlapping critical path ≈ 12–14 weeks</td><td class="num">62</td><td></td></tr>
+        </tbody>
+      </table></div>
+      <p>At a blended loaded cost of $5,500 per person-week, direct fixed build is about $341,000. That is higher than the compact price illustration elsewhere on the page because this lab includes production-grade concurrency, security and handoff. Scope tiers must be explicit: a research prototype with ten tools and a local runner is not the same product as a maintained enterprise gym.</p>
+
+      <h4>Step 3 · Estimate task production as archetypes plus instances</h4>
+      <p>Assume 15 archetypes. Each archetype takes 24 SME/engineering hours to define the goal, initial state, oracle trajectory, disallowed shortcuts, grader conditions, and first three instances. Additional instances take 3.5 hours before validation. Candidate yield is 80% after oracle, human, simulator and difficulty checks.</p>
+      <ol class="worked">
+        <li><b>Archetype foundations.</b> <code>15 × 24 = 360 hours</code>.</li>
+        <li><b>Remaining instances.</b> The foundations include 45 instances, leaving 105 accepted instances. At 80% yield, author <code>105 / .80 = 132</code> candidates.</li>
+        <li><b>Candidate authoring.</b> <code>132 × 3.5 = 462 hours</code>.</li>
+        <li><b>Validation.</b> Suppose all 177 total candidates/seed instances average 1.5 hours of oracle and human review: <code>266 hours</code>.</li>
+        <li><b>Total task work.</b> About <code>360 + 462 + 266 = 1,088 hours</code>. At a $100/h blended SME/engineering rate, $108,800 direct, before gauntlet episodes.</li>
+      </ol>
+      <div class="checkpoint"><b>Sanity check:</b> accepted incremental tasks average 7.25 human hours once archetype design and rejects are allocated. A quote of &ldquo;$300 per task&rdquo; can work only for parameterized variants whose archetype, tools, policy and grader already exist.</div>
+
+      <h4>Step 4 · Size evaluation episodes and infrastructure</h4>
+      <p>Difficulty calibration uses four reference agents, eight seeds per task: <code>150 × 4 × 8 = 4,800 episodes</code>. Acceptance repeats the final suite for determinism, adding perhaps 1,200 episodes. A client comparison of six candidate agents with five seeds adds <code>150 × 6 × 5 = 4,500</code>. Initial program total is around 10,500 episodes.</p>
+      <div class="tbl"><table>
+        <thead><tr><th>Quantity</th><th>Base</th><th>Calculation</th><th>Result</th></tr></thead>
+        <tbody>
+          <tr><td>Mean episode wall time</td><td>12 turns × 2.5 s model/tool latency + overhead</td><td></td><td class="num">45 s</td></tr>
+          <tr><td>Serial runtime</td><td>10,500 episodes</td><td>10,500 × 45 s</td><td class="num">131.25 h</td></tr>
+          <tr><td>Theoretical 100-way runtime</td><td>100 concurrent</td><td>131.25 / 100</td><td class="num">1.31 h</td></tr>
+          <tr><td>Planned runtime</td><td>70% utilization + retries + long tail</td><td>1.31 / .70 × 1.20</td><td class="num">≈ 2.25 h</td></tr>
+          <tr><td>Trajectory events</td><td>12 turns + 3 tools + grades ≈ 20 events</td><td>10,500 × 20</td><td class="num">210,000</td></tr>
+        </tbody>
+      </table></div>
+      <p>The model bill depends on tokens, not just episode count. If each episode uses 45,000 input and 4,000 output tokens across turns, 10,500 episodes consume 472.5M input and 42M output tokens. Multiply by the chosen model&rsquo;s current contracted price; do not hard-code a public API rate into a long proposal. Run a cheap model for simulator turns only if it still passes the simulator audit.</p>
+
+      <h4>Step 5 · Understand the gym metrics through examples</h4>
+      <div class="metric-example"><b>Task validity.</b> A task is valid if the seeded state satisfies preconditions, at least one policy-compliant path reaches the goal, the grader recognizes all allowed outcomes, and resets reproduce the start. If 147 of 150 pass every check, validity is 98%, but the delivery target should still be 100%: quarantine three rather than ship a noisy denominator.</div>
+      <div class="metric-example"><b>Grader precision and recall.</b> Human auditors label 200 trajectories, 50 as true passes. The grader calls 55 passes, of which 47 are real. Precision is <code>47/55 = 85.5%</code>; recall is <code>47/50 = 94%</code>. High recall with weak precision inflates agent scores. Improve outcome rules before comparing agents.</div>
+      <div class="metric-example"><b>Policy grader.</b> Outcome success and compliance are separate. An agent may issue the refund correctly but violate the rule requiring identity verification. Report outcome success, policy compliance, and joint success. A single pass bit hides why behavior failed.</div>
+      <div class="metric-example"><b>Simulator goal adherence.</b> In 100 audited conversations, the simulated user reveals a hidden account number without being asked in 12, accepts an invalid alternative in 7, and follows the intended goal in 81. Goal adherence is 81%, which places an 81% ceiling on clean evaluation if failures are not detected and retried.</div>
+      <div class="metric-example"><b>pass^k.</b> If single-run success is 0.8 and runs were independent, probability of succeeding all four times is <code>.8^4 = .4096</code>. The reliability question is strict: a seemingly strong 80% agent is stable on four repetitions only about 41% of the time. Use empirical task-level pass^k where possible because runs are not perfectly independent.</div>
+      <div class="metric-example"><b>Environment failure rate.</b> If 2% of episodes fail because reset, tool, or simulator infrastructure breaks, the observed agent success is biased downward and variance rises. Tag infrastructure failures separately and publish their rate next to agent metrics.</div>
+
+      <h4>Step 6 · Build a milestone price and risk reserve</h4>
+      <div class="tbl"><table>
+        <thead><tr><th>Commercial block</th><th>Estimated COGS</th><th>Illustrative price</th><th>Acceptance</th></tr></thead>
+        <tbody>
+          <tr><td>M1 · policy, state and tool contracts</td><td class="num money">$125k</td><td class="num money">$185k</td><td>Signed rulebook, schema and 18 tool contracts.</td></tr>
+          <tr><td>M2 · executable environment and runner</td><td class="num money">$180k</td><td class="num money">$265k</td><td>Tools, resets, 100-way load test, traces.</td></tr>
+          <tr><td>M3 · simulator and grader</td><td class="num money">$110k</td><td class="num money">$170k</td><td>Audit metrics meet agreed thresholds.</td></tr>
+          <tr><td>M4 · 150 validated tasks</td><td class="num money">$145k</td><td class="num money">$220k</td><td>100% valid suite, difficulty and acceptance report.</td></tr>
+          <tr><td>Risk reserve and integration</td><td class="num money">$65k</td><td>included</td><td>Burned only against named unknowns.</td></tr>
+          <tr class="total"><td>Total</td><td class="num money">$625k</td><td class="num money">$840k</td><td>≈ 25.6% gross margin.</td></tr>
+        </tbody>
+      </table></div>
+      <p>This is a production-grade example, not a universal rate. A prototype could cost far less by reducing tools, concurrency, simulator sophistication, security and maintenance. The defensible move is to show which capabilities are included and let the client choose a tier. A fixed price without a tool count, policy scope, concurrency target, and task-archetype definition is not a scope.</p>
+
+      <h4>Step 7 · Sensitivity and change control</h4>
+      <div class="est-grid">
+        <div class="est-card"><h4>Tool count</h4><p>Adding five tools does more than add five functions. Estimate contracts, state effects, permissions, simulator usage, grader observability, negative tests and documentation.</p></div>
+        <div class="est-card"><h4>Dual control</h4><p>If the simulated user can also invoke tools, state races and grading become harder. Model it as a new variant, not a small task addition.</p></div>
+        <div class="est-card"><h4>Policy volatility</h4><p>If rules change monthly, invest in declarative policy tests and a regression suite. Maintenance becomes recurring product work.</p></div>
+        <div class="est-card"><h4>Episode length</h4><p>Doubling turns roughly doubles model tokens and increases simulator drift opportunities. It can also reduce throughput below the concurrency SLA.</p></div>
+      </div>
+
+      <h4>Practice prompts</h4>
+      <div class="est-grid">
+        <div class="est-card"><h4>Scale the suite</h4><p>The client wants 500 tasks but only 25 archetypes. Separate one-time archetype work from additional instances and estimate the new unit cost.</p></div>
+        <div class="est-card"><h4>Training use</h4><p>The gym will produce 2 million RL episodes per month. Estimate resets per second, token volume, trajectory storage, and the operations team.</p></div>
+        <div class="est-card"><h4>Weak simulator</h4><p>Simulator adherence is 88% and the target agent succeeds 85%. Explain how simulator errors can distort the score and what audit sample is needed.</p></div>
+      </div>
+      <div class="talk"><b>Interview-ready summary</b>I would scope the gym as a fixed environment build plus validated tasks, episodes and maintenance. In this production-grade example, 18 tools, 45 policy rules, a simulator, audited grader, 100-way runner and 150 tasks require about 62 person-weeks of fixed build plus 1,100 task hours. A milestone price is safer than a per-task price because the environment must be trusted before its tasks have value.</div>
+    </div>
+  </section>
+
+  <!-- ===================== ESTIMATION FUNDAMENTALS ===================== -->
+  <section class="panel" id="p-est" style="--t: var(--t-consult)" aria-label="Estimation fundamentals" hidden>
+    <div class="phead">
+      <h2 class="ptitle">Estimation fundamentals: from an ambiguous request to a defensible range</h2>
+      <p class="pdesc">A reusable method for estimating data and evaluation programs without memorizing rate cards. You will define the output unit, draw the conversion funnel, quantify capacity and quality, price uncertainty, and communicate a range whose assumptions can be tested in a pilot.</p>
+      <div class="strip">
+        <div><div class="k">core equation</div><div class="v">output → work → capacity → cost → price</div></div>
+        <div><div class="k">most important habit</div><div class="v">write units on every number</div></div>
+        <div><div class="k">honest answer</div><div class="v">base case + range + dominant unknown</div></div>
+        <div><div class="k">pilot purpose</div><div class="v">measure the assumption that moves the estimate most</div></div>
+      </div>
+    </div>
+    <div class="tabs" role="tablist">
+      <button class="tab active" role="tab" aria-selected="true" data-tab="mind">Mental model</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="scope">Scope inputs</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="vol">Volume &amp; yield</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="cap">Capacity &amp; schedule</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="quality">Metrics &amp; confidence</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="econ">Cost &amp; price</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="cases">Cases &amp; drills</button>
+    </div>
+
+    <div class="pane" data-tab="mind">
+      <h3>The mental model: an estimate is a transparent model, not a guess</h3>
+      <p>An estimate is a chain of quantities connected by formulas. The client states a desired outcome—perhaps 100,000 accepted labels, 500 hard reasoning items, or an agent gym with 150 tasks. Your job is to translate that output into the work the factory must attempt, the people and machines required to perform it, the calendar needed to coordinate it, the evidence required to accept it, and the price that covers cost and risk.</p>
+      <span class="formula">requested output × work per output ÷ productivity = capacity and time<br>capacity × loaded rates + non-labor cost = COGS<br>COGS ÷ (1 − target gross margin) = price</span>
+      <p>The formulas are easy. The hard part is choosing the right units and finding the multipliers hidden in words such as <em>accepted</em>, <em>high quality</em>, <em>expert</em>, <em>urgent</em>, and <em>benchmark-grade</em>. Each adjective implies a gate or constraint. Your model should make those consequences explicit.</p>
+
+      <div class="lesson"><div class="lesson-head"><p class="label">First principle</p><h4>Every estimate has a numerator, a denominator, and a definition of done</h4></div><div class="lesson-body">
+        <p>When someone says &ldquo;we need 50,000 annotations in four weeks,&rdquo; ask what one annotation means. Is it one worker click, one item with three independent labels, one accepted item after adjudication, or one hour of video with three label layers? The word is the numerator. Then ask what produces it: judgments per productive hour, accepted items per candidate, or tasks per engineer-week. That is the denominator. Finally ask which metric makes the item accepted.</p>
+        <p>A well-formed statement sounds like this: &ldquo;We will deliver 50,000 aggregated pairs, each built from three base votes plus adaptive escalation, accepted when batch α is at least 0.80 and item confidence is at least 0.85, within twenty production days.&rdquo; Now volume, quality, and time are all calculable.</p>
+      </div></div>
+
+      <h4>The seven transformations</h4>
+      <ol class="worked">
+        <li><b>Outcome → deliverable.</b> Translate business intent into an artifact: training records, benchmark tasks, collected hours, an environment, or graded trajectories. &ldquo;Improve the model&rdquo; is an outcome; it is not yet a unit you can price.</li>
+        <li><b>Deliverable → accepted unit.</b> Define one unit and the acceptance gate. For preference data, one unit might be an aggregated pair. For coding data, it is a task whose oracle passes, initial state fails, hidden tests resist gaming, and repeated runs are deterministic.</li>
+        <li><b>Accepted unit → attempted work.</b> Add overlap, yield loss, goldens, audit samples, escalation and rework. This is where 50,000 outputs can become 195,000 attempts.</li>
+        <li><b>Attempted work → labor and compute.</b> Multiply work by measured time or tokens. Separate roles and stages because an expert hour, annotator hour, GPU-hour and project-management hour have different constraints and costs.</li>
+        <li><b>Labor and compute → capacity and calendar.</b> Divide by productive capacity, then add ramp, dependencies, batching, holidays, review queues and acceptance buffer. Headcount arithmetic is not a project schedule.</li>
+        <li><b>Capacity → cost.</b> Use loaded cost: pay, platform fees, employer burden or vendor markup, infrastructure, management, tooling, compliance, and a reserve for named uncertainty.</li>
+        <li><b>Cost → commercial offer.</b> Choose unit price, fixed milestones, time-and-materials, or a hybrid. Calculate margin, state volume and scope assumptions, and define which changes reopen the price.</li>
+      </ol>
+
+      <h4>A tiny example from end to end</h4>
+      <p>A client wants 10,000 accepted classifications in ten workdays. Each item gets two labels; disagreements (estimated at 15%) get a third. Five percent of task exposures are goldens, 4% of items require replacement, and a valid judgment takes 90 seconds.</p>
+      <ol class="worked">
+        <li>Base judgments: <code>10,000 × 2 = 20,000</code>.</li>
+        <li>Disagreement judgments: <code>10,000 × .15 = 1,500</code>.</li>
+        <li>Golden injection: if production work is 95% of exposures, <code>21,500 / .95 = 22,632</code> total exposures.</li>
+        <li>Replacement: <code>22,632 / .96 = 23,575</code> attempts.</li>
+        <li>Labor: <code>23,575 × 1.5 / 60 = 589.4 hours</code>.</li>
+        <li>Capacity: at five productive hours per worker-day over ten days, mathematical minimum is <code>589.4 / 50 = 11.8</code>; with 25% headroom, plan fifteen active workers.</li>
+        <li>Direct labor at $18/h is $10,609. Add $4,000 setup and PM, $1,500 platform, and 8% reserve: COGS ≈ $17,397, or $1.74 per accepted item.</li>
+        <li>At a 35% target gross margin, required price is <code>$17,397 / .65 = $26,765</code>, or $2.68 per item.</li>
+      </ol>
+      <p>That example is not a rate recommendation. Its purpose is to show the full chain and expose the dominant variables. If judgment time is actually three minutes, direct labor doubles. If disagreement is 25%, it rises modestly. The pilot should measure time before debating a five-point change in the management allocation.</p>
+
+      <h4>Fermi estimation: how to proceed with incomplete information</h4>
+      <p>In an interview you rarely receive every number. Make bounded assumptions, label them, and use known relationships. A useful pattern is: state the unit, choose a round base case, compute, sanity-check against another method, then give a range.</p>
+      <div class="est-grid">
+        <div class="est-card"><h4>Anchor</h4><p>Choose a quantity you can reason about: minutes per judgment, hours per expert task, video bitrate, or productive hours per person-day.</p></div>
+        <div class="est-card"><h4>Decompose</h4><p>Break a hard unknown into easier factors. Monthly judgments = active workers × days × productive hours/day × judgments/hour.</p></div>
+        <div class="est-card"><h4>Round deliberately</h4><p>Use 20 workdays, 60 minutes, and simple percentages. False precision hides uncertainty. Preserve exact arithmetic only when it clarifies a sensitivity.</p></div>
+        <div class="est-card"><h4>Cross-check</h4><p>Estimate throughput both bottom-up from workers and top-down from historical batch velocity. Large disagreement means a missing constraint.</p></div>
+      </div>
+
+      <h4>Units prevent most estimation errors</h4>
+      <p>Write units into formulas as if doing dimensional analysis in physics. If task time is minutes per judgment and volume is judgments, their product is minutes. Dividing by sixty minutes per hour yields hours. If a result is &ldquo;workers per hour&rdquo; when you expected workers, the model is wrong.</p>
+      <div class="tbl"><table>
+        <thead><tr><th>Quantity</th><th>Good unit</th><th>Common confusion</th></tr></thead>
+        <tbody>
+          <tr><td>Preference work</td><td>judgment attempts; accepted pairs</td><td>Calling both &ldquo;labels&rdquo; and forgetting overlap.</td></tr>
+          <tr><td>Reasoning production</td><td>authored candidates; accepted problems</td><td>Pricing only accepted items but staffing only accepted-item hours.</td></tr>
+          <tr><td>Video collection</td><td>recorded hour; usable hour</td><td>Treating capture time and accepted media as equal.</td></tr>
+          <tr><td>Video annotation</td><td>human-minutes per video-minute per layer</td><td>Using one blanket cost for every label type.</td></tr>
+          <tr><td>Coding benchmarks</td><td>candidate task; validated task; episode</td><td>Mixing authoring, acceptance and evaluation runs.</td></tr>
+          <tr><td>Financials</td><td>cost per accepted unit; price per accepted unit</td><td>Comparing a judgment-level cost to an item-level price.</td></tr>
+        </tbody>
+      </table></div>
+
+      <h4>Three levels of estimate</h4>
+      <div class="est-grid">
+        <div class="est-card"><h4>Order of magnitude</h4><p>Used in discovery. Is this $20k, $200k or $2M? Use broad ranges and identify the unknown that separates them.</p></div>
+        <div class="est-card"><h4>Planning estimate</h4><p>Used after a pilot or historical data. Stage-level assumptions, capacity, schedule and ±20–30% range.</p></div>
+        <div class="est-card"><h4>Commercial baseline</h4><p>Used in a proposal. Defined scope and unit, exclusions, acceptance, change control, payment milestones and risk ownership.</p></div>
+      </div>
+      <p>A common credibility error is presenting a discovery estimate with commercial-baseline precision. Say, &ldquo;Before a pilot this is a $300k–$450k program; the range is driven by a 3–6 minute task-time uncertainty. A 2,000-item pilot will narrow it.&rdquo; That is stronger than quoting $372,418 from invented assumptions.</p>
+
+      <h4>What a complete answer sounds like</h4>
+      <div class="talk"><b>Reusable answer</b>I&rsquo;ll estimate this in five steps. First I&rsquo;ll define the accepted unit and quality gate. Then I&rsquo;ll convert delivered volume into attempted work using overlap, yield and rework. I&rsquo;ll convert work into labor and compute, size the constrained role and the calendar, and finally build COGS and price. I&rsquo;ll give a base case and a range, then identify the assumption a pilot must measure.</div>
+    </div>
+
+    <div class="pane" data-tab="scope" hidden>
+      <h3>Scope inputs: the minimum information needed for a real estimate</h3>
+      <p>The scoping conversation is not a feature checklist. Each question should map to a variable, a constraint, or an acceptance rule in the model. If an answer will not change design, schedule, cost, risk or quality, it is probably not an early discovery question.</p>
+
+      <h4>1 · Decision and downstream use</h4>
+      <p>Ask what decision the artifact changes. Training data, an offline benchmark, a launch gate, regression monitoring and RL episodes can use similar-looking records but require different confidence, representativeness, secrecy and repeatability. A training corpus may tolerate probabilistic labels across millions of items; a benchmark demands clean, stable tasks because one bad item corrupts the score.</p>
+      <div class="metric-example"><b>Example:</b> A client asks for 100,000 preference pairs. If the use is reward-model training, three votes with confidence and broad coverage may be enough. If the same pairs decide whether a model launches in a regulated market, the client may require expert adjudication, demographic analysis, stable test sets and a much lower ambiguity rate. Same count, different product.</div>
+
+      <h4>2 · Unit of delivery</h4>
+      <p>Write a one-sentence unit contract. Include content, judgments or layers, metadata, quality status and version. Examples:</p>
+      <ul class="cons">
+        <li><b>Preference:</b> one query and two assets, all raw votes, aggregated label, item confidence, rubric version and position-randomization metadata.</li>
+        <li><b>Reasoning:</b> one accepted problem, canonical answer, verified solution, independent-solver record, difficulty results and contamination status.</li>
+        <li><b>Video:</b> one usable, consent-linked hour at the capture specification, plus named annotation layers measured against their own acceptance metrics.</li>
+        <li><b>Coding:</b> one validated task with initial environment, instruction, hidden tests, oracle, deterministic-run evidence and calibration results.</li>
+        <li><b>Gym:</b> a versioned environment milestone plus validated task instances and a reproducible episode/grading interface.</li>
+      </ul>
+
+      <h4>3 · Volume, mix and distribution</h4>
+      <p>Total volume is not enough. Ask for breakdowns by language, locale, domain, difficulty, label layer, task family, model family and cadence. A scarce cell can determine timeline even when the overall total is small. Capture minimums, maximum contribution per source, and whether underfilled cells may be substituted.</p>
+      <div class="tbl"><table>
+        <thead><tr><th>Question</th><th>Variable it determines</th><th>Example failure if omitted</th></tr></thead>
+        <tbody>
+          <tr><td>One-time or weekly?</td><td>Standing pool, automation ROI, maintenance.</td><td>A cheap one-off workflow cannot sustain a weekly SLA.</td></tr>
+          <tr><td>What mix is guaranteed?</td><td>Weighted unit cost and scarce capacity.</td><td>Client replaces easy tasks with costly concurrency tasks at the same rate.</td></tr>
+          <tr><td>What is the smallest quota cell?</td><td>Recruiting lead time and buffer.</td><td>Global output reaches target while one language misses delivery.</td></tr>
+          <tr><td>Can sources repeat?</td><td>Diversity, deduplication and rights checks.</td><td>A few contributors dominate the corpus.</td></tr>
+          <tr><td>How quickly may volume change?</td><td>Reserved capacity and rush premium.</td><td>A 2× burst destroys quality or misses deadline.</td></tr>
+        </tbody>
+      </table></div>
+
+      <h4>4 · Quality definition and acceptance</h4>
+      <p>&ldquo;High quality&rdquo; must become observable conditions. Ask who owns the rubric, which metrics matter, how the client samples, what happens to rejected batches, and when an item is final. Separate process metrics from outcome metrics. Goldens and task time detect pool behavior; downstream model lift measures business value. One cannot substitute for the other.</p>
+      <p>Acceptance should specify the population and sample. &ldquo;95% accuracy&rdquo; is incomplete without the unit, reference labels, sample size, confidence level, class mix and treatment of abstentions. &ldquo;Client reviews a random 2% of every batch; batch accepted if Wilson lower bound on pass rate is at least 92%, with critical defects at zero&rdquo; is much closer to a contract.</p>
+
+      <h4>5 · Input readiness</h4>
+      <p>Determine who supplies source data, how clean it is, whether usage rights and consent are documented, whether taxonomies exist, and whether examples represent edge cases. Input problems consume schedule even if the delivery unit begins later. Add an explicit ingest acceptance gate so the team does not absorb unlimited cleanup.</p>
+      <div class="est-grid">
+        <div class="est-card"><h4>Ready</h4><p>Schema and samples exist; rights are documented; rubric owner is named; client feedback SLA is two days. Fixed-price pilot may be reasonable.</p></div>
+        <div class="est-card"><h4>Partly ready</h4><p>Data exists but taxonomy and acceptance are vague. Use paid discovery and a calibration milestone before unit pricing.</p></div>
+        <div class="est-card"><h4>Not ready</h4><p>The use case is aspirational and source/rights are unclear. Quote time-and-materials discovery with explicit exit criteria, not production volume.</p></div>
+      </div>
+
+      <h4>6 · Workflow and roles</h4>
+      <p>Map who authors, labels, verifies, adjudicates, operates, approves and accepts. For each role estimate qualification, productive hours, hourly cost, scarcity, and whether work can be parallel. The constrained role often defines timeline. Ten cheap annotators cannot replace one unavailable licensed reviewer.</p>
+      <div class="tbl"><table>
+        <thead><tr><th>Role</th><th>Questions</th><th>Estimation consequence</th></tr></thead>
+        <tbody>
+          <tr><td>Contributors / annotators</td><td>Skills, languages, geography, pay, productivity, attrition?</td><td>Pool size and direct labor.</td></tr>
+          <tr><td>Experts</td><td>Credential, conflict rules, scarcity, review depth?</td><td>Yield, bottleneck, premium.</td></tr>
+          <tr><td>QA/adjudicators</td><td>Sample rate, dispute rate, decision SLA?</td><td>Rework cost and queue delay.</td></tr>
+          <tr><td>Engineers</td><td>Reusable platform or bespoke integration?</td><td>Fixed setup and critical path.</td></tr>
+          <tr><td>Client owner</td><td>Who answers rubric questions and accepts changes?</td><td>Blocked-time assumption and change latency.</td></tr>
+        </tbody>
+      </table></div>
+
+      <h4>7 · Non-functional constraints</h4>
+      <p>Security, privacy, residency, audit, accessibility, reproducibility and latency are not side notes. They add workflows and can restrict the labor pool. Examples include private media streaming, clean-room benchmark access, background checks, regional processing, deletion on consent withdrawal, immutable audit logs, air-gapped environments, or reproducible seeds.</p>
+      <div class="metric-example"><b>Example:</b> Restricting unreleased video to a US-only, background-checked pool may cut the eligible pool from 1,000 to 120 people. The cost effect is not just higher hourly pay; ramp time, weekend coverage and burst capacity change. Reflect the constraint in the capacity model before adding a generic security surcharge.</div>
+
+      <h4>8 · Schedule and dependencies</h4>
+      <p>Ask for the true business date and what happens if it slips. Separate setup, pilot, production, client acceptance and contingency. Identify dependencies: source delivery, tool credentials, policy-owner feedback, security review, model access, evaluator availability. A schedule is a network of dependent tasks, not total person-hours divided by people.</p>
+      <span class="formula">calendar = setup + calibration + ramp + production + acceptance + buffer<br>not: total labor hours ÷ total people</span>
+
+      <h4>9 · Commercial constraints and risk ownership</h4>
+      <p>Ask whether the client needs a fixed budget, unit rate, minimum commitment, cancellation flexibility, or outcome guarantee. Determine who pays for input defects, scope changes, rejected candidates, model-price changes, rush capacity and third-party cloud fees. A good price follows controllability: fixed price for bounded work you control; unit price for repeatable output; T&amp;M for discovery; pass-through for volatile third-party spend.</p>
+
+      <h4>10 · Baseline and counterfactual</h4>
+      <p>Understand the current process and what the client compares against. If internal experts produce twenty accepted items per month at $2,000 each, a $1,500 offer with stronger auditability has a clear value story. Without baseline, price becomes a negotiation detached from outcome. Also ask the cost of delay: a launch blocked for a month may justify a rush pool even if unit cost rises.</p>
+
+      <h4>Build the assumption register live</h4>
+      <div class="tbl"><table>
+        <thead><tr><th>ID</th><th>Assumption</th><th>Base</th><th>Range</th><th>Evidence</th><th>Owner / next action</th></tr></thead>
+        <tbody>
+          <tr><td>A1</td><td>Valid judgment time</td><td>4.5 min</td><td>3–7 min</td><td>Comparable program only</td><td>Measure 300 pilot tasks</td></tr>
+          <tr><td>A2</td><td>Escalation after three votes</td><td>20%</td><td>10–35%</td><td>Rubric draft</td><td>Compare pilot confidence</td></tr>
+          <tr><td>A3</td><td>Qualified worker activation</td><td>80%</td><td>65–90%</td><td>Historical pool</td><td>Recruiting lead validates</td></tr>
+          <tr><td>A4</td><td>Client feedback SLA</td><td>2 days</td><td>1–5 days</td><td>Verbal</td><td>Put in SOW</td></tr>
+          <tr><td>A5</td><td>Target margin</td><td>35%</td><td>30–40%</td><td>internal policy</td><td>Commercial owner</td></tr>
+        </tbody>
+      </table></div>
+      <p>The register turns uncertainty into work. Rank assumptions by <code>impact × uncertainty</code>. High-impact, high-uncertainty assumptions belong in the pilot or contract. Low-impact assumptions can remain ranges. This avoids spending discovery time measuring quantities that barely move the answer.</p>
+
+      <h4>Red flags that prevent a responsible fixed estimate</h4>
+      <ul class="cons">
+        <li><b>No accepted unit.</b> The client names a business outcome but not the artifact or acceptance rule.</li>
+        <li><b>Unknown source rights.</b> Data may not be legal to collect, label, or reuse.</li>
+        <li><b>Quality by taste.</b> No rubric owner, reference set, sample plan or dispute mechanism.</li>
+        <li><b>Unlimited mix changes.</b> Easy and difficult units share one rate with no committed distribution.</li>
+        <li><b>Deadline before access.</b> Security, credentials or source delivery have no owner/date.</li>
+        <li><b>Fixed price on unknown yield.</b> Accepted-output pricing before any candidate-funnel evidence.</li>
+        <li><b>Model-dependent definition.</b> Difficulty target names &ldquo;frontier model&rdquo; without model, version, prompt, tools, seeds and date.</li>
+      </ul>
+      <div class="talk"><b>Say it in discovery</b>I can give an order-of-magnitude range today. To turn that into a fixed production price, we need three things: a precise accepted unit, a pilot estimate of time and yield, and an agreed acceptance sample. Until then I would price discovery, not pretend the uncertainty disappeared.</div>
+    </div>
+
+    <div class="pane" data-tab="vol" hidden>
+      <h3>Volume and yield: converting output into attempted work</h3>
+      <p>Volume estimation is a conservation problem. Follow units through each gate and ensure every loss is accounted for. The most reusable patterns are redundancy, funnel yield, rework, sampling and recurring cadence.</p>
+
+      <h4>Redundancy and overlap</h4>
+      <p>When several independent people judge the same item, output work multiplies. Fixed overlap is simple: <code>items × raters</code>. Adaptive overlap needs expected value.</p>
+      <span class="formula">expected judgments/item = base overlap + Σ(probability of escalation path × extra judgments on that path)</span>
+      <div class="metric-example"><b>Example:</b> Start with two raters. They agree on 78% of items; the remaining 22% receive a third. Ten percent of those still require two expert votes. Expected judgments are <code>2 + .22×1 + .22×.10×2 = 2.264</code> per item. For 100,000 items, plan 226,400 production judgments before goldens and rework.</div>
+      <p>Adaptive overlap is powerful because most easy items avoid unnecessary votes. But a two-rater start cannot estimate all agreement statistics in the same way as three independent votes, and tie-handling must be explicit. Operational savings should not silently change the quality contract.</p>
+
+      <h4>Sequential yield versus parallel failure reasons</h4>
+      <p>If stages occur sequentially, multiply conditional yields. If failure categories are mutually exclusive outcomes of one stage, add their rates and subtract from one. Confusing the two produces large errors.</p>
+      <div class="est-grid">
+        <div class="est-card"><h4>Sequential</h4><p>90% pass validity, then 80% verification, then 75% difficulty.</p><span class="formula">yield = .90 × .80 × .75 = 54%</span><p>From 1,000 candidates, 540 survive all three.</p></div>
+        <div class="est-card"><h4>Mutually exclusive</h4><p>Of raw video, 10% fails framing, 4% upload, 6% privacy. If each hour has one primary outcome:</p><span class="formula">yield = 1 − .10 − .04 − .06 = 80%</span><p>Do not multiply unless each check is conditional among survivors.</p></div>
+        <div class="est-card"><h4>Overlapping reasons</h4><p>An hour can fail framing and privacy. Adding rates double-counts overlap. Use an observed accepted/raw ratio or model joint outcomes.</p></div>
+      </div>
+
+      <h4>Rework versus replacement</h4>
+      <p>Rework repairs the same unit; replacement creates a new unit. Their time and success differ. Suppose 8% of items fail QA. Sixty percent are repairable in five minutes with 90% success; forty percent require replacement at the full twenty-minute cost.</p>
+      <span class="formula">expected extra minutes/item = .08 × [(.60 × 5) + (.40 × 20)] = .88 min</span>
+      <p>If repair can fail, include its second path: <code>.08 × .60 × .10 × 20 = .096</code> additional replacement minutes. Modeling every rare branch may be unnecessary, but distinguish cheap correction from total restart.</p>
+
+      <h4>Golden and audit sampling conventions</h4>
+      <p>&ldquo;Ten percent goldens&rdquo; is ambiguous. It may mean ten golden exposures per one hundred total exposures, or ten added for every one hundred production tasks. The first requires dividing by 0.90; the second multiplies by 1.10. For 100,000 production judgments, results are 111,111 versus 110,000. The difference is small here but the habit matters.</p>
+      <p>QA sampling may trigger more work. A 3% expert sample of 50,000 items is 1,500 audits. If each audit takes six minutes, that is 150 expert hours. If a failed audit rejects an entire 1,000-item batch, expected rework depends on batch failure probability and policy—not simply 3%.</p>
+
+      <h4>Batch acceptance expected value</h4>
+      <div class="metric-example"><b>Example:</b> Fifty batches of 1,000 items each have an estimated 6% chance of rejection. A rejected batch requires reviewing all 1,000 items at two minutes each, but only 30% need relabeling at four minutes. Expected additional minutes per batch are <code>.06 × (1,000×2 + 300×4) = 192</code>. Across fifty batches, 160 hours. A batch-level rejection rule creates correlated rework and should be modeled separately from item-level defects.</div>
+
+      <h4>Recurring demand, backlog and Little&rsquo;s Law</h4>
+      <p>For steady-state systems, flow matters more than total project volume. Little&rsquo;s Law states <code>L = λW</code>: average work in process equals throughput rate times average time in system.</p>
+      <div class="metric-example"><b>Example:</b> A reasoning factory accepts 50 problems per week and each candidate spends an average of three weeks from submission to final decision. Average work in process is <code>50 × 3 = 150 accepted-equivalent items</code>; because yield is 50%, roughly 300 candidates may be somewhere in the funnel. If dashboards show 600, queues or blocked reviews are doubling cycle time.</div>
+      <p>Little&rsquo;s Law is a diagnostic, not a schedule by itself. It assumes a stable system. During ramp or a one-time deadline, use a week-by-week flow model.</p>
+
+      <h4>Ramp and cohort math</h4>
+      <p>New workers or authors do not start at mature throughput. Model cohorts by week. Suppose forty annotators start, with productive hours per person of 10, 18, 24 and 25 across their first four weeks. A second cohort of twenty starts in week three.</p>
+      <div class="tbl"><table>
+        <thead><tr><th>Week</th><th>Cohort A people × hours</th><th>Cohort B people × hours</th><th>Total productive hours</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>40 × 10</td><td>—</td><td class="num">400</td></tr>
+          <tr><td>2</td><td>40 × 18</td><td>—</td><td class="num">720</td></tr>
+          <tr><td>3</td><td>40 × 24</td><td>20 × 10</td><td class="num">1,160</td></tr>
+          <tr><td>4</td><td>40 × 25</td><td>20 × 18</td><td class="num">1,360</td></tr>
+          <tr><td>5</td><td>40 × 25</td><td>20 × 24</td><td class="num">1,480</td></tr>
+        </tbody>
+      </table></div>
+      <p>A steady-state calculation using sixty people × twenty-five hours × five weeks would predict 7,500 hours. Cohort math yields 5,120—a 32% difference. This is why early production schedules miss even when mature productivity is correct.</p>
+
+      <h4>Demand variability and service levels</h4>
+      <p>Average arrival rate is not enough when daily demand varies. Capacity near 100% utilization causes queues to explode because there is no room for bursts or slow tasks. For human operations, target 70–85% planned utilization depending on variability and SLA. The unused portion is not waste; it is the buffer that protects turnaround.</p>
+      <div class="metric-example"><b>Example:</b> Average demand is 1,000 judgments/day, but p95 is 1,450. A pool sized exactly for 1,000 accumulates backlog on every high day. If the SLA is one day, either reserve capacity near p95, use a flexible overflow pool, or allow backlog with a longer p95 turnaround. State which.</div>
+
+      <h4>Forecast by strata, then add</h4>
+      <p>When work types have different time or yield, use a weighted model. Average inputs are safe only if the mix is stable.</p>
+      <div class="metric-example"><b>Example:</b> A dataset is 60% simple at two minutes, 30% medium at six minutes and 10% expert at twenty minutes. Weighted mean is <code>.6×2 + .3×6 + .1×20 = 5 minutes</code>. If the client shifts expert content to 25%, keeping simple at 45% and medium at 30%, mean becomes <code>.45×2 + .30×6 + .25×20 = 7.7 minutes</code>, a 54% cost increase with unchanged total volume.</div>
+
+      <h4>Top-down and bottom-up reconciliation</h4>
+      <p>Bottom-up estimates multiply items by minutes. Top-down estimates use observed throughput: a similar twenty-person team delivered 8,000 items/week. If bottom-up predicts 14,000, investigate. Possible missing factors include queue starvation, meetings, tool latency, rework, task mix or a wrong definition of productive time. The goal is not to average the two; it is to learn why they differ.</p>
+
+      <h4>Volume worksheet</h4>
+      <div class="tbl"><table>
+        <thead><tr><th>Line</th><th>Formula</th><th>Example</th></tr></thead>
+        <tbody>
+          <tr><td>Accepted output</td><td>client quantity</td><td class="num">100,000 items</td></tr>
+          <tr><td>Candidate/input need</td><td>accepted ÷ compounded yield</td><td class="num">100,000 ÷ .70 = 142,857</td></tr>
+          <tr><td>Base work</td><td>candidates × base overlap/layers</td><td class="num">142,857 × 2 = 285,714</td></tr>
+          <tr><td>Adaptive work</td><td>items × path probability × extra work</td><td class="num">100,000 × .20 × 1 = 20,000</td></tr>
+          <tr><td>Non-delivery work</td><td>production ÷ (1 − golden share)</td><td class="num">305,714 ÷ .95 = 321,804</td></tr>
+          <tr><td>Rework attempts</td><td>attempts ÷ (1 − replacement rate)</td><td class="num">321,804 ÷ .96 = 335,213</td></tr>
+          <tr><td>Labor hours</td><td>attempts × minutes ÷ 60</td><td class="num">335,213 × 3 ÷ 60 = 16,761</td></tr>
+        </tbody>
+      </table></div>
+      <div class="checkpoint"><b>Check the denominator:</b> if yield applies to candidates before overlap, divide accepted items before multiplying votes. If rework applies to judgments after overlap, divide later. Put every loss at the stage where it actually occurs.</div>
+
+      <h4>Practice</h4>
+      <div class="est-grid">
+        <div class="est-card"><h4>Adaptive votes</h4><p>80,000 items get two votes. Twenty-five percent disagree and get a third; 4% of all items go to two experts. Add 7% goldens. How many total judgments?</p></div>
+        <div class="est-card"><h4>Sequential funnel</h4><p>Validity 90%, verification 82%, difficulty 65%, editorial 96%. How many candidates for 300 accepted items? Which gate offers the largest absolute gain from a five-point improvement?</p></div>
+        <div class="est-card"><h4>Weekly service</h4><p>Demand is 20k items/week, 4 min/item, 10% rework. Workers provide 22 productive h/week. Size the pool at 80% planned utilization.</p></div>
+      </div>
+    </div>
+
+    <div class="pane" data-tab="cap" hidden>
+      <h3>Capacity and schedule: turning hours into a believable delivery plan</h3>
+      <p>A capacity estimate answers &ldquo;how much can the system produce?&rdquo; A schedule answers &ldquo;when will this specific scope be accepted?&rdquo; They are related but not identical. Capacity may be parallel; dependencies, ramp, reviews and client decisions create a critical path.</p>
+
+      <h4>Productive time is not paid time</h4>
+      <p>An eight-hour paid day contains training, breaks, meetings, tool latency, queue starvation, clarification, QA feedback and administration. Estimate productive time from telemetry or use a conservative range. For crowd annotation, 4–6 productive hours per active day may be reasonable depending on task availability. For engineers, 20–30 focused task hours per week may be more realistic than forty. Do not hide utilization inside task-time assumptions; keep them separate.</p>
+      <span class="formula">productive capacity = people × active days × paid hours/day × utilization<br>or directly: people × measured productive hours/person-period</span>
+      <div class="metric-example"><b>Example:</b> Twenty engineers for six weeks is 4,800 paid hours at 40 h/week. At 65% productive allocation, usable project capacity is 3,120 hours. If your bottom-up work estimate is 3,000 hours, the plan has only 4% headroom before accounting for dependencies. It is not a comfortable six-week plan.</div>
+
+      <h4>Headcount from hours</h4>
+      <p>The first calculation is simple:</p>
+      <span class="formula">people required = total productive hours ÷ (productive hours/person-period × periods available)</span>
+      <p>Then adjust for specialization, parallelizability, management span and headroom. If 1,000 hours require a licensed reviewer and 4,000 require general annotators, five thousand divided by an average person is meaningless. Size each constrained role separately.</p>
+
+      <h4>Critical path and parallel work</h4>
+      <p>Imagine a project with two weeks of rubric design, one week of qualification setup, four weeks of production, and one week of acceptance. Some recruiting can begin during rubric design, but qualification cannot finalize before the rubric. Production batches can enter acceptance while later batches are still being labeled. Draw dependencies and identify the longest path.</p>
+      <div class="tbl"><table>
+        <thead><tr><th>Work package</th><th>Duration</th><th>Depends on</th><th>Can overlap with</th></tr></thead>
+        <tbody>
+          <tr><td>Rubric and schema</td><td>2 weeks</td><td>client owner access</td><td>source ingest, recruiting</td></tr>
+          <tr><td>Tool configuration</td><td>1.5 weeks</td><td>draft schema</td><td>rubric refinement</td></tr>
+          <tr><td>Qualification and calibration</td><td>1 week</td><td>rubric, tool</td><td>pilot ingest</td></tr>
+          <tr><td>Pilot</td><td>1 week</td><td>qualified pool</td><td>dashboard build</td></tr>
+          <tr><td>Production</td><td>4 weeks</td><td>pilot readout</td><td>rolling QA and delivery</td></tr>
+          <tr><td>Final acceptance</td><td>1 week</td><td>last batch</td><td>documentation handoff</td></tr>
+        </tbody>
+      </table></div>
+      <p>Adding durations gives 10.5 weeks, but overlap may reduce the calendar to 8–9 weeks. Conversely, if the client takes five days to approve the pilot rather than one, the critical path grows. Include decision SLAs in the schedule.</p>
+
+      <h4>Throughput, cycle time and work in process</h4>
+      <p>Throughput is completed units per time. Cycle time is elapsed time from start to completion for one unit. Work in process is everything currently inside the system. Little&rsquo;s Law connects their averages: <code>WIP = throughput × cycle time</code>.</p>
+      <div class="metric-example"><b>Example:</b> A coding-task factory accepts ten tasks per week and average candidate cycle time is four weeks. It should contain about forty accepted-equivalent tasks in progress. At 70% yield, roughly 57 candidates may be active. If the actual queue is 120, either cycle time is longer than reported or throughput is about to rise. This turns queue size into a diagnostic.</div>
+
+      <h4>Utilization and queue behavior</h4>
+      <p>High utilization sounds efficient but harms latency in variable systems. When reviewers are busy almost all the time, any burst creates a queue. The exact relationship depends on arrival and service distributions, but the practical rule is clear: the stricter the turnaround SLA and the more variable the work, the more headroom you need.</p>
+      <div class="est-grid">
+        <div class="est-card"><h4>Predictable batch work</h4><p>Tasks are similar, deadlines are weekly, and backlog is allowed. Planned utilization can be higher, perhaps 85–90%.</p></div>
+        <div class="est-card"><h4>One-day SLA</h4><p>Arrivals vary and some cases take much longer. Plan 65–80% or keep an overflow pool.</p></div>
+        <div class="est-card"><h4>Scarce expert gate</h4><p>One expert outage can stop delivery. Use multiple qualified reviewers, appointment blocks, or a longer stated SLA.</p></div>
+      </div>
+
+      <h4>Variability: average task time is not enough</h4>
+      <p>Suppose median task time is four minutes, mean is six, and p90 is fifteen because a small number of difficult items take much longer. Labor cost follows the mean total time, not the median. Operational staffing and timeout policy need the distribution. Estimate by strata or use sampled totals.</p>
+      <div class="metric-example"><b>Example:</b> 80% of tasks take 3 minutes and 20% take 18. Mean is <code>.8×3 + .2×18 = 6 minutes</code>. Staffing from the 3-minute &ldquo;typical&rdquo; task underestimates labor by half. Routing the hard 20% to specialists may improve both predictability and quality.</div>
+
+      <h4>Ramp, learning and attrition</h4>
+      <p>Production capacity changes over time. New workers are slower and more error-prone; experienced workers may churn; quality interventions temporarily reduce output. Use weekly cohorts. A simple model records active people, hours, task speed and acceptance for each cohort.</p>
+      <div class="tbl"><table>
+        <thead><tr><th>Cohort week</th><th>Speed vs mature</th><th>Acceptance</th><th>Interpretation</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td class="num">55%</td><td class="num">82%</td><td>Training and frequent feedback.</td></tr>
+          <tr><td>2</td><td class="num">75%</td><td class="num">90%</td><td>Routine cases; hard items restricted.</td></tr>
+          <tr><td>3</td><td class="num">90%</td><td class="num">94%</td><td>Broader queue access.</td></tr>
+          <tr><td>4+</td><td class="num">100%</td><td class="num">96%</td><td>Mature planning rate.</td></tr>
+        </tbody>
+      </table></div>
+      <p>If 10% of the pool churns monthly, recurring operations must recruit continuously just to stay flat. Recruiting and qualification capacity is part of the production system.</p>
+
+      <h4>Machine capacity</h4>
+      <p>For compute work, distinguish service time, concurrency, rate limits and utilization. The theoretical wall-clock time for independent jobs is total service time divided by concurrency. Then adjust for long tails, retries, setup and provider throttles.</p>
+      <span class="formula">ideal wall time = jobs × average service time ÷ concurrent slots<br>planned wall time = ideal ÷ target utilization × retry factor</span>
+      <div class="metric-example"><b>Example:</b> 20,000 model-judge calls average 12 seconds. With 100 concurrent slots, ideal time is 2,400 seconds, or 40 minutes. At 70% utilization and 8% retry overhead, planned time is <code>40/.70×1.08 = 61.7 minutes</code>. If the API limit is only 1,000 requests/minute, rate limit—not concurrency—sets a floor of twenty minutes, still below the adjusted capacity floor.</div>
+
+      <h4>Availability and schedule confidence</h4>
+      <p>A plan with no buffer implicitly claims every assumption hits its mean. Add contingency based on known uncertainty rather than a ritual percentage. Common buffers include replacement volume, worker attrition, client review delay, infrastructure retry, scarce-expert absence and final acceptance defects.</p>
+      <div class="tbl"><table>
+        <thead><tr><th>Risk</th><th>Probability</th><th>Schedule impact</th><th>Expected impact</th><th>Treatment</th></tr></thead>
+        <tbody>
+          <tr><td>Client pilot approval delayed</td><td class="num">30%</td><td class="num">5 days</td><td class="num">1.5 days</td><td>Two-day SLA; escalate after day two.</td></tr>
+          <tr><td>Expert reviewer unavailable</td><td class="num">20%</td><td class="num">4 days</td><td class="num">0.8 day</td><td>Qualify backup reviewer.</td></tr>
+          <tr><td>Replacement rate above plan</td><td class="num">25%</td><td class="num">3 days</td><td class="num">0.75 day</td><td>Produce 5% early overage.</td></tr>
+          <tr><td>Tool integration change</td><td class="num">15%</td><td class="num">8 days</td><td class="num">1.2 days</td><td>Freeze interface at milestone.</td></tr>
+        </tbody>
+      </table></div>
+      <p>Expected impacts sum to about 4.25 days, but risks can correlate. Use a one-week buffer and active mitigations. For a high-stakes fixed date, scenario simulation is better than simply summing expected values.</p>
+
+      <h4>PERT for uncertain work packages</h4>
+      <p>When a task has optimistic, most likely and pessimistic durations, a PERT mean is <code>(O + 4M + P)/6</code>. If simulator build is 3, 5 and 9 weeks, estimated mean is <code>(3 + 20 + 9)/6 = 5.33 weeks</code>. PERT does not remove uncertainty, but it is better than selecting the optimistic number under deadline pressure.</p>
+
+      <h4>Schedule worksheet</h4>
+      <ol class="worked">
+        <li>List work packages, role, productive hours, dependencies and earliest start.</li>
+        <li>Calculate mathematical capacity per role.</li>
+        <li>Apply utilization, ramp and attrition.</li>
+        <li>Lay work into weeks, respecting dependencies and WIP limits.</li>
+        <li>Identify the constrained role and critical path.</li>
+        <li>Add acceptance and risk buffer explicitly.</li>
+        <li>Cross-check against historical velocity and run a conservative scenario.</li>
+      </ol>
+
+      <h4>Practice</h4>
+      <div class="est-grid">
+        <div class="est-card"><h4>Human capacity</h4><p>12,000 productive hours, 24 h/person-week, ten weeks, 80% planned utilization. How many people? How does a two-week ramp change the answer?</p></div>
+        <div class="est-card"><h4>Critical path</h4><p>Tooling takes four weeks; recruiting three and can overlap; qualification takes one after both; production five; acceptance one. Draw the calendar.</p></div>
+        <div class="est-card"><h4>Compute</h4><p>50,000 episodes at 70 seconds, 250 slots, 65% utilization, 10% retries. Estimate runtime and identify a provider rate-limit check.</p></div>
+      </div>
+    </div>
+
+    <div class="pane" data-tab="quality" hidden>
+      <h3>Metrics and confidence: know what each number can and cannot prove</h3>
+      <p>Metrics are part of scope because they define acceptance and create work. Choose a metric by the question it answers. Agreement asks whether raters are consistent; accuracy asks whether predictions match a trusted reference; precision and recall describe different error costs; IoU measures overlap; calibration asks whether confidence means what it claims; pass@k and pass^k answer different reliability questions.</p>
+
+      <h4>Start with the decision and the error matrix</h4>
+      <p>For any binary gate, write true condition versus predicted decision. If FAIL is the positive class:</p>
+      <div class="tbl"><table>
+        <thead><tr><th></th><th>Human says FAIL</th><th>Human says PASS</th></tr></thead>
+        <tbody>
+          <tr><td><b>System says FAIL</b></td><td>True positive: caught defect</td><td>False positive: good item sent to review/rejected</td></tr>
+          <tr><td><b>System says PASS</b></td><td>False negative: bad item shipped</td><td>True negative: good item passes</td></tr>
+        </tbody>
+      </table></div>
+      <p>Precision asks, &ldquo;When the system says FAIL, how often is it right?&rdquo; Recall asks, &ldquo;Of all true failures, how many did it catch?&rdquo;</p>
+      <span class="formula">precision = TP / (TP + FP)<br>recall = TP / (TP + FN)<br>F1 = 2 × precision × recall / (precision + recall)</span>
+      <div class="metric-example"><b>Worked confusion matrix:</b> Human audit has 100 failures and 900 passes. A judge catches 92 failures and flags 45 good items. Precision is <code>92/(92+45)=67.2%</code>; recall is <code>92/100=92%</code>. This may be good for triage—most failures are caught—but poor for automatic rejection because one third of rejections are wrong.</div>
+
+      <h4>Accuracy and class imbalance</h4>
+      <p>If only 1% of items fail, a classifier that always says PASS is 99% accurate and useless. Report class-specific metrics, prevalence and confusion counts. Balanced accuracy averages recall for each class. Precision depends on prevalence: the same detector looks less precise when true failures are rare.</p>
+      <div class="metric-example"><b>Base-rate effect:</b> A detector has 90% failure recall and 95% specificity. At 20% failure prevalence, among 1,000 items it catches 180 failures and falsely flags 40 passes: precision 81.8%. At 2% prevalence it catches 18 and falsely flags 49: precision only 26.9%. Threshold and workflow must match deployment prevalence.</div>
+
+      <h4>Agreement is not accuracy</h4>
+      <p>When no ground truth exists, measure whether independent raters apply the rubric consistently. Raw agreement is intuitive but can be inflated by dominant categories. Chance-corrected measures compare observed disagreement with disagreement expected from label marginals.</p>
+      <span class="formula">Krippendorff α = 1 − observed disagreement / expected disagreement</span>
+      <div class="metric-example"><b>Example:</b> Observed disagreement is 10% and expected disagreement from marginals is 40%. α is <code>1 − .10/.40 = .75</code>. If expected disagreement were only 12%, the same 10% observed disagreement gives α = 0.17 because near-unanimous marginals make chance agreement high.</div>
+      <p>Use α when rater counts vary or votes are missing. Cohen&rsquo;s κ fits exactly two raters; Fleiss&rsquo; κ assumes a fixed number. Report item confidence separately. High batch agreement does not guarantee every item is unambiguous.</p>
+
+      <h4>Reliability of a metric estimate</h4>
+      <p>A sample metric is uncertain. For a pass proportion, attach a confidence interval. The Wilson interval behaves better than the simple normal approximation for small samples or proportions near zero and one.</p>
+      <div class="metric-example"><b>Example:</b> A client audits 47 of 50 items and all 47? Clarify the denominator: suppose 47 of 50 pass, observed 94%. The approximate 95% Wilson interval is about 84%–98%. You cannot confidently claim the true pass rate exceeds 92%. With 470 of 500, the interval narrows to roughly 91.6%–95.7%, making the acceptance decision more stable.</div>
+      <p>Sample size depends on the desired margin of error, confidence and prevalence. Near 50%, a rough 95% sample for ±5 percentage points is about 385 independent items. For ±2 points it is about 2,400. Finite population correction matters only when sampling a large share of a small batch.</p>
+
+      <h4>Acceptance sampling</h4>
+      <p>Design the sample around the decision and defect taxonomy. Critical defects may require zero tolerance; minor defects can use a rate. Stratify by language, task family or risk so easy majority classes do not hide failure in a small segment.</p>
+      <div class="tbl"><table>
+        <thead><tr><th>Defect class</th><th>Example</th><th>Sampling rule</th><th>Batch action</th></tr></thead>
+        <tbody>
+          <tr><td>Critical</td><td>PII leak, invalid consent, answer leakage</td><td>targeted plus random; zero observed</td><td>quarantine and root-cause review</td></tr>
+          <tr><td>Major</td><td>wrong label, broken test, incorrect solution</td><td>random stratified sample</td><td>accept if lower confidence bound meets target</td></tr>
+          <tr><td>Minor</td><td>format or wording issue</td><td>smaller sample or automated check</td><td>repair without rejecting whole batch</td></tr>
+        </tbody>
+      </table></div>
+
+      <h4>Calibration and expected calibration error</h4>
+      <p>A confidence of 0.8 should be correct about 80% of the time. Group predictions into confidence bins, compare average confidence with observed accuracy, and weight the absolute gaps. That is expected calibration error (ECE).</p>
+      <div class="metric-example"><b>Example:</b> In the 0.8–0.9 bin, 200 items have average confidence 0.85 but only 150 are correct, accuracy 0.75. That bin contributes <code>200/N × |.85−.75|</code> to ECE. An overconfident judge may rank items usefully yet make unsafe auto-accept decisions.</div>
+      <p>Calibration can drift when rubric, language, domain or model version changes. Calibrate on one set, choose thresholds on another if possible, and evaluate on a held-out set. Never report confidence as a probability without checking calibration.</p>
+
+      <h4>Temporal and spatial overlap</h4>
+      <p>Intersection over union is <code>intersection / union</code>. It penalizes both missing coverage and extra coverage. For temporal segments, lengths are seconds; for masks or boxes, areas.</p>
+      <div class="metric-example"><b>Example:</b> Reference interval [5, 15], prediction [8, 18]. Intersection is 7, union is 13, IoU = 0.538. Boundary errors are +3 s start and +3 s end. If downstream training tolerates rough boundaries, IoU 0.5 might be adequate; for short surgical actions it may be unusable. Targets come from use, not convention.</div>
+
+      <h4>pass@k and pass^k</h4>
+      <p>These notations are frequently confused. pass@k asks whether at least one of k attempts succeeds. Under independent constant success probability p, it is <code>1 − (1 − p)^k</code>. pass^k asks whether all k attempts succeed: <code>p^k</code>. The first rewards sampling; the second measures repeatability.</p>
+      <div class="tbl"><table>
+        <thead><tr><th>Single-run p</th><th>pass@2</th><th>pass@4</th><th>pass^2</th><th>pass^4</th></tr></thead>
+        <tbody>
+          <tr><td class="num">0.50</td><td class="num">0.75</td><td class="num">0.938</td><td class="num">0.25</td><td class="num">0.063</td></tr>
+          <tr><td class="num">0.75</td><td class="num">0.938</td><td class="num">0.996</td><td class="num">0.563</td><td class="num">0.316</td></tr>
+          <tr><td class="num">0.90</td><td class="num">0.990</td><td class="num">0.9999</td><td class="num">0.810</td><td class="num">0.656</td></tr>
+        </tbody>
+      </table></div>
+      <p>Real attempts may be correlated. Similar sampling errors or an environment bug violate independence. Prefer empirical estimators from repeated runs across items and report the protocol: model, version, prompt, tools, temperature, seeds and date.</p>
+
+      <h4>Downstream metrics and causal humility</h4>
+      <p>A data factory controls label process metrics; the client ultimately cares about model lift, safety incidents, or task success. Downstream change can be affected by model architecture, training recipe and evaluation. Offer a joint experiment: frozen training recipe, comparable baseline, held-out evaluation and confidence intervals. Do not guarantee lift solely from annotation agreement.</p>
+
+      <h4>Metric hierarchy</h4>
+      <div class="est-grid">
+        <div class="est-card"><h4>Input</h4><p>Coverage, quota fill, source rights, consent completeness.</p></div>
+        <div class="est-card"><h4>Process</h4><p>Task time, throughput, goldens, rework, queue age.</p></div>
+        <div class="est-card"><h4>Output</h4><p>Agreement, accuracy, IoU, validity, grader precision/recall.</p></div>
+        <div class="est-card"><h4>Outcome</h4><p>Model lift, launch confidence, agent success, reduced incidents.</p></div>
+      </div>
+      <p>Use leading input/process metrics to operate daily, output metrics to accept batches, and outcome metrics to justify the program. A dashboard with only downstream lift arrives too late to manage the factory.</p>
+
+      <h4>Practice</h4>
+      <div class="est-grid">
+        <div class="est-card"><h4>Judge gate</h4><p>TP=180, FP=30, FN=20, TN=770. Compute precision, recall, specificity and accuracy. Is it safe for pre-screening or auto-rejection?</p></div>
+        <div class="est-card"><h4>Agreement</h4><p>Observed disagreement .14, expected .50. Compute α. Then explain what a high α cannot tell you about correctness.</p></div>
+        <div class="est-card"><h4>Reliability</h4><p>An agent succeeds 80% per run. Compare pass@4 and pass^4. Which belongs in a benchmark for &ldquo;can ever solve&rdquo; versus production consistency?</p></div>
+      </div>
+    </div>
+
+    <div class="pane" data-tab="econ" hidden>
+      <h3>Cost and price: turn the operational model into a commercial offer</h3>
+      <p>Cost is what delivery consumes. Price is what the client pays. Margin is the space between them that funds sales, product investment, corporate overhead and risk. A defensible commercial model shows cost blocks, avoids double counting, and matches payment structure to who controls the uncertainty.</p>
+
+      <h4>Build COGS by behavior, not accounting label</h4>
+      <div class="tbl"><table>
+        <thead><tr><th>Cost block</th><th>Examples</th><th>Usually fixed or variable?</th><th>Common omission</th></tr></thead>
+        <tbody>
+          <tr><td>Production labor</td><td>annotators, authors, solvers, reviewers</td><td>variable with attempted work</td><td>rejected and golden work</td></tr>
+          <tr><td>Operations labor</td><td>PM, pool ops, QA lead, support</td><td>step-fixed by program size</td><td>meetings and client reporting</td></tr>
+          <tr><td>Engineering</td><td>tooling, integration, validators, runner</td><td>fixed setup plus maintenance</td><td>amortization and on-call</td></tr>
+          <tr><td>Compute</td><td>model calls, GPUs, sandboxes, storage, egress</td><td>usage-variable; some reserved</td><td>retries, failed runs, observability</td></tr>
+          <tr><td>Recruiting and qualification</td><td>sourcing, tests, training, attrition replacement</td><td>front-loaded and recurring</td><td>nonproductive qualification pay</td></tr>
+          <tr><td>Compliance and security</td><td>background checks, privacy review, clean room</td><td>fixed plus per-person/per-audit</td><td>deletion and incident workflows</td></tr>
+          <tr><td>Contingency</td><td>named yield, time, scope or provider risks</td><td>reserve, not hidden profit</td><td>using one generic percentage with no rationale</td></tr>
+        </tbody>
+      </table></div>
+
+      <h4>Loaded rates</h4>
+      <p>The rate paid to a worker is not necessarily the effective cost per productive hour. Platform fees, payroll burden, benefits, idle time, qualification, supervision and currency/payment costs may apply.</p>
+      <div class="metric-example"><b>Example:</b> An annotator receives $16 per paid hour. Employer/platform burden is 25%, so paid-hour cost is $20. If 80% of paid time is productive, effective productive-hour cost is <code>$20/.80 = $25</code>. Using $16 against productive task hours understates labor by 36%.</div>
+      <p>For external experts paid per accepted unit, convert to an expected cost per attempted unit using yield. For salaried staff, use loaded annual cost divided by realistic productive hours, not 2,080 without adjustment.</p>
+
+      <h4>Fixed-cost amortization and volume</h4>
+      <p>Setup cost per unit falls with committed volume. If tooling and rubric design cost $80,000, it adds $8 per unit at 10,000 units and $0.80 at 100,000. A low volume tier cannot receive the same unit rate unless setup is charged separately.</p>
+      <span class="formula">unit COGS = variable COGS/unit + fixed program cost ÷ committed accepted units</span>
+      <div class="metric-example"><b>Example:</b> Variable COGS is $5.20/pair and fixed cost is $60,000. At 10,000 pairs total COGS is $11.20; at 50,000 it is $6.40. A $9 price loses money in the first case and supports 28.9% gross margin in the second. Volume discounts should follow amortization and real efficiency, not optimism.</div>
+
+      <h4>Gross margin correctly calculated</h4>
+      <span class="formula">gross margin = (revenue − COGS) / revenue<br>price for target margin = COGS / (1 − target margin)</span>
+      <p>Markup and margin are not the same. A 50% markup on $100 cost produces a $150 price and 33.3% margin. To achieve 50% margin, price must be $200.</p>
+      <div class="tbl"><table>
+        <thead><tr><th>COGS</th><th>Target GM</th><th>Required price</th><th>Equivalent markup on cost</th></tr></thead>
+        <tbody>
+          <tr><td class="num money">$100</td><td class="num">20%</td><td class="num money">$125.00</td><td class="num">25%</td></tr>
+          <tr><td class="num money">$100</td><td class="num">30%</td><td class="num money">$142.86</td><td class="num">42.9%</td></tr>
+          <tr><td class="num money">$100</td><td class="num">40%</td><td class="num money">$166.67</td><td class="num">66.7%</td></tr>
+          <tr><td class="num money">$100</td><td class="num">50%</td><td class="num money">$200.00</td><td class="num">100%</td></tr>
+        </tbody>
+      </table></div>
+
+      <h4>Choose a commercial structure by uncertainty and control</h4>
+      <div class="est-grid">
+        <div class="est-card"><h4>Fixed price</h4><p>Use for bounded deliverables with stable inputs and acceptance. Protect with assumptions, milestones, exclusions and change control.</p></div>
+        <div class="est-card"><h4>Unit price</h4><p>Use for repeatable accepted output. Define the unit, mix, minimum volume, yield ownership and what happens to rejected work.</p></div>
+        <div class="est-card"><h4>Time &amp; materials</h4><p>Use for discovery, uncertain integration, evolving policy and client-controlled priorities. Add a cap or checkpoint for budget confidence.</p></div>
+        <div class="est-card"><h4>Hybrid</h4><p>Fixed setup + unit production + pass-through compute + maintenance retainer. Often best for data factories and gyms.</p></div>
+        <div class="est-card"><h4>Outcome-based</h4><p>Use only when the outcome is measurable, causal influence is clear, baseline is agreed and downside is bounded.</p></div>
+      </div>
+
+      <h4>Expected risk cost</h4>
+      <p>For named risks, estimate probability and financial impact. Expected monetary value is probability times impact. Add correlated risks carefully; do not pretend a sum of means is a worst case.</p>
+      <div class="tbl"><table>
+        <thead><tr><th>Risk</th><th>Probability</th><th>COGS impact</th><th>Expected value</th><th>Mitigation</th></tr></thead>
+        <tbody>
+          <tr><td>Yield 10 points below base</td><td class="num">30%</td><td class="num money">$60,000</td><td class="num money">$18,000</td><td>Pilot and author coaching.</td></tr>
+          <tr><td>Client rubric change</td><td class="num">25%</td><td class="num money">$40,000</td><td class="num money">$10,000</td><td>Version freeze and change order.</td></tr>
+          <tr><td>Expert availability delay</td><td class="num">20%</td><td class="num money">$25,000</td><td class="num money">$5,000</td><td>Backup pool.</td></tr>
+          <tr><td>Provider price change</td><td class="num">15%</td><td class="num money">$20,000</td><td class="num money">$3,000</td><td>Pass-through or indexed price.</td></tr>
+          <tr class="total"><td>Expected reserve</td><td></td><td></td><td class="num money">$36,000</td><td>Round and review correlation.</td></tr>
+        </tbody>
+      </table></div>
+      <p>A contingency reserve belongs in COGS if the delivery team expects to consume it. Commercial margin should not be the only risk buffer. Conversely, risks contractually owned by the client—late source delivery, post-freeze scope changes—should trigger schedule/price adjustment rather than being fully prepaid by every customer.</p>
+
+      <h4>Sensitivity and break-even</h4>
+      <p>Change one driver at a time to see what moves unit economics. Rank by elasticity: percentage change in outcome divided by percentage change in input. In labor-heavy tasks, minutes per attempt and yield often dominate. For software-heavy environments, fixed engineering scope and maintenance dominate.</p>
+      <div class="metric-example"><b>Automation break-even:</b> A proposal model costs $120,000 to build and operate for the program. It saves 1.5 human minutes per item at $24/productive hour, or $0.60/item. Break-even volume is <code>$120,000/$0.60 = 200,000 items</code>. At 50,000 items, it is not justified purely by labor savings, though quality or schedule benefits may still matter.</div>
+
+      <h4>Cash flow and milestones</h4>
+      <p>A profitable project can be cash-flow negative if recruiting, devices and engineering are paid before client acceptance. Align payment milestones with irreversible spend. For example: 20% at kickoff, 20% at design acceptance, 25% after pilot, 25% on production batches, 10% at final acceptance. For long programs, monthly invoicing reduces financing risk.</p>
+
+      <h4>Discount logic</h4>
+      <p>A discount should correspond to economic value received: committed volume, longer forecast, standardized scope, prepaid cash, reusable tooling, flexible SLA or lower cancellation risk. A discount for &ldquo;future potential&rdquo; without commitment is simply lower margin.</p>
+      <div class="tbl"><table>
+        <thead><tr><th>Client concession</th><th>Economic benefit</th><th>Possible price response</th></tr></thead>
+        <tbody>
+          <tr><td>100k minimum commitment</td><td>fixed-cost amortization, stable pool</td><td>volume tier after threshold</td></tr>
+          <tr><td>Eight-week forecast lock</td><td>capacity planning, lower rush risk</td><td>reduced reserve</td></tr>
+          <tr><td>Standard schema and tooling</td><td>less engineering</td><td>lower setup fee</td></tr>
+          <tr><td>Flexible 5-day SLA</td><td>higher utilization, smaller overflow pool</td><td>lower unit rate</td></tr>
+          <tr><td>Prepayment</td><td>better cash flow and reduced credit risk</td><td>small commercial discount</td></tr>
+        </tbody>
+      </table></div>
+
+      <h4>Price waterfall example</h4>
+      <p>A program has $420,000 base COGS including expected risk. Target margin is 35%, so list price is <code>$420,000/.65 = $646,154</code>. The client commits volume that saves $25,000 fixed cost and prepays, earning a $10,000 discount. Revised COGS is $395,000 and net price is $636,154, margin 37.9%. If sales instead discounts the original list by 15% to $549,231 with unchanged COGS, margin falls to 23.5%. Always recalculate, never discuss discounts only as percentages.</p>
+
+      <h4>Commercial checklist</h4>
+      <ol class="worked">
+        <li>Show unit and volume mix.</li>
+        <li>Show fixed and variable cost blocks.</li>
+        <li>State yield, time, utilization and third-party assumptions.</li>
+        <li>Calculate price from COGS and margin; cross-check client value.</li>
+        <li>Offer a range or tiers tied to real scope differences.</li>
+        <li>Define acceptance, rejection and rework responsibility.</li>
+        <li>Name pass-through costs and price-indexed dependencies.</li>
+        <li>Define change-control triggers and cancellation terms.</li>
+        <li>Align invoice milestones with spend and acceptance.</li>
+      </ol>
+      <div class="talk"><b>How to say it</b>The base program is $640k under the stated volume, mix and quality gate. About two thirds is variable production and one third is setup, QA and risk reserve. The range is $560k–$760k, driven mainly by yield and expert review time. The pilot narrows those two assumptions; any later change in task mix or acceptance threshold follows the agreed unit schedule.</div>
+    </div>
+
+    <div class="pane" data-tab="cases" hidden>
+      <h3>Cases and drills: practice the full chain</h3>
+      <p>Estimation improves through repetition. For each case, pause after the prompt and build your own model before reading the walkthrough. There can be several reasonable answers; the standard is whether assumptions, units, constraints and sensitivities are visible.</p>
+
+      <h4>Case 1 · Multilingual safety classification</h4>
+      <p><b>Prompt:</b> Deliver 120,000 accepted text classifications in four weeks: 60% English, 25% Spanish, 15% Japanese. Two base labels, third on disagreement. Expected disagreement is 12%, 16% and 25% respectively. Goldens are 5% of exposures. Replacement is 3%. Valid task times are 55, 70 and 95 seconds. Workers provide twenty productive hours per week. Estimate judgments, hours and active pool by language.</p>
+      <div class="tbl"><table>
+        <thead><tr><th>Language</th><th>Items</th><th>Expected judgments/item</th><th>Production judgments</th><th>Hours after goldens/replacement</th><th>Workers</th></tr></thead>
+        <tbody>
+          <tr><td>English</td><td class="num">72,000</td><td class="num">2.12</td><td class="num">152,640</td><td class="num">≈ 2,509</td><td class="num">32</td></tr>
+          <tr><td>Spanish</td><td class="num">30,000</td><td class="num">2.16</td><td class="num">64,800</td><td class="num">≈ 1,368</td><td class="num">18</td></tr>
+          <tr><td>Japanese</td><td class="num">18,000</td><td class="num">2.25</td><td class="num">40,500</td><td class="num">≈ 1,165</td><td class="num">15</td></tr>
+        </tbody>
+      </table></div>
+      <p>The hour calculation is production judgments divided by 0.95 for goldens and 0.97 for replacement, multiplied by seconds, divided by 3,600. Workers equal hours divided by eighty productive hours over four weeks, rounded up. Add 20–25% headroom and qualification attrition. Japanese is only 15% of items but needs nearly half the English headcount per item because disagreement and time are higher. A blended global rate would obscure that constraint.</p>
+
+      <h4>Case 2 · Hard math dataset</h4>
+      <p><b>Prompt:</b> Deliver 200 accepted problems. Candidate gates: completeness 92%, automated validity 90%, blind solve 80%, difficulty 60%, editorial 95%. Authoring is three hours/candidate at $100/h. Blind solve is 1.5 hours per validity survivor at $100/h. Other direct review averages 0.6 hours per blind-solve survivor at $75/h. Estimate candidates and direct expert cost.</p>
+      <ol class="worked">
+        <li>Compounded yield: <code>.92×.90×.80×.60×.95 = .3776</code>.</li>
+        <li>Candidates: <code>200/.3776 = 530</code>, rounded to perhaps 550 for planning.</li>
+        <li>Authoring: <code>530×3×$100 = $159,000</code>.</li>
+        <li>Validity survivors entering blind solve: <code>530×.92×.90 = 439</code>. Blind cost: <code>439×1.5×$100 = $65,850</code>.</li>
+        <li>Blind-solve survivors entering further review: <code>439×.80 = 351</code>. Other review: <code>351×.6×$75 = $15,795</code>.</li>
+        <li>Direct expert cost ≈ $240,645, or $1,203 per accepted item before compute, PM, tooling and contingency.</li>
+      </ol>
+      <p>The largest lever is difficulty yield. Raising automated validity from 90% to 95% saves about 28 candidates; raising difficulty from 60% to 70% saves about 76. Coaching authors to target difficulty is commercially more important than a small checker improvement, though the checker may save review time.</p>
+
+      <h4>Case 3 · Video annotation automation</h4>
+      <p><b>Prompt:</b> Annotate 2,000 video hours with temporal segments. Manual baseline is 6 HM/VM at $22/h. A proposal model costs $90,000 to adapt and $8/video-hour to run. With proposals, human work is expected to fall to 1.8 HM/VM. Is automation justified on labor cost alone?</p>
+      <div class="metric-example"><b>Manual:</b> one video hour contains sixty video minutes, so human hours/video hour = 6. Total human hours are 12,000 and labor is $264,000.</div>
+      <div class="metric-example"><b>Semi-auto:</b> human hours/video hour = 1.8. Total human hours 3,600, labor $79,200. Inference costs $16,000; adaptation $90,000; total $185,200. Savings are $78,800, so yes at 2,000 hours under these assumptions.</div>
+      <p>Break-even hours solve <code>manual variable − semi-auto variable = fixed adaptation</code>. Manual variable is $132/video hour. Semi-auto labor plus inference is <code>1.8×$22 + $8 = $47.60</code>. Savings $84.40/hour. Break-even <code>$90,000/$84.40 = 1,066 hours</code>. Add model-maintenance and QA differences before signing. Also validate proposal recall; low human time caused by missing segments is not efficiency.</p>
+
+      <h4>Case 4 · Coding benchmark deadline</h4>
+      <p><b>Prompt:</b> Produce 60 accepted tasks in eight weeks. Yield is 75%. Candidate build takes twelve hours; late-stage validation averages four hours per accepted task. Engineers provide 26 productive hours/week. Platform foundations require two engineers for the first three weeks and must finish before full production. How many task engineers are needed?</p>
+      <ol class="worked">
+        <li>Candidates: <code>60/.75 = 80</code>. Build hours: <code>80×12 = 960</code>. Validation: <code>60×4 = 240</code>. Total task work 1,200 hours.</li>
+        <li>If all eight weeks were available, one engineer provides 208 hours; mathematical minimum 5.77, so six.</li>
+        <li>But production ramps during foundations. Suppose task authors can deliver 25% capacity in weeks 1–2, 60% in week 3, and 100% in weeks 4–8. Effective full-capacity weeks are <code>.25+.25+.60+5 = 6.10</code>.</li>
+        <li>Capacity per task engineer is <code>6.10×26 = 158.6 hours</code>. Need <code>1,200/158.6 = 7.57</code>, so eight task engineers, plus the two platform engineers.</li>
+        <li>Add independent reviewers and a replacement buffer; eight is the production minimum, not total team size.</li>
+      </ol>
+
+      <h4>Case 5 · Gym operating cost</h4>
+      <p><b>Prompt:</b> Run one million episodes per month. Mean episode uses 30,000 input tokens and 3,000 output tokens, lasts 50 seconds, writes 200 KB compressed trajectory data, and has 5% infrastructure retry. The client wants completion within ten days using 500 concurrent slots. Estimate token volume, storage and runtime.</p>
+      <ol class="worked">
+        <li>Attempts including retry: <code>1,000,000×1.05 = 1,050,000</code>.</li>
+        <li>Input tokens: 31.5 billion; output tokens: 3.15 billion. Apply contracted model rates and separate simulator from agent tokens if they use different models.</li>
+        <li>Trajectory storage: <code>1,050,000×200 KB = 210 GB</code> compressed, before indexes, logs and replication. Retaining twelve months is about 2.5 TB raw compressed trajectories.</li>
+        <li>Serial runtime: <code>1,050,000×50 s = 14,583 hours</code>. At 500 slots ideal elapsed is 29.2 hours. At 70% utilization, 41.7 hours—well within ten days.</li>
+        <li>Required average throughput for ten days is <code>1,050,000/(10×24×3600)=1.22 episodes/s</code>. The planned platform supports roughly <code>500×.70/50 = 7 episodes/s</code>, leaving ample headroom unless model API limits bind.</li>
+      </ol>
+
+      <h4>Case 6 · Price and margin negotiation</h4>
+      <p><b>Prompt:</b> A program has $300,000 fixed COGS and $4.50 variable COGS per accepted unit. Client requests 100,000 units and a price of $7.00. Calculate margin. Then find the price for 35% margin and the volume required for $7.00 to produce 35% margin.</p>
+      <div class="metric-example"><b>At 100k:</b> Total COGS = <code>$300,000 + $450,000 = $750,000</code>. Revenue at $7 = $700,000. The project loses $50,000; margin is −7.1%.</div>
+      <div class="metric-example"><b>Price for 35%:</b> <code>$750,000/.65 = $1,153,846</code>, or $11.54/unit.</div>
+      <div class="metric-example"><b>Can $7 ever support 35%?</b> Required COGS/unit is <code>$7×.65 = $4.55</code>. Variable cost is already $4.50, leaving only $0.05/unit for fixed cost. Volume must be <code>$300,000/.05 = 6,000,000 units</code>. The requested rate is economically unrealistic unless variable cost changes.</div>
+
+      <h4>Case 7 · Metric choice</h4>
+      <p><b>Prompt:</b> An LLM judge evaluates rare critical failures. In 10,000 audited items, 100 are true failures. The judge catches 95 but falsely flags 297 good items. Compute accuracy, failure recall and precision. Decide whether it can auto-reject.</p>
+      <ol class="worked">
+        <li>TP=95, FN=5, FP=297, TN=9,603.</li>
+        <li>Accuracy = <code>(95+9,603)/10,000 = 96.98%</code>.</li>
+        <li>Failure recall = <code>95/100 = 95%</code>.</li>
+        <li>Failure precision = <code>95/(95+297) = 24.2%</code>.</li>
+        <li>It is useful for pre-screening because it catches most failures, but unsafe and expensive for auto-rejection: three quarters of rejected items would be good. Route flags to human review or raise the threshold and remeasure recall.</li>
+      </ol>
+
+      <h4>Case 8 · Build the interview answer in five minutes</h4>
+      <p><b>Prompt:</b> &ldquo;Price 25,000 expert-reviewed legal annotations in six weeks.&rdquo; A strong verbal structure:</p>
+      <ol class="worked">
+        <li><b>Clarify unit and jurisdiction.</b> One accepted record? How many labels and reviews? Licensed experts or trained generalists? What agreement and client audit define acceptance?</li>
+        <li><b>Make bounded assumptions.</b> Two base reviews, 20% third-review escalation, 5% goldens, 5% replacement, eight minutes/review, $120/productive expert hour.</li>
+        <li><b>Calculate.</b> Production reviews <code>25k×(2+.2)=55k</code>. After goldens and replacement: <code>55k/.95/.95≈60.9k</code>. Hours <code>60.9k×8/60≈8,120</code>.</li>
+        <li><b>Capacity.</b> Experts provide fifteen productive hours/week for six weeks = ninety hours. Mathematical minimum 91 experts; with 20% headroom and jurisdiction quotas, recruit about 110 active qualified experts.</li>
+        <li><b>Cost.</b> Direct expert labor ≈ $974k. Add recruiting/qualification, platform, senior adjudication, PM and contingency—assume total COGS $1.25M. At 35% margin, price ≈ $1.92M, or $76.80 per accepted item.</li>
+        <li><b>Range and pilot.</b> If review time is 6–12 minutes, cost range is wide. Run 500 items across jurisdictions to measure time, disagreement and expert activation before fixing production price.</li>
+      </ol>
+      <p>This answer is valuable even if another candidate chooses different assumptions. It connects definitions, arithmetic, constraints, quality, economics and uncertainty in a form the interviewer can challenge.</p>
+
+      <h4>How to audit an estimate before presenting it</h4>
+      <p>A second pass should try to break the model, not merely check arithmetic. Read every line and ask whether the units reconcile, whether a loss is applied at the correct stage, whether work is counted once, and whether the schedule respects dependencies. Then inspect incentives: could a team hit the named metric while producing something the client does not want?</p>
+      <ol class="worked">
+        <li><b>Reconcile volumes.</b> Begin with inputs and follow every branch. Candidates should equal accepted units plus rejects, unless items can be repaired or split. Judgment attempts should reconcile to base votes, escalations, goldens, audits and replacements. If dashboard categories overlap, do not add them.</li>
+        <li><b>Reconcile hours.</b> Total stage hours should equal items entering that stage multiplied by time per entering item. Confirm whether time is median, mean, paid, active or accepted-only. Labor cost should use productive hours with an effective productive-hour rate.</li>
+        <li><b>Reconcile people.</b> Each role&rsquo;s required hours must fit the named people and calendar. Check part-time allocation, ramp, attrition, holidays and review duties. A lead counted as 100% production and 100% management is double-booked.</li>
+        <li><b>Reconcile calendar.</b> Confirm prerequisites and approval waits. Adding more people cannot compress work that depends on one client decision, one scarce reviewer, or a serial environment foundation.</li>
+        <li><b>Reconcile metrics.</b> Every target needs a population, protocol and sample. Make sure denominators include failed or abstained cases appropriately and that acceptance sampling can actually distinguish the threshold.</li>
+        <li><b>Reconcile money.</b> Sum cost blocks to COGS, calculate margin from revenue rather than cost, and verify fixed costs are amortized over committed—not hoped-for—volume. Confirm discounts do not push price below variable cost.</li>
+      </ol>
+
+      <h4>Common estimation traps, corrected</h4>
+      <div class="tbl"><table>
+        <thead><tr><th>Trap</th><th>Why it fails</th><th>Corrective question</th></tr></thead>
+        <tbody>
+          <tr><td>&ldquo;Ten people for ten weeks is 100 person-weeks.&rdquo;</td><td>True arithmetically, but ignores role fit, ramp and dependencies.</td><td>Which work can each person do, and when can it start?</td></tr>
+          <tr><td>&ldquo;We need three labels per item.&rdquo;</td><td>Ignores goldens, escalation, audits and replacement.</td><td>How many total task exposures produce one accepted aggregate?</td></tr>
+          <tr><td>&ldquo;The average task is four minutes.&rdquo;</td><td>May be median; long-tail work drives cost.</td><td>What are mean, p90 and mix-weighted total valid minutes?</td></tr>
+          <tr><td>&ldquo;Quality target is 95%.&rdquo;</td><td>No metric, class, sample, confidence or defect severity.</td><td>95% of what, compared with which reference, measured how?</td></tr>
+          <tr><td>&ldquo;Add 20% contingency.&rdquo;</td><td>Can hide unknown scope and double-count margin.</td><td>Which named risk consumes the reserve, and who controls it?</td></tr>
+          <tr><td>&ldquo;Volume discount is 15%.&rdquo;</td><td>May exceed the actual savings from scale.</td><td>Which fixed costs or productivity improvements create that discount?</td></tr>
+          <tr><td>&ldquo;The automation saves 70%.&rdquo;</td><td>May ignore build cost, recall, QA and maintenance.</td><td>At what volume does total cost break even at equal accepted quality?</td></tr>
+          <tr><td>&ldquo;We can double throughput by doubling people.&rdquo;</td><td>Recruiting, tooling, reviewers and client feedback may not scale.</td><td>Which stage becomes the next bottleneck?</td></tr>
+        </tbody>
+      </table></div>
+
+      <h4>More rapid drills</h4>
+      <div class="est-grid">
+        <div class="est-card"><h4>Agreement pilot</h4><p>A 1,000-item pilot uses three raters. Fourteen percent of votes are missing, and 180 items receive only two votes. Which agreement statistic fits? How would missingness affect capacity and confidence?</p></div>
+        <div class="est-card"><h4>Batch audit</h4><p>You observe 96 passes in a 100-item audit against a 95% target. Explain why observed 96% alone is not strong proof and what larger sample or acceptance rule you would use.</p></div>
+        <div class="est-card"><h4>Queue bottleneck</h4><p>Authors submit 40 items/week, reviewers clear 32, and current review backlog is 96. Estimate backlog growth and waiting time if nothing changes. How many reviewer-equivalent items/week close the gap in six weeks?</p></div>
+        <div class="est-card"><h4>Mix shift</h4><p>A flat-price task portfolio moves from 10% to 30% concurrency tasks, whose unit cost is 2.5× normal. Calculate the weighted-cost increase and identify the contractual protection.</p></div>
+        <div class="est-card"><h4>Utilization</h4><p>A 20-person pool supplies 500 productive hours/week and demand averages 470 with a 100-hour standard deviation. Is average capacity sufficient for a one-week SLA? Propose overflow or headroom.</p></div>
+        <div class="est-card"><h4>Yield investment</h4><p>A $40k training program raises accepted yield from 45% to 58%. Candidate cost before final gates is $300 and target output is 500. Estimate candidate savings and whether the investment pays back.</p></div>
+      </div>
+
+      <h4>Model answer to the yield-investment drill</h4>
+      <p>At 45% yield, 500 accepted units require <code>500/.45 = 1,112</code> candidates. At 58%, they require <code>500/.58 = 863</code>, saving about 249 candidates. At $300 of pre-gate cost each, savings are $74,700. After the $40,000 training investment, net program savings are about $34,700. The investment also reduces schedule load and review queue size. Validate that the higher yield does not come from making items easier or relaxing acceptance; yield improvement must be measured at the same definition of done.</p>
+
+      <h4>How to update an estimate after the pilot</h4>
+      <p>Replace assumptions with measured distributions, not just averages. Record task time by stratum, yield by gate, rework path, worker activation, reviewer queue time, model-token use, infrastructure retries and client decision latency. Recalculate base, optimistic and conservative cases. Compare predicted versus observed pilot cost and explain variance line by line.</p>
+      <p>For example, suppose the pilot predicted 4.5 minutes per judgment and 20% escalation. Observed time is 5.2 minutes and escalation 13%. Time raises labor about 15.6%; lower escalation reduces expected votes perhaps 4%. Net cost still rises. A mature readout says which effect wins rather than announcing that one metric improved.</p>
+      <p>Freeze a baseline version after the pilot: scope, unit, mix, rubric, workflow, rates, yields, metrics and dependencies. Production performance can then be compared against that baseline. When the client changes the rubric or target model, create a new version and quantify the delta. This is estimation as an operating discipline, not a one-time spreadsheet.</p>
+
+      <h4>Final checklist</h4>
+      <div class="tbl"><table>
+        <thead><tr><th>Question</th><th>If missing, the estimate is weak because…</th></tr></thead>
+        <tbody>
+          <tr><td>What exactly is one accepted unit?</td><td>volume has no stable meaning.</td></tr>
+          <tr><td>What work is attempted but not delivered?</td><td>overlap, yield, goldens and rework disappear.</td></tr>
+          <tr><td>Which role or machine is constrained?</td><td>headcount total hides the real schedule.</td></tr>
+          <tr><td>What metric accepts the output?</td><td>quality is subjective and rework unbounded.</td></tr>
+          <tr><td>What is fixed, variable and pass-through?</td><td>unit price will not scale correctly.</td></tr>
+          <tr><td>What assumption moves cost most?</td><td>the pilot may measure the wrong thing.</td></tr>
+          <tr><td>What range and scenario do you show?</td><td>a point estimate pretends uncertainty is zero.</td></tr>
+          <tr><td>What change triggers re-estimation?</td><td>scope risk remains commercially invisible.</td></tr>
+        </tbody>
+      </table></div>
+      <div class="talk"><b>Final mental script</b>Define the accepted unit. Draw the funnel. Calculate attempted work. Convert it to labor and compute. Size the constrained capacity and critical path. Choose metrics with examples and confidence. Build COGS, price to a target margin, show a range, and use the pilot to measure the dominant unknown.</div>
     </div>
   </section>
 
@@ -1473,7 +2668,7 @@ def pass_hat_k(n, c, k): return comb(c, k) / comb(n, k)
 (function () {
   var cards = Array.prototype.slice.call(document.querySelectorAll('.card'));
   var panels = Array.prototype.slice.call(document.querySelectorAll('.panel'));
-  var slug = { 'p-pref': 'preferences', 'p-reason': 'reasoning', 'p-video': 'video', 'p-code': 'coding', 'p-gym': 'gyms', 'p-consult': 'consult', 'p-concepts': 'concepts', 'p-judge': 'judge' };
+  var slug = { 'p-pref': 'preferences', 'p-reason': 'reasoning', 'p-video': 'video', 'p-code': 'coding', 'p-gym': 'gyms', 'p-est': 'estimation', 'p-consult': 'consult', 'p-concepts': 'concepts', 'p-judge': 'judge' };
   var bySlug = {}; Object.keys(slug).forEach(function (k) { bySlug[slug[k]] = k; });
   function show(id, setHash) {
     cards.forEach(function (c) { c.classList.toggle('active', c.getAttribute('data-target') === id); c.setAttribute('aria-pressed', c.getAttribute('data-target') === id ? 'true' : 'false'); });
