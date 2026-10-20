@@ -140,9 +140,10 @@
   .say b { color: var(--accent); font-family: var(--mono); font-size: .66rem; letter-spacing: .1em; text-transform: uppercase; display: block; margin-bottom: 3px; font-weight: 500; }
   .two { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px; }
   .two > div { min-width: 0; }
-  .walk { display: grid; gap: 6px; margin: 0; padding: 0; list-style: none; counter-reset: s; }
-  .walk li { display: grid; grid-template-columns: 24px 1fr; gap: 8px; font-size: .9rem; }
-  .walk li::before { counter-increment: s; content: counter(s); font-family: var(--mono); font-size: .72rem; color: var(--t); font-weight: 500; padding-top: 3px; }
+  .walk { margin: 0; padding: 0; list-style: none; counter-reset: s; }
+  .walk li { position: relative; display: block; min-height: 24px; margin: 0 0 10px; padding-left: 31px; font-size: .9rem; }
+  .walk li:last-child { margin-bottom: 0; }
+  .walk li::before { counter-increment: s; content: counter(s); position: absolute; left: 0; top: 0; width: 21px; height: 21px; display: grid; place-items: center; border-radius: 50%; background: var(--t); color: var(--surface); font-family: var(--mono); font-size: .65rem; font-weight: 700; }
   footer { margin-top: 36px; padding-top: 14px; border-top: 1px solid var(--border); color: var(--faint); font-size: .78rem; }
   @media (prefers-reduced-motion: reduce) { .card { transition: none; } }
 </style>
